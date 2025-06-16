@@ -1,14 +1,35 @@
-import { getFirestore, collection, doc, setDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc, getDocs, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { app } from './firebase-config.js';
 
 const db = getFirestore(app);
 
-// Function to generate a unique account number
-function generateAccountNumber() {
-    const prefix = 'HLG'; // Holliday Lawn & Garden
-    const timestamp = Date.now().toString().slice(-6); // Last 6 digits of timestamp
-    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0'); // 3 random digits
-    return `${prefix}${timestamp}${random}`;
+// Function to generate a simple account number (HLG + 4 digits)
+async function generateAccountNumber() {
+    try {
+        const customersRef = collection(db, 'customers');
+        const customersSnapshot = await getDocs(customersRef);
+        const existingNumbers = new Set();
+        
+        // Get all existing account numbers
+        customersSnapshot.forEach((doc) => {
+            const data = doc.data();
+            if (data.accountNumber) {
+                existingNumbers.add(data.accountNumber);
+            }
+        });
+        
+        // Generate a new number that doesn't exist
+        let accountNumber;
+        do {
+            const number = Math.floor(1000 + Math.random() * 9000).toString(); // 4 digits between 1000-9999
+            accountNumber = `HLG${number}`;
+        } while (existingNumbers.has(accountNumber));
+        
+        return accountNumber;
+    } catch (error) {
+        console.error('Error generating account number:', error);
+        throw error;
+    }
 }
 
 // Function to assign account numbers to existing customers
@@ -21,8 +42,9 @@ async function assignAccountNumbers() {
         customersSnapshot.forEach((doc) => {
             const customerData = doc.data();
             if (!customerData.accountNumber) {
-                const accountNumber = generateAccountNumber();
-                updates.push(updateDoc(doc.ref, { accountNumber }));
+                updates.push(generateAccountNumber().then(accountNumber => 
+                    updateDoc(doc.ref, { accountNumber })
+                ));
             }
         });
 
@@ -57,7 +79,7 @@ async function getCustomerByAccountNumber(accountNumber) {
 // Function to create a new customer with account number
 async function createCustomerWithAccount(customerData) {
     try {
-        const accountNumber = generateAccountNumber();
+        const accountNumber = await generateAccountNumber();
         const customerWithAccount = {
             ...customerData,
             accountNumber,
