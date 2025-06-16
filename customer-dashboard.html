@@ -1,41 +1,16 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Customer Dashboard - Holliday's Lawn & Garden</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link
-      rel="icon"
-      type="image/png"
-      href="assets/images/favicon/favicon-32x32.png"
-      sizes="32x32"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      href="assets/images/favicon/favicon-16x16.png"
-      sizes="16x16"
-    />
-    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.png" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="assets/images/favicon/icon-192.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="512x512"
-      href="assets/images/favicon/icon-512.png"
-    />
-    <link rel="manifest" href="manifest.json" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Customer Dashboard - Holliday's Lawn &amp; Garden</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/images/favicon/icon-512.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
       body {
         margin: 0;
@@ -547,11 +522,7 @@
       <aside class="sidebar">
         <div class="logo">
           <a href="index.html">
-            <img
-              src="assets/images/hollidays-logo.optimized-1280.png"
-              alt="Holliday's Lawn & Garden Logo"
-              loading="lazy"
-            />
+            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
           </a>
         </div>
         <nav>
@@ -560,9 +531,7 @@
               <a href="customer-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li>
-              <a href="pay-your-bill.html"
-                ><i class="fas fa-file-invoice-dollar"></i> Pay Your Bill</a
-              >
+              <a href="pay-your-bill.html"><i class="fas fa-file-invoice-dollar"></i> Pay Your Bill</a>
             </li>
             <li>
               <a href="services.html"><i class="fas fa-leaf"></i> Services</a>
@@ -582,10 +551,7 @@
           <div class="greeting">Welcome, <span id="customerName">Customer</span>!</div>
           <div class="notifications" title="Notifications">
             <i class="fas fa-bell"></i>
-            <span
-              class="badge"
-              id="notificationCount"
-              style="
+            <span class="badge" id="notificationCount" style="
                 display: none;
                 position: absolute;
                 top: -8px;
@@ -596,9 +562,7 @@
                 padding: 2px 7px;
                 font-size: 0.8rem;
                 font-weight: 700;
-              "
-              >0</span
-            >
+              ">0</span>
           </div>
         </div>
         <section class="dashboard-sections">
@@ -612,7 +576,7 @@
             <h3>Submit New Service Request</h3>
             <form id="requestForm">
               <label for="serviceType">Service Type</label>
-              <select id="serviceType" required>
+              <select id="serviceType" required="">
                 <option value="">Select...</option>
                 <option value="Lawn Mowing">Lawn Mowing</option>
                 <option value="Hedge Trimming">Hedge Trimming</option>
@@ -632,7 +596,7 @@
                 </option>
               </select>
               <label for="preferredDate">Preferred Date</label>
-              <input type="date" id="preferredDate" required />
+              <input type="date" id="preferredDate" required="">
               <label for="requestNotes">Notes</label>
               <textarea id="requestNotes" placeholder="Any special instructions..."></textarea>
               <button type="submit">Submit Request</button>
@@ -701,16 +665,13 @@
                 <a href="profile.html" id="editProfileLink" style="color: #2e7d32">Edit Profile</a>
               </li>
               <li>
-                <button
-                  id="quickEditProfileBtn"
-                  style="
+                <button id="quickEditProfileBtn" style="
                     color: #2e7d32;
                     background: none;
                     border: none;
                     cursor: pointer;
                     text-decoration: underline;
-                  "
-                >
+                  ">
                   Quick Edit
                 </button>
               </li>
@@ -720,7 +681,7 @@
             <h3>Support / Contact</h3>
             <form id="supportForm">
               <label for="supportMessage">Message</label>
-              <textarea id="supportMessage" required placeholder="How can we help you?"></textarea>
+              <textarea id="supportMessage" required="" placeholder="How can we help you?"></textarea>
               <button type="submit">Send Message</button>
             </form>
           </div>
@@ -795,7 +756,7 @@
         </div>
         <div class="footer-bottom">
           <p>
-            &copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.
+            © <span id="current-year"></span> Holliday's Lawn &amp; Garden. All rights reserved.
           </p>
         </div>
       </div>
@@ -804,9 +765,22 @@
     <!-- PayPal Smart Payment Buttons -->
     <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
     <script type="module">
-      import { auth, db } from './assets/js/firebase.js';
-      import { onAuthStateChanged, signOut } from 'firebase/auth';
-      import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+      import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+      // Your Firebase config here
+      const firebaseConfig = {
+        apiKey: "AIzaSyDxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxX",
+        authDomain: "holliday-lawn-garden.firebaseapp.com",
+        projectId: "holliday-lawn-garden",
+        storageBucket: "holliday-lawn-garden.appspot.com",
+        messagingSenderId: "123456789012",
+        appId: "1:123456789012:web:1234567890123456789012"
+      };
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
 
       // Initialize event listeners when DOM is loaded
       document.addEventListener('DOMContentLoaded', () => {
@@ -920,5 +894,6 @@
         document.getElementById('feedbackForm').reset();
       }
     </script>
-  </body>
-</html>
+  
+
+</body></html>
