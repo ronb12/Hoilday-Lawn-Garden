@@ -19,6 +19,7 @@ window.addEventListener('error', (event) => {
 
 export async function initializeDashboard(user) {
   console.log('Initializing dashboard for user:', user);
+  console.log('User metadata:', user.metadata);
   
   // Update UI with user info
   const profileName = document.getElementById('profileName');
@@ -35,7 +36,10 @@ export async function initializeDashboard(user) {
     const userDoc = await getDoc(doc(db, 'users', user.uid));
     if (userDoc.exists()) {
       const userData = userDoc.data();
+      // Add Firebase user metadata to the userData object
+      userData.metadata = user.metadata;
       console.log('User data from Firestore:', userData);
+      console.log('User document metadata:', userDoc.metadata);
       updateDashboardUI(userData);
     } else {
       console.log('No user document found in Firestore');
@@ -129,6 +133,7 @@ export function handleLogout() {
 export function updateDashboardUI(userData) {
   console.log('Updating dashboard UI with user data:', userData);
   console.log('User data fields:', Object.keys(userData));
+  console.log('Raw user data:', JSON.stringify(userData, null, 2));
   
   // Update user profile information
   const profileName = document.getElementById('profileName');
@@ -156,16 +161,21 @@ export function updateDashboardUI(userData) {
   
   if (customerName) customerName.textContent = userData.displayName || userData.name || 'Customer';
   
-  // Format and display join date
+  // Format and display join date using Firebase account creation time
   if (profileJoinDate) {
     console.log('Join date data:', {
       createdAt: userData.createdAt,
       joinDate: userData.joinDate,
       registrationDate: userData.registrationDate,
-      signupDate: userData.signupDate
+      signupDate: userData.signupDate,
+      creationTime: userData.creationTime,
+      timestamp: userData.timestamp,
+      metadata: userData.metadata
     });
     
-    if (userData.createdAt) {
+    if (userData.metadata && userData.metadata.creationTime) {
+      profileJoinDate.textContent = new Date(userData.metadata.creationTime).toLocaleDateString();
+    } else if (userData.createdAt) {
       const joinDate = userData.createdAt.toDate();
       profileJoinDate.textContent = joinDate.toLocaleDateString();
     } else if (userData.joinDate) {
@@ -174,6 +184,10 @@ export function updateDashboardUI(userData) {
       profileJoinDate.textContent = new Date(userData.registrationDate).toLocaleDateString();
     } else if (userData.signupDate) {
       profileJoinDate.textContent = new Date(userData.signupDate).toLocaleDateString();
+    } else if (userData.creationTime) {
+      profileJoinDate.textContent = new Date(userData.creationTime).toLocaleDateString();
+    } else if (userData.timestamp) {
+      profileJoinDate.textContent = new Date(userData.timestamp).toLocaleDateString();
     } else {
       profileJoinDate.textContent = 'Not available';
     }
@@ -185,7 +199,8 @@ export function updateDashboardUI(userData) {
       serviceHistory: userData.serviceHistory,
       lastService: userData.lastService,
       recentServices: userData.recentServices,
-      services: userData.services
+      services: userData.services,
+      appointments: userData.appointments
     });
     
     if (userData.serviceHistory && userData.serviceHistory.length > 0) {
@@ -199,6 +214,9 @@ export function updateDashboardUI(userData) {
     } else if (userData.services && userData.services.length > 0) {
       const lastService = userData.services[userData.services.length - 1];
       profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
+    } else if (userData.appointments && userData.appointments.length > 0) {
+      const lastAppointment = userData.appointments[userData.appointments.length - 1];
+      profileLastService.textContent = `${lastAppointment.serviceType} (${new Date(lastAppointment.date).toLocaleDateString()})`;
     } else {
       profileLastService.textContent = 'Not available';
     }
