@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Account Number Assignment</title>
+    <script type="module" src="assets/js/run-assignment.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Running Account Number Assignment</h1>
+    <p>Please wait while we assign account numbers to existing customers...</p>
+    <div id="output"></div>
+    <script>
+        // Override console.log to show output in the page
+        const outputDiv = document.getElementById('output');
+        const originalConsoleLog = console.log;
+        console.log = function() {
+            const args = Array.from(arguments);
+            outputDiv.textContent += args.join(' ') + '\n';
+            originalConsoleLog.apply(console, arguments);
+        };
+    </script>
+</body>
+</html> 
