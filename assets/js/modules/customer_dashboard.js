@@ -2,7 +2,7 @@
 console.log('modules/customer_dashboard.js loaded'); 
 
 import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, orderBy, limit, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { app } from "../firebase-config.js";
 
 // Initialize Firebase services
@@ -138,6 +138,12 @@ export async function initializeDashboard(user) {
     
     // Load unpaid invoices
     await loadUnpaidInvoices(user.uid);
+    
+    // Initialize appointment form
+    initializeAppointmentForm();
+    
+    // Load appointments
+    await loadAppointments();
   } catch (error) {
     console.error('Error loading user data:', error);
     showNotification('Error loading user data', 'error');
@@ -316,4 +322,181 @@ export function updateDashboardUI(userData) {
   }
   
   if (customerName) customerName.textContent = userData.displayName || userData.name || 'Customer';
+}
+
+// Initialize appointment form
+function initializeAppointmentForm() {
+    const appointmentForm = document.getElementById('appointmentForm');
+    const preferredDateInput = document.getElementById('preferredDate');
+    
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    preferredDateInput.min = today;
+    
+    if (appointmentForm) {
+        appointmentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const serviceType = document.getElementById('serviceType').value;
+            const preferredDate = document.getElementById('preferredDate').value;
+            const preferredTime = document.getElementById('preferredTime').value;
+            const serviceNotes = document.getElementById('serviceNotes').value;
+            
+            try {
+                showLoading('Scheduling appointment...');
+                
+                // Create appointment in Firestore
+                const appointmentData = {
+                    customerId: auth.currentUser.uid,
+                    serviceType,
+                    preferredDate,
+                    preferredTime,
+                    serviceNotes,
+                    status: 'pending',
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
+                };
+                
+                const appointmentRef = await addDoc(collection(db, 'appointments'), appointmentData);
+                
+                // Update UI
+                showNotification('Appointment scheduled successfully!', 'success');
+                appointmentForm.reset();
+                
+                // Refresh appointments list
+                loadAppointments();
+                
+            } catch (error) {
+                console.error('Error scheduling appointment:', error);
+                showNotification('Failed to schedule appointment. Please try again.', 'error');
+            } finally {
+                hideLoading();
+            }
+        });
+    }
+}
+
+// Load appointments
+async function loadAppointments() {
+    const appointmentsList = document.querySelector('.appointments-list');
+    const noAppointments = document.querySelector('.no-appointments');
+    
+    if (!appointmentsList) return;
+    
+    try {
+        showLoading('Loading appointments...');
+        
+        // Query appointments for current user
+        const appointmentsQuery = query(
+            collection(db, 'appointments'),
+            where('customerId', '==', auth.currentUser.uid),
+            where('status', 'in', ['pending', 'confirmed']),
+            orderBy('preferredDate', 'asc')
+        );
+        
+        const appointmentsSnapshot = await getDocs(appointmentsQuery);
+        
+        if (appointmentsSnapshot.empty) {
+            appointmentsList.innerHTML = '';
+            noAppointments.style.display = 'block';
+            return;
+        }
+        
+        noAppointments.style.display = 'none';
+        appointmentsList.innerHTML = '';
+        
+        appointmentsSnapshot.forEach(doc => {
+            const appointment = doc.data();
+            const appointmentElement = createAppointmentElement(doc.id, appointment);
+            appointmentsList.appendChild(appointmentElement);
+        });
+        
+    } catch (error) {
+        console.error('Error loading appointments:', error);
+        showNotification('Failed to load appointments', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// Create appointment element
+function createAppointmentElement(id, appointment) {
+    const div = document.createElement('div');
+    div.className = 'appointment-item';
+    div.innerHTML = `
+        <div class="appointment-header">
+            <h4>${formatServiceType(appointment.serviceType)}</h4>
+            <span class="status-badge ${appointment.status}">${formatStatus(appointment.status)}</span>
+        </div>
+        <div class="appointment-details">
+            <p><i class="fas fa-calendar"></i> ${formatDate(appointment.preferredDate)}</p>
+            <p><i class="fas fa-clock"></i> ${formatTimeSlot(appointment.preferredTime)}</p>
+            ${appointment.serviceNotes ? `<p><i class="fas fa-info-circle"></i> ${appointment.serviceNotes}</p>` : ''}
+        </div>
+        ${appointment.status === 'pending' ? `
+            <div class="appointment-actions">
+                <button class="action-btn cancel-btn" data-id="${id}">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        ` : ''}
+    `;
+    
+    // Add cancel button handler
+    const cancelBtn = div.querySelector('.cancel-btn');
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => cancelAppointment(id));
+    }
+    
+    return div;
+}
+
+// Helper functions
+function formatServiceType(type) {
+    return type.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+}
+
+function formatStatus(status) {
+    return status.charAt(0).toUpperCase() + status.slice(1);
+}
+
+function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+function formatTimeSlot(timeSlot) {
+    const timeMap = {
+        'morning': '8:00 AM - 12:00 PM',
+        'afternoon': '12:00 PM - 4:00 PM',
+        'evening': '4:00 PM - 6:00 PM'
+    };
+    return timeMap[timeSlot] || timeSlot;
+}
+
+// Cancel appointment
+async function cancelAppointment(appointmentId) {
+    if (!confirm('Are you sure you want to cancel this appointment?')) return;
+    
+    try {
+        showLoading('Cancelling appointment...');
+        
+        await updateDoc(doc(db, 'appointments', appointmentId), {
+            status: 'cancelled',
+            updatedAt: serverTimestamp()
+        });
+        
+        showNotification('Appointment cancelled successfully', 'success');
+        loadAppointments();
+        
+    } catch (error) {
+        console.error('Error cancelling appointment:', error);
+        showNotification('Failed to cancel appointment', 'error');
+    } finally {
+        hideLoading();
+    }
 } 

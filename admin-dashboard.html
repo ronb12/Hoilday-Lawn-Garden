@@ -218,6 +218,49 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- Appointments Section -->
+                <div class="dashboard-section">
+                    <div class="section-header">
+                        <h2>Appointment Management</h2>
+                        <div class="section-actions">
+                            <select id="appointmentFilter" class="filter-select">
+                                <option value="all">All Appointments</option>
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="appointments-container">
+                        <div class="appointments-list">
+                            <!-- Appointments will be loaded here dynamically -->
+                        </div>
+                        <div class="no-appointments" style="display: none;">
+                            <i class="fas fa-calendar-times"></i>
+                            <p>No appointments found</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appointment Details Modal -->
+                <div id="appointmentModal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <!-- Modal content will be loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Loading Overlay -->
+                <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+                    <div class="loading-content">
+                        <div class="spinner"></div>
+                        <p id="loadingMessage">Loading...</p>
+                    </div>
+                </div>
+
+                <!-- Notification Container -->
+                <div id="notificationContainer" class="notification-container"></div>
             </div>
         </div>
     </main>
@@ -259,5 +302,6 @@
 
     <script type="module" src="assets/js/firebase-config.js"></script>
     <script type="module" src="assets/js/admin-dashboard.js"></script>
+    <script type="module" src="assets/js/modules/admin_dashboard.js"></script>
 </body>
 </html> 
