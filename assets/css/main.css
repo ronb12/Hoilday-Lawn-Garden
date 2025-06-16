@@ -4036,7 +4036,7 @@ td {
   margin-top: 2rem;
 }
 
-.pressure-washing-card {
+.pressure-washing .service-card {
   background: #fff;
   padding: 2rem;
   border-radius: 8px;
@@ -4045,7 +4045,7 @@ td {
   transition: transform 0.3s ease;
 }
 
-.pressure-washing-card:hover {
+.pressure-washing .service-card:hover {
   transform: translateY(-5px);
 }
 
