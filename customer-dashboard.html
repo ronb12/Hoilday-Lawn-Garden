@@ -661,10 +661,14 @@
             <a href="#" class="view-all">View All Payments</a>
           </div>
           <div class="dashboard-card" id="profile">
-            <h3>Profile</h3>
-            <ul>
-              <li>Name: <span id="profileName">Customer</span></li>
-              <li>Email: <span id="profileEmail">customer@email.com</span></li>
+            <h3>My Profile</h3>
+            <ul class="profile-info">
+              <li><strong>Name:</strong> <span id="profileName">Customer</span></li>
+              <li><strong>Email:</strong> <span id="profileEmail">customer@email.com</span></li>
+              <li><strong>Phone:</strong> <span id="profilePhone">Not provided</span></li>
+              <li><strong>Address:</strong> <span id="profileAddress">Not provided</span></li>
+              <li><strong>Member Since:</strong> <span id="profileJoinDate">Not available</span></li>
+              <li><strong>Last Service:</strong> <span id="profileLastService">Not available</span></li>
             </ul>
           </div>
           <div class="dashboard-card" id="support">
@@ -790,8 +794,11 @@
         // Update UI with user info
         const profileName = document.getElementById('profileName');
         const profileEmail = document.getElementById('profileEmail');
+        const customerName = document.getElementById('customerName');
+        
         if (profileName) profileName.textContent = user.displayName || 'Customer';
         if (profileEmail) profileEmail.textContent = user.email || '';
+        if (customerName) customerName.textContent = user.displayName || 'Customer';
 
         // Load user's data from Firestore
         try {
@@ -800,6 +807,9 @@
             const userData = userDoc.data();
             updateDashboardUI(userData);
           }
+          
+          // Load unpaid invoices
+          await loadUnpaidInvoices(user.uid);
         } catch (error) {
           console.error('Error loading user data:', error);
         }

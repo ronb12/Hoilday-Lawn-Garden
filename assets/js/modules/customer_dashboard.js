@@ -21,8 +21,11 @@ export async function initializeDashboard(user) {
   // Update UI with user info
   const profileName = document.getElementById('profileName');
   const profileEmail = document.getElementById('profileEmail');
+  const customerName = document.getElementById('customerName');
+  
   if (profileName) profileName.textContent = user.displayName || 'Customer';
   if (profileEmail) profileEmail.textContent = user.email || '';
+  if (customerName) customerName.textContent = user.displayName || 'Customer';
 
   // Load user's data from Firestore
   try {
@@ -123,6 +126,8 @@ export function updateDashboardUI(userData) {
   const profileEmail = document.getElementById('profileEmail');
   const profilePhone = document.getElementById('profilePhone');
   const profileAddress = document.getElementById('profileAddress');
+  const profileJoinDate = document.getElementById('profileJoinDate');
+  const profileLastService = document.getElementById('profileLastService');
   const customerName = document.getElementById('customerName');
 
   if (profileName) profileName.textContent = userData.displayName || 'Customer';
@@ -130,6 +135,18 @@ export function updateDashboardUI(userData) {
   if (profilePhone) profilePhone.textContent = userData.phone || 'Not provided';
   if (profileAddress) profileAddress.textContent = userData.address || 'Not provided';
   if (customerName) customerName.textContent = userData.displayName || 'Customer';
+  
+  // Format and display join date
+  if (profileJoinDate && userData.createdAt) {
+    const joinDate = userData.createdAt.toDate();
+    profileJoinDate.textContent = joinDate.toLocaleDateString();
+  }
+  
+  // Get and display last service
+  if (profileLastService && userData.serviceHistory && userData.serviceHistory.length > 0) {
+    const lastService = userData.serviceHistory[userData.serviceHistory.length - 1];
+    profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
+  }
 
   // Update service history if available
   if (userData.serviceHistory) {
