@@ -1,22 +1,11 @@
 // Placeholder modules/customer_dashboard.js
 console.log('modules/customer_dashboard.js loaded'); 
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { app } from "../../firebase-config.js";
 
-// Your Firebase config here
-const firebaseConfig = {
-  apiKey: "AIzaSyDxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxX",
-  authDomain: "holliday-lawn-garden.firebaseapp.com",
-  projectId: "holliday-lawn-garden",
-  storageBucket: "holliday-lawn-garden.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:1234567890123456789012"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase services
 const auth = getAuth(app);
 const db = getFirestore(app);
 

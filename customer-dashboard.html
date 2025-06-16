@@ -769,8 +769,9 @@
 
     <!-- PayPal Smart Payment Buttons -->
     <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
-    <script type="module" src="assets/js/unpaid-invoices.js"></script>
-    <script type="module">
+    <script type="module" src="assets/js/firebase-config.js"></script>
+    <script type="module" src="assets/js/unpaid-invoices.js" defer></script>
+    <script type="module" defer>
       import { app } from './assets/js/firebase-config.js';
       import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
       import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
