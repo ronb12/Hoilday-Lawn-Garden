@@ -20,6 +20,7 @@ window.addEventListener('error', (event) => {
 export async function initializeDashboard(user) {
   console.log('Initializing dashboard for user:', user);
   console.log('User metadata:', user.metadata);
+  console.log('User creation time:', user.metadata.creationTime);
   
   // Update UI with user info
   const profileName = document.getElementById('profileName');
@@ -36,8 +37,8 @@ export async function initializeDashboard(user) {
     const userDoc = await getDoc(doc(db, 'users', user.uid));
     if (userDoc.exists()) {
       const userData = userDoc.data();
-      // Add Firebase user creation time
-      userData.creationTime = user.metadata.creationTime;
+      // Add Firebase user creation time directly
+      userData.memberSince = user.metadata.creationTime;
       console.log('User data from Firestore:', userData);
       console.log('User document metadata:', userDoc.metadata);
       console.log('Firebase user creation time:', user.metadata.creationTime);
@@ -165,6 +166,7 @@ export function updateDashboardUI(userData) {
   // Format and display join date using Firebase account creation time
   if (profileJoinDate) {
     console.log('Join date data:', {
+      memberSince: userData.memberSince,
       createdAt: userData.createdAt,
       joinDate: userData.joinDate,
       registrationDate: userData.registrationDate,
@@ -173,9 +175,9 @@ export function updateDashboardUI(userData) {
       timestamp: userData.timestamp
     });
     
-    if (userData.creationTime) {
-      const creationDate = new Date(userData.creationTime);
-      console.log('Using Firebase creation time:', creationDate);
+    if (userData.memberSince) {
+      const creationDate = new Date(userData.memberSince);
+      console.log('Using memberSince date:', creationDate);
       profileJoinDate.textContent = creationDate.toLocaleDateString();
     } else if (userData.createdAt) {
       const joinDate = userData.createdAt.toDate();
@@ -190,6 +192,9 @@ export function updateDashboardUI(userData) {
     } else if (userData.signupDate) {
       console.log('Using signupDate:', userData.signupDate);
       profileJoinDate.textContent = new Date(userData.signupDate).toLocaleDateString();
+    } else if (userData.creationTime) {
+      console.log('Using creationTime:', userData.creationTime);
+      profileJoinDate.textContent = new Date(userData.creationTime).toLocaleDateString();
     } else if (userData.timestamp) {
       console.log('Using timestamp:', userData.timestamp);
       profileJoinDate.textContent = new Date(userData.timestamp).toLocaleDateString();
