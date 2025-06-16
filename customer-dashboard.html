@@ -91,7 +91,19 @@
         
         <main id="main-content" class="dashboard-main" role="main">
             <div class="dashboard-header">
-                <div class="greeting">Welcome back, <span id="userName">Customer</span>!</div>
+                <div class="greeting">
+                    <h2>Welcome, <span id="customerName">Customer</span></h2>
+                    <p>Account Number: <span id="accountNumber" class="account-number"></span></p>
+                </div>
+                <div class="date-filter">
+                    <label for="dateRange">Date Range:</label>
+                    <select id="dateRange">
+                        <option value="30">Last 30 Days</option>
+                        <option value="90">Last 90 Days</option>
+                        <option value="180">Last 6 Months</option>
+                        <option value="365">Last Year</option>
+                    </select>
+                </div>
                 <div class="header-actions">
                     <div class="notifications-panel">
                         <button class="notifications-toggle" id="notificationsToggle" aria-label="View notifications">
