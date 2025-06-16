@@ -48,20 +48,24 @@ function updateProfileUI(userData) {
     document.getElementById('displayName').value = userData.displayName || '';
     document.getElementById('email').value = userData.email || '';
     document.getElementById('phone').value = userData.phone || '';
-    document.getElementById('address').value = userData.address || '';
-  }
-}
-
-function initializeEventListeners() {
-  // Add event listeners for profile interactions
-  const profileForm = document.getElementById('profileForm');
-  if (profileForm) {
-    profileForm.addEventListener('submit', handleProfileSubmit);
-  }
-
-  const logoutButton = document.getElementById('logout-button');
-  if (logoutButton) {
-    logoutButton.addEventListener('click', handleLogout);
+    
+    // Handle address fields
+    if (userData.address) {
+      // If we have the old address format, try to parse it
+      const addressParts = userData.address.split(',').map(part => part.trim());
+      if (addressParts.length >= 4) {
+        document.getElementById('street').value = addressParts[0] || '';
+        document.getElementById('city').value = addressParts[1] || '';
+        document.getElementById('state').value = addressParts[2] || '';
+        document.getElementById('zipCode').value = addressParts[3] || '';
+      }
+    } else {
+      // Set individual address fields
+      document.getElementById('street').value = userData.street || '';
+      document.getElementById('city').value = userData.city || '';
+      document.getElementById('state').value = userData.state || '';
+      document.getElementById('zipCode').value = userData.zipCode || '';
+    }
   }
 }
 
@@ -75,7 +79,11 @@ async function handleProfileSubmit(event) {
       displayName: document.getElementById('displayName').value,
       email: document.getElementById('email').value,
       phone: document.getElementById('phone').value,
-      address: document.getElementById('address').value
+      // Store address components separately
+      street: document.getElementById('street').value,
+      city: document.getElementById('city').value,
+      state: document.getElementById('state').value,
+      zipCode: document.getElementById('zipCode').value
     };
 
     await updateDoc(doc(db, 'users', user.uid), formData);
