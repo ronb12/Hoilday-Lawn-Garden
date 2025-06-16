@@ -1,9 +1,7 @@
 // Profile Management JavaScript
-import { handleError, handleFirebaseError } from './error-handler.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, query, where, orderBy, getDocs, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { showError } from './firebase.js';
 import { app } from './firebase-config.js';
 
 const auth = getAuth(app);
@@ -35,10 +33,10 @@ async function loadUserProfile(user) {
       const userData = userDoc.data();
       updateProfileUI(userData);
     } else {
-      handleError(new Error('User data not found'), 'loadUserProfile');
+      handleError(new Error('User data not found'));
     }
   } catch (error) {
-    handleFirebaseError(error);
+    handleError(error);
   }
 }
 
@@ -96,8 +94,42 @@ function handleLogout() {
       window.location.href = '/login.html';
     })
     .catch(error => {
-      handleFirebaseError(error);
+      handleError(error);
     });
+}
+
+function handleError(error) {
+  console.error('Error:', error);
+  let message = 'An error occurred';
+  
+  if (error.code) {
+    switch (error.code) {
+      case 'auth/user-not-found':
+        message = 'User not found';
+        break;
+      case 'auth/wrong-password':
+        message = 'Incorrect password';
+        break;
+      case 'auth/email-already-in-use':
+        message = 'Email already in use';
+        break;
+      case 'auth/weak-password':
+        message = 'Password is too weak';
+        break;
+      case 'auth/invalid-email':
+        message = 'Invalid email address';
+        break;
+      case 'permission-denied':
+        message = 'Permission denied';
+        break;
+      default:
+        message = error.message || 'An error occurred';
+    }
+  } else {
+    message = error.message || 'An error occurred';
+  }
+  
+  showNotification(message, 'error');
 }
 
 function showNotification(message, type = 'success') {
