@@ -36,10 +36,11 @@ export async function initializeDashboard(user) {
     const userDoc = await getDoc(doc(db, 'users', user.uid));
     if (userDoc.exists()) {
       const userData = userDoc.data();
-      // Add Firebase user metadata to the userData object
-      userData.metadata = user.metadata;
+      // Add Firebase user creation time
+      userData.creationTime = user.metadata.creationTime;
       console.log('User data from Firestore:', userData);
       console.log('User document metadata:', userDoc.metadata);
+      console.log('Firebase user creation time:', user.metadata.creationTime);
       updateDashboardUI(userData);
     } else {
       console.log('No user document found in Firestore');
@@ -169,26 +170,31 @@ export function updateDashboardUI(userData) {
       registrationDate: userData.registrationDate,
       signupDate: userData.signupDate,
       creationTime: userData.creationTime,
-      timestamp: userData.timestamp,
-      metadata: userData.metadata
+      timestamp: userData.timestamp
     });
     
-    if (userData.metadata && userData.metadata.creationTime) {
-      profileJoinDate.textContent = new Date(userData.metadata.creationTime).toLocaleDateString();
+    if (userData.creationTime) {
+      const creationDate = new Date(userData.creationTime);
+      console.log('Using Firebase creation time:', creationDate);
+      profileJoinDate.textContent = creationDate.toLocaleDateString();
     } else if (userData.createdAt) {
       const joinDate = userData.createdAt.toDate();
+      console.log('Using Firestore createdAt:', joinDate);
       profileJoinDate.textContent = joinDate.toLocaleDateString();
     } else if (userData.joinDate) {
+      console.log('Using joinDate:', userData.joinDate);
       profileJoinDate.textContent = new Date(userData.joinDate).toLocaleDateString();
     } else if (userData.registrationDate) {
+      console.log('Using registrationDate:', userData.registrationDate);
       profileJoinDate.textContent = new Date(userData.registrationDate).toLocaleDateString();
     } else if (userData.signupDate) {
+      console.log('Using signupDate:', userData.signupDate);
       profileJoinDate.textContent = new Date(userData.signupDate).toLocaleDateString();
-    } else if (userData.creationTime) {
-      profileJoinDate.textContent = new Date(userData.creationTime).toLocaleDateString();
     } else if (userData.timestamp) {
+      console.log('Using timestamp:', userData.timestamp);
       profileJoinDate.textContent = new Date(userData.timestamp).toLocaleDateString();
     } else {
+      console.log('No date information available');
       profileJoinDate.textContent = 'Not available';
     }
   }
