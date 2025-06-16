@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Profile - Holliday's Lawn & Garden</title>
+  <title>Edit Profile - Holliday's Lawn & Garden</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/main.css?v=1.0.1">
   <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png" sizes="32x32">
   <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16">
   <link rel="shortcut icon" href="assets/images/favicon/favicon.ico">
@@ -138,16 +138,16 @@
         <i class="fas fa-arrow-left"></i>
         Back to Dashboard
       </a>
-      <h1>My Profile</h1>
+      <h1>Edit Profile</h1>
     </div>
-    <form id="profileForm">
+    <form id="profileForm" class="profile-form">
       <div class="form-group">
-        <label for="displayName">Full Name</label>
-        <input type="text" id="displayName" name="displayName" required>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
       </div>
       <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required readonly>
       </div>
       <div class="form-group">
         <label for="phone">Phone Number</label>
@@ -175,6 +175,103 @@
     </form>
   </div>
 
-  <script type="module" src="assets/js/profile.js"></script>
+  <script type="module">
+    import { app } from './assets/js/firebase-config.js';
+    import { 
+      getAuth, 
+      onAuthStateChanged 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { 
+      getFirestore, 
+      doc, 
+      getDoc, 
+      updateDoc 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Check authentication state
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+      loadUserProfile(user);
+    });
+
+    async function loadUserProfile(user) {
+      try {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          
+          // Populate form fields
+          document.getElementById('name').value = userData.displayName || userData.name || '';
+          document.getElementById('email').value = user.email || '';
+          document.getElementById('phone').value = userData.phone || '';
+          document.getElementById('street').value = userData.street || '';
+          document.getElementById('city').value = userData.city || '';
+          document.getElementById('state').value = userData.state || '';
+          document.getElementById('zipCode').value = userData.zipCode || '';
+        }
+      } catch (error) {
+        console.error('Error loading profile:', error);
+        showNotification('Error loading profile data', 'error');
+      }
+    }
+
+    // Handle form submission
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const user = auth.currentUser;
+      if (!user) {
+        showNotification('You must be logged in to update your profile', 'error');
+        return;
+      }
+
+      try {
+        const formData = {
+          displayName: document.getElementById('name').value,
+          phone: document.getElementById('phone').value,
+          street: document.getElementById('street').value,
+          city: document.getElementById('city').value,
+          state: document.getElementById('state').value,
+          zipCode: document.getElementById('zipCode').value,
+          updatedAt: new Date()
+        };
+
+        await updateDoc(doc(db, 'users', user.uid), formData);
+        showNotification('Profile updated successfully', 'success');
+        
+        // Update user's display name in Firebase Auth
+        await user.updateProfile({
+          displayName: formData.displayName
+        });
+
+        // Redirect back to dashboard after a short delay
+        setTimeout(() => {
+          window.location.href = 'customer-dashboard.html';
+        }, 1500);
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        showNotification('Error updating profile', 'error');
+      }
+    });
+
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+  </script>
 </body>
 </html> 

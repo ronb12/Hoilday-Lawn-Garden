@@ -832,6 +832,9 @@
               <li><strong>Member Since:</strong> <span id="profileJoinDate">Not available</span></li>
               <li><strong>Last Service:</strong> <span id="profileLastService">Not available</span></li>
             </ul>
+            <button id="editProfileBtn" class="action-btn" style="margin-top: 1rem;">
+              <i class="fas fa-edit"></i> Edit Profile
+            </button>
           </div>
           <div class="dashboard-card" id="support">
             <h3>Support / Contact</h3>
@@ -946,7 +949,9 @@
         query, 
         where, 
         getDocs, 
-        addDoc 
+        addDoc,
+        orderBy,
+        limit
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
       import { updateDashboardUI, initializeEventListeners, handleLogout } from './assets/js/modules/customer_dashboard.js';
       import { loadUnpaidInvoices } from './assets/js/unpaid-invoices.js';
@@ -1013,6 +1018,7 @@
         const profileName = document.getElementById('profileName');
         const profileEmail = document.getElementById('profileEmail');
         const customerName = document.getElementById('customerName');
+        const profileLastService = document.getElementById('profileLastService');
         
         if (profileName) profileName.textContent = user.displayName || 'Customer';
         if (profileEmail) profileEmail.textContent = user.email || '';
@@ -1020,92 +1026,28 @@
 
         // Load user's data from Firestore
         try {
-          console.log('=== Firestore Data ===');
-          console.log('Fetching user document from Firestore for ID:', user.uid);
+          // Get user document
           const userDoc = await getDoc(doc(db, 'users', user.uid));
           if (userDoc.exists()) {
             const userData = userDoc.data();
-            console.log('Raw Firestore data:', userData);
-            console.log('Firestore document metadata:', userDoc.metadata);
             
-            // Add Firebase user creation time directly
-            userData.memberSince = user.metadata.creationTime;
-            console.log('Added memberSince:', userData.memberSince);
+            // Get last service from services subcollection
+            const servicesQuery = query(
+              collection(db, 'users', user.uid, 'services'),
+              orderBy('date', 'desc'),
+              limit(1)
+            );
             
-            // Log all available date fields
-            console.log('=== Date Fields ===');
-            console.log('memberSince:', userData.memberSince);
-            console.log('createdAt:', userData.createdAt);
-            console.log('joinDate:', userData.joinDate);
-            console.log('registrationDate:', userData.registrationDate);
-            console.log('signupDate:', userData.signupDate);
-            console.log('creationTime:', userData.creationTime);
-            console.log('timestamp:', userData.timestamp);
-            
-            // Get and display last service
-            if (profileLastService) {
-              console.log('=== Service History Processing ===');
-              console.log('Service history data:', {
-                serviceHistory: userData.serviceHistory,
-                lastService: userData.lastService,
-                recentServices: userData.recentServices,
-                services: userData.services,
-                appointments: userData.appointments
-              });
-              
-              let lastServiceDate = null;
-              let lastServiceType = null;
-              
-              // Check serviceHistory array
-              if (userData.serviceHistory && Array.isArray(userData.serviceHistory) && userData.serviceHistory.length > 0) {
-                const lastService = userData.serviceHistory[userData.serviceHistory.length - 1];
-                console.log('Found service in serviceHistory:', lastService);
-                lastServiceDate = lastService.date;
-                lastServiceType = lastService.type;
-              }
-              // Check lastService object
-              else if (userData.lastService && userData.lastService.date) {
-                console.log('Found service in lastService:', userData.lastService);
-                lastServiceDate = userData.lastService.date;
-                lastServiceType = userData.lastService.type;
-              }
-              // Check recentServices array
-              else if (userData.recentServices && Array.isArray(userData.recentServices) && userData.recentServices.length > 0) {
-                const lastService = userData.recentServices[0];
-                console.log('Found service in recentServices:', lastService);
-                lastServiceDate = lastService.date;
-                lastServiceType = lastService.type;
-              }
-              // Check services array
-              else if (userData.services && Array.isArray(userData.services) && userData.services.length > 0) {
-                const lastService = userData.services[userData.services.length - 1];
-                console.log('Found service in services:', lastService);
-                lastServiceDate = lastService.date;
-                lastServiceType = lastService.type;
-              }
-              // Check appointments array
-              else if (userData.appointments && Array.isArray(userData.appointments) && userData.appointments.length > 0) {
-                const lastAppointment = userData.appointments[userData.appointments.length - 1];
-                console.log('Found service in appointments:', lastAppointment);
-                lastServiceDate = lastAppointment.date;
-                lastServiceType = lastAppointment.serviceType;
-              }
-              
-              if (lastServiceDate && lastServiceType) {
-                try {
-                  const serviceDate = new Date(lastServiceDate);
-                  console.log('Formatted service date:', serviceDate);
-                  profileLastService.textContent = `${lastServiceType} (${serviceDate.toLocaleDateString()})`;
-                } catch (error) {
-                  console.error('Error formatting service date:', error);
-                  profileLastService.textContent = `${lastServiceType} (Date unavailable)`;
-                }
-              } else {
-                console.log('No service history available');
-                profileLastService.textContent = 'Not available';
-              }
+            const servicesSnapshot = await getDocs(servicesQuery);
+            if (!servicesSnapshot.empty) {
+              const lastService = servicesSnapshot.docs[0].data();
+              const serviceDate = lastService.date.toDate();
+              profileLastService.textContent = `${lastService.type} (${serviceDate.toLocaleDateString()})`;
+            } else {
+              profileLastService.textContent = 'No services yet';
             }
             
+            // Update rest of the dashboard UI
             updateDashboardUI(userData);
           }
           
@@ -1113,6 +1055,7 @@
           await loadUnpaidInvoices(user.uid);
         } catch (error) {
           console.error('Error loading user data:', error);
+          profileLastService.textContent = 'Error loading service history';
         }
       }
 
@@ -1160,17 +1103,10 @@
         document.getElementById('feedbackForm').reset();
       }
 
-      const editProfileLink = document.getElementById('editProfileLink');
-      if (editProfileLink) {
-        editProfileLink.addEventListener('click', (e) => {
-          e.preventDefault();
-          window.location.href = 'profile.html';
-        });
-      }
-
-      const quickEditProfileBtn = document.getElementById('quickEditProfileBtn');
-      if (quickEditProfileBtn) {
-        quickEditProfileBtn.addEventListener('click', () => {
+      // Add edit profile button functionality
+      const editProfileBtn = document.getElementById('editProfileBtn');
+      if (editProfileBtn) {
+        editProfileBtn.addEventListener('click', () => {
           window.location.href = 'profile.html';
         });
       }
@@ -1377,6 +1313,53 @@
           queueNotification('Failed to clear cache. Please try again.', 'error');
         }
       });
+
+      // Test service history
+      async function testServiceHistory() {
+        const user = auth.currentUser;
+        if (!user) {
+          console.error('No user logged in');
+          return;
+        }
+
+        try {
+          // Get last service from services subcollection
+          const servicesQuery = query(
+            collection(db, 'users', user.uid, 'services'),
+            orderBy('date', 'desc'),
+            limit(1)
+          );
+
+          const servicesSnapshot = await getDocs(servicesQuery);
+          
+          if (!servicesSnapshot.empty) {
+            const lastService = servicesSnapshot.docs[0].data();
+            const serviceDate = lastService.date.toDate();
+            console.log('Last Service:', {
+              type: lastService.type,
+              date: serviceDate.toLocaleDateString(),
+              status: lastService.status
+            });
+            
+            // Update the UI
+            const profileLastService = document.getElementById('profileLastService');
+            if (profileLastService) {
+              profileLastService.textContent = `${lastService.type} (${serviceDate.toLocaleDateString()})`;
+            }
+          } else {
+            console.log('No services found');
+            const profileLastService = document.getElementById('profileLastService');
+            if (profileLastService) {
+              profileLastService.textContent = 'No services yet';
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching service history:', error);
+        }
+      }
+
+      // Run the test
+      testServiceHistory();
     </script>
   </body>
 </html>
