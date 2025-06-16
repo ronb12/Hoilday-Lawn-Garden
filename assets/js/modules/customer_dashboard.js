@@ -18,9 +18,14 @@ window.addEventListener('error', (event) => {
 }, true);
 
 export async function initializeDashboard(user) {
-  console.log('Initializing dashboard for user:', user);
+  console.log('=== Firebase User Object ===');
+  console.log('User:', user);
   console.log('User metadata:', user.metadata);
   console.log('User creation time:', user.metadata.creationTime);
+  console.log('User last sign in:', user.metadata.lastSignInTime);
+  console.log('User display name:', user.displayName);
+  console.log('User email:', user.email);
+  console.log('User UID:', user.uid);
   
   // Update UI with user info
   const profileName = document.getElementById('profileName');
@@ -33,15 +38,28 @@ export async function initializeDashboard(user) {
 
   // Load user's data from Firestore
   try {
+    console.log('=== Firestore Data ===');
     console.log('Fetching user document from Firestore for ID:', user.uid);
     const userDoc = await getDoc(doc(db, 'users', user.uid));
     if (userDoc.exists()) {
       const userData = userDoc.data();
+      console.log('Raw Firestore data:', userData);
+      console.log('Firestore document metadata:', userDoc.metadata);
+      
       // Add Firebase user creation time directly
       userData.memberSince = user.metadata.creationTime;
-      console.log('User data from Firestore:', userData);
-      console.log('User document metadata:', userDoc.metadata);
-      console.log('Firebase user creation time:', user.metadata.creationTime);
+      console.log('Added memberSince:', userData.memberSince);
+      
+      // Log all available date fields
+      console.log('=== Date Fields ===');
+      console.log('memberSince:', userData.memberSince);
+      console.log('createdAt:', userData.createdAt);
+      console.log('joinDate:', userData.joinDate);
+      console.log('registrationDate:', userData.registrationDate);
+      console.log('signupDate:', userData.signupDate);
+      console.log('creationTime:', userData.creationTime);
+      console.log('timestamp:', userData.timestamp);
+      
       updateDashboardUI(userData);
     } else {
       console.log('No user document found in Firestore');
@@ -133,7 +151,8 @@ export function handleLogout() {
 }
 
 export function updateDashboardUI(userData) {
-  console.log('Updating dashboard UI with user data:', userData);
+  console.log('=== Updating Dashboard UI ===');
+  console.log('User data:', userData);
   console.log('User data fields:', Object.keys(userData));
   console.log('Raw user data:', JSON.stringify(userData, null, 2));
   
@@ -165,6 +184,7 @@ export function updateDashboardUI(userData) {
   
   // Format and display join date using Firebase account creation time
   if (profileJoinDate) {
+    console.log('=== Join Date Processing ===');
     console.log('Join date data:', {
       memberSince: userData.memberSince,
       createdAt: userData.createdAt,
@@ -206,6 +226,7 @@ export function updateDashboardUI(userData) {
   
   // Get and display last service
   if (profileLastService) {
+    console.log('=== Service History Processing ===');
     console.log('Service history data:', {
       serviceHistory: userData.serviceHistory,
       lastService: userData.lastService,
@@ -216,19 +237,25 @@ export function updateDashboardUI(userData) {
     
     if (userData.serviceHistory && userData.serviceHistory.length > 0) {
       const lastService = userData.serviceHistory[userData.serviceHistory.length - 1];
+      console.log('Using serviceHistory:', lastService);
       profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
     } else if (userData.lastService) {
+      console.log('Using lastService:', userData.lastService);
       profileLastService.textContent = `${userData.lastService.type} (${new Date(userData.lastService.date).toLocaleDateString()})`;
     } else if (userData.recentServices && userData.recentServices.length > 0) {
       const lastService = userData.recentServices[0];
+      console.log('Using recentServices:', lastService);
       profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
     } else if (userData.services && userData.services.length > 0) {
       const lastService = userData.services[userData.services.length - 1];
+      console.log('Using services:', lastService);
       profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
     } else if (userData.appointments && userData.appointments.length > 0) {
       const lastAppointment = userData.appointments[userData.appointments.length - 1];
+      console.log('Using appointments:', lastAppointment);
       profileLastService.textContent = `${lastAppointment.serviceType} (${new Date(lastAppointment.date).toLocaleDateString()})`;
     } else {
+      console.log('No service history available');
       profileLastService.textContent = 'Not available';
     }
   }

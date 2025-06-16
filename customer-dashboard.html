@@ -792,6 +792,15 @@
       });
 
       async function initializeDashboard(user) {
+        console.log('=== Firebase User Object ===');
+        console.log('User:', user);
+        console.log('User metadata:', user.metadata);
+        console.log('User creation time:', user.metadata.creationTime);
+        console.log('User last sign in:', user.metadata.lastSignInTime);
+        console.log('User display name:', user.displayName);
+        console.log('User email:', user.email);
+        console.log('User UID:', user.uid);
+        
         // Update UI with user info
         const profileName = document.getElementById('profileName');
         const profileEmail = document.getElementById('profileEmail');
@@ -803,9 +812,28 @@
 
         // Load user's data from Firestore
         try {
+          console.log('=== Firestore Data ===');
+          console.log('Fetching user document from Firestore for ID:', user.uid);
           const userDoc = await getDoc(doc(db, 'users', user.uid));
           if (userDoc.exists()) {
             const userData = userDoc.data();
+            console.log('Raw Firestore data:', userData);
+            console.log('Firestore document metadata:', userDoc.metadata);
+            
+            // Add Firebase user creation time directly
+            userData.memberSince = user.metadata.creationTime;
+            console.log('Added memberSince:', userData.memberSince);
+            
+            // Log all available date fields
+            console.log('=== Date Fields ===');
+            console.log('memberSince:', userData.memberSince);
+            console.log('createdAt:', userData.createdAt);
+            console.log('joinDate:', userData.joinDate);
+            console.log('registrationDate:', userData.registrationDate);
+            console.log('signupDate:', userData.signupDate);
+            console.log('creationTime:', userData.creationTime);
+            console.log('timestamp:', userData.timestamp);
+            
             updateDashboardUI(userData);
           }
           
@@ -936,6 +964,87 @@
           window.location.href = 'profile.html';
         });
       }
+
+      // Notification System
+      function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+      }
+
+      // Payment Manager
+      window.paymentManager = {
+        handlePayPalSuccess: async function(details) {
+          try {
+            // Update payment status in Firestore
+            const user = auth.currentUser;
+            if (!user) return;
+            
+            // Add payment record
+            await addDoc(collection(db, 'payments'), {
+              userId: user.uid,
+              amount: details.purchase_units[0].amount.value,
+              status: 'completed',
+              paymentId: details.id,
+              timestamp: serverTimestamp()
+            });
+            
+            // Update invoice status if applicable
+            const invoiceId = new URLSearchParams(window.location.search).get('invoice');
+            if (invoiceId) {
+              await updateDoc(doc(db, 'invoices', invoiceId), {
+                status: 'paid',
+                paidAt: serverTimestamp()
+              });
+            }
+          } catch (error) {
+            console.error('Error handling payment:', error);
+            showNotification('Error processing payment', 'error');
+          }
+        }
+      };
+
+      // Communication System
+      window.communicationSystem = {
+        sendEmergencyRequest: async function() {
+          try {
+            const user = auth.currentUser;
+            if (!user) return;
+            
+            await addDoc(collection(db, 'emergency_requests'), {
+              userId: user.uid,
+              status: 'pending',
+              timestamp: serverTimestamp()
+            });
+          } catch (error) {
+            console.error('Error sending emergency request:', error);
+            showNotification('Error sending emergency request', 'error');
+          }
+        },
+        
+        submitFeedback: async function({ feedback, rating }) {
+          try {
+            const user = auth.currentUser;
+            if (!user) return;
+            
+            await addDoc(collection(db, 'feedback'), {
+              userId: user.uid,
+              feedback,
+              rating,
+              timestamp: serverTimestamp()
+            });
+          } catch (error) {
+            console.error('Error submitting feedback:', error);
+            showNotification('Error submitting feedback', 'error');
+          }
+        }
+      };
     </script>
   
 
