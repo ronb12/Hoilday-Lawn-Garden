@@ -689,9 +689,6 @@
               <ul>
                 <li class="empty">Loading invoices...</li>
               </ul>
-              <button id="addTestDataBtn" class="action-button" style="margin-top: 10px;">
-                Add Test Invoices
-              </button>
             </div>
           </div>
         </section>
@@ -909,68 +906,6 @@
           await loadUnpaidInvoices(user.uid);
         } catch (error) {
           console.error('Error loading user data:', error);
-        }
-      }
-
-      async function createTestInvoices() {
-        const user = auth.currentUser;
-        if (!user) {
-          console.error('No user logged in');
-          return;
-        }
-
-        try {
-          // Create test invoices
-          const invoices = [
-            {
-              userId: user.uid,
-              invoiceNumber: 'INV-001',
-              amount: 150.00,
-              date: new Date(),
-              status: 'unpaid',
-              description: 'Lawn Maintenance - Monthly Service'
-            },
-            {
-              userId: user.uid,
-              invoiceNumber: 'INV-002',
-              amount: 75.50,
-              date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
-              status: 'unpaid',
-              description: 'Garden Cleanup'
-            },
-            {
-              userId: user.uid,
-              invoiceNumber: 'INV-003',
-              amount: 200.00,
-              date: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000), // 14 days ago
-              status: 'unpaid',
-              description: 'Tree Trimming Service'
-            }
-          ];
-
-          // Add invoices to Firestore
-          for (const invoice of invoices) {
-            await addDoc(collection(db, 'invoices'), invoice);
-          }
-
-          // Create test upcoming appointment
-          const appointment = {
-            userId: user.uid,
-            serviceType: 'Lawn Maintenance',
-            date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
-            time: '10:00 AM',
-            status: 'scheduled',
-            description: 'Regular lawn maintenance and garden check-up',
-            address: '123 Main St, New Orleans, LA 70112'
-          };
-
-          await addDoc(collection(db, 'appointments'), appointment);
-
-          console.log('Test data created successfully');
-          alert('Test invoices and appointment have been created. Please refresh the page to see them.');
-        } catch (error) {
-          console.error('Error creating test data:', error);
-          alert('Error creating test data. Please check the console for details.');
         }
       }
 
