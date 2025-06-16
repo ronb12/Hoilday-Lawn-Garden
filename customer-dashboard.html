@@ -770,6 +770,7 @@
       import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
       import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
       import { updateDashboardUI, initializeEventListeners, handleLogout } from './assets/js/modules/customer_dashboard.js';
+      import { loadUnpaidInvoices } from './assets/js/unpaid-invoices.js';
 
       // Initialize Firebase services
       const auth = getAuth(app);
