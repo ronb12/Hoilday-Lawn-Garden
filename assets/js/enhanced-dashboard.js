@@ -3,17 +3,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getFirestore, collection, query, where, orderBy, getDocs, addDoc, updateDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { firebaseConfig } from './firebase-config.js';
 
 // Initialize Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyDxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxX",
-  authDomain: "holliday-lawn-garden.firebaseapp.com",
-  projectId: "holliday-lawn-garden",
-  storageBucket: "holliday-lawn-garden.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:1234567890123456789012"
-};
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
@@ -383,35 +375,52 @@ window.showNotification = showNotification;
 
 // Unpaid Invoices Loader
 export async function loadUnpaidInvoices(userId) {
-  const q = query(
-    collection(db, "invoices"),
-    where("userId", "==", userId),
-    where("status", "==", "unpaid")
-  );
-  const snap = await getDocs(q);
   const container = document.querySelector("#unpaidInvoices ul");
   if (!container) return;
-  if (snap.empty) {
-    container.innerHTML = '<li class="empty">No unpaid invoices</li>';
-    return;
+  
+  try {
+    container.innerHTML = '<li class="empty">Loading invoices...</li>';
+    
+    const q = query(
+      collection(db, "invoices"),
+      where("userId", "==", userId),
+      where("status", "==", "unpaid")
+    );
+    
+    const snap = await getDocs(q);
+    
+    if (snap.empty) {
+      container.innerHTML = '<li class="empty">No unpaid invoices</li>';
+      return;
+    }
+    
+    container.innerHTML = "";
+    snap.forEach(doc => {
+      const invoice = doc.data();
+      container.innerHTML += `
+        <li class="invoice-item">
+          <div class="invoice-info">
+            <strong>Invoice #${invoice.invoiceNumber}</strong>
+            <span class="date">${new Date(invoice.date?.toDate()).toLocaleDateString()}</span>
+          </div>
+          <div class="invoice-details">
+            <span class="amount">$${invoice.amount?.toFixed(2) ?? '0.00'}</span>
+            <button class="action-button" onclick="window.location.href='/pay-your-bill.html?invoice=${invoice.invoiceNumber}'">
+              Pay Now
+            </button>
+          </div>
+        </li>
+      `;
+    });
+  } catch (error) {
+    console.error('Error loading unpaid invoices:', error);
+    container.innerHTML = '<li class="empty">Error loading invoices. Please try again later.</li>';
   }
-  container.innerHTML = "";
-  snap.forEach(doc => {
-    const invoice = doc.data();
-    container.innerHTML += `
-      <li>
-        <span class="invoice-number">${invoice.invoiceNumber}</span>
-        <span class="amount">$${invoice.amount?.toFixed(2) ?? '0.00'}</span>
-        <span class="status">${invoice.status}</span>
-      </li>
-    `;
-  });
 }
 
-// After user login, call loadUnpaidInvoices(currentUser.uid)
-onAuthStateChanged(auth, (user) => {
+// Initialize dashboard components
+export function initializeDashboardComponents(user) {
   if (user) {
-    // ... existing code ...
     loadUnpaidInvoices(user.uid);
   }
-});
+}

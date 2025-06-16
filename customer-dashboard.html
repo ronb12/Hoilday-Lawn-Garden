@@ -764,10 +764,11 @@
 
     <!-- PayPal Smart Payment Buttons -->
     <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+    <script type="module" src="assets/js/unpaid-invoices.js"></script>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-      import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+      import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
       // Your Firebase config here
       const firebaseConfig = {
@@ -778,6 +779,8 @@
         messagingSenderId: "123456789012",
         appId: "1:123456789012:web:1234567890123456789012"
       };
+
+      // Initialize Firebase
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const db = getFirestore(app);
