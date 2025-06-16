@@ -64,6 +64,9 @@ async function loadUnpaidInvoices(userId) {
   }
 }
 
+// Export the function
+export { loadUnpaidInvoices };
+
 // Listen for auth state changes
 onAuthStateChanged(auth, (user) => {
   console.log('Auth state changed:', user ? 'User logged in' : 'No user');
