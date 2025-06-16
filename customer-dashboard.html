@@ -564,6 +564,10 @@
                 font-weight: 700;
               ">0</span>
           </div>
+          <button id="testNotificationBtn" class="action-button" style="margin-right: 10px;">
+            <i class="fas fa-bell"></i>
+            Test Notifications
+          </button>
           <button id="quickEditProfileBtn" class="action-button">
             <i class="fas fa-user-edit"></i>
             Quick Edit Profile
@@ -1030,17 +1034,44 @@
       }
 
       // Notification System
-      function showNotification(message, type = 'info') {
+      function showNotification(message, type = 'info', duration = 3000) {
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
-        notification.textContent = message;
+        notification.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <i class="fas ${getNotificationIcon(type)}"></i>
+            <span>${message}</span>
+          </div>
+        `;
         document.body.appendChild(notification);
         
-        // Remove notification after 3 seconds
+        // Remove notification after duration
         setTimeout(() => {
-          notification.remove();
-        }, 3000);
+          notification.style.opacity = '0';
+          notification.style.transform = 'translateX(100%)';
+          setTimeout(() => notification.remove(), 300);
+        }, duration);
       }
+
+      function getNotificationIcon(type) {
+        switch(type) {
+          case 'success': return 'fa-check-circle';
+          case 'error': return 'fa-exclamation-circle';
+          case 'info': return 'fa-info-circle';
+          default: return 'fa-bell';
+        }
+      }
+
+      // Test notifications
+      document.getElementById('testNotificationBtn').addEventListener('click', () => {
+        showNotification('This is a success message!', 'success');
+        setTimeout(() => {
+          showNotification('This is an error message!', 'error');
+        }, 1000);
+        setTimeout(() => {
+          showNotification('This is an info message!', 'info');
+        }, 2000);
+      });
 
       // Payment Manager
       window.paymentManager = {
