@@ -18,6 +18,8 @@ window.addEventListener('error', (event) => {
 }, true);
 
 export async function initializeDashboard(user) {
+  console.log('Initializing dashboard for user:', user);
+  
   // Update UI with user info
   const profileName = document.getElementById('profileName');
   const profileEmail = document.getElementById('profileEmail');
@@ -29,10 +31,14 @@ export async function initializeDashboard(user) {
 
   // Load user's data from Firestore
   try {
+    console.log('Fetching user document from Firestore for ID:', user.uid);
     const userDoc = await getDoc(doc(db, 'users', user.uid));
     if (userDoc.exists()) {
       const userData = userDoc.data();
+      console.log('User data from Firestore:', userData);
       updateDashboardUI(userData);
+    } else {
+      console.log('No user document found in Firestore');
     }
     
     // Load unpaid invoices
@@ -122,6 +128,7 @@ export function handleLogout() {
 
 export function updateDashboardUI(userData) {
   console.log('Updating dashboard UI with user data:', userData);
+  console.log('User data fields:', Object.keys(userData));
   
   // Update user profile information
   const profileName = document.getElementById('profileName');
@@ -135,16 +142,38 @@ export function updateDashboardUI(userData) {
   if (profileName) profileName.textContent = userData.displayName || userData.name || 'Customer';
   if (profileEmail) profileEmail.textContent = userData.email || '';
   if (profilePhone) profilePhone.textContent = userData.phone || 'Not provided';
-  if (profileAddress) profileAddress.textContent = userData.address || 'Not provided';
+  
+  // Handle address display
+  if (profileAddress) {
+    if (userData.address) {
+      profileAddress.textContent = userData.address;
+    } else if (userData.street && userData.city && userData.state && userData.zipCode) {
+      profileAddress.textContent = `${userData.street}, ${userData.city}, ${userData.state} ${userData.zipCode}`;
+    } else {
+      profileAddress.textContent = 'Not provided';
+    }
+  }
+  
   if (customerName) customerName.textContent = userData.displayName || userData.name || 'Customer';
   
   // Format and display join date
   if (profileJoinDate) {
+    console.log('Join date data:', {
+      createdAt: userData.createdAt,
+      joinDate: userData.joinDate,
+      registrationDate: userData.registrationDate,
+      signupDate: userData.signupDate
+    });
+    
     if (userData.createdAt) {
       const joinDate = userData.createdAt.toDate();
       profileJoinDate.textContent = joinDate.toLocaleDateString();
     } else if (userData.joinDate) {
       profileJoinDate.textContent = new Date(userData.joinDate).toLocaleDateString();
+    } else if (userData.registrationDate) {
+      profileJoinDate.textContent = new Date(userData.registrationDate).toLocaleDateString();
+    } else if (userData.signupDate) {
+      profileJoinDate.textContent = new Date(userData.signupDate).toLocaleDateString();
     } else {
       profileJoinDate.textContent = 'Not available';
     }
@@ -152,11 +181,24 @@ export function updateDashboardUI(userData) {
   
   // Get and display last service
   if (profileLastService) {
+    console.log('Service history data:', {
+      serviceHistory: userData.serviceHistory,
+      lastService: userData.lastService,
+      recentServices: userData.recentServices,
+      services: userData.services
+    });
+    
     if (userData.serviceHistory && userData.serviceHistory.length > 0) {
       const lastService = userData.serviceHistory[userData.serviceHistory.length - 1];
       profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
     } else if (userData.lastService) {
       profileLastService.textContent = `${userData.lastService.type} (${new Date(userData.lastService.date).toLocaleDateString()})`;
+    } else if (userData.recentServices && userData.recentServices.length > 0) {
+      const lastService = userData.recentServices[0];
+      profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
+    } else if (userData.services && userData.services.length > 0) {
+      const lastService = userData.services[userData.services.length - 1];
+      profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
     } else {
       profileLastService.textContent = 'Not available';
     }
