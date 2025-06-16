@@ -1,7 +1,7 @@
 // Placeholder modules/customer_dashboard.js
 console.log('modules/customer_dashboard.js loaded'); 
 
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { app } from "../firebase-config.js";
 
@@ -140,6 +140,7 @@ export async function initializeDashboard(user) {
     await loadUnpaidInvoices(user.uid);
   } catch (error) {
     console.error('Error loading user data:', error);
+    showNotification('Error loading user data', 'error');
   }
 }
 
@@ -182,46 +183,54 @@ async function loadServiceHistory(userId) {
 }
 
 export async function loadUnpaidInvoices(userId) {
-  const container = document.querySelector("#unpaidInvoices ul");
-  if (!container) return;
-  
   try {
-    container.innerHTML = '<li class="empty">Loading invoices...</li>';
-    
-    const q = query(
-      collection(db, "invoices"),
-      where("userId", "==", userId),
-      where("status", "==", "unpaid")
+    console.log('Loading unpaid invoices for user:', userId);
+    const invoicesQuery = query(
+      collection(db, 'invoices'),
+      where('userId', '==', userId),
+      where('status', '==', 'unpaid'),
+      orderBy('dueDate', 'asc')
     );
     
-    const snap = await getDocs(q);
+    const invoicesSnapshot = await getDocs(invoicesQuery);
+    const unpaidInvoicesContainer = document.getElementById('unpaidInvoices');
     
-    if (snap.empty) {
-      container.innerHTML = '<li class="empty">No unpaid invoices</li>';
-      return;
+    if (unpaidInvoicesContainer) {
+      if (invoicesSnapshot.empty) {
+        unpaidInvoicesContainer.innerHTML = '<p>No unpaid invoices</p>';
+      } else {
+        unpaidInvoicesContainer.innerHTML = `
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Invoice #</th>
+                <th>Amount</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${invoicesSnapshot.docs.map(doc => `
+                <tr>
+                  <td>${doc.data().invoiceNumber || 'N/A'}</td>
+                  <td>$${doc.data().amount || '0.00'}</td>
+                  <td>${doc.data().dueDate?.toDate().toLocaleDateString() || 'N/A'}</td>
+                  <td>
+                    <button class="btn-primary" onclick="payInvoice('${doc.id}')">Pay Now</button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }
     }
-    
-    container.innerHTML = "";
-    snap.forEach(doc => {
-      const invoice = doc.data();
-      container.innerHTML += `
-        <li class="invoice-item">
-          <div class="invoice-info">
-            <strong>Invoice #${invoice.invoiceNumber}</strong>
-            <span class="date">${new Date(invoice.date?.toDate()).toLocaleDateString()}</span>
-          </div>
-          <div class="invoice-details">
-            <span class="amount">$${invoice.amount?.toFixed(2) ?? '0.00'}</span>
-            <button class="action-button" onclick="window.location.href='/pay-your-bill.html?invoice=${invoice.invoiceNumber}'">
-              Pay Now
-            </button>
-          </div>
-        </li>
-      `;
-    });
   } catch (error) {
     console.error('Error loading unpaid invoices:', error);
-    container.innerHTML = '<li class="empty">Error loading invoices. Please try again later.</li>';
+    const unpaidInvoicesContainer = document.getElementById('unpaidInvoices');
+    if (unpaidInvoicesContainer) {
+      unpaidInvoicesContainer.innerHTML = '<p>Error loading unpaid invoices</p>';
+    }
   }
 }
 
@@ -259,6 +268,7 @@ export function handleLogout() {
     })
     .catch(error => {
       console.error('Error signing out:', error);
+      showNotification('Error signing out', 'error');
     });
 }
 
