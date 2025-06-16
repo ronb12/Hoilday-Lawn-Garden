@@ -67,3 +67,25 @@ self.addEventListener('fetch', event => {
     })
   );
 });
+
+// Add message event listener for cache clearing
+self.addEventListener('message', event => {
+  if (event.data === 'CLEAR_CACHE') {
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          console.log('Deleting cache:', cacheName);
+          return caches.delete(cacheName);
+        })
+      );
+    }).then(() => {
+      console.log('All caches cleared');
+      // Force reload the page
+      self.clients.matchAll().then(clients => {
+        clients.forEach(client => {
+          client.postMessage('RELOAD_PAGE');
+        });
+      });
+    });
+  }
+});
