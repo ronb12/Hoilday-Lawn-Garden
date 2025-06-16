@@ -5,8 +5,8 @@ import { app } from "./firebase-config.js";
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Admin UIDs
-const ADMIN_UIDS = ['UB8vAhpsgFZJTsYngb33BRAV2Rh1'];
+// Allowed admin emails
+const ADMIN_EMAILS = ['ronellbradley@bradleyvs.com'];
 
 const adminLoginForm = document.getElementById("adminLoginForm");
 if (adminLoginForm) {
@@ -22,18 +22,16 @@ if (adminLoginForm) {
 
             console.log("Attempting admin login for:", email);
 
-            // First attempt Firebase authentication
+            // Check if email is in allowed admin list
+            if (!ADMIN_EMAILS.includes(email)) {
+                throw new Error("Invalid email or password");
+            }
+
+            // Attempt Firebase authentication
             console.log("Attempting Firebase authentication");
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             console.log("Firebase authentication successful for user:", user.uid);
-
-            // Check if the user is in the admin UIDs list
-            if (!ADMIN_UIDS.includes(user.uid)) {
-                console.error("User is not in admin UIDs list");
-                await auth.signOut();
-                throw new Error("Invalid email or password");
-            }
 
             // Check if the user has admin status in users collection
             console.log("Checking user document for admin status");
@@ -45,10 +43,10 @@ if (adminLoginForm) {
                 console.log("Creating user document with admin status");
                 await setDoc(doc(db, "users", user.uid), {
                     email: user.email,
-                    isAdmin: true,
+                    role: 'admin',
                     createdAt: new Date().toISOString()
                 });
-            } else if (!userDoc.data().isAdmin) {
+            } else if (userDoc.data().role !== 'admin') {
                 console.error("User document exists but is not marked as admin");
                 await auth.signOut();
                 throw new Error("Invalid email or password");
