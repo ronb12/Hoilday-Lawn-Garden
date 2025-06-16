@@ -1,13 +1,16 @@
 // Register the background service worker
 async function registerBackgroundWorker() {
     try {
-        const registration = await navigator.serviceWorker.register('/assets/js/background-cache-cleaner.js', {
-            scope: '/'
-        });
-        console.log('Background cache cleaner registered:', registration);
-        return registration;
+        if ('serviceWorker' in navigator) {
+            const registration = await navigator.serviceWorker.register('/assets/js/background-cache-cleaner.js', {
+                scope: '/'
+            });
+            console.log('Service Worker registered successfully:', registration);
+            return registration;
+        }
+        throw new Error('Service Workers are not supported in this browser');
     } catch (error) {
-        console.error('Error registering background worker:', error);
+        console.warn('Service Worker registration failed:', error);
         return null;
     }
 }
@@ -15,41 +18,28 @@ async function registerBackgroundWorker() {
 // Function to clear browser caches using background worker
 async function clearBrowserCache() {
     try {
-        // Register the background worker if not already registered
         const registration = await registerBackgroundWorker();
-        if (!registration) {
-            throw new Error('Failed to register background worker');
+        if (registration) {
+            await registration.update();
+            console.log('Cache updated successfully');
+        }
+        
+        // Clear application cache
+        if ('caches' in window) {
+            const cacheNames = await caches.keys();
+            await Promise.all(
+                cacheNames.map(cacheName => caches.delete(cacheName))
+            );
+            console.log('Application cache cleared');
         }
 
-        // Wait for the service worker to be ready
-        await navigator.serviceWorker.ready;
-
-        // Get the active service worker
-        const worker = registration.active;
-        if (!worker) {
-            throw new Error('No active service worker');
+        // Clear browser cache
+        if ('clearBrowserData' in window) {
+            await window.clearBrowserData();
+            console.log('Browser cache cleared');
         }
 
-        // Send message to clear cache
-        worker.postMessage({ type: 'CLEAR_CACHE' });
-
-        // Return a promise that resolves when the cache is cleared
-        return new Promise((resolve, reject) => {
-            const timeout = setTimeout(() => {
-                reject(new Error('Cache clearing timed out'));
-            }, 10000); // 10 second timeout
-
-            navigator.serviceWorker.addEventListener('message', (event) => {
-                if (event.data.type === 'CACHE_CLEARED') {
-                    clearTimeout(timeout);
-                    if (event.data.success) {
-                        resolve(true);
-                    } else {
-                        reject(new Error(event.data.error || 'Failed to clear cache'));
-                    }
-                }
-            });
-        });
+        return true;
     } catch (error) {
         console.error('Error clearing cache:', error);
         return false;
@@ -58,12 +48,33 @@ async function clearBrowserCache() {
 
 // Initialize cache clearing when the page loads
 document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        await clearBrowserCache();
-        // Reload the page after cache is cleared
-        window.location.reload(true);
-    } catch (error) {
-        console.error('Error during cache clearing:', error);
+    const clearCacheBtn = document.getElementById('clear-cache-btn');
+    const cacheStatus = document.getElementById('cache-status');
+
+    if (clearCacheBtn) {
+        clearCacheBtn.addEventListener('click', async () => {
+            try {
+                clearCacheBtn.disabled = true;
+                clearCacheBtn.textContent = 'Clearing...';
+                
+                const success = await clearBrowserCache();
+                
+                if (success) {
+                    cacheStatus.textContent = 'Cache cleared successfully!';
+                    cacheStatus.className = 'success';
+                } else {
+                    cacheStatus.textContent = 'Cache clearing failed. Please try again.';
+                    cacheStatus.className = 'error';
+                }
+            } catch (error) {
+                console.error('Error during cache clearing:', error);
+                cacheStatus.textContent = 'An error occurred. Please try again.';
+                cacheStatus.className = 'error';
+            } finally {
+                clearCacheBtn.disabled = false;
+                clearCacheBtn.textContent = 'Clear Cache';
+            }
+        });
     }
 });
 

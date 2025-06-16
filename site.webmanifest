@@ -8,18 +8,18 @@
   "theme_color": "#4CAF50",
   "icons": [
     {
-      "src": "/Holliday-Lawn-Garden/assets/icons/icon-144.png",
-      "sizes": "144x144",
+      "src": "assets/icons/favicon-32x32.png",
+      "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "/Holliday-Lawn-Garden/assets/images/favicon/android-chrome-192x192.png",
-      "sizes": "192x192",
+      "src": "assets/icons/favicon-16x16.png",
+      "sizes": "16x16",
       "type": "image/png"
     },
     {
-      "src": "/Holliday-Lawn-Garden/assets/images/favicon/android-chrome-512x512.png",
-      "sizes": "512x512",
+      "src": "assets/icons/apple-touch-icon.png",
+      "sizes": "180x180",
       "type": "image/png"
     }
   ]
