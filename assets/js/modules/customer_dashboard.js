@@ -3,7 +3,7 @@ console.log('modules/customer_dashboard.js loaded');
 
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { app } from "../../firebase-config.js";
+import { app } from "../firebase-config.js";
 
 // Initialize Firebase services
 const auth = getAuth(app);
