@@ -121,6 +121,8 @@ export function handleLogout() {
 }
 
 export function updateDashboardUI(userData) {
+  console.log('Updating dashboard UI with user data:', userData);
+  
   // Update user profile information
   const profileName = document.getElementById('profileName');
   const profileEmail = document.getElementById('profileEmail');
@@ -130,22 +132,34 @@ export function updateDashboardUI(userData) {
   const profileLastService = document.getElementById('profileLastService');
   const customerName = document.getElementById('customerName');
 
-  if (profileName) profileName.textContent = userData.displayName || 'Customer';
+  if (profileName) profileName.textContent = userData.displayName || userData.name || 'Customer';
   if (profileEmail) profileEmail.textContent = userData.email || '';
   if (profilePhone) profilePhone.textContent = userData.phone || 'Not provided';
   if (profileAddress) profileAddress.textContent = userData.address || 'Not provided';
-  if (customerName) customerName.textContent = userData.displayName || 'Customer';
+  if (customerName) customerName.textContent = userData.displayName || userData.name || 'Customer';
   
   // Format and display join date
-  if (profileJoinDate && userData.createdAt) {
-    const joinDate = userData.createdAt.toDate();
-    profileJoinDate.textContent = joinDate.toLocaleDateString();
+  if (profileJoinDate) {
+    if (userData.createdAt) {
+      const joinDate = userData.createdAt.toDate();
+      profileJoinDate.textContent = joinDate.toLocaleDateString();
+    } else if (userData.joinDate) {
+      profileJoinDate.textContent = new Date(userData.joinDate).toLocaleDateString();
+    } else {
+      profileJoinDate.textContent = 'Not available';
+    }
   }
   
   // Get and display last service
-  if (profileLastService && userData.serviceHistory && userData.serviceHistory.length > 0) {
-    const lastService = userData.serviceHistory[userData.serviceHistory.length - 1];
-    profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
+  if (profileLastService) {
+    if (userData.serviceHistory && userData.serviceHistory.length > 0) {
+      const lastService = userData.serviceHistory[userData.serviceHistory.length - 1];
+      profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
+    } else if (userData.lastService) {
+      profileLastService.textContent = `${userData.lastService.type} (${new Date(userData.lastService.date).toLocaleDateString()})`;
+    } else {
+      profileLastService.textContent = 'Not available';
+    }
   }
 
   // Update service history if available
