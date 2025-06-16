@@ -523,7 +523,7 @@ nav {
 }
 
 .footer-section h3 {
-  color: #a8d5b5;
+  color: #ffffff;
   font-size: 1.2rem;
   margin-bottom: 1rem;
   font-weight: 600;
@@ -531,17 +531,17 @@ nav {
 
 .footer-contact p {
   margin-bottom: 0.5rem;
-  color: #e8f5eb;
+  color: #ffffff;
 }
 
 .footer-contact a {
-  color: #a8d5b5;
+  color: #ffffff;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footer-contact a:hover {
-  color: #ffffff;
+  color: #a8d5b5;
 }
 
 .footer-links ul {
@@ -555,13 +555,13 @@ nav {
 }
 
 .footer-links a {
-  color: #a8d5b5;
+  color: #ffffff;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footer-links a:hover {
-  color: #ffffff;
+  color: #a8d5b5;
 }
 
 .footer-social {
@@ -571,20 +571,20 @@ nav {
 }
 
 .footer-social a {
-  color: #a8d5b5;
+  color: #ffffff;
   font-size: 1.5rem;
   transition: color 0.3s ease;
 }
 
 .footer-social a:hover {
-  color: #ffffff;
+  color: #a8d5b5;
 }
 
 .footer-bottom {
   text-align: center;
   padding-top: 2rem;
   border-top: 1px solid #1a3d1e;
-  color: #a8d5b5;
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
