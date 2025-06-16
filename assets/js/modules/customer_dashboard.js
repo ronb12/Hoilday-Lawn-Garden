@@ -127,13 +127,16 @@ export function initializeEventListeners() {
   if (editProfileLink) {
     editProfileLink.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       window.location.href = 'profile.html';
     });
   }
 
   const quickEditProfileBtn = document.getElementById('quickEditProfileBtn');
   if (quickEditProfileBtn) {
-    quickEditProfileBtn.addEventListener('click', () => {
+    quickEditProfileBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       window.location.href = 'profile.html';
     });
   }
@@ -203,21 +206,6 @@ export function updateDashboardUI(userData) {
       const joinDate = userData.createdAt.toDate();
       console.log('Using Firestore createdAt:', joinDate);
       profileJoinDate.textContent = joinDate.toLocaleDateString();
-    } else if (userData.joinDate) {
-      console.log('Using joinDate:', userData.joinDate);
-      profileJoinDate.textContent = new Date(userData.joinDate).toLocaleDateString();
-    } else if (userData.registrationDate) {
-      console.log('Using registrationDate:', userData.registrationDate);
-      profileJoinDate.textContent = new Date(userData.registrationDate).toLocaleDateString();
-    } else if (userData.signupDate) {
-      console.log('Using signupDate:', userData.signupDate);
-      profileJoinDate.textContent = new Date(userData.signupDate).toLocaleDateString();
-    } else if (userData.creationTime) {
-      console.log('Using creationTime:', userData.creationTime);
-      profileJoinDate.textContent = new Date(userData.creationTime).toLocaleDateString();
-    } else if (userData.timestamp) {
-      console.log('Using timestamp:', userData.timestamp);
-      profileJoinDate.textContent = new Date(userData.timestamp).toLocaleDateString();
     } else {
       console.log('No date information available');
       profileJoinDate.textContent = 'Not available';
@@ -235,25 +223,53 @@ export function updateDashboardUI(userData) {
       appointments: userData.appointments
     });
     
-    if (userData.serviceHistory && userData.serviceHistory.length > 0) {
+    let lastServiceDate = null;
+    let lastServiceType = null;
+    
+    // Check serviceHistory array
+    if (userData.serviceHistory && Array.isArray(userData.serviceHistory) && userData.serviceHistory.length > 0) {
       const lastService = userData.serviceHistory[userData.serviceHistory.length - 1];
-      console.log('Using serviceHistory:', lastService);
-      profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
-    } else if (userData.lastService) {
-      console.log('Using lastService:', userData.lastService);
-      profileLastService.textContent = `${userData.lastService.type} (${new Date(userData.lastService.date).toLocaleDateString()})`;
-    } else if (userData.recentServices && userData.recentServices.length > 0) {
+      console.log('Found service in serviceHistory:', lastService);
+      lastServiceDate = lastService.date;
+      lastServiceType = lastService.type;
+    }
+    // Check lastService object
+    else if (userData.lastService && userData.lastService.date) {
+      console.log('Found service in lastService:', userData.lastService);
+      lastServiceDate = userData.lastService.date;
+      lastServiceType = userData.lastService.type;
+    }
+    // Check recentServices array
+    else if (userData.recentServices && Array.isArray(userData.recentServices) && userData.recentServices.length > 0) {
       const lastService = userData.recentServices[0];
-      console.log('Using recentServices:', lastService);
-      profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
-    } else if (userData.services && userData.services.length > 0) {
+      console.log('Found service in recentServices:', lastService);
+      lastServiceDate = lastService.date;
+      lastServiceType = lastService.type;
+    }
+    // Check services array
+    else if (userData.services && Array.isArray(userData.services) && userData.services.length > 0) {
       const lastService = userData.services[userData.services.length - 1];
-      console.log('Using services:', lastService);
-      profileLastService.textContent = `${lastService.type} (${new Date(lastService.date).toLocaleDateString()})`;
-    } else if (userData.appointments && userData.appointments.length > 0) {
+      console.log('Found service in services:', lastService);
+      lastServiceDate = lastService.date;
+      lastServiceType = lastService.type;
+    }
+    // Check appointments array
+    else if (userData.appointments && Array.isArray(userData.appointments) && userData.appointments.length > 0) {
       const lastAppointment = userData.appointments[userData.appointments.length - 1];
-      console.log('Using appointments:', lastAppointment);
-      profileLastService.textContent = `${lastAppointment.serviceType} (${new Date(lastAppointment.date).toLocaleDateString()})`;
+      console.log('Found service in appointments:', lastAppointment);
+      lastServiceDate = lastAppointment.date;
+      lastServiceType = lastAppointment.serviceType;
+    }
+    
+    if (lastServiceDate && lastServiceType) {
+      try {
+        const serviceDate = new Date(lastServiceDate);
+        console.log('Formatted service date:', serviceDate);
+        profileLastService.textContent = `${lastServiceType} (${serviceDate.toLocaleDateString()})`;
+      } catch (error) {
+        console.error('Error formatting service date:', error);
+        profileLastService.textContent = `${lastServiceType} (Date unavailable)`;
+      }
     } else {
       console.log('No service history available');
       profileLastService.textContent = 'Not available';

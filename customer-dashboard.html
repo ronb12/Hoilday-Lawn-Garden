@@ -834,6 +834,70 @@
             console.log('creationTime:', userData.creationTime);
             console.log('timestamp:', userData.timestamp);
             
+            // Get and display last service
+            if (profileLastService) {
+              console.log('=== Service History Processing ===');
+              console.log('Service history data:', {
+                serviceHistory: userData.serviceHistory,
+                lastService: userData.lastService,
+                recentServices: userData.recentServices,
+                services: userData.services,
+                appointments: userData.appointments
+              });
+              
+              let lastServiceDate = null;
+              let lastServiceType = null;
+              
+              // Check serviceHistory array
+              if (userData.serviceHistory && Array.isArray(userData.serviceHistory) && userData.serviceHistory.length > 0) {
+                const lastService = userData.serviceHistory[userData.serviceHistory.length - 1];
+                console.log('Found service in serviceHistory:', lastService);
+                lastServiceDate = lastService.date;
+                lastServiceType = lastService.type;
+              }
+              // Check lastService object
+              else if (userData.lastService && userData.lastService.date) {
+                console.log('Found service in lastService:', userData.lastService);
+                lastServiceDate = userData.lastService.date;
+                lastServiceType = userData.lastService.type;
+              }
+              // Check recentServices array
+              else if (userData.recentServices && Array.isArray(userData.recentServices) && userData.recentServices.length > 0) {
+                const lastService = userData.recentServices[0];
+                console.log('Found service in recentServices:', lastService);
+                lastServiceDate = lastService.date;
+                lastServiceType = lastService.type;
+              }
+              // Check services array
+              else if (userData.services && Array.isArray(userData.services) && userData.services.length > 0) {
+                const lastService = userData.services[userData.services.length - 1];
+                console.log('Found service in services:', lastService);
+                lastServiceDate = lastService.date;
+                lastServiceType = lastService.type;
+              }
+              // Check appointments array
+              else if (userData.appointments && Array.isArray(userData.appointments) && userData.appointments.length > 0) {
+                const lastAppointment = userData.appointments[userData.appointments.length - 1];
+                console.log('Found service in appointments:', lastAppointment);
+                lastServiceDate = lastAppointment.date;
+                lastServiceType = lastAppointment.serviceType;
+              }
+              
+              if (lastServiceDate && lastServiceType) {
+                try {
+                  const serviceDate = new Date(lastServiceDate);
+                  console.log('Formatted service date:', serviceDate);
+                  profileLastService.textContent = `${lastServiceType} (${serviceDate.toLocaleDateString()})`;
+                } catch (error) {
+                  console.error('Error formatting service date:', error);
+                  profileLastService.textContent = `${lastServiceType} (Date unavailable)`;
+                }
+              } else {
+                console.log('No service history available');
+                profileLastService.textContent = 'Not available';
+              }
+            }
+            
             updateDashboardUI(userData);
           }
           
