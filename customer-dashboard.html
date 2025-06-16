@@ -924,6 +924,21 @@
         showNotification('Feedback submitted!', 'success');
         document.getElementById('feedbackForm').reset();
       }
+
+      const editProfileLink = document.getElementById('editProfileLink');
+      if (editProfileLink) {
+        editProfileLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = 'profile.html';
+        });
+      }
+
+      const quickEditProfileBtn = document.getElementById('quickEditProfileBtn');
+      if (quickEditProfileBtn) {
+        quickEditProfileBtn.addEventListener('click', () => {
+          window.location.href = 'profile.html';
+        });
+      }
     </script>
   
 

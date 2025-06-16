@@ -1,13 +1,21 @@
 // Placeholder modules/customer_dashboard.js
 console.log('modules/customer_dashboard.js loaded'); 
 
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut } from "../firebase/auth.js";
+import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs } from "../firebase/firestore.js";
 import { app } from "../firebase-config.js";
 
 // Initialize Firebase services
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+// Handle PayPal script loading errors
+window.addEventListener('error', (event) => {
+  if (event.filename && event.filename.includes('paypal')) {
+    console.warn('PayPal script loading issue:', event.message);
+    // Continue with core functionality
+  }
+}, true);
 
 export async function initializeDashboard(user) {
   // Update UI with user info
@@ -86,14 +94,14 @@ export function initializeEventListeners() {
   if (editProfileLink) {
     editProfileLink.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.href = '/profile.html';
+      window.location.href = 'profile.html';
     });
   }
 
   const quickEditProfileBtn = document.getElementById('quickEditProfileBtn');
   if (quickEditProfileBtn) {
     quickEditProfileBtn.addEventListener('click', () => {
-      window.location.href = '/profile.html';
+      window.location.href = 'profile.html';
     });
   }
 }
@@ -102,7 +110,7 @@ export function handleLogout() {
   signOut(auth)
     .then(() => {
       sessionStorage.removeItem('user');
-      window.location.href = '/login.html';
+      window.location.href = 'login.html';
     })
     .catch(error => {
       console.error('Error signing out:', error);
