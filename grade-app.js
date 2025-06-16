@@ -232,7 +232,7 @@ class AppGrader {
     // Check admin features
     const adminFeatures = {
       login: fs.existsSync('admin-login.html'),
-      dashboard: fs.existsSync('admin.html'),
+      dashboard: fs.existsSync('admin-dashboard.html'),
       management: fs.existsSync('assets/js/admin-management.js'),
     };
 
