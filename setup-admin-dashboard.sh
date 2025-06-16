@@ -1,3 +1,10 @@
+#!/bin/bash
+
+# Create the directory if it doesn't exist
+mkdir -p assets/js
+
+# Create the admin dashboard JavaScript file
+cat > assets/js/admin-dashboard.js << 'EOL'
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { 
     getFirestore, 
@@ -528,4 +535,10 @@ window.deleteDocument = async (documentId) => {
             showNotification('Error deleting document', 'error');
         }
     }
-}; 
+};
+EOL
+
+# Make the script executable
+chmod +x setup-admin-dashboard.sh
+
+echo "Admin dashboard JavaScript file has been created successfully!" 

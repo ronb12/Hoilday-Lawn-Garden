@@ -1,7 +1,11 @@
-// Placeholder modules/customer_dashboard.js
-console.log('modules/customer_dashboard.js loaded'); 
+#!/bin/bash
 
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+# Create the modules directory if it doesn't exist
+mkdir -p assets/js/modules
+
+# Write the customer dashboard JavaScript code
+cat > assets/js/modules/customer_dashboard.js << 'EOL'
+import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { app } from "../firebase-config.js";
 
@@ -181,50 +185,6 @@ async function loadServiceHistory(userId) {
   }
 }
 
-export async function loadUnpaidInvoices(userId) {
-  const container = document.querySelector("#unpaidInvoices ul");
-  if (!container) return;
-  
-  try {
-    container.innerHTML = '<li class="empty">Loading invoices...</li>';
-    
-    const q = query(
-      collection(db, "invoices"),
-      where("userId", "==", userId),
-      where("status", "==", "unpaid")
-    );
-    
-    const snap = await getDocs(q);
-    
-    if (snap.empty) {
-      container.innerHTML = '<li class="empty">No unpaid invoices</li>';
-      return;
-    }
-    
-    container.innerHTML = "";
-    snap.forEach(doc => {
-      const invoice = doc.data();
-      container.innerHTML += `
-        <li class="invoice-item">
-          <div class="invoice-info">
-            <strong>Invoice #${invoice.invoiceNumber}</strong>
-            <span class="date">${new Date(invoice.date?.toDate()).toLocaleDateString()}</span>
-          </div>
-          <div class="invoice-details">
-            <span class="amount">$${invoice.amount?.toFixed(2) ?? '0.00'}</span>
-            <button class="action-button" onclick="window.location.href='/pay-your-bill.html?invoice=${invoice.invoiceNumber}'">
-              Pay Now
-            </button>
-          </div>
-        </li>
-      `;
-    });
-  } catch (error) {
-    console.error('Error loading unpaid invoices:', error);
-    container.innerHTML = '<li class="empty">Error loading invoices. Please try again later.</li>';
-  }
-}
-
 export function initializeEventListeners() {
   // Add event listeners for dashboard interactions
   const logoutButton = document.querySelector('.logout-btn');
@@ -306,4 +266,8 @@ export function updateDashboardUI(userData) {
   }
   
   if (customerName) customerName.textContent = userData.displayName || userData.name || 'Customer';
-} 
+}
+EOL
+
+# Make the script executable
+chmod +x setup-customer-dashboard.sh 
