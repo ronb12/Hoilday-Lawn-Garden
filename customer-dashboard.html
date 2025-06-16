@@ -708,9 +708,6 @@
         <div class="dashboard-header">
           <div class="greeting">Welcome back, <span id="userName">Customer</span>!</div>
           <div class="header-actions">
-            <button id="testNotificationBtn" class="action-btn">
-              <i class="fas fa-bell"></i> Test Notifications
-            </button>
             <div class="notifications-panel">
               <button class="notifications-toggle" id="notificationsToggle">
                 <i class="fas fa-bell"></i>
@@ -931,8 +928,26 @@
     <script type="module" src="assets/js/unpaid-invoices.js" defer></script>
     <script type="module" defer>
       import { app } from './assets/js/firebase-config.js';
-      import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-      import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+      import { 
+        getAuth, 
+        onAuthStateChanged, 
+        signOut,
+        setPersistence,
+        browserSessionPersistence,
+        signInWithEmailAndPassword
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+      import { 
+        getFirestore, 
+        doc, 
+        getDoc, 
+        updateDoc, 
+        serverTimestamp, 
+        collection, 
+        query, 
+        where, 
+        getDocs, 
+        addDoc 
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
       import { updateDashboardUI, initializeEventListeners, handleLogout } from './assets/js/modules/customer_dashboard.js';
       import { loadUnpaidInvoices } from './assets/js/unpaid-invoices.js';
 
@@ -940,14 +955,43 @@
       const auth = getAuth(app);
       const db = getFirestore(app);
 
+      // Set persistence to SESSION
+      setPersistence(auth, browserSessionPersistence)
+        .catch((error) => {
+          console.error("Auth persistence error:", error);
+        });
+
       // Initialize event listeners when DOM is loaded
       document.addEventListener('DOMContentLoaded', () => {
         // Check authentication state
         onAuthStateChanged(auth, user => {
           if (!user) {
-            window.location.href = '/login.html';
+            // Check if we have a stored session
+            const storedUser = sessionStorage.getItem('user');
+            if (storedUser) {
+              try {
+                const userData = JSON.parse(storedUser);
+                // Attempt to restore the session
+                signInWithEmailAndPassword(auth, userData.email, userData.password)
+                  .catch(() => {
+                    // If restoration fails, redirect to login
+                    sessionStorage.removeItem('user');
+                    window.location.href = 'login.html';
+                  });
+              } catch (error) {
+                sessionStorage.removeItem('user');
+                window.location.href = 'login.html';
+              }
+            } else {
+              window.location.href = 'login.html';
+            }
             return;
           }
+          // Store user session
+          sessionStorage.setItem('user', JSON.stringify({
+            email: user.email,
+            uid: user.uid
+          }));
           initializeDashboard(user);
         });
 
@@ -1245,17 +1289,6 @@
           item.classList.add('read');
         });
         updateNotificationBadge();
-      });
-
-      // Test notifications
-      document.getElementById('testNotificationBtn').addEventListener('click', () => {
-        queueNotification('This is a success message!', 'success');
-        setTimeout(() => {
-          queueNotification('This is an error message!', 'error');
-        }, 1000);
-        setTimeout(() => {
-          queueNotification('This is an info message!', 'info');
-        }, 2000);
       });
 
       // Payment Manager
