@@ -2,7 +2,7 @@
 console.log('login.js loaded'); 
 
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { app } from "./firebase-config.js";
 
 const auth = getAuth(app);
@@ -38,10 +38,18 @@ if (loginForm) {
 
             // Double-check customer status
             const userDoc = await getDoc(doc(db, "users", user.uid));
-            if (!userDoc.exists() || userDoc.data().isAdmin) {
-                // Sign out the user if they're an admin
+            if (!userDoc.exists()) {
+                // Create user document if it doesn't exist
+                await setDoc(doc(db, "users", user.uid), {
+                    email: user.email,
+                    role: 'user',
+                    createdAt: new Date().toISOString()
+                });
+            } else if (userDoc.data().role === 'admin') {
+                // If user is admin, redirect to admin login
                 await auth.signOut();
-                throw new Error("Invalid email or password");
+                window.location.href = "admin-login.html";
+                return;
             }
 
             // Show success message
@@ -81,9 +89,18 @@ if (googleSignInButton) {
 
             // Double-check customer status
             const userDoc = await getDoc(doc(db, "users", user.uid));
-            if (!userDoc.exists() || userDoc.data().isAdmin) {
+            if (!userDoc.exists()) {
+                // Create user document if it doesn't exist
+                await setDoc(doc(db, "users", user.uid), {
+                    email: user.email,
+                    role: 'user',
+                    createdAt: new Date().toISOString()
+                });
+            } else if (userDoc.data().role === 'admin') {
+                // If user is admin, redirect to admin login
                 await auth.signOut();
-                throw new Error("Invalid email or password");
+                window.location.href = "admin-login.html";
+                return;
             }
 
             // Show success message
