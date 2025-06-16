@@ -1,9 +1,12 @@
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { app } from "./firebase-config.js";
 
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+// Admin UIDs
+const ADMIN_UIDS = ['UB8vAhpsgFZJTsYngb33BRAV2Rh1'];
 
 const adminLoginForm = document.getElementById("adminLoginForm");
 if (adminLoginForm) {
@@ -17,24 +20,41 @@ if (adminLoginForm) {
             submitButton.disabled = true;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
 
-            // First, check if the email is in the admins collection
-            const adminDoc = await getDoc(doc(db, "admins", email));
-            if (!adminDoc.exists()) {
-                throw new Error("Invalid email or password");
-            }
+            console.log("Attempting admin login for:", email);
 
-            // Then attempt to sign in
+            // First attempt Firebase authentication
+            console.log("Attempting Firebase authentication");
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
+            console.log("Firebase authentication successful for user:", user.uid);
 
-            // Double-check admin status
-            const userDoc = await getDoc(doc(db, "users", user.uid));
-            if (!userDoc.exists() || !userDoc.data().isAdmin) {
-                // Sign out the user if they're not an admin
+            // Check if the user is in the admin UIDs list
+            if (!ADMIN_UIDS.includes(user.uid)) {
+                console.error("User is not in admin UIDs list");
                 await auth.signOut();
                 throw new Error("Invalid email or password");
             }
 
+            // Check if the user has admin status in users collection
+            console.log("Checking user document for admin status");
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            console.log("User document exists:", userDoc.exists());
+            
+            if (!userDoc.exists()) {
+                // Create the user document if it doesn't exist
+                console.log("Creating user document with admin status");
+                await setDoc(doc(db, "users", user.uid), {
+                    email: user.email,
+                    isAdmin: true,
+                    createdAt: new Date().toISOString()
+                });
+            } else if (!userDoc.data().isAdmin) {
+                console.error("User document exists but is not marked as admin");
+                await auth.signOut();
+                throw new Error("Invalid email or password");
+            }
+
+            console.log("Admin login successful");
             // Show success message
             const successMessage = document.getElementById("successMessage");
             if (successMessage) {
@@ -48,10 +68,21 @@ if (adminLoginForm) {
 
         } catch (error) {
             console.error("Login error:", error);
-            showNotification(error.message, "error");
+            let errorMessage = "Invalid email or password";
+            
+            // Provide more specific error messages for debugging
+            if (error.code === "auth/user-not-found") {
+                errorMessage = "No account found with this email";
+            } else if (error.code === "auth/wrong-password") {
+                errorMessage = "Incorrect password";
+            } else if (error.code === "auth/too-many-requests") {
+                errorMessage = "Too many failed attempts. Please try again later";
+            }
+            
+            showNotification(errorMessage, "error");
             const submitButton = e.target.querySelector("button[type=submit]");
             submitButton.disabled = false;
-            submitButton.textContent = "Sign In";
+            submitButton.textContent = "Login to Admin Panel";
         }
     });
 }

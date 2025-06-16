@@ -39,25 +39,38 @@ body {
 
 /* Main Header Styles */
 .main-header {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 1rem 2rem;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1000;
-  box-shadow: var(--shadow);
-  height: 80px;
+  padding: 0.5rem 1rem;
+  min-height: 80px;
 }
 
 .logo {
+  flex: 0 0 auto;
   max-width: 200px;
-  height: auto;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
+}
+
+.logo a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.logo picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .logo img {
@@ -65,6 +78,15 @@ body {
   height: auto;
   max-height: 60px;
   object-fit: contain;
+  display: block;
+}
+
+/* Navigation Container */
+.nav-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 /* Navigation Styles */
@@ -149,7 +171,8 @@ nav {
 /* Mobile Menu Styles */
 @media (max-width: 768px) {
   .main-header {
-    padding: 1rem;
+    padding: 0.5rem;
+    min-height: 70px;
   }
 
   .hamburger {
@@ -207,7 +230,7 @@ nav {
   }
 
   .logo {
-    max-width: 150px;
+    max-width: 160px;
   }
 
   .logo img {
@@ -4031,6 +4054,346 @@ td {
   .pressure-washing-card h3 {
     font-size: 1.5rem;
   }
+}
+
+// ... existing code ...
+
+/* Cache Clearing Styles */
+#clear-cache-btn {
+    margin-top: 10px;
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#clear-cache-btn:hover {
+    background-color: #e0e0e0;
+}
+
+#clear-cache-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+#cache-status {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    z-index: 9999;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    animation: slideIn 0.3s ease-out;
+}
+
+#cache-status.success {
+    background-color: #4CAF50;
+}
+
+#cache-status.error {
+    background-color: #f44336;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Login Links Container */
+.login-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Privacy Policy Page Styles */
+.privacy-policy {
+    padding: 2rem 0;
+    background-color: #f8f9fa;
+}
+
+.privacy-policy .hero-section {
+    background-color: #2e7d32;
+    color: white;
+    padding: 3rem 0;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.privacy-policy .hero-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.privacy-policy .last-updated {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.privacy-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.privacy-intro {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.privacy-section {
+    background: white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.privacy-section h2 {
+    color: #2e7d32;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.privacy-section p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.privacy-section ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.privacy-section ul li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.privacy-section ul li:before {
+    content: "•";
+    color: #2e7d32;
+    position: absolute;
+    left: 0;
+}
+
+.privacy-section .contact-info {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.privacy-section .contact-info p {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.privacy-section .contact-info i {
+    color: #2e7d32;
+    width: 20px;
+}
+
+.privacy-section .contact-info a {
+    color: #2e7d32;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.privacy-section .contact-info a:hover {
+    color: #1b5e20;
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .privacy-policy .hero-section {
+        padding: 2rem 0;
+    }
+
+    .privacy-policy .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .privacy-section {
+        padding: 1.5rem;
+    }
+
+    .privacy-section h2 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .privacy-policy .hero-section h1 {
+        font-size: 1.75rem;
+    }
+
+    .privacy-section {
+        padding: 1rem;
+    }
+
+    .privacy-section h2 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Terms of Service Page Styles */
+.terms-of-service {
+    padding: 2rem 0;
+    background-color: #f8f9fa;
+}
+
+.terms-of-service .hero-section {
+    background-color: #2e7d32;
+    color: white;
+    padding: 3rem 0;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.terms-of-service .hero-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.terms-of-service .last-updated {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.terms-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.terms-intro {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.terms-section {
+    background: white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.terms-section h2 {
+    color: #2e7d32;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.terms-section p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.terms-section ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.terms-section ul li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.terms-section ul li:before {
+    content: "•";
+    color: #2e7d32;
+    position: absolute;
+    left: 0;
+}
+
+.terms-section .contact-info {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.terms-section .contact-info p {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.terms-section .contact-info i {
+    color: #2e7d32;
+    width: 20px;
+}
+
+.terms-section .contact-info a {
+    color: #2e7d32;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.terms-section .contact-info a:hover {
+    color: #1b5e20;
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .terms-of-service .hero-section {
+        padding: 2rem 0;
+    }
+
+    .terms-of-service .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .terms-section {
+        padding: 1.5rem;
+    }
+
+    .terms-section h2 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .terms-of-service .hero-section h1 {
+        font-size: 1.75rem;
+    }
+
+    .terms-section {
+        padding: 1rem;
+    }
+
+    .terms-section h2 {
+        font-size: 1.2rem;
+    }
 }
 
 // ... existing code ...
