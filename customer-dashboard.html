@@ -685,11 +685,16 @@
               <button type="submit">Send Message</button>
             </form>
           </div>
-          <div class="dashboard-card" id="unpaidInvoices">
-            <h3>Unpaid Invoices</h3>
-            <ul>
-              <li class="empty">Loading invoices...</li>
-            </ul>
+          <div class="dashboard-section" id="unpaidInvoices">
+            <h2>Unpaid Invoices</h2>
+            <div id="unpaidInvoices">
+              <ul>
+                <li class="empty">Loading invoices...</li>
+              </ul>
+              <button id="addTestDataBtn" class="action-button" style="margin-top: 10px;">
+                Add Test Invoices
+              </button>
+            </div>
           </div>
         </section>
       </main>
@@ -766,22 +771,11 @@
     <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
     <script type="module" src="assets/js/unpaid-invoices.js"></script>
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { app } from './assets/js/firebase-config.js';
       import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-      import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+      import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-      // Your Firebase config here
-      const firebaseConfig = {
-        apiKey: "AIzaSyDxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxX",
-        authDomain: "holliday-lawn-garden.firebaseapp.com",
-        projectId: "holliday-lawn-garden",
-        storageBucket: "holliday-lawn-garden.appspot.com",
-        messagingSenderId: "123456789012",
-        appId: "1:123456789012:web:1234567890123456789012"
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
+      // Initialize Firebase services
       const auth = getAuth(app);
       const db = getFirestore(app);
 
@@ -820,6 +814,74 @@
           quickEditProfileBtn.addEventListener('click', () => {
             window.location.href = '/profile.html';
           });
+        }
+
+        // Add test data button
+        const addTestDataBtn = document.getElementById('addTestDataBtn');
+        if (addTestDataBtn) {
+          addTestDataBtn.addEventListener('click', createTestInvoices);
+        }
+      }
+
+      async function createTestInvoices() {
+        const user = auth.currentUser;
+        if (!user) {
+          console.error('No user logged in');
+          return;
+        }
+
+        try {
+          // Create test invoices
+          const invoices = [
+            {
+              userId: user.uid,
+              invoiceNumber: 'INV-001',
+              amount: 150.00,
+              date: new Date(),
+              status: 'unpaid',
+              description: 'Lawn Maintenance - Monthly Service'
+            },
+            {
+              userId: user.uid,
+              invoiceNumber: 'INV-002',
+              amount: 75.50,
+              date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
+              status: 'unpaid',
+              description: 'Garden Cleanup'
+            },
+            {
+              userId: user.uid,
+              invoiceNumber: 'INV-003',
+              amount: 200.00,
+              date: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000), // 14 days ago
+              status: 'unpaid',
+              description: 'Tree Trimming Service'
+            }
+          ];
+
+          // Add invoices to Firestore
+          for (const invoice of invoices) {
+            await addDoc(collection(db, 'invoices'), invoice);
+          }
+
+          // Create test upcoming appointment
+          const appointment = {
+            userId: user.uid,
+            serviceType: 'Lawn Maintenance',
+            date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+            time: '10:00 AM',
+            status: 'scheduled',
+            description: 'Regular lawn maintenance and garden check-up',
+            address: '123 Main St, New Orleans, LA 70112'
+          };
+
+          await addDoc(collection(db, 'appointments'), appointment);
+
+          console.log('Test data created successfully');
+          alert('Test invoices and appointment have been created. Please refresh the page to see them.');
+        } catch (error) {
+          console.error('Error creating test data:', error);
+          alert('Error creating test data. Please check the console for details.');
         }
       }
 
