@@ -1,317 +1,316 @@
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { app } from "../../firebase-config.js";
-import { showLoading, hideLoading, showNotification, showModal, closeModal } from "./utils.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { app } from "../firebase-config.js";
 
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Initialize appointment management
-function initializeAppointmentManagement() {
-    const appointmentsList = document.querySelector('.appointments-list');
-    if (!appointmentsList) return;
+// DOM Elements
+const adminName = document.getElementById("adminName");
+const adminRole = document.getElementById("adminRole");
+const logoutBtn = document.getElementById("logoutBtn");
+const adminOverview = document.getElementById("adminOverview");
+const recentAppointments = document.getElementById("recentAppointments");
+const loadingIndicator = document.getElementById("loadingIndicator");
+const notificationContainer = document.getElementById("notificationContainer");
 
-    // Load appointments
-    loadAppointments();
+// Quick Action Buttons
+const newAppointmentBtn = document.getElementById("newAppointmentBtn");
+const addCustomerBtn = document.getElementById("addCustomerBtn");
+const generateReportBtn = document.getElementById("generateReportBtn");
+const sendNotificationsBtn = document.getElementById("sendNotificationsBtn");
 
-    // Set up real-time updates
-    const appointmentsRef = collection(db, 'appointments');
-    const appointmentsQuery = query(
-        appointmentsRef,
-        where('status', 'in', ['pending', 'confirmed']),
-        orderBy('preferredDate', 'asc')
-    );
-
-    onSnapshot(appointmentsQuery, (snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-            if (change.type === 'added' || change.type === 'modified') {
-                updateAppointmentUI(change.doc.id, change.doc.data());
-            } else if (change.type === 'removed') {
-                removeAppointmentUI(change.doc.id);
+// Check if user is logged in and is an admin
+onAuthStateChanged(auth, async (user) => {
+    console.log("Auth state changed:", user ? "User logged in" : "User logged out");
+    
+    if (user) {
+        try {
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (!userDoc.exists() || userDoc.data().role !== 'admin') {
+                console.error("User is not an admin");
+                window.location.href = "login.html";
+                return;
             }
-        });
-    });
 
-    // Set up filter
-    const filterSelect = document.getElementById('appointmentFilter');
-    if (filterSelect) {
-        filterSelect.addEventListener('change', (e) => {
-            const status = e.target.value;
-            filterAppointments(status);
-        });
+            console.log("Initializing admin dashboard for user:", user.email);
+            await initializeDashboard(user);
+        } catch (error) {
+            console.error("Error checking admin status:", error);
+            showNotification("Error verifying admin status", "error");
+        }
+    } else {
+        window.location.href = "admin-login.html";
+    }
+});
+
+async function initializeDashboard(user) {
+    try {
+        showLoading();
+        
+        // Update admin profile info
+        if (adminName) adminName.textContent = user.email;
+        if (adminRole) adminRole.textContent = "Administrator";
+
+        // Load dashboard data
+        await Promise.all([
+            loadAdminOverview(),
+            loadRecentAppointments()
+        ]);
+
+        // Set up event listeners
+        setupEventListeners();
+
+        hideLoading();
+    } catch (error) {
+        console.error("Error initializing dashboard:", error);
+        showNotification("Error loading dashboard data", "error");
+        hideLoading();
     }
 }
 
-// Filter appointments
-function filterAppointments(status) {
-    const appointments = document.querySelectorAll('.appointment-item');
-    appointments.forEach(appointment => {
-        if (status === 'all' || appointment.querySelector('.status-badge').classList.contains(status)) {
-            appointment.style.display = 'block';
-        } else {
-            appointment.style.display = 'none';
-        }
-    });
-}
-
-// Load appointments
-async function loadAppointments() {
-    const appointmentsList = document.querySelector('.appointments-list');
-    const noAppointments = document.querySelector('.no-appointments');
-    
-    if (!appointmentsList) return;
-    
+async function loadAdminOverview() {
     try {
-        showLoading('Loading appointments...');
-        
-        const appointmentsQuery = query(
-            collection(db, 'appointments'),
-            where('status', 'in', ['pending', 'confirmed']),
-            orderBy('preferredDate', 'asc')
-        );
-        
-        const appointmentsSnapshot = await getDocs(appointmentsQuery);
-        
-        if (appointmentsSnapshot.empty) {
-            appointmentsList.innerHTML = '';
-            noAppointments.style.display = 'block';
+        if (!adminOverview) {
+            console.error("Admin overview element not found");
             return;
         }
-        
-        noAppointments.style.display = 'none';
-        appointmentsList.innerHTML = '';
-        
-        appointmentsSnapshot.forEach(doc => {
-            const appointment = doc.data();
-            const appointmentElement = createAppointmentElement(doc.id, appointment);
-            appointmentsList.appendChild(appointmentElement);
-        });
-        
-    } catch (error) {
-        console.error('Error loading appointments:', error);
-        showNotification('Failed to load appointments', 'error');
-    } finally {
-        hideLoading();
-    }
-}
 
-// Create appointment element
-function createAppointmentElement(id, appointment) {
-    const div = document.createElement('div');
-    div.className = 'appointment-item';
-    div.id = `appointment-${id}`;
-    
-    // Get customer details
-    getCustomerDetails(appointment.customerId).then(customerData => {
-        div.innerHTML = `
-            <div class="appointment-header">
-                <div class="customer-info">
-                    <h4>${customerData.displayName || customerData.name || 'Customer'}</h4>
-                    <p class="customer-email">${customerData.email}</p>
+        const stats = await getDashboardStats();
+        
+        adminOverview.innerHTML = `
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
                 </div>
-                <span class="status-badge ${appointment.status}">${formatStatus(appointment.status)}</span>
+                <div class="stat-info">
+                    <h3>Total Customers</h3>
+                    <p class="stat-number">${stats.totalCustomers}</p>
+                    <p class="stat-change ${stats.customerChange >= 0 ? 'positive' : 'negative'}">
+                        ${stats.customerChange >= 0 ? '+' : ''}${stats.customerChange}% from last month
+                    </p>
+                </div>
             </div>
-            <div class="appointment-details">
-                <p><i class="fas fa-tools"></i> ${formatServiceType(appointment.serviceType)}</p>
-                <p><i class="fas fa-calendar"></i> ${formatDate(appointment.preferredDate)}</p>
-                <p><i class="fas fa-clock"></i> ${formatTimeSlot(appointment.preferredTime)}</p>
-                ${appointment.serviceNotes ? `<p><i class="fas fa-info-circle"></i> ${appointment.serviceNotes}</p>` : ''}
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Active Appointments</h3>
+                    <p class="stat-number">${stats.activeAppointments}</p>
+                    <p class="stat-change ${stats.appointmentChange >= 0 ? 'positive' : 'negative'}">
+                        ${stats.appointmentChange >= 0 ? '+' : ''}${stats.appointmentChange}% from last month
+                    </p>
+                </div>
             </div>
-            <div class="appointment-actions">
-                ${appointment.status === 'pending' ? `
-                    <button class="action-btn confirm-btn" data-id="${id}">
-                        <i class="fas fa-check"></i> Confirm
-                    </button>
-                    <button class="action-btn cancel-btn" data-id="${id}">
-                        <i class="fas fa-times"></i> Cancel
-                    </button>
-                ` : ''}
-                <button class="action-btn view-btn" data-id="${id}">
-                    <i class="fas fa-eye"></i> View Details
-                </button>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Monthly Revenue</h3>
+                    <p class="stat-number">$${stats.monthlyRevenue.toLocaleString()}</p>
+                    <p class="stat-change ${stats.revenueChange >= 0 ? 'positive' : 'negative'}">
+                        ${stats.revenueChange >= 0 ? '+' : ''}${stats.revenueChange}% from last month
+                    </p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Customer Satisfaction</h3>
+                    <p class="stat-number">${stats.satisfaction}/5</p>
+                    <p class="stat-change ${stats.satisfactionChange >= 0 ? 'positive' : 'negative'}">
+                        ${stats.satisfactionChange >= 0 ? '+' : ''}${stats.satisfactionChange} from last month
+                    </p>
+                </div>
             </div>
         `;
-        
-        // Add event listeners
-        const confirmBtn = div.querySelector('.confirm-btn');
-        const cancelBtn = div.querySelector('.cancel-btn');
-        const viewBtn = div.querySelector('.view-btn');
-        
-        if (confirmBtn) {
-            confirmBtn.addEventListener('click', () => confirmAppointment(id));
-        }
-        if (cancelBtn) {
-            cancelBtn.addEventListener('click', () => cancelAppointment(id));
-        }
-        if (viewBtn) {
-            viewBtn.addEventListener('click', () => viewAppointmentDetails(id, appointment, customerData));
-        }
-    });
-    
-    return div;
-}
-
-// Get customer details
-async function getCustomerDetails(customerId) {
-    try {
-        const customerDoc = await getDoc(doc(db, 'users', customerId));
-        return customerDoc.data() || {};
     } catch (error) {
-        console.error('Error getting customer details:', error);
-        return {};
+        console.error("Error loading admin overview:", error);
+        showNotification("Error loading dashboard statistics", "error");
     }
 }
 
-// Update appointment UI
-function updateAppointmentUI(id, appointment) {
-    const existingElement = document.getElementById(`appointment-${id}`);
-    if (existingElement) {
-        const newElement = createAppointmentElement(id, appointment);
-        existingElement.replaceWith(newElement);
-    } else {
-        const appointmentsList = document.querySelector('.appointments-list');
-        const noAppointments = document.querySelector('.no-appointments');
-        if (appointmentsList && noAppointments) {
-            noAppointments.style.display = 'none';
-            const appointmentElement = createAppointmentElement(id, appointment);
-            appointmentsList.appendChild(appointmentElement);
-        }
-    }
-}
-
-// Remove appointment UI
-function removeAppointmentUI(id) {
-    const element = document.getElementById(`appointment-${id}`);
-    if (element) {
-        element.remove();
-        
-        // Check if list is empty
-        const appointmentsList = document.querySelector('.appointments-list');
-        const noAppointments = document.querySelector('.no-appointments');
-        if (appointmentsList && noAppointments && appointmentsList.children.length === 0) {
-            noAppointments.style.display = 'block';
-        }
-    }
-}
-
-// Confirm appointment
-async function confirmAppointment(appointmentId) {
-    if (!confirm('Are you sure you want to confirm this appointment?')) return;
-    
+async function loadRecentAppointments() {
     try {
-        showLoading('Confirming appointment...');
+        if (!recentAppointments) {
+            console.error("Recent appointments element not found");
+            return;
+        }
+
+        const appointments = await getRecentAppointments();
         
-        await updateDoc(doc(db, 'appointments', appointmentId), {
-            status: 'confirmed',
-            updatedAt: serverTimestamp()
+        if (appointments.length === 0) {
+            recentAppointments.innerHTML = `
+                <div class="no-data">
+                    <i class="fas fa-calendar-times"></i>
+                    <p>No recent appointments</p>
+                </div>
+            `;
+            return;
+        }
+
+        recentAppointments.innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Service</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${appointments.map(appointment => `
+                        <tr>
+                            <td>${appointment.customerName}</td>
+                            <td>${appointment.service}</td>
+                            <td>${formatDate(appointment.date)}</td>
+                            <td><span class="status-badge ${appointment.status.toLowerCase()}">${appointment.status}</span></td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    } catch (error) {
+        console.error("Error loading recent appointments:", error);
+        showNotification("Error loading recent appointments", "error");
+    }
+}
+
+async function getDashboardStats() {
+    // TODO: Implement actual data fetching from Firestore
+    return {
+        totalCustomers: 1234,
+        customerChange: 12,
+        activeAppointments: 45,
+        appointmentChange: 5,
+        monthlyRevenue: 12345,
+        revenueChange: 8,
+        satisfaction: 4.8,
+        satisfactionChange: 0.2
+    };
+}
+
+async function getRecentAppointments() {
+    // TODO: Implement actual data fetching from Firestore
+    return [
+        {
+            customerName: "John Smith",
+            service: "Lawn Maintenance",
+            date: "2024-03-20",
+            status: "Confirmed"
+        },
+        {
+            customerName: "Sarah Johnson",
+            service: "Garden Design",
+            date: "2024-03-21",
+            status: "Pending"
+        },
+        {
+            customerName: "Mike Brown",
+            service: "Irrigation System",
+            date: "2024-03-22",
+            status: "Completed"
+        }
+    ];
+}
+
+function setupEventListeners() {
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", handleLogout);
+    }
+
+    if (newAppointmentBtn) {
+        newAppointmentBtn.addEventListener("click", () => {
+            // TODO: Implement new appointment functionality
+            showNotification("New appointment feature coming soon", "info");
         });
-        
-        showNotification('Appointment confirmed successfully', 'success');
-        
+    }
+
+    if (addCustomerBtn) {
+        addCustomerBtn.addEventListener("click", () => {
+            // TODO: Implement add customer functionality
+            showNotification("Add customer feature coming soon", "info");
+        });
+    }
+
+    if (generateReportBtn) {
+        generateReportBtn.addEventListener("click", () => {
+            // TODO: Implement report generation
+            showNotification("Report generation feature coming soon", "info");
+        });
+    }
+
+    if (sendNotificationsBtn) {
+        sendNotificationsBtn.addEventListener("click", () => {
+            // TODO: Implement notification sending
+            showNotification("Notification feature coming soon", "info");
+        });
+    }
+}
+
+async function handleLogout() {
+    try {
+        showLoading();
+        await signOut(auth);
+        window.location.href = "admin-login.html";
     } catch (error) {
-        console.error('Error confirming appointment:', error);
-        showNotification('Failed to confirm appointment', 'error');
-    } finally {
+        console.error("Error signing out:", error);
+        showNotification("Error signing out", "error");
         hideLoading();
     }
 }
 
-// Cancel appointment
-async function cancelAppointment(appointmentId) {
-    if (!confirm('Are you sure you want to cancel this appointment?')) return;
-    
-    try {
-        showLoading('Cancelling appointment...');
-        
-        await updateDoc(doc(db, 'appointments', appointmentId), {
-            status: 'cancelled',
-            updatedAt: serverTimestamp()
-        });
-        
-        showNotification('Appointment cancelled successfully', 'success');
-        
-    } catch (error) {
-        console.error('Error cancelling appointment:', error);
-        showNotification('Failed to cancel appointment', 'error');
-    } finally {
-        hideLoading();
+function showLoading() {
+    if (loadingIndicator) {
+        loadingIndicator.style.display = "flex";
     }
 }
 
-// View appointment details
-function viewAppointmentDetails(id, appointment, customerData) {
-    // Create modal content
-    const modalContent = `
-        <div class="appointment-details-modal">
-            <h3>Appointment Details</h3>
-            <div class="details-grid">
-                <div class="detail-group">
-                    <h4>Customer Information</h4>
-                    <p><strong>Name:</strong> ${customerData.displayName || customerData.name || 'N/A'}</p>
-                    <p><strong>Email:</strong> ${customerData.email || 'N/A'}</p>
-                    <p><strong>Phone:</strong> ${customerData.phone || 'N/A'}</p>
-                </div>
-                <div class="detail-group">
-                    <h4>Service Information</h4>
-                    <p><strong>Service Type:</strong> ${formatServiceType(appointment.serviceType)}</p>
-                    <p><strong>Date:</strong> ${formatDate(appointment.preferredDate)}</p>
-                    <p><strong>Time:</strong> ${formatTimeSlot(appointment.preferredTime)}</p>
-                    <p><strong>Status:</strong> <span class="status-badge ${appointment.status}">${formatStatus(appointment.status)}</span></p>
-                </div>
-                ${appointment.serviceNotes ? `
-                    <div class="detail-group">
-                        <h4>Additional Notes</h4>
-                        <p>${appointment.serviceNotes}</p>
-                    </div>
-                ` : ''}
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
-            </div>
-        </div>
+function hideLoading() {
+    if (loadingIndicator) {
+        loadingIndicator.style.display = "none";
+    }
+}
+
+function showNotification(message, type = "info") {
+    if (!notificationContainer) return;
+
+    const notification = document.createElement("div");
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas ${getNotificationIcon(type)}"></i>
+        <span>${message}</span>
     `;
-    
-    // Show modal
-    showModal(modalContent);
+
+    notificationContainer.appendChild(notification);
+
+    setTimeout(() => {
+        notification.classList.add("fade-out");
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
 }
 
-// Helper functions
-function formatServiceType(type) {
-    return type.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-}
-
-function formatStatus(status) {
-    return status.charAt(0).toUpperCase() + status.slice(1);
+function getNotificationIcon(type) {
+    switch (type) {
+        case "success":
+            return "fa-check-circle";
+        case "error":
+            return "fa-exclamation-circle";
+        case "warning":
+            return "fa-exclamation-triangle";
+        default:
+            return "fa-info-circle";
+    }
 }
 
 function formatDate(dateString) {
-    return new Date(dateString).toLocaleDateString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
 }
-
-function formatTimeSlot(timeSlot) {
-    const timeMap = {
-        'morning': '8:00 AM - 12:00 PM',
-        'afternoon': '12:00 PM - 4:00 PM',
-        'evening': '4:00 PM - 6:00 PM'
-    };
-    return timeMap[timeSlot] || timeSlot;
-}
-
-// Initialize dashboard
-export async function initializeDashboard() {
-    // Initialize appointment management
-    initializeAppointmentManagement();
-}
-
-// Export functions for use in other modules
-export {
-    loadAppointments,
-    confirmAppointment,
-    cancelAppointment,
-    viewAppointmentDetails
-}; 
