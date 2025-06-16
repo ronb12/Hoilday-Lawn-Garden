@@ -1,13 +1,17 @@
 // Profile Management JavaScript
 import { handleError, handleFirebaseError } from './error-handler.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, query, where, orderBy, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, query, where, orderBy, getDocs, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { showError } from './firebase.js';
+import { app } from './firebase-config.js';
+
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 document.addEventListener('DOMContentLoaded', () => {
   // Check authentication state
-  auth.onAuthStateChanged(user => {
+  onAuthStateChanged(auth, user => {
     if (!user) {
       // If not logged in, redirect to login page
       window.location.href = '/login.html';
@@ -15,27 +19,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // User is logged in, initialize profile
-    initializeProfile(user);
+    loadUserProfile(user);
   });
+
+  const profileForm = document.getElementById('profileForm');
+  if (profileForm) {
+    profileForm.addEventListener('submit', handleProfileSubmit);
+  }
 });
 
-function initializeProfile(user) {
-  // Load user's data
-  loadUserData(user.uid);
-
-  // Initialize event listeners
-  initializeEventListeners();
-}
-
-async function loadUserData(userId) {
+async function loadUserProfile(user) {
   try {
-    const userDoc = await db.collection('users').doc(userId).get();
-
-    if (userDoc.exists) {
+    const userDoc = await getDoc(doc(db, 'users', user.uid));
+    if (userDoc.exists()) {
       const userData = userDoc.data();
       updateProfileUI(userData);
     } else {
-      handleError(new Error('User data not found'), 'loadUserData');
+      handleError(new Error('User data not found'), 'loadUserProfile');
     }
   } catch (error) {
     handleFirebaseError(error);
@@ -58,7 +58,7 @@ function initializeEventListeners() {
   // Add event listeners for profile interactions
   const profileForm = document.getElementById('profileForm');
   if (profileForm) {
-    profileForm.addEventListener('submit', handleProfileUpdate);
+    profileForm.addEventListener('submit', handleProfileSubmit);
   }
 
   const logoutButton = document.getElementById('logout-button');
@@ -67,35 +67,24 @@ function initializeEventListeners() {
   }
 }
 
-async function handleProfileUpdate(event) {
+async function handleProfileSubmit(event) {
   event.preventDefault();
-
   const user = auth.currentUser;
-  if (!user) {
-    showError('You must be logged in to update your profile');
-    return;
-  }
-
-  const formData = new FormData(event.target);
-  const updates = {
-    displayName: formData.get('displayName'),
-    phone: formData.get('phone'),
-    address: formData.get('address'),
-    updatedAt: new Date().toISOString()
-  };
+  if (!user) return;
 
   try {
-    // Update user profile in Firestore
-    await db.collection('users').doc(user.uid).update(updates);
+    const formData = {
+      displayName: document.getElementById('displayName').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      address: document.getElementById('address').value
+    };
 
-    // Update auth profile
-    await user.updateProfile({
-      displayName: updates.displayName
-    });
-
-    showSuccess('Profile updated successfully');
+    await updateDoc(doc(db, 'users', user.uid), formData);
+    showNotification('Profile updated successfully', 'success');
   } catch (error) {
-    handleFirebaseError(error);
+    console.error('Error updating profile:', error);
+    showNotification('Error updating profile', 'error');
   }
 }
 
@@ -111,20 +100,13 @@ function handleLogout() {
     });
 }
 
-function showSuccess(message) {
-  const successMessage = document.createElement('div');
-  successMessage.className = 'success-message';
-  successMessage.textContent = message;
-  successMessage.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #2e7d32;
-    color: white;
-    padding: 1rem;
-    border-radius: 4px;
-    z-index: 1000;
-  `;
-  document.body.appendChild(successMessage);
-  setTimeout(() => successMessage.remove(), 3000);
+function showNotification(message, type = 'success') {
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.textContent = message;
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
 } 

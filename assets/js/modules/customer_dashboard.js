@@ -121,9 +121,36 @@ export function handleLogout() {
 }
 
 export function updateDashboardUI(userData) {
-  // Update dashboard UI with user data
+  // Update user profile information
+  const profileName = document.getElementById('profileName');
+  const profileEmail = document.getElementById('profileEmail');
+  const profilePhone = document.getElementById('profilePhone');
+  const profileAddress = document.getElementById('profileAddress');
   const customerName = document.getElementById('customerName');
-  if (customerName) {
-    customerName.textContent = userData.displayName || 'Customer';
+
+  if (profileName) profileName.textContent = userData.displayName || 'Customer';
+  if (profileEmail) profileEmail.textContent = userData.email || '';
+  if (profilePhone) profilePhone.textContent = userData.phone || 'Not provided';
+  if (profileAddress) profileAddress.textContent = userData.address || 'Not provided';
+  if (customerName) customerName.textContent = userData.displayName || 'Customer';
+
+  // Update service history if available
+  if (userData.serviceHistory) {
+    const serviceHistoryList = document.getElementById('serviceHistoryList');
+    if (serviceHistoryList) {
+      serviceHistoryList.innerHTML = userData.serviceHistory
+        .map(service => `
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h6 class="mb-1">${service.type}</h6>
+                <small class="text-muted">${new Date(service.date).toLocaleDateString()}</small>
+              </div>
+              <span class="badge bg-primary">${service.status}</span>
+            </div>
+          </li>
+        `)
+        .join('');
+    }
   }
 } 
