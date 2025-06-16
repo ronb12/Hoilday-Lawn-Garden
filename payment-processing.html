@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing Payment - Holliday's Lawn & Garden</title>
+    <meta name="description" content="Your payment is currently being processed. Please wait while we complete your transaction.">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Processing Payment - Holliday's Lawn & Garden",
+        "description": "Your payment is currently being processed. Please wait while we complete your transaction.",
+        "url": "https://hollidaylawngarden.com/payment-processing"
+    }
+    </script>
+</head>
+<body>
+    <div id="loading-overlay" class="loading-overlay" style="display:none">
+        <div class="spinner"></div>
+        <p id="loading-message">Loading...</p>
+    </div>
+
+    <header class="main-header">
+        <a href="index.html" class="logo">
+            <img src="assets/images/hollidays-logo.webp" alt="Holliday's Lawn & Garden Logo">
+        </a>
+        <nav aria-label="Main navigation">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                <li><a href="education.html">Education</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="payment-status-container">
+            <div class="payment-status-card processing">
+                <div class="processing-animation">
+                    <i class="fas fa-circle-notch fa-spin"></i>
+                </div>
+                <h1>Processing Your Payment</h1>
+                <p>Please wait while we process your payment securely.</p>
+                <div class="payment-status-details">
+                    <p>This may take a few moments.</p>
+                    <p>Do not close this window or refresh the page.</p>
+                </div>
+                <div class="payment-progress">
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Karl Holliday</p>
+                <p><i class="fas fa-phone"></i> (504) 717-1887</p>
+                <p><i class="fas fa-envelope"></i> 7holliday@gmail.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Simulate progress bar
+        const progressBar = document.querySelector('.progress');
+        let progress = 0;
+        
+        const interval = setInterval(() => {
+            progress += 5;
+            progressBar.style.width = `${progress}%`;
+            
+            if (progress >= 100) {
+                clearInterval(interval);
+                // Redirect to success page after completion
+                setTimeout(() => {
+                    window.location.href = 'payment-success.html';
+                }, 1000);
+            }
+        }, 500);
+    </script>
+</body>
+</html> 

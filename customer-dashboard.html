@@ -1,8 +1,29 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title>Customer Dashboard - Holliday's Lawn &amp; Garden</title>
+    <title>Customer Dashboard - Holliday's Lawn & Garden</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/main.css?v=1.0.1">
+    <meta name="description" content="Manage your lawn care services, view service history, and handle payments through your customer dashboard.">
+    <meta name="keywords" content="lawn care, customer dashboard, service history, payments, Holliday's Lawn & Garden">
+    <meta name="author" content="Holliday's Lawn & Garden">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hollidayslawnandgarden.com/customer-dashboard">
+    <meta property="og:title" content="Customer Dashboard - Holliday's Lawn & Garden">
+    <meta property="og:description" content="Manage your lawn care services, view service history, and handle payments through your customer dashboard.">
+    <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://hollidayslawnandgarden.com/customer-dashboard">
+    <meta property="twitter:title" content="Customer Dashboard - Holliday's Lawn & Garden">
+    <meta property="twitter:description" content="Manage your lawn care services, view service history, and handle payments through your customer dashboard.">
+    <meta property="twitter:image" content="assets/images/hollidays-logo.optimized-1280.png">
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png?v=1.0.1" sizes="32x32">
     <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png?v=1.0.1" sizes="16x16">
     <link rel="shortcut icon" href="assets/images/favicon/favicon.ico?v=1.0.1">
@@ -10,1356 +31,294 @@
     <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon/icon-192.png?v=1.0.1">
     <link rel="icon" type="image/png" sizes="512x512" href="assets/images/favicon/icon-512.png?v=1.0.1">
     <link rel="manifest" href="manifest.json?v=1.0.1">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/main.css?v=1.0.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-      body {
-        margin: 0;
-        font-family: 'Segoe UI', Arial, sans-serif;
-        background: #f4f6f8;
-        color: #222;
-      }
-      .dashboard-wrapper {
-        display: flex;
-        min-height: 100vh;
-      }
-      .sidebar {
-        background: #2e7d32;
-        color: #fff;
-        width: 240px;
-        min-width: 200px;
-        padding: 2rem 1rem 1rem 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
-      }
-      .sidebar .logo {
-        margin-bottom: 2rem;
-      }
-      .sidebar .logo img {
-        max-width: 120px;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-      }
-      .sidebar nav ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        width: 100%;
-      }
-      .sidebar nav ul li {
-        margin: 1rem 0;
-      }
-      .sidebar nav ul li a {
-        color: #fff;
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 1.1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        transition: color 0.2s;
-      }
-      .sidebar nav ul li a:hover {
-        color: #b2dfdb;
-      }
-      .sidebar .logout-btn {
-        margin-top: auto;
-        background: #fff;
-        color: #2e7d32;
-        border: none;
-        border-radius: 4px;
-        padding: 0.5rem 1.5rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition:
-          background 0.2s,
-          color 0.2s;
-      }
-      .sidebar .logout-btn:hover {
-        background: #b2dfdb;
-        color: #222;
-      }
-      .dashboard-main {
-        flex: 1;
-        padding: 2rem 3vw;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        background: #f4f6f8;
-      }
-      .dashboard-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-      .dashboard-header .greeting {
-        font-size: 1.5rem;
-        font-weight: 600;
-      }
-      .dashboard-header .notifications {
-        position: relative;
-        font-size: 1.3rem;
-        cursor: pointer;
-        color: #2e7d32;
-      }
-      .dashboard-sections {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 2rem;
-      }
-      .dashboard-card {
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-        padding: 1.5rem 1.25rem;
-        min-height: 220px;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-      .dashboard-card h3 {
-        margin: 0 0 0.5rem 0;
-        font-size: 1.2rem;
-        color: #2e7d32;
-      }
-      .dashboard-card ul {
-        padding-left: 1.2rem;
-        margin: 0;
-      }
-      .dashboard-card .empty {
-        color: #888;
-        font-size: 1rem;
-        margin-top: 1rem;
-      }
-      .service-history-item,
-      .payment-history-item {
-        border-bottom: 1px solid #eee;
-        padding: 0.75rem 0;
-      }
-      .service-history-item:last-child,
-      .payment-history-item:last-child {
-        border-bottom: none;
-      }
-      .service-history-item .date,
-      .payment-history-item .date {
-        color: #666;
-        font-size: 0.9rem;
-      }
-      .service-history-item .status,
-      .payment-history-item .status {
-        display: inline-block;
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.85rem;
-        font-weight: 500;
-      }
-      .status.completed {
-        background: #e8f5e9;
-        color: #2e7d32;
-      }
-      .status.pending {
-        background: #fff3e0;
-        color: #f57c00;
-      }
-      .status.cancelled {
-        background: #ffebee;
-        color: #c62828;
-      }
-      .payment-history-item .amount {
-        font-weight: 600;
-        color: #2e7d32;
-      }
-      .payment-history-item .invoice-number {
-        color: #666;
-        font-size: 0.9rem;
-      }
-      .view-all {
-        color: #2e7d32;
-        text-decoration: none;
-        font-size: 0.9rem;
-        font-weight: 500;
-        display: inline-block;
-        margin-top: 0.5rem;
-      }
-      .view-all:hover {
-        text-decoration: underline;
-      }
-      .dashboard-card form input,
-      .dashboard-card form select,
-      .dashboard-card form textarea {
-        width: 100%;
-        padding: 0.5rem;
-        margin-bottom: 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 1rem;
-      }
-      .dashboard-card form button {
-        background: #2e7d32;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        padding: 0.5rem 1.5rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-      .dashboard-card form button:hover {
-        background: #388e3c;
-      }
-      @media (max-width: 900px) {
-        .dashboard-wrapper {
-          flex-direction: column;
-        }
-        .sidebar {
-          width: 100%;
-          min-width: unset;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-          padding: 1rem;
-        }
-        .sidebar nav ul {
-          display: flex;
-          flex-direction: row;
-          gap: 1rem;
-        }
-        .dashboard-main {
-          padding: 1rem 2vw;
-        }
-        .dashboard-sections {
-          grid-template-columns: 1fr;
-        }
-      }
-      .invoice-item {
-        border-bottom: 1px solid #eee;
-        padding: 1rem 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-      .invoice-item:last-child {
-        border-bottom: none;
-      }
-      .invoice-info {
-        flex: 1;
-        min-width: 200px;
-      }
-      .invoice-info strong {
-        display: block;
-        margin-bottom: 0.25rem;
-      }
-      .invoice-number {
-        color: #666;
-        font-size: 0.9rem;
-        margin-right: 1rem;
-      }
-      .invoice-details {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-      .amount {
-        font-weight: 600;
-        color: #2e7d32;
-        font-size: 1.1rem;
-      }
-      .paypal-button-container {
-        min-width: 200px;
-      }
-      @media (max-width: 600px) {
-        .invoice-item {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-        .invoice-details {
-          width: 100%;
-          justify-content: space-between;
-        }
-      }
-      /* Profile Modal Styles */
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-      }
-      .modal.active {
-        display: flex;
-      }
-      .modal-content {
-        background: #fff;
-        padding: 2rem;
-        border-radius: 10px;
-        width: 90%;
-        max-width: 500px;
-        position: relative;
-      }
-      .modal-close {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: #666;
-      }
-      .modal-close:hover {
-        color: #333;
-      }
-      .modal h2 {
-        margin: 0 0 1.5rem 0;
-        color: #2e7d32;
-      }
-      .modal form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-      .modal form label {
-        font-weight: 500;
-        color: #333;
-      }
-      .modal form input {
-        padding: 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 1rem;
-      }
-      .modal form input:focus {
-        border-color: #2e7d32;
-        outline: none;
-      }
-      .modal form button {
-        background: #2e7d32;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        padding: 0.75rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.2s;
-        margin-top: 1rem;
-      }
-      .modal form button:hover {
-        background: #388e3c;
-      }
-      .modal form .error {
-        color: #c62828;
-        font-size: 0.9rem;
-        margin-top: 0.25rem;
-      }
-      .modal form .success {
-        color: #2e7d32;
-        font-size: 0.9rem;
-        margin-top: 0.25rem;
-      }
-      .modal form .section-divider {
-        border-top: 1px solid #eee;
-        margin: 1.5rem 0;
-        padding-top: 1.5rem;
-      }
-      .modal form .section-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #2e7d32;
-        margin-bottom: 1rem;
-      }
-      .modal form .verification-status {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
-      }
-      .modal form .verification-status i {
-        font-size: 1.2rem;
-      }
-      .modal form .verification-status.verified {
-        color: #2e7d32;
-      }
-      .modal form .verification-status.unverified {
-        color: #f57c00;
-      }
-      /* New styles for enhanced features */
-      .feature-section {
-        margin-top: 2rem;
-        padding: 1.5rem;
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-      }
-      .feature-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-      }
-      .feature-header h2 {
-        margin: 0;
-        color: #2e7d32;
-        font-size: 1.5rem;
-      }
-      .action-button {
-        background: #2e7d32;
-        color: #fff;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: 500;
-        transition: background 0.2s;
-      }
-      .action-button:hover {
-        background: #1b5e20;
-      }
-      .service-item,
-      .payment-item,
-      .message-item,
-      .document-item {
-        background: #f8f9fa;
-        border-radius: 6px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-      }
-      .service-image {
-        max-width: 200px;
-        border-radius: 4px;
-        margin-top: 0.5rem;
-      }
-      .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 1rem;
-        border-radius: 4px;
-        color: #fff;
-        z-index: 1000;
-        animation: slideIn 0.3s ease-out;
-      }
-      .notification.success {
-        background: #2e7d32;
-      }
-      .notification.error {
-        background: #c62828;
-      }
-      .notification.info {
-        background: #1976d2;
-      }
-      @keyframes slideIn {
-        from {
-          transform: translateX(100%);
-          opacity: 0;
-        }
-        to {
-          transform: translateX(0);
-          opacity: 1;
-        }
-      }
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-      }
-      .modal-content {
-        background: #fff;
-        width: 90%;
-        max-width: 500px;
-        margin: 50px auto;
-        padding: 2rem;
-        border-radius: 8px;
-        position: relative;
-      }
-      .close-modal {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: #666;
-      }
-      .form-group {
-        margin-bottom: 1rem;
-      }
-      .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: #333;
-      }
-      .form-group input,
-      .form-group textarea,
-      .form-group select {
-        width: 100%;
-        padding: 0.5rem;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 1rem;
-      }
-      .form-group textarea {
-        min-height: 100px;
-      }
-      .notifications-panel {
-        position: relative;
-        margin: 0 15px;
-      }
-      .notifications-toggle {
-        background: none;
-        border: none;
-        color: #666;
-        cursor: pointer;
-        padding: 8px;
-        position: relative;
-        transition: color 0.2s;
-      }
-      .notifications-toggle:hover {
-        color: #2e7d32;
-      }
-      .notification-badge {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background: #e74c3c;
-        color: white;
-        border-radius: 50%;
-        width: 18px;
-        height: 18px;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        display: none;
-      }
-      .notifications-dropdown {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 320px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        display: none;
-        z-index: 1000;
-        margin-top: 8px;
-      }
-      .notifications-dropdown.active {
-        display: block;
-      }
-      .notifications-header {
-        padding: 15px;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .notifications-header h3 {
-        margin: 0;
-        font-size: 1.1rem;
-        color: #2e7d32;
-      }
-      .notifications-list {
-        max-height: 400px;
-        overflow-y: auto;
-      }
-      .notification-item {
-        padding: 12px 15px;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        transition: background-color 0.2s;
-      }
-      .notification-item:hover {
-        background-color: #f8f9fa;
-      }
-      .notification-item.read {
-        opacity: 0.7;
-      }
-      .notification-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        flex-shrink: 0;
-      }
-      .notification-item.success .notification-icon {
-        background-color: #2ecc71;
-      }
-      .notification-item.error .notification-icon {
-        background-color: #e74c3c;
-      }
-      .notification-item.info .notification-icon {
-        background-color: #3498db;
-      }
-      .notification-content {
-        flex: 1;
-        min-width: 0;
-      }
-      .notification-content p {
-        margin: 0;
-        font-size: 0.95rem;
-        line-height: 1.4;
-        color: #333;
-      }
-      .notification-time {
-        font-size: 0.8rem;
-        color: #666;
-        margin-top: 4px;
-      }
-      .empty-state {
-        padding: 30px;
-        text-align: center;
-        color: #666;
-      }
-      .empty-state i {
-        font-size: 24px;
-        margin-bottom: 10px;
-        color: #999;
-      }
-      .mark-read-btn {
-        background: none;
-        border: none;
-        color: #2e7d32;
-        cursor: pointer;
-        font-size: 0.9rem;
-        padding: 4px 8px;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-      }
-      .mark-read-btn:hover {
-        background-color: #e8f5e9;
-      }
-      .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .action-btn {
-        background: #fff;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        padding: 8px 16px;
-        color: #666;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.2s;
-      }
-      .action-btn:hover {
-        background: #f8f9fa;
-        border-color: #ccc;
-        color: #2e7d32;
-      }
-      .action-btn i {
-        font-size: 1rem;
-      }
-    </style>
-  </head>
-  <body>
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <div class="dashboard-wrapper">
-      <aside class="sidebar">
-        <div class="logo">
-          <a href="index.html">
-            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
-          </a>
-        </div>
-        <nav>
-          <ul>
-            <li>
-              <a href="customer-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            </li>
-            <li>
-              <a href="pay-your-bill.html"><i class="fas fa-file-invoice-dollar"></i> Pay Your Bill</a>
-            </li>
-            <li>
-              <a href="services.html"><i class="fas fa-leaf"></i> Services</a>
-            </li>
-            <li>
-              <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
-            </li>
-            <li>
-              <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-            </li>
-          </ul>
-        </nav>
-        <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-      </aside>
-      <main class="dashboard-main">
-        <div class="dashboard-header">
-          <div class="greeting">Welcome back, <span id="userName">Customer</span>!</div>
-          <div class="header-actions">
-            <div class="notifications-panel">
-              <button class="notifications-toggle" id="notificationsToggle">
-                <i class="fas fa-bell"></i>
-                <span class="notification-badge" id="notificationBadge">0</span>
-              </button>
-              <div class="notifications-dropdown" id="notificationsDropdown">
-                <div class="notifications-header">
-                  <h3>Notifications</h3>
-                  <button class="mark-read-btn" id="markAllReadBtn">Mark all as read</button>
-                </div>
-                <div class="notifications-list" id="notificationsList">
-                  <div class="empty-state">
-                    <i class="fas fa-bell-slash"></i>
-                    <p>No notifications yet</p>
-                  </div>
-                </div>
-              </div>
+        <aside class="sidebar" role="complementary" aria-label="Dashboard navigation">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" loading="lazy">
+                </a>
             </div>
-            <button id="clearCacheBtn" class="action-btn">
-              <i class="fas fa-sync"></i> Clear Cache
+            <nav>
+                <ul>
+                    <li>
+                        <a href="customer-dashboard.html" aria-current="page">
+                            <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pay-your-bill.html">
+                            <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
+                            Pay Your Bill
+                        </a>
+                    </li>
+                    <li>
+                        <a href="services.html">
+                            <i class="fas fa-leaf" aria-hidden="true"></i>
+                            Services
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.html">
+                            <i class="fas fa-user" aria-hidden="true"></i>
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contact.html">
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <button class="logout-btn" aria-label="Logout">
+                <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                Logout
             </button>
-          </div>
-        </div>
-        <section class="dashboard-sections">
-          <div class="dashboard-card" id="serviceRequests">
-            <h3>Your Service Requests</h3>
-            <ul>
-              <li class="empty">No service requests yet.</li>
-            </ul>
-          </div>
-          <div class="dashboard-card" id="newRequest">
-            <h3>Submit New Service Request</h3>
-            <form id="requestForm">
-              <label for="serviceType">Service Type</label>
-              <select id="serviceType" required="">
-                <option value="">Select...</option>
-                <option value="Lawn Mowing">Lawn Mowing</option>
-                <option value="Hedge Trimming">Hedge Trimming</option>
-                <option value="Leaf Cleanup">Leaf Cleanup</option>
-                <option value="Mulching">Mulching</option>
-                <option value="Fertilization">Fertilization</option>
-                <option value="Weed Control">Weed Control</option>
-                <option value="Garden Design">Garden Design</option>
-                <option value="Seasonal Cleanup">Seasonal Cleanup</option>
-                <option value="Driveway Pressure Washing">Driveway Pressure Washing</option>
-                <option value="Sidewalk Pressure Washing">Sidewalk Pressure Washing</option>
-                <option value="Patio Pressure Washing">Patio Pressure Washing</option>
-                <option value="Deck Pressure Washing">Deck Pressure Washing</option>
-                <option value="Fence Pressure Washing">Fence Pressure Washing</option>
-                <option value="House Exterior Pressure Washing">
-                  House Exterior Pressure Washing
-                </option>
-              </select>
-              <label for="preferredDate">Preferred Date</label>
-              <input type="date" id="preferredDate" required="">
-              <label for="requestNotes">Notes</label>
-              <textarea id="requestNotes" placeholder="Any special instructions..."></textarea>
-              <button type="submit">Submit Request</button>
-            </form>
-          </div>
-          <div class="dashboard-card" id="upcomingAppointments">
-            <h3>Upcoming Appointments</h3>
-            <ul>
-              <li class="empty">No upcoming appointments.</li>
-            </ul>
-          </div>
-          <div class="dashboard-card" id="serviceHistory">
-            <h3>Service History</h3>
-            <ul>
-              <li class="service-history-item">
-                <div class="service-info">
-                  <strong>Lawn Mowing</strong>
-                  <span class="date">March 15, 2024</span>
+        </aside>
+        
+        <main id="main-content" class="dashboard-main" role="main">
+            <div class="dashboard-header">
+                <div class="greeting">Welcome back, <span id="userName">Customer</span>!</div>
+                <div class="header-actions">
+                    <div class="notifications-panel">
+                        <button class="notifications-toggle" id="notificationsToggle" aria-label="View notifications">
+                            <i class="fas fa-bell" aria-hidden="true"></i>
+                            <span class="notification-badge" id="notificationBadge">0</span>
+                        </button>
+                        <div class="notifications-dropdown" id="notificationsDropdown">
+                            <div class="notifications-header">
+                                <h3>Notifications</h3>
+                                <button class="mark-read-btn" id="markAllReadBtn">Mark all as read</button>
+                            </div>
+                            <div class="notifications-list" id="notificationsList">
+                                <div class="empty-state">
+                                    <i class="fas fa-bell-slash" aria-hidden="true"></i>
+                                    <p>No notifications yet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="clearCacheBtn" class="action-btn" aria-label="Clear cache">
+                        <i class="fas fa-sync" aria-hidden="true"></i>
+                        Clear Cache
+                    </button>
                 </div>
-                <span class="status completed">Completed</span>
-              </li>
-              <li class="service-history-item">
-                <div class="service-info">
-                  <strong>Hedge Trimming</strong>
-                  <span class="date">March 1, 2024</span>
-                </div>
-                <span class="status completed">Completed</span>
-              </li>
-            </ul>
-            <a href="#" class="view-all">View All Services</a>
-          </div>
-          <div class="dashboard-card" id="paymentHistory">
-            <h3>Payment History</h3>
-            <ul>
-              <li class="payment-history-item">
-                <div class="payment-info">
-                  <strong>Lawn Mowing Service</strong>
-                  <span class="invoice-number">INV-2024-001</span>
-                  <span class="date">March 15, 2024</span>
-                </div>
-                <div class="payment-details">
-                  <span class="amount">$75.00</span>
-                  <span class="status completed">Paid</span>
-                </div>
-              </li>
-              <li class="payment-history-item">
-                <div class="payment-info">
-                  <strong>Hedge Trimming Service</strong>
-                  <span class="invoice-number">INV-2024-002</span>
-                  <span class="date">March 1, 2024</span>
-                </div>
-                <div class="payment-details">
-                  <span class="amount">$120.00</span>
-                  <span class="status completed">Paid</span>
-                </div>
-              </li>
-            </ul>
-            <a href="#" class="view-all">View All Payments</a>
-          </div>
-          <div class="dashboard-card" id="profile">
-            <h3>My Profile</h3>
-            <ul class="profile-info">
-              <li><strong>Name:</strong> <span id="profileName">Customer</span></li>
-              <li><strong>Email:</strong> <span id="profileEmail">customer@email.com</span></li>
-              <li><strong>Phone:</strong> <span id="profilePhone">Not provided</span></li>
-              <li><strong>Address:</strong> <span id="profileAddress">Not provided</span></li>
-              <li><strong>Member Since:</strong> <span id="profileJoinDate">Not available</span></li>
-              <li><strong>Last Service:</strong> <span id="profileLastService">Not available</span></li>
-            </ul>
-            <button id="editProfileBtn" class="action-btn" style="margin-top: 1rem;">
-              <i class="fas fa-edit"></i> Edit Profile
-            </button>
-          </div>
-          <div class="dashboard-card" id="support">
-            <h3>Support / Contact</h3>
-            <form id="supportForm">
-              <label for="supportMessage">Message</label>
-              <textarea id="supportMessage" required="" placeholder="How can we help you?"></textarea>
-              <button type="submit">Send Message</button>
-            </form>
-          </div>
-          <div class="dashboard-section" id="unpaidInvoices">
-            <h2>Unpaid Invoices</h2>
-            <div id="unpaidInvoices">
-              <ul>
-                <li class="empty">Loading invoices...</li>
-              </ul>
             </div>
-          </div>
-        </section>
-      </main>
+            
+            <section class="dashboard-sections">
+                <div class="dashboard-card" id="serviceRequests">
+                    <h3>Your Service Requests</h3>
+                    <ul>
+                        <li class="empty">No service requests yet.</li>
+                    </ul>
+                </div>
+                
+                <div class="dashboard-card" id="newRequest">
+                    <h3>Submit New Service Request</h3>
+                    <form id="requestForm">
+                        <div class="form-group">
+                            <label for="serviceType">Service Type</label>
+                            <select id="serviceType" required>
+                                <option value="">Select...</option>
+                                <option value="Lawn Mowing">Lawn Mowing</option>
+                                <option value="Hedge Trimming">Hedge Trimming</option>
+                                <option value="Leaf Cleanup">Leaf Cleanup</option>
+                                <option value="Mulching">Mulching</option>
+                                <option value="Fertilization">Fertilization</option>
+                                <option value="Weed Control">Weed Control</option>
+                                <option value="Garden Design">Garden Design</option>
+                                <option value="Seasonal Cleanup">Seasonal Cleanup</option>
+                                <option value="Driveway Pressure Washing">Driveway Pressure Washing</option>
+                                <option value="Sidewalk Pressure Washing">Sidewalk Pressure Washing</option>
+                                <option value="Patio Pressure Washing">Patio Pressure Washing</option>
+                                <option value="Deck Pressure Washing">Deck Pressure Washing</option>
+                                <option value="Fence Pressure Washing">Fence Pressure Washing</option>
+                                <option value="House Exterior Pressure Washing">House Exterior Pressure Washing</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="preferredDate">Preferred Date</label>
+                            <input type="date" id="preferredDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="requestNotes">Notes</label>
+                            <textarea id="requestNotes" placeholder="Any special instructions..."></textarea>
+                        </div>
+                        <button type="submit">Submit Request</button>
+                    </form>
+                </div>
+                
+                <div class="dashboard-card" id="upcomingAppointments">
+                    <h3>Upcoming Appointments</h3>
+                    <ul>
+                        <li class="empty">No upcoming appointments.</li>
+                    </ul>
+                </div>
+                
+                <div class="dashboard-card" id="serviceHistory">
+                    <h3>Service History</h3>
+                    <ul>
+                        <li class="service-history-item">
+                            <div class="service-info">
+                                <strong>Lawn Mowing</strong>
+                                <span class="date">March 15, 2024</span>
+                            </div>
+                            <span class="status completed">Completed</span>
+                        </li>
+                        <li class="service-history-item">
+                            <div class="service-info">
+                                <strong>Hedge Trimming</strong>
+                                <span class="date">March 1, 2024</span>
+                            </div>
+                            <span class="status completed">Completed</span>
+                        </li>
+                    </ul>
+                    <a href="#" class="view-all">View All Services</a>
+                </div>
+                
+                <div class="dashboard-card" id="paymentHistory">
+                    <h3>Payment History</h3>
+                    <ul>
+                        <li class="payment-history-item">
+                            <div class="payment-info">
+                                <strong>Lawn Mowing Service</strong>
+                                <span class="invoice-number">INV-2024-001</span>
+                                <span class="date">March 15, 2024</span>
+                            </div>
+                            <div class="payment-details">
+                                <span class="amount">$75.00</span>
+                                <span class="status completed">Paid</span>
+                            </div>
+                        </li>
+                        <li class="payment-history-item">
+                            <div class="payment-info">
+                                <strong>Hedge Trimming Service</strong>
+                                <span class="invoice-number">INV-2024-002</span>
+                                <span class="date">March 1, 2024</span>
+                            </div>
+                            <div class="payment-details">
+                                <span class="amount">$120.00</span>
+                                <span class="status completed">Paid</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="#" class="view-all">View All Payments</a>
+                </div>
+                
+                <div class="dashboard-card" id="profile">
+                    <h3>My Profile</h3>
+                    <ul class="profile-info">
+                        <li><strong>Name:</strong> <span id="profileName">Customer</span></li>
+                        <li><strong>Email:</strong> <span id="profileEmail">customer@email.com</span></li>
+                        <li><strong>Phone:</strong> <span id="profilePhone">Not provided</span></li>
+                        <li><strong>Address:</strong> <span id="profileAddress">Not provided</span></li>
+                        <li><strong>Member Since:</strong> <span id="profileJoinDate">Not available</span></li>
+                        <li><strong>Last Service:</strong> <span id="profileLastService">Not available</span></li>
+                    </ul>
+                    <button id="editProfileBtn" class="action-btn">
+                        <i class="fas fa-edit" aria-hidden="true"></i>
+                        Edit Profile
+                    </button>
+                </div>
+                
+                <div class="dashboard-card" id="support">
+                    <h3>Support / Contact</h3>
+                    <form id="supportForm">
+                        <div class="form-group">
+                            <label for="supportMessage">Message</label>
+                            <textarea id="supportMessage" required placeholder="How can we help you?"></textarea>
+                        </div>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </section>
+        </main>
     </div>
-    <footer class="footer" role="contentinfo" aria-label="Site footer" style="margin-top: 2rem">
-      <div class="footer-content">
-        <div class="footer-main">
-          <div class="footer-section">
-            <h3>Contact Us</h3>
-            <div class="footer-contact">
-              <span class="footer-owner">Karl Holliday</span>
-              <a href="tel:+15047171887" aria-label="Call us">
-                <i class="fas fa-phone" aria-hidden="true"></i>
-                <span>(504) 717-1887</span>
-              </a>
-              <a href="mailto:7holliday@gmail.com" aria-label="Email us">
-                <i class="fas fa-envelope" aria-hidden="true"></i>
-                <span>7holliday@gmail.com</span>
-              </a>
+    
+    <footer class="footer" role="contentinfo" aria-label="Site footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="footer-contact">
+                        <span class="footer-owner">Karl Holliday</span>
+                        <a href="tel:+15047171887" aria-label="Call us">
+                            <i class="fas fa-phone" aria-hidden="true"></i>
+                            <span>(504) 717-1887</span>
+                        </a>
+                        <a href="mailto:7holliday@gmail.com" aria-label="Email us">
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <span>7holliday@gmail.com</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Portal</h3>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                        <li><a href="customer-dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="footer-section">
-            <h3>Quick Links</h3>
-            <ul>
-              <li><a href="about.html">About Us</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="education.html">Education</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h3>Customer Portal</h3>
-            <ul>
-              <li><a href="login.html">Login</a></li>
-              <li><a href="register.html">Register</a></li>
-              <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-              <li><a href="customer-dashboard.html">Dashboard</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h3>Legal</h3>
-            <ul>
-              <li><a href="privacy.html">Privacy Policy</a></li>
-              <li><a href="terms.html">Terms of Service</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h3>Connect With Us</h3>
-            <div class="footer-social">
-              <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
-                <i class="fab fa-facebook" aria-hidden="true"></i>
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
-                <i class="fab fa-twitter" aria-hidden="true"></i>
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
-                <i class="fab fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
-                <i class="fab fa-linkedin" aria-hidden="true"></i>
-              </a>
+            <div class="footer-bottom">
+                <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
             </div>
-          </div>
         </div>
-        <div class="footer-bottom">
-          <p>
-            © <span id="current-year"></span> Holliday's Lawn &amp; Garden. All rights reserved.
-          </p>
-        </div>
-      </div>
     </footer>
 
-    <!-- PayPal Smart Payment Buttons -->
+    <!-- Scripts -->
     <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
     <script type="module" src="assets/js/firebase-config.js?v=1.0.1"></script>
     <script type="module" src="assets/js/main.js?v=1.0.1" defer></script>
     <script type="module" src="assets/js/modules/customer_dashboard.js?v=1.0.1" defer></script>
     <script type="module" src="assets/js/unpaid-invoices.js" defer></script>
-    <script type="module" defer>
-      import { app } from './assets/js/firebase-config.js';
-      import { 
-        getAuth, 
-        onAuthStateChanged, 
-        signOut,
-        setPersistence,
-        browserSessionPersistence,
-        signInWithEmailAndPassword
-      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-      import { 
-        getFirestore, 
-        doc, 
-        getDoc, 
-        updateDoc, 
-        serverTimestamp, 
-        collection, 
-        query, 
-        where, 
-        getDocs, 
-        addDoc,
-        orderBy,
-        limit
-      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-      import { updateDashboardUI, initializeEventListeners, handleLogout } from './assets/js/modules/customer_dashboard.js';
-      import { loadUnpaidInvoices } from './assets/js/unpaid-invoices.js';
-
-      // Initialize Firebase services
-      const auth = getAuth(app);
-      const db = getFirestore(app);
-
-      // Set persistence to SESSION
-      setPersistence(auth, browserSessionPersistence)
-        .catch((error) => {
-          console.error("Auth persistence error:", error);
-        });
-
-      // Initialize event listeners when DOM is loaded
-      document.addEventListener('DOMContentLoaded', () => {
-        // Check authentication state
-        onAuthStateChanged(auth, user => {
-          if (!user) {
-            // Check if we have a stored session
-            const storedUser = sessionStorage.getItem('user');
-            if (storedUser) {
-              try {
-                const userData = JSON.parse(storedUser);
-                // Attempt to restore the session
-                signInWithEmailAndPassword(auth, userData.email, userData.password)
-                  .catch(() => {
-                    // If restoration fails, redirect to login
-                    sessionStorage.removeItem('user');
-                    window.location.href = 'login.html';
-                  });
-              } catch (error) {
-                sessionStorage.removeItem('user');
-                window.location.href = 'login.html';
-              }
-            } else {
-              window.location.href = 'login.html';
-            }
-            return;
-          }
-          // Store user session
-          sessionStorage.setItem('user', JSON.stringify({
-            email: user.email,
-            uid: user.uid
-          }));
-          initializeDashboard(user);
-        });
-
-        // Initialize event listeners
-        initializeEventListeners();
-      });
-
-      async function initializeDashboard(user) {
-        console.log('=== Firebase User Object ===');
-        console.log('User:', user);
-        console.log('User metadata:', user.metadata);
-        console.log('User creation time:', user.metadata.creationTime);
-        console.log('User last sign in:', user.metadata.lastSignInTime);
-        console.log('User display name:', user.displayName);
-        console.log('User email:', user.email);
-        console.log('User UID:', user.uid);
-        
-        // Update UI with user info
-        const profileName = document.getElementById('profileName');
-        const profileEmail = document.getElementById('profileEmail');
-        const customerName = document.getElementById('customerName');
-        const profileLastService = document.getElementById('profileLastService');
-        
-        if (profileName) profileName.textContent = user.displayName || 'Customer';
-        if (profileEmail) profileEmail.textContent = user.email || '';
-        if (customerName) customerName.textContent = user.displayName || 'Customer';
-
-        // Load user's data from Firestore
-        try {
-          // Get user document
-          const userDoc = await getDoc(doc(db, 'users', user.uid));
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            
-            // Get last service from services subcollection
-            const servicesQuery = query(
-              collection(db, 'users', user.uid, 'services'),
-              orderBy('date', 'desc'),
-              limit(1)
-            );
-            
-            const servicesSnapshot = await getDocs(servicesQuery);
-            if (!servicesSnapshot.empty) {
-              const lastService = servicesSnapshot.docs[0].data();
-              const serviceDate = lastService.date.toDate();
-              profileLastService.textContent = `${lastService.type} (${serviceDate.toLocaleDateString()})`;
-            } else {
-              profileLastService.textContent = 'No services yet';
-            }
-            
-            // Update rest of the dashboard UI
-            updateDashboardUI(userData);
-          }
-          
-          // Load unpaid invoices
-          await loadUnpaidInvoices(user.uid);
-        } catch (error) {
-          console.error('Error loading user data:', error);
-          profileLastService.textContent = 'Error loading service history';
-        }
-      }
-
-      // PayPal Button Render
-      function renderPayPalButton(amount) {
-        if (!window.paypal) return;
-        paypal.Buttons({
-          createOrder: function(data, actions) {
-            return actions.order.create({
-              purchase_units: [{ amount: { value: amount } }]
-            });
-          },
-          onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-              // Call backend or Firestore update here
-              window.paymentManager.handlePayPalSuccess(details);
-              showNotification('PayPal payment successful!', 'success');
-            });
-          }
-        }).render('#paypal-button-container');
-      }
-
-      // Show PayPal button when payment modal opens
-      function showPaymentModal() {
-        document.getElementById('paymentModal').style.display = 'block';
-        setTimeout(() => {
-          const amount = document.getElementById('paymentAmount').value || '10.00';
-          renderPayPalButton(amount);
-        }, 500);
-      }
-
-      // Emergency Request
-      function handleEmergencyRequest() {
-        window.communicationSystem.sendEmergencyRequest();
-        showNotification('Emergency request sent!', 'info');
-      }
-
-      // Feedback Submit
-      async function handleFeedbackSubmit(event) {
-        event.preventDefault();
-        const feedback = document.getElementById('feedbackText').value;
-        const rating = document.getElementById('serviceRating').value;
-        await window.communicationSystem.submitFeedback({ feedback, rating });
-        showNotification('Feedback submitted!', 'success');
-        document.getElementById('feedbackForm').reset();
-      }
-
-      // Add edit profile button functionality
-      const editProfileBtn = document.getElementById('editProfileBtn');
-      if (editProfileBtn) {
-        editProfileBtn.addEventListener('click', () => {
-          window.location.href = 'profile.html';
-        });
-      }
-
-      // Notification Queue System
-      const notificationQueue = [];
-      let isProcessingQueue = false;
-
-      function processNotificationQueue() {
-        if (isProcessingQueue || notificationQueue.length === 0) return;
-        
-        isProcessingQueue = true;
-        const { message, type, duration } = notificationQueue.shift();
-        
-        showNotification(message, type, duration);
-        
-        setTimeout(() => {
-          isProcessingQueue = false;
-          processNotificationQueue();
-        }, duration + 300);
-      }
-
-      function queueNotification(message, type = 'info', duration = 3000) {
-        notificationQueue.push({ message, type, duration });
-        processNotificationQueue();
-      }
-
-      // Enhanced Notification System
-      function showNotification(message, type = 'info', duration = 3000) {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.innerHTML = `
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <i class="fas ${getNotificationIcon(type)}"></i>
-            <span>${message}</span>
-          </div>
-        `;
-        document.body.appendChild(notification);
-        
-        // Add to notification history
-        addToNotificationHistory(message, type);
-        
-        // Remove notification after duration
-        setTimeout(() => {
-          notification.style.opacity = '0';
-          notification.style.transform = 'translateX(100%)';
-          setTimeout(() => notification.remove(), 300);
-        }, duration);
-      }
-
-      function getNotificationIcon(type) {
-        switch (type) {
-          case 'success':
-            return 'fa-check-circle';
-          case 'error':
-            return 'fa-exclamation-circle';
-          case 'info':
-          default:
-            return 'fa-info-circle';
-        }
-      }
-
-      function addToNotificationHistory(message, type) {
-        const notificationsList = document.getElementById('notificationsList');
-        const emptyState = notificationsList.querySelector('.empty-state');
-        
-        if (emptyState) {
-          emptyState.remove();
-        }
-        
-        const notificationItem = document.createElement('div');
-        notificationItem.className = `notification-item ${type}`;
-        notificationItem.innerHTML = `
-          <div class="notification-icon">
-            <i class="fas ${getNotificationIcon(type)}"></i>
-          </div>
-          <div class="notification-content">
-            <p>${message}</p>
-            <span class="notification-time">${new Date().toLocaleTimeString()}</span>
-          </div>
-          <button class="mark-read-btn" title="Mark as read">
-            <i class="fas fa-check"></i>
-          </button>
-        `;
-        
-        notificationsList.insertBefore(notificationItem, notificationsList.firstChild);
-        updateNotificationBadge();
-      }
-
-      function updateNotificationBadge() {
-        const badge = document.getElementById('notificationBadge');
-        const unreadCount = document.querySelectorAll('.notification-item:not(.read)').length;
-        badge.textContent = unreadCount;
-        badge.style.display = unreadCount > 0 ? 'flex' : 'none';
-      }
-
-      // Toggle notifications panel
-      document.getElementById('notificationsToggle').addEventListener('click', (e) => {
-        e.stopPropagation();
-        const dropdown = document.getElementById('notificationsDropdown');
-        dropdown.classList.toggle('active');
-      });
-
-      // Close notifications panel when clicking outside
-      document.addEventListener('click', (e) => {
-        const dropdown = document.getElementById('notificationsDropdown');
-        const toggle = document.getElementById('notificationsToggle');
-        if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
-          dropdown.classList.remove('active');
-        }
-      });
-
-      // Mark all as read
-      document.getElementById('markAllReadBtn').addEventListener('click', () => {
-        document.querySelectorAll('.notification-item').forEach(item => {
-          item.classList.add('read');
-        });
-        updateNotificationBadge();
-      });
-
-      // Payment Manager
-      window.paymentManager = {
-        handlePayPalSuccess: async function(details) {
-          try {
-            // Update payment status in Firestore
-            const user = auth.currentUser;
-            if (!user) return;
-            
-            // Add payment record
-            await addDoc(collection(db, 'payments'), {
-              userId: user.uid,
-              amount: details.purchase_units[0].amount.value,
-              status: 'completed',
-              paymentId: details.id,
-              timestamp: serverTimestamp()
-            });
-            
-            // Update invoice status if applicable
-            const invoiceId = new URLSearchParams(window.location.search).get('invoice');
-            if (invoiceId) {
-              await updateDoc(doc(db, 'invoices', invoiceId), {
-                status: 'paid',
-                paidAt: serverTimestamp()
-              });
-            }
-          } catch (error) {
-            console.error('Error handling payment:', error);
-            showNotification('Error processing payment', 'error');
-          }
-        }
-      };
-
-      // Communication System
-      window.communicationSystem = {
-        sendEmergencyRequest: async function() {
-          try {
-            const user = auth.currentUser;
-            if (!user) return;
-            
-            await addDoc(collection(db, 'emergency_requests'), {
-              userId: user.uid,
-              status: 'pending',
-              timestamp: serverTimestamp()
-            });
-          } catch (error) {
-            console.error('Error sending emergency request:', error);
-            showNotification('Error sending emergency request', 'error');
-          }
-        },
-        
-        submitFeedback: async function({ feedback, rating }) {
-          try {
-            const user = auth.currentUser;
-            if (!user) return;
-            
-            await addDoc(collection(db, 'feedback'), {
-              userId: user.uid,
-              feedback,
-              rating,
-              timestamp: serverTimestamp()
-            });
-          } catch (error) {
-            console.error('Error submitting feedback:', error);
-            showNotification('Error submitting feedback', 'error');
-          }
-        }
-      };
-
-      // Add cache clearing functionality
-      document.getElementById('clearCacheBtn').addEventListener('click', async () => {
-        try {
-          if ('serviceWorker' in navigator) {
-            const registration = await navigator.serviceWorker.getRegistration();
-            if (registration) {
-              await registration.update();
-              queueNotification('Cache cleared successfully!', 'success');
-            }
-          }
-          // Force reload after a short delay
-          setTimeout(() => {
-            window.location.reload(true);
-          }, 1000);
-        } catch (error) {
-          queueNotification('Failed to clear cache. Please try again.', 'error');
-        }
-      });
-
-      // Test service history
-      async function testServiceHistory() {
-        const user = auth.currentUser;
-        if (!user) {
-          console.error('No user logged in');
-          return;
-        }
-
-        try {
-          // Get last service from services subcollection
-          const servicesQuery = query(
-            collection(db, 'users', user.uid, 'services'),
-            orderBy('date', 'desc'),
-            limit(1)
-          );
-
-          const servicesSnapshot = await getDocs(servicesQuery);
-          
-          if (!servicesSnapshot.empty) {
-            const lastService = servicesSnapshot.docs[0].data();
-            const serviceDate = lastService.date.toDate();
-            console.log('Last Service:', {
-              type: lastService.type,
-              date: serviceDate.toLocaleDateString(),
-              status: lastService.status
-            });
-            
-            // Update the UI
-            const profileLastService = document.getElementById('profileLastService');
-            if (profileLastService) {
-              profileLastService.textContent = `${lastService.type} (${serviceDate.toLocaleDateString()})`;
-            }
-          } else {
-            console.log('No services found');
-            const profileLastService = document.getElementById('profileLastService');
-            if (profileLastService) {
-              profileLastService.textContent = 'No services yet';
-            }
-          }
-        } catch (error) {
-          console.error('Error fetching service history:', error);
-        }
-      }
-
-      // Run the test
-      testServiceHistory();
-    </script>
-  </body>
+</body>
 </html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Expired - Holliday's Lawn & Garden</title>
+    <meta name="description" content="Your payment session has expired. Please try again to complete your transaction.">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Payment Expired - Holliday's Lawn & Garden",
+        "description": "Your payment session has expired. Please try again to complete your transaction.",
+        "url": "https://hollidaylawngarden.com/payment-expired"
+    }
+    </script>
+</head>
+<body>
+    <div id="loading-overlay" class="loading-overlay" style="display:none">
+        <div class="spinner"></div>
+        <p id="loading-message">Loading...</p>
+    </div>
+
+    <header class="main-header">
+        <a href="index.html" class="logo">
+            <img src="assets/images/hollidays-logo.webp" alt="Holliday's Lawn & Garden Logo">
+        </a>
+        <nav aria-label="Main navigation">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                <li><a href="education.html">Education</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="payment-status-container">
+            <div class="payment-status-card expired">
+                <i class="fas fa-clock"></i>
+                <h1>Payment Session Expired</h1>
+                <p>Your payment session has expired.</p>
+                <div class="payment-status-details">
+                    <p>Payment sessions are valid for 30 minutes from the time of creation.</p>
+                    <p>No charges have been made to your account.</p>
+                </div>
+                <div class="payment-actions">
+                    <a href="pay-your-bill.html" class="btn primary">Start New Payment</a>
+                    <a href="contact.html" class="btn secondary">Contact Support</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Karl Holliday</p>
+                <p><i class="fas fa-phone"></i> (504) 717-1887</p>
+                <p><i class="fas fa-envelope"></i> 7holliday@gmail.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html> 

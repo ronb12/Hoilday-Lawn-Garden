@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed - Holliday's Lawn & Garden</title>
+    <meta name="description" content="Your payment could not be processed. Please try again or contact us for assistance.">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Payment Failed - Holliday's Lawn & Garden",
+        "description": "Your payment could not be processed. Please try again or contact us for assistance.",
+        "url": "https://hollidaylawngarden.com/payment-failed"
+    }
+    </script>
+</head>
+<body>
+    <div id="loading-overlay" class="loading-overlay" style="display:none">
+        <div class="spinner"></div>
+        <p id="loading-message">Loading...</p>
+    </div>
+
+    <header class="main-header">
+        <a href="index.html" class="logo">
+            <img src="assets/images/hollidays-logo.webp" alt="Holliday's Lawn & Garden Logo">
+        </a>
+        <nav aria-label="Main navigation">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                <li><a href="education.html">Education</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="payment-status-container">
+            <div class="payment-status-card failed">
+                <i class="fas fa-times-circle"></i>
+                <h1>Payment Failed</h1>
+                <p>We were unable to process your payment. This could be due to:</p>
+                <ul>
+                    <li>Insufficient funds</li>
+                    <li>Invalid card information</li>
+                    <li>Bank declined the transaction</li>
+                    <li>Technical issues</li>
+                </ul>
+                <div class="payment-actions">
+                    <a href="pay-your-bill.html" class="btn primary">Try Again</a>
+                    <a href="contact.html" class="btn secondary">Contact Support</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Karl Holliday</p>
+                <p><i class="fas fa-phone"></i> (504) 717-1887</p>
+                <p><i class="fas fa-envelope"></i> 7holliday@gmail.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html> 

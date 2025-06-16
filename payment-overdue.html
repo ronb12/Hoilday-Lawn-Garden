@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Overdue - Holliday's Lawn & Garden</title>
+    <meta name="description" content="Your payment is overdue. Please make a payment as soon as possible to avoid service interruption.">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Payment Overdue - Holliday's Lawn & Garden",
+        "description": "Your payment is overdue. Please make a payment as soon as possible to avoid service interruption.",
+        "url": "https://hollidaylawngarden.com/payment-overdue"
+    }
+    </script>
+</head>
+<body>
+    <div id="loading-overlay" class="loading-overlay" style="display:none">
+        <div class="spinner"></div>
+        <p id="loading-message">Loading...</p>
+    </div>
+
+    <header class="main-header">
+        <a href="index.html" class="logo">
+            <img src="assets/images/hollidays-logo.webp" alt="Holliday's Lawn & Garden Logo">
+        </a>
+        <nav aria-label="Main navigation">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                <li><a href="education.html">Education</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="payment-status-container">
+            <div class="payment-status-card overdue">
+                <i class="fas fa-exclamation-circle"></i>
+                <h1>Payment Overdue</h1>
+                <p>Your payment is overdue. Please make a payment as soon as possible.</p>
+                <div class="payment-status-details">
+                    <p>Payment Details:</p>
+                    <ul>
+                        <li>Account Number: <span id="account-number">XXXX-XXXX</span></li>
+                        <li>Due Date: <span id="due-date">MM/DD/YYYY</span></li>
+                        <li>Amount Due: <span id="amount-due">$0.00</span></li>
+                        <li>Days Overdue: <span id="days-overdue">0</span></li>
+                    </ul>
+                    <p>Important Information:</p>
+                    <ul>
+                        <li>Late fees may apply</li>
+                        <li>Service may be interrupted if payment is not received</li>
+                        <li>Payment plans may be available</li>
+                        <li>Contact us for assistance</li>
+                    </ul>
+                    <p>Payment Options:</p>
+                    <ul>
+                        <li>Online payment (available 24/7)</li>
+                        <li>Phone payment: (504) 717-1887</li>
+                        <li>In-person payment at our office</li>
+                        <li>Mail-in payment</li>
+                    </ul>
+                    <p>If you're experiencing financial difficulties, please contact our support team to discuss payment arrangements.</p>
+                </div>
+                <div class="payment-actions">
+                    <a href="pay-your-bill.html" class="btn primary">Make Payment Now</a>
+                    <a href="contact.html" class="btn secondary">Contact Support</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Karl Holliday</p>
+                <p><i class="fas fa-phone"></i> (504) 717-1887</p>
+                <p><i class="fas fa-envelope"></i> 7holliday@gmail.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Get overdue details from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const accountNumber = urlParams.get('account') || 'XXXX-XXXX';
+        const dueDate = urlParams.get('due') || new Date().toLocaleDateString();
+        const amountDue = urlParams.get('amount') || '$0.00';
+        const daysOverdue = urlParams.get('days') || '0';
+        
+        document.getElementById('account-number').textContent = accountNumber;
+        document.getElementById('due-date').textContent = dueDate;
+        document.getElementById('amount-due').textContent = amountDue;
+        document.getElementById('days-overdue').textContent = daysOverdue;
+    </script>
+</body>
+</html> 

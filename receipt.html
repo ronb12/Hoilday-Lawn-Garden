@@ -1,129 +1,198 @@
-<footer class="footer" role="contentinfo" aria-label="Site footer">
-  <div class="footer-content">
-    <div class="footer-main">
-      <div class="footer-section">
-        <h3>Contact Us</h3>
-        <div class="footer-contact">
-          <span class="footer-owner">Karl Holliday</span>
-          <a href="tel:+15047171887" aria-label="Call us">
-            <i class="fas fa-phone" aria-hidden="true"></i>
-            <span>(504) 717-1887</span>
-          </a>
-          <a href="mailto:7holliday@gmail.com" aria-label="Email us">
-            <i class="fas fa-envelope" aria-hidden="true"></i>
-            <span>7holliday@gmail.com</span>
-          </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Payment Receipt - Holliday's Lawn & Garden</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="View your payment receipt from Holliday's Lawn & Garden">
+    <meta name="theme-color" content="#2e7d32">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/favicon/favicon-32x32.png" type="image/png">
+</head>
+<body>
+    <!-- Skip to Main Content -->
+    <a href="#main-content" class="skip-to-main">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <picture>
+                    <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+                    <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" loading="lazy">
+                </picture>
+            </a>
         </div>
-      </div>
-      <div class="footer-section">
-        <h3>Quick Links</h3>
-        <ul>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="education.html">Education</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h3>Customer Portal</h3>
-        <ul>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="register.html">Register</a></li>
-          <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-          <li><a href="customer-dashboard.html">Dashboard</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h3>Legal</h3>
-        <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h3>Connect With Us</h3>
-        <div class="footer-social">
-          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
-            <i class="fab fa-facebook" aria-hidden="true"></i>
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
-            <i class="fab fa-twitter" aria-hidden="true"></i>
-          </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
-            <i class="fab fa-instagram" aria-hidden="true"></i>
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <i class="fab fa-linkedin" aria-hidden="true"></i>
-          </a>
+        <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                <li><a href="login.html" class="btn btn-secondary">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="receipt-section">
+        <div class="receipt-container">
+            <div class="receipt-header">
+                <h1>Payment Receipt</h1>
+                <div class="receipt-status success">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Payment Successful</span>
+                </div>
+            </div>
+
+            <div class="receipt-details">
+                <div class="receipt-info">
+                    <div class="info-group">
+                        <h3>Transaction Details</h3>
+                        <p><strong>Receipt Number:</strong> <span id="receipt-number"></span></p>
+                        <p><strong>Date:</strong> <span id="receipt-date"></span></p>
+                        <p><strong>Time:</strong> <span id="receipt-time"></span></p>
+                        <p><strong>Payment Method:</strong> <span id="payment-method"></span></p>
+                    </div>
+
+                    <div class="info-group">
+                        <h3>Payment Summary</h3>
+                        <p><strong>Amount Paid:</strong> <span id="amount-paid"></span></p>
+                        <p><strong>Service:</strong> <span id="service-type"></span></p>
+                        <p><strong>Status:</strong> <span class="status-badge confirmed">Confirmed</span></p>
+                    </div>
+                </div>
+
+                <div class="receipt-actions">
+                    <button class="btn btn-primary" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print Receipt
+                    </button>
+                    <button class="btn btn-secondary" onclick="downloadPDF()">
+                        <i class="fas fa-download"></i> Download PDF
+                    </button>
+                    <a href="customer-dashboard.html" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
+    </main>
+
+    <!-- Footer -->
     <footer class="footer" role="contentinfo" aria-label="Site footer">
-      <div class="footer-content">
-        <div class="footer-main">
-          <div class="footer-section">
-            <h3>Contact Us</h3>
-            <div class="footer-contact">
-              <span class="footer-owner">Karl Holliday</span>
-              <a href="tel:+15047171887" aria-label="Call us">
-                <i class="fas fa-phone" aria-hidden="true"></i>
-                <span>(504) 717-1887</span>
-              </a>
-              <a href="mailto:7holliday@gmail.com" aria-label="Email us">
-                <i class="fas fa-envelope" aria-hidden="true"></i>
-                <span>7holliday@gmail.com</span>
-              </a>
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="footer-contact">
+                        <span class="footer-owner">Karl Holliday</span>
+                        <a href="tel:+15047171887" aria-label="Call us">
+                            <i class="fas fa-phone" aria-hidden="true"></i>
+                            <span>(504) 717-1887</span>
+                        </a>
+                        <a href="mailto:7holliday@gmail.com" aria-label="Email us">
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <span>7holliday@gmail.com</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Portal</h3>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                        <li><a href="customer-dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="footer-section">
-            <h3>Quick Links</h3>
-            <ul>
-              <li><a href="about.html">About Us</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="education.html">Education</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h3>Customer Portal</h3>
-            <ul>
-              <li><a href="login.html">Login</a></li>
-              <li><a href="register.html">Register</a></li>
-              <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-              <li><a href="customer-dashboard.html">Dashboard</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h3>Legal</h3>
-            <ul>
-              <li><a href="privacy.html">Privacy Policy</a></li>
-              <li><a href="terms.html">Terms of Service</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h3>Connect With Us</h3>
-            <div class="footer-social">
-              <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
-                <i class="fab fa-facebook" aria-hidden="true"></i>
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
-                <i class="fab fa-twitter" aria-hidden="true"></i>
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
-                <i class="fab fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
-                <i class="fab fa-linkedin" aria-hidden="true"></i>
-              </a>
+            <div class="footer-copyright">
+                <p>&copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
             </div>
-          </div>
         </div>
-        <div class="footer-copyright">
-          <p>
-            &copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.
-          </p>
-        </div>
-      </div>
     </footer>
-  </div>
-</footer>
+
+    <!-- Scripts -->
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Function to download receipt as PDF
+        function downloadPDF() {
+            // Implementation for PDF download
+            console.log('PDF download functionality to be implemented');
+        }
+
+        // Load receipt data
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get receipt data from URL parameters or localStorage
+            const urlParams = new URLSearchParams(window.location.search);
+            const receiptData = {
+                number: urlParams.get('receipt') || 'RCP-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString(),
+                method: 'Credit Card',
+                amount: '$150.00',
+                service: 'Lawn Maintenance'
+            };
+
+            // Populate receipt data
+            document.getElementById('receipt-number').textContent = receiptData.number;
+            document.getElementById('receipt-date').textContent = receiptData.date;
+            document.getElementById('receipt-time').textContent = receiptData.time;
+            document.getElementById('payment-method').textContent = receiptData.method;
+            document.getElementById('amount-paid').textContent = receiptData.amount;
+            document.getElementById('service-type').textContent = receiptData.service;
+        });
+    </script>
+</body>
+</html>

@@ -1,1 +1,72 @@
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"; import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"; import { app } from "./firebase-config.js"; const auth = getAuth(app); const db = getFirestore(app); const googleProvider = new GoogleAuthProvider(); const adminLoginForm = document.getElementById("adminLoginForm"); if (adminLoginForm) { adminLoginForm.addEventListener("submit", async (e) => { e.preventDefault(); const email = document.getElementById("email").value; const password = document.getElementById("password").value; const remember = document.getElementById("remember").checked; try { const submitButton = e.target.querySelector("button[type=submit]"); const originalText = submitButton.textContent; submitButton.disabled = true; submitButton.innerHTML = "<i class=\"fas fa-spinner fa-spin\"></i> Logging in..."; const userCredential = await signInWithEmailAndPassword(auth, email, password); const user = userCredential.user; const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || !userDoc.data().isAdmin) { throw new Error("Unauthorized access attempt"); } if (remember) { sessionStorage.setItem("adminSession", JSON.stringify({ uid: user.uid, email: user.email, timestamp: Date.now() })); } window.location.href = "admin-dashboard.html"; } catch (error) { console.error("Login error:", error); showNotification(error.message, "error"); const submitButton = e.target.querySelector("button[type=submit]"); submitButton.disabled = false; submitButton.textContent = "Login to Admin Panel"; } }); } const googleSigninButton = document.querySelector(".google-signin"); if (googleSigninButton) { googleSigninButton.addEventListener("click", async () => { try { const result = await signInWithPopup(auth, googleProvider); const user = result.user; const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || !userDoc.data().isAdmin) { throw new Error("Unauthorized access attempt"); } window.location.href = "admin-dashboard.html"; } catch (error) { console.error("Google sign-in error:", error); showNotification(error.message, "error"); } }); } function showNotification(message, type = "error") { const notification = document.createElement("div"); notification.className = `notification ${type}`; notification.innerHTML = `<span class="notification-message">${message}</span><button class="notification-close" aria-label="Close notification">&times;</button>`; document.body.appendChild(notification); const closeButton = notification.querySelector(".notification-close"); if (closeButton) { closeButton.addEventListener("click", () => { notification.remove(); }); } setTimeout(() => { notification.remove(); }, 5000); } const style = document.createElement("style"); style.textContent = `.notification{position:fixed;top:20px;right:20px;padding:1rem;border-radius:4px;background:white;box-shadow:0 2px 10px rgba(0,0,0,0.1);display:flex;align-items:center;gap:1rem;z-index:1000;animation:slideIn 0.3s ease}.notification.error{border-left:4px solid #dc3545}.notification.success{border-left:4px solid #28a745}.notification-message{color:#333}.notification-close{background:none;border:none;color:#666;cursor:pointer;font-size:1.25rem;padding:0;line-height:1}.notification-close:hover{color:#333}@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}`; document.head.appendChild(style);
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { app } from "./firebase-config.js";
+
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const adminLoginForm = document.getElementById("adminLoginForm");
+if (adminLoginForm) {
+    adminLoginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("adminEmail").value;
+        const password = document.getElementById("adminPassword").value;
+
+        try {
+            const submitButton = e.target.querySelector("button[type=submit]");
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+
+            // First, check if the email is in the admins collection
+            const adminDoc = await getDoc(doc(db, "admins", email));
+            if (!adminDoc.exists()) {
+                throw new Error("Invalid email or password");
+            }
+
+            // Then attempt to sign in
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Double-check admin status
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (!userDoc.exists() || !userDoc.data().isAdmin) {
+                // Sign out the user if they're not an admin
+                await auth.signOut();
+                throw new Error("Invalid email or password");
+            }
+
+            // Show success message
+            const successMessage = document.getElementById("successMessage");
+            if (successMessage) {
+                successMessage.style.display = "block";
+            }
+
+            // Redirect to admin dashboard
+            setTimeout(() => {
+                window.location.href = "admin-dashboard.html";
+            }, 1500);
+
+        } catch (error) {
+            console.error("Login error:", error);
+            showNotification(error.message, "error");
+            const submitButton = e.target.querySelector("button[type=submit]");
+            submitButton.disabled = false;
+            submitButton.textContent = "Sign In";
+        }
+    });
+}
+
+function showNotification(message, type = "error") {
+    const errorContainer = document.getElementById("error-container");
+    const errorMessage = document.getElementById("errorMessage");
+    
+    if (errorContainer && errorMessage) {
+        errorContainer.style.display = "block";
+        errorMessage.textContent = message;
+        
+        // Hide the error message after 5 seconds
+        setTimeout(() => {
+            errorContainer.style.display = "none";
+        }, 5000);
+    }
+}

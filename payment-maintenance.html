@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment System Maintenance - Holliday's Lawn & Garden</title>
+    <meta name="description" content="Our payment system is currently under maintenance. Please try again later or use alternative payment methods.">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Payment System Maintenance - Holliday's Lawn & Garden",
+        "description": "Our payment system is currently under maintenance. Please try again later or use alternative payment methods.",
+        "url": "https://hollidaylawngarden.com/payment-maintenance"
+    }
+    </script>
+</head>
+<body>
+    <div id="loading-overlay" class="loading-overlay" style="display:none">
+        <div class="spinner"></div>
+        <p id="loading-message">Loading...</p>
+    </div>
+
+    <header class="main-header">
+        <a href="index.html" class="logo">
+            <img src="assets/images/hollidays-logo.webp" alt="Holliday's Lawn & Garden Logo">
+        </a>
+        <nav aria-label="Main navigation">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                <li><a href="education.html">Education</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="payment-status-container">
+            <div class="payment-status-card maintenance">
+                <i class="fas fa-tools"></i>
+                <h1>Payment System Maintenance</h1>
+                <p>Our payment system is currently under maintenance.</p>
+                <div class="payment-status-details">
+                    <p>Maintenance Details:</p>
+                    <ul>
+                        <li>Start Time: <span id="start-time">MM/DD/YYYY HH:MM</span></li>
+                        <li>Estimated End Time: <span id="end-time">MM/DD/YYYY HH:MM</span></li>
+                        <li>Status: <span id="maintenance-status">In Progress</span></li>
+                    </ul>
+                    <p>Alternative payment methods available:</p>
+                    <ul>
+                        <li>Phone payment: (504) 717-1887</li>
+                        <li>In-person payment at our office</li>
+                        <li>Mail-in payment</li>
+                    </ul>
+                    <p>What we're doing:</p>
+                    <ul>
+                        <li>Updating our payment processing system</li>
+                        <li>Enhancing security features</li>
+                        <li>Improving payment processing speed</li>
+                        <li>Adding new payment options</li>
+                    </ul>
+                    <p>We apologize for any inconvenience. Please try again after the maintenance period or use one of our alternative payment methods.</p>
+                </div>
+                <div class="payment-actions">
+                    <a href="contact.html" class="btn primary">Contact Support</a>
+                    <a href="pay-your-bill.html" class="btn secondary">View Payment Options</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Karl Holliday</p>
+                <p><i class="fas fa-phone"></i> (504) 717-1887</p>
+                <p><i class="fas fa-envelope"></i> 7holliday@gmail.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Get maintenance details from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const startTime = urlParams.get('start') || new Date().toLocaleString();
+        const endTime = urlParams.get('end') || new Date(Date.now() + 2 * 60 * 60 * 1000).toLocaleString();
+        const maintenanceStatus = urlParams.get('status') || 'In Progress';
+        
+        document.getElementById('start-time').textContent = startTime;
+        document.getElementById('end-time').textContent = endTime;
+        document.getElementById('maintenance-status').textContent = maintenanceStatus;
+    </script>
+</body>
+</html> 
