@@ -36,17 +36,8 @@ import {
     getDownloadURL, 
     deleteObject 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+import { app } from "./firebase-config.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxX",
-    authDomain: "holliday-lawn-garden.firebaseapp.com",
-    projectId: "holliday-lawn-garden",
-    storageBucket: "holliday-lawn-garden.appspot.com",
-    messagingSenderId: "123456789012",
-    appId: "1:123456789012:web:1234567890123456789012"
-};
-
-const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
@@ -54,12 +45,19 @@ const storage = getStorage(app);
 // Check if user is admin
 async function checkAdminAccess(user) {
     if (!user) return false;
-    const userDoc = await getDoc(doc(db, 'users', user.uid));
-    return userDoc.exists() && userDoc.data().role === 'admin';
+    try {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        return userDoc.exists() && userDoc.data().role === 'admin';
+    } catch (error) {
+        console.error('Error checking admin access:', error);
+        return false;
+    }
 }
 
 // Authentication state observer
 onAuthStateChanged(auth, async (user) => {
+    console.log('Auth state changed:', user ? 'User logged in' : 'No user');
+    
     if (!user) {
         window.location.href = 'admin-login.html';
         return;
@@ -67,6 +65,7 @@ onAuthStateChanged(auth, async (user) => {
     
     const isAdmin = await checkAdminAccess(user);
     if (!isAdmin) {
+        console.error('Unauthorized access attempt by non-admin user:', user.email);
         showNotification('Unauthorized access. Admin privileges required.', 'error');
         signOut(auth);
         window.location.href = 'admin-login.html';
@@ -80,6 +79,8 @@ onAuthStateChanged(auth, async (user) => {
 // Initialize dashboard features
 async function initializeDashboard(user) {
     try {
+        console.log('Initializing admin dashboard for user:', user.email);
+        
         // Load admin overview
         await loadAdminOverview();
         
@@ -100,6 +101,12 @@ async function initializeDashboard(user) {
         
         // Initialize event listeners
         initializeEventListeners();
+        
+        // Update admin name in header
+        const greeting = document.querySelector('.greeting');
+        if (greeting) {
+            greeting.textContent = `Welcome, ${user.displayName || 'Admin'}!`;
+        }
     } catch (error) {
         console.error('Error initializing dashboard:', error);
         showNotification('Error loading dashboard data', 'error');
@@ -155,18 +162,18 @@ async function loadUsers() {
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Phone</th>
                         <th>Role</th>
+                        <th>Created</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     ${usersSnapshot.docs.map(doc => `
                         <tr>
-                            <td>${doc.data().displayName || doc.data().name || 'N/A'}</td>
+                            <td>${doc.data().displayName || 'N/A'}</td>
                             <td>${doc.data().email || 'N/A'}</td>
-                            <td>${doc.data().phone || 'N/A'}</td>
                             <td>${doc.data().role || 'user'}</td>
+                            <td>${doc.data().createdAt?.toDate().toLocaleDateString() || 'N/A'}</td>
                             <td>
                                 <button class="btn-secondary" onclick="editUser('${doc.id}')">Edit</button>
                                 <button class="btn-danger" onclick="deleteUser('${doc.id}')">Delete</button>
@@ -198,6 +205,7 @@ async function loadServices() {
                         <th>Name</th>
                         <th>Price</th>
                         <th>Duration</th>
+                        <th>Description</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -206,7 +214,8 @@ async function loadServices() {
                         <tr>
                             <td>${doc.data().name || 'N/A'}</td>
                             <td>$${doc.data().price || '0.00'}</td>
-                            <td>${doc.data().duration || '0'} hours</td>
+                            <td>${doc.data().duration || '0'} min</td>
+                            <td>${doc.data().description || 'N/A'}</td>
                             <td>
                                 <button class="btn-secondary" onclick="editService('${doc.id}')">Edit</button>
                                 <button class="btn-danger" onclick="deleteService('${doc.id}')">Delete</button>
@@ -399,18 +408,23 @@ function initializeEventListeners() {
     document.getElementById('uploadDocumentForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const file = document.getElementById('documentFile').files[0];
-        const documentData = {
-            name: document.getElementById('documentName').value,
-            type: document.getElementById('documentType').value,
-            size: file.size,
-            uploadDate: serverTimestamp()
-        };
+        if (!file) {
+            showNotification('Please select a file to upload', 'error');
+            return;
+        }
         
         try {
             const storageRef = ref(storage, `documents/${file.name}`);
             await uploadBytes(storageRef, file);
             const downloadURL = await getDownloadURL(storageRef);
-            documentData.url = downloadURL;
+            
+            const documentData = {
+                name: file.name,
+                type: file.type,
+                size: file.size,
+                url: downloadURL,
+                uploadDate: serverTimestamp()
+            };
             
             await addDoc(collection(db, 'documents'), documentData);
             closeModal('uploadDocumentModal');
@@ -419,6 +433,17 @@ function initializeEventListeners() {
         } catch (error) {
             console.error('Error uploading document:', error);
             showNotification('Error uploading document', 'error');
+        }
+    });
+    
+    // Logout button
+    document.querySelector('.logout-btn')?.addEventListener('click', async () => {
+        try {
+            await signOut(auth);
+            window.location.href = 'admin-login.html';
+        } catch (error) {
+            console.error('Error signing out:', error);
+            showNotification('Error signing out', 'error');
         }
     });
 }
@@ -432,24 +457,23 @@ function closeModal(modalId) {
     document.getElementById(modalId).style.display = 'none';
 }
 
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
 function formatFileSize(bytes) {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-}
-
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.remove();
-    }, 5000);
 }
 
 // Export functions for use in HTML
@@ -519,11 +543,10 @@ window.deleteDocument = async (documentId) => {
         try {
             const docRef = doc(db, 'documents', documentId);
             const docSnap = await getDoc(docRef);
-            
             if (docSnap.exists()) {
-                const documentData = docSnap.data();
-                if (documentData.url) {
-                    const storageRef = ref(storage, documentData.url);
+                const docData = docSnap.data();
+                if (docData.url) {
+                    const storageRef = ref(storage, docData.url);
                     await deleteObject(storageRef);
                 }
                 await deleteDoc(docRef);
