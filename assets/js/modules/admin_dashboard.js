@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { app } from "../firebase-config.js";
 
 const auth = getAuth(app);
@@ -182,41 +182,133 @@ async function loadRecentAppointments() {
 }
 
 async function getDashboardStats() {
-    // TODO: Implement actual data fetching from Firestore
-    return {
-        totalCustomers: 1234,
-        customerChange: 12,
-        activeAppointments: 45,
-        appointmentChange: 5,
-        monthlyRevenue: 12345,
-        revenueChange: 8,
-        satisfaction: 4.8,
-        satisfactionChange: 0.2
-    };
+    try {
+        // Get total customers
+        const customersSnapshot = await getDocs(collection(db, "users"));
+        const totalCustomers = customersSnapshot.size;
+
+        // Get active appointments
+        const appointmentsSnapshot = await getDocs(
+            query(collection(db, "appointments"), 
+            where("status", "in", ["pending", "confirmed"]))
+        );
+        const activeAppointments = appointmentsSnapshot.size;
+
+        // Get monthly revenue
+        const now = new Date();
+        const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const paymentsSnapshot = await getDocs(
+            query(collection(db, "payments"),
+            where("date", ">=", firstDayOfMonth.toISOString()))
+        );
+        const monthlyRevenue = paymentsSnapshot.docs.reduce((total, doc) => {
+            const payment = doc.data();
+            return total + (payment.amount || 0);
+        }, 0);
+
+        // Get customer satisfaction
+        const reviewsSnapshot = await getDocs(collection(db, "reviews"));
+        const satisfaction = reviewsSnapshot.docs.reduce((total, doc) => {
+            const review = doc.data();
+            return total + (review.rating || 0);
+        }, 0) / (reviewsSnapshot.size || 1);
+
+        // Calculate changes from last month
+        const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0);
+
+        // Last month's customers
+        const lastMonthCustomersSnapshot = await getDocs(
+            query(collection(db, "users"),
+            where("createdAt", ">=", lastMonth.toISOString()),
+            where("createdAt", "<=", lastMonthEnd.toISOString()))
+        );
+        const lastMonthCustomers = lastMonthCustomersSnapshot.size;
+        const customerChange = lastMonthCustomers ? 
+            ((totalCustomers - lastMonthCustomers) / lastMonthCustomers) * 100 : 0;
+
+        // Last month's appointments
+        const lastMonthAppointmentsSnapshot = await getDocs(
+            query(collection(db, "appointments"),
+            where("date", ">=", lastMonth.toISOString()),
+            where("date", "<=", lastMonthEnd.toISOString()))
+        );
+        const lastMonthAppointments = lastMonthAppointmentsSnapshot.size;
+        const appointmentChange = lastMonthAppointments ?
+            ((activeAppointments - lastMonthAppointments) / lastMonthAppointments) * 100 : 0;
+
+        // Last month's revenue
+        const lastMonthPaymentsSnapshot = await getDocs(
+            query(collection(db, "payments"),
+            where("date", ">=", lastMonth.toISOString()),
+            where("date", "<=", lastMonthEnd.toISOString()))
+        );
+        const lastMonthRevenue = lastMonthPaymentsSnapshot.docs.reduce((total, doc) => {
+            const payment = doc.data();
+            return total + (payment.amount || 0);
+        }, 0);
+        const revenueChange = lastMonthRevenue ?
+            ((monthlyRevenue - lastMonthRevenue) / lastMonthRevenue) * 100 : 0;
+
+        // Last month's satisfaction
+        const lastMonthReviewsSnapshot = await getDocs(
+            query(collection(db, "reviews"),
+            where("date", ">=", lastMonth.toISOString()),
+            where("date", "<=", lastMonthEnd.toISOString()))
+        );
+        const lastMonthSatisfaction = lastMonthReviewsSnapshot.docs.reduce((total, doc) => {
+            const review = doc.data();
+            return total + (review.rating || 0);
+        }, 0) / (lastMonthReviewsSnapshot.size || 1);
+        const satisfactionChange = lastMonthSatisfaction ?
+            satisfaction - lastMonthSatisfaction : 0;
+
+        return {
+            totalCustomers,
+            customerChange,
+            activeAppointments,
+            appointmentChange,
+            monthlyRevenue,
+            revenueChange,
+            satisfaction: satisfaction.toFixed(1),
+            satisfactionChange: satisfactionChange.toFixed(1)
+        };
+    } catch (error) {
+        console.error("Error fetching dashboard stats:", error);
+        throw error;
+    }
 }
 
 async function getRecentAppointments() {
-    // TODO: Implement actual data fetching from Firestore
-    return [
-        {
-            customerName: "John Smith",
-            service: "Lawn Maintenance",
-            date: "2024-03-20",
-            status: "Confirmed"
-        },
-        {
-            customerName: "Sarah Johnson",
-            service: "Garden Design",
-            date: "2024-03-21",
-            status: "Pending"
-        },
-        {
-            customerName: "Mike Brown",
-            service: "Irrigation System",
-            date: "2024-03-22",
-            status: "Completed"
+    try {
+        const now = new Date();
+        const appointmentsSnapshot = await getDocs(
+            query(collection(db, "appointments"),
+            where("date", ">=", now.toISOString()),
+            orderBy("date", "asc"),
+            limit(5))
+        );
+
+        const appointments = [];
+        for (const doc of appointmentsSnapshot.docs) {
+            const appointment = doc.data();
+            const customerDoc = await getDoc(doc(db, "users", appointment.userId));
+            const customer = customerDoc.data();
+
+            appointments.push({
+                id: doc.id,
+                customerName: customer?.name || "Unknown Customer",
+                service: appointment.service,
+                date: appointment.date,
+                status: appointment.status
+            });
         }
-    ];
+
+        return appointments;
+    } catch (error) {
+        console.error("Error fetching recent appointments:", error);
+        throw error;
+    }
 }
 
 function setupEventListeners() {
