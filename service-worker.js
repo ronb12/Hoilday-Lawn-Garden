@@ -1,4 +1,4 @@
-const CACHE_NAME = 'holliday-lawn-garden-v1';
+const CACHE_NAME = 'holliday-lawn-garden-v2';
 const ASSETS_TO_CACHE = [
   '/Holliday-Lawn-Garden/',
   '/Holliday-Lawn-Garden/index.html',
