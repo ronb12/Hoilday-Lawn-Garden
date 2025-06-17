@@ -8,13 +8,29 @@ document.addEventListener("DOMContentLoaded", function() {
     const body = document.body;
 
     if (hamburger) {
+        // Set initial ARIA state
+        hamburger.setAttribute("aria-expanded", "false");
+        hamburger.setAttribute("aria-controls", "nav-menu");
+        nav.setAttribute("id", "nav-menu");
+
         hamburger.addEventListener("click", function() {
+            const isExpanded = hamburger.getAttribute("aria-expanded") === "true";
+            
+            // Toggle classes
             hamburger.classList.toggle("active");
             nav.classList.toggle("active");
             navLinks.classList.toggle("active");
             body.classList.toggle("menu-open");
-            const isExpanded = hamburger.getAttribute("aria-expanded") === "true";
+            
+            // Update ARIA state
             hamburger.setAttribute("aria-expanded", !isExpanded);
+            
+            // Prevent body scroll when menu is open
+            if (!isExpanded) {
+                body.style.overflow = "hidden";
+            } else {
+                body.style.overflow = "";
+            }
         });
 
         // Close menu when clicking outside
@@ -25,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 nav.classList.remove("active");
                 navLinks.classList.remove("active");
                 body.classList.remove("menu-open");
+                body.style.overflow = "";
                 hamburger.setAttribute("aria-expanded", "false");
             }
         });
@@ -36,27 +53,41 @@ document.addEventListener("DOMContentLoaded", function() {
                 nav.classList.remove("active");
                 navLinks.classList.remove("active");
                 body.classList.remove("menu-open");
+                body.style.overflow = "";
                 hamburger.setAttribute("aria-expanded", "false");
             }
         });
 
         // Close menu on window resize
+        let resizeTimer;
         window.addEventListener("resize", function() {
-            if (window.innerWidth > 768 && nav.classList.contains("active")) {
-                hamburger.classList.remove("active");
-                nav.classList.remove("active");
-                navLinks.classList.remove("active");
-                body.classList.remove("menu-open");
-                hamburger.setAttribute("aria-expanded", "false");
-            }
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                if (window.innerWidth > 768 && nav.classList.contains("active")) {
+                    hamburger.classList.remove("active");
+                    nav.classList.remove("active");
+                    navLinks.classList.remove("active");
+                    body.classList.remove("menu-open");
+                    body.style.overflow = "";
+                    hamburger.setAttribute("aria-expanded", "false");
+                }
+            }, 250);
         });
 
-        // Prevent body scroll when menu is open
-        nav.addEventListener("touchmove", function(event) {
-            if (nav.classList.contains("active")) {
-                event.preventDefault();
-            }
-        }, { passive: false });
+        // Handle navigation link clicks
+        const navItems = navLinks.querySelectorAll("a");
+        navItems.forEach(link => {
+            link.addEventListener("click", function() {
+                if (nav.classList.contains("active")) {
+                    hamburger.classList.remove("active");
+                    nav.classList.remove("active");
+                    navLinks.classList.remove("active");
+                    body.classList.remove("menu-open");
+                    body.style.overflow = "";
+                    hamburger.setAttribute("aria-expanded", "false");
+                }
+            });
+        });
     }
 });
 
