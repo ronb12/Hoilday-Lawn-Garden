@@ -615,6 +615,7 @@ footer a:focus {
   display: flex;
   flex-direction: column;
   height: 100%;
+  text-align: center;
 }
 
 .service-card:hover {
@@ -622,11 +623,10 @@ footer a:focus {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.service-icon {
-  font-size: 2.5rem;
-  color: var(--primary-color);
+.service-emoji {
+  font-size: 3rem;
   margin-bottom: 1rem;
-  text-align: center;
+  line-height: 1;
 }
 
 .service-card h3 {
@@ -645,6 +645,7 @@ footer a:focus {
   list-style: none;
   padding: 0;
   margin: 0 0 1.5rem 0;
+  text-align: left;
 }
 
 .service-features li {
@@ -663,7 +664,7 @@ footer a:focus {
 }
 
 .service-card .btn {
-  align-self: flex-start;
+  align-self: center;
   margin-top: auto;
 }
 
@@ -733,10 +734,10 @@ footer a:focus {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.service-icon {
-  font-size: 2.5rem;
-  color: var(--primary-color);
+.service-emoji {
+  font-size: 3rem;
   margin-bottom: 1rem;
+  line-height: 1;
 }
 
 .service-card h3 {
