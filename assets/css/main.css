@@ -3621,6 +3621,8 @@ nav {
   width: 100%;
   max-width: 700px;
   margin: 0 auto;
+  opacity: 1 !important;
+  transform: none !important;
 }
 @media (max-width: 768px) {
   .hero {
