@@ -34,7 +34,7 @@ const dashboardStats = document.getElementById("dashboardStats");
 const recentAppointments = document.getElementById("recentAppointments");
 const refreshDashboard = document.getElementById("refreshDashboard");
 const logoutButton = document.getElementById("logoutButton");
-const viewAllCustomers = document.getElementById("viewAllCustomers");
+const viewAllCustomersBtn = document.getElementById("viewAllCustomers");
 const addNewCustomer = document.getElementById("addNewCustomer");
 const viewAllPayments = document.getElementById("viewAllPayments");
 const processPayment = document.getElementById("processPayment");
@@ -219,15 +219,14 @@ function updateDashboardStats(stats) {
 function setupEventListeners() {
     if (refreshDashboard) {
         refreshDashboard.addEventListener("click", () => {
-            loadDashboardStats();
-            loadRecentAppointments();
+            initializeDashboard(auth.currentUser);
         });
     }
 
     if (logoutButton) {
         logoutButton.addEventListener("click", async () => {
             try {
-                await auth.signOut();
+                await signOut(auth);
                 window.location.href = "admin-login.html";
             } catch (error) {
                 console.error("Error signing out:", error);
@@ -236,8 +235,8 @@ function setupEventListeners() {
         });
     }
 
-    if (viewAllCustomers) {
-        viewAllCustomers.addEventListener("click", viewAllCustomers);
+    if (viewAllCustomersBtn) {
+        viewAllCustomersBtn.addEventListener("click", viewAllCustomers);
     }
 
     if (addNewCustomer) {
@@ -274,19 +273,17 @@ async function viewAllCustomers() {
         showLoading("Loading customers...");
         const customersQuery = query(
             collection(db, "users"),
-            where("role", "==", "customer"),
-            orderBy("createdAt", "desc")
+            where("role", "==", "customer")
         );
-        
         const customersSnapshot = await getDocs(customersQuery);
         const customers = customersSnapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
         }));
-        
         showCustomersModal(customers);
     } catch (error) {
-        handleError(error, "Error loading customers");
+        console.error("Error loading customers:", error);
+        showNotification("Error loading customers", "error");
     } finally {
         hideLoading();
     }
