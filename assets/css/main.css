@@ -637,7 +637,7 @@ footer a:focus {
   padding: 2rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-align: center;
+  text-align: left;
 }
 
 .service-card:hover {
@@ -646,20 +646,22 @@ footer a:focus {
 }
 
 .service-emoji {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .service-card h3 {
   color: #2e7d32;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .service-card p {
   color: #666;
-  margin-bottom: 1.5rem;
   line-height: 1.6;
+  margin: 0;
 }
 
 .service-features {
@@ -1255,5 +1257,63 @@ footer a:focus {
   .cta-buttons {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+/* FAQ Section Styles */
+.faq-section {
+  padding: 5rem 0;
+  background-color: #f8f9fa;
+}
+
+.faq-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.faq-section .services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.faq-section .service-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+}
+
+.faq-section .service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.faq-section .service-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.faq-section .service-card h3 {
+  color: #2e7d32;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.faq-section .service-card p {
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .faq-section .services-grid {
+    grid-template-columns: 1fr;
   }
 }
