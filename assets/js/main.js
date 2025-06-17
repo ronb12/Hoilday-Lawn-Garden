@@ -151,24 +151,33 @@ function renderServiceDetails(service) {
 
 // Cache control
 if ('serviceWorker' in navigator) {
-  // Register service worker
-  navigator.serviceWorker.register('/Holliday-Lawn-Garden/service-worker.js')
-    .then(registration => {
-      console.log('ServiceWorker registration successful');
-      
-      // Check for updates every hour
-      setInterval(() => {
-        registration.update();
-      }, 3600000);
-    })
-    .catch(error => {
-      console.error('ServiceWorker registration failed:', error);
-    });
+  // Unregister any existing service workers first
+  navigator.serviceWorker.getRegistrations().then(registrations => {
+    for (let registration of registrations) {
+      registration.unregister();
+    }
+  }).then(() => {
+    // Register new service worker
+    return navigator.serviceWorker.register('/Holliday-Lawn-Garden/service-worker.js');
+  }).then(registration => {
+    console.log('ServiceWorker registration successful');
+    
+    // Force update check on page load
+    registration.update();
+    
+    // Check for updates every 5 minutes
+    setInterval(() => {
+      registration.update();
+    }, 300000); // 5 minutes
+  }).catch(error => {
+    console.error('ServiceWorker registration failed:', error);
+  });
 
   // Listen for messages from service worker
   navigator.serviceWorker.addEventListener('message', event => {
     if (event.data === 'RELOAD_PAGE') {
-      window.location.reload();
+      // Force reload from server
+      window.location.reload(true);
     }
   });
 }
@@ -181,12 +190,26 @@ window.addEventListener('load', () => {
     loadingSpinner.style.display = 'none';
   }
 
-  // Only clear cache on explicit reload, not on initial page load
-  if (window.performance && 
-      window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD &&
-      sessionStorage.getItem('hasReloaded') !== 'true') {
-    sessionStorage.setItem('hasReloaded', 'true');
-    clearCacheAndReload();
+  // Clear cache on every page load
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+      registrations.forEach(registration => {
+        registration.update();
+      });
+    });
+  }
+});
+
+// Add cache clearing to visibility change
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(registrations => {
+        registrations.forEach(registration => {
+          registration.update();
+        });
+      });
+    }
   }
 });
 

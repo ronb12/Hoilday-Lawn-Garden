@@ -1,11 +1,10 @@
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v3';
 const CACHE_NAME = 'holliday-lawn-garden-' + CACHE_VERSION;
 const ASSETS_TO_CACHE = [
   '/Holliday-Lawn-Garden/',
   '/Holliday-Lawn-Garden/index.html',
   '/Holliday-Lawn-Garden/about.html',
   '/Holliday-Lawn-Garden/services.html',
-  '/Holliday-Lawn-Garden/faq.html',
   '/Holliday-Lawn-Garden/contact.html',
   '/Holliday-Lawn-Garden/education.html',
   '/Holliday-Lawn-Garden/pay-your-bill.html',
@@ -22,50 +21,80 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache');
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          console.log('Deleting old cache:', cacheName);
+          return caches.delete(cacheName);
+        })
+      );
+    }).then(() => {
+      return caches.open(CACHE_NAME).then(cache => {
+        console.log('Opened new cache');
         return cache.addAll(ASSETS_TO_CACHE);
-      })
-      .catch(error => {
-        console.error('Cache initialization failed:', error);
-      })
+      });
+    })
   );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    Promise.all([
+      caches.keys().then(cacheNames => {
+        return Promise.all(
+          cacheNames.map(cacheName => {
+            if (cacheName !== CACHE_NAME) {
+              console.log('Deleting old cache:', cacheName);
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      }),
+      self.clients.claim()
+    ])
   );
-  self.clients.claim();
 });
 
 // Fetch event - serve from cache, fall back to network
 self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  
+  if (url.pathname.includes('.html')) {
+    const cacheBuster = '?v=' + CACHE_VERSION;
+    if (!url.search.includes(cacheBuster)) {
+      url.search += (url.search ? '&' : '?') + cacheBuster;
+      event.respondWith(fetch(url.toString()));
+      return;
+    }
+  }
+  
+  if (url.pathname.includes('faq.html')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseToCache);
+          });
+          return response;
+        })
+        .catch(() => {
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then(response => {
-      // Return cached response if found
       if (response) {
-        // Check if the cached response is stale (older than 1 hour)
         const cacheTime = response.headers.get('sw-cache-time');
         if (cacheTime && Date.now() - new Date(cacheTime).getTime() > 3600000) {
-          // Cache is stale, fetch fresh content
           return fetchAndCache(event.request);
         }
         return response;
       }
-      // No cache found, fetch from network
       return fetchAndCache(event.request);
     })
   );
@@ -79,21 +108,16 @@ async function fetchAndCache(request) {
       return response;
     }
 
-    // Clone the response
     const responseToCache = response.clone();
-
-    // Add cache timestamp
     const headers = new Headers(responseToCache.headers);
     headers.append('sw-cache-time', new Date().toISOString());
 
-    // Create new response with cache headers
     const cachedResponse = new Response(responseToCache.body, {
       status: responseToCache.status,
       statusText: responseToCache.statusText,
       headers: headers
     });
 
-    // Cache the response
     const cache = await caches.open(CACHE_NAME);
     await cache.put(request, cachedResponse);
 
@@ -116,7 +140,6 @@ self.addEventListener('message', event => {
       );
     }).then(() => {
       console.log('All caches cleared');
-      // Force reload the page
       self.clients.matchAll().then(clients => {
         clients.forEach(client => {
           client.postMessage('RELOAD_PAGE');
