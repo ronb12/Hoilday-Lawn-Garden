@@ -33,9 +33,10 @@
     <link rel="manifest" href="manifest.json?v=1.0.1">
     
     <!-- Stylesheets -->
-<link rel="stylesheet" href="assets/css/mobile-enhancements.css">
+    <link rel="stylesheet" href="assets/css/mobile-enhancements.css">
     <link rel="stylesheet" href="assets/css/main.css?v=1.0.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/customer-dashboard.css">
     
     <!-- Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
@@ -43,336 +44,95 @@
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
     
-    <div class="dashboard-wrapper">
-        <aside class="sidebar" role="complementary" aria-label="Dashboard navigation">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" loading="lazy">
-                </a>
+    <div class="container">
+        <header class="header">
+            <h1>Customer Dashboard</h1>
+            <div class="header-actions">
+                <button id="refreshDashboard" class="btn btn-secondary">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <button id="logoutButton" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </div>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="customer-dashboard.html" aria-current="page">
-                            <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
-                            Dashboard
-                        </a>
-                    </li>
-                    <li>
-                        <a href="pay-your-bill.html">
-                            <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
-                            Pay Your Bill
-                        </a>
-                    </li>
-                    <li>
-                        <a href="services.html">
-                            <i class="fas fa-leaf" aria-hidden="true"></i>
-                            Services
-                        </a>
-                    </li>
-                    <li>
-                        <a href="profile.html">
-                            <i class="fas fa-user" aria-hidden="true"></i>
-                            Profile
-                        </a>
-                    </li>
-                    <li>
-                        <a href="contact.html">
-                            <i class="fas fa-envelope" aria-hidden="true"></i>
-                            Contact
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <button class="logout-btn" aria-label="Logout">
-                <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
-                Logout
-            </button>
-        </aside>
-        
-        <main id="main-content" class="dashboard-main" role="main">
-            <div class="dashboard-header">
-                <div class="greeting">
-                    <h2>Welcome, <span id="customerName">Customer</span></h2>
-                    <p>Account Number: <span id="accountNumber" class="account-number"></span></p>
-                </div>
-                <div class="date-filter">
-                    <label for="dateRange">Date Range:</label>
-                    <select id="dateRange">
-                        <option value="30">Last 30 Days</option>
-                        <option value="90">Last 90 Days</option>
-                        <option value="180">Last 6 Months</option>
-                        <option value="365">Last Year</option>
-                    </select>
-                </div>
-                <div class="header-actions">
-                    <div class="notifications-panel">
-                        <button class="notifications-toggle" id="notificationsToggle" aria-label="View notifications">
-                            <i class="fas fa-bell" aria-hidden="true"></i>
-                            <span class="notification-badge" id="notificationBadge">0</span>
-                        </button>
-                        <div class="notifications-dropdown" id="notificationsDropdown">
-                            <div class="notifications-header">
-                                <h3>Notifications</h3>
-                                <button class="mark-read-btn" id="markAllReadBtn">Mark all as read</button>
-                            </div>
-                            <div class="notifications-list" id="notificationsList">
-                                <div class="empty-state">
-                                    <i class="fas fa-bell-slash" aria-hidden="true"></i>
-                                    <p>No notifications yet</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button id="clearCacheBtn" class="action-btn" aria-label="Clear cache">
-                        <i class="fas fa-sync" aria-hidden="true"></i>
-                        Clear Cache
-                    </button>
-                </div>
-            </div>
-            
-            <section class="dashboard-sections">
-                <div class="dashboard-card" id="serviceRequests">
-                    <h3>Your Service Requests</h3>
-                    <ul>
-                        <li class="empty">No service requests yet.</li>
-                    </ul>
-                </div>
-                
-                <div class="dashboard-card" id="newRequest">
-                    <h3>Submit New Service Request</h3>
-                    <form id="requestForm">
-                        <div class="form-group">
-                            <label for="serviceType">Service Type</label>
-                            <select id="serviceType" required>
-                                <option value="">Select...</option>
-                                <option value="Lawn Mowing">Lawn Mowing</option>
-                                <option value="Hedge Trimming">Hedge Trimming</option>
-                                <option value="Leaf Cleanup">Leaf Cleanup</option>
-                                <option value="Mulching">Mulching</option>
-                                <option value="Fertilization">Fertilization</option>
-                                <option value="Weed Control">Weed Control</option>
-                                <option value="Garden Design">Garden Design</option>
-                                <option value="Seasonal Cleanup">Seasonal Cleanup</option>
-                                <option value="Driveway Pressure Washing">Driveway Pressure Washing</option>
-                                <option value="Sidewalk Pressure Washing">Sidewalk Pressure Washing</option>
-                                <option value="Patio Pressure Washing">Patio Pressure Washing</option>
-                                <option value="Deck Pressure Washing">Deck Pressure Washing</option>
-                                <option value="Fence Pressure Washing">Fence Pressure Washing</option>
-                                <option value="House Exterior Pressure Washing">House Exterior Pressure Washing</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="preferredDate">Preferred Date</label>
-                            <input type="date" id="preferredDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="requestNotes">Notes</label>
-                            <textarea id="requestNotes" placeholder="Any special instructions..."></textarea>
-                        </div>
-                        <button type="submit">Submit Request</button>
-                    </form>
-                </div>
-                
-                <div class="dashboard-card" id="appointments">
-                    <h3>Schedule Service</h3>
-                    <form id="appointmentForm" class="appointment-form">
-                        <div class="form-group">
-                            <label for="serviceType">Service Type</label>
-                            <select id="serviceType" required>
-                                <option value="">Select a service</option>
-                                <option value="lawn-mowing">Lawn Mowing</option>
-                                <option value="hedge-trimming">Hedge Trimming</option>
-                                <option value="garden-maintenance">Garden Maintenance</option>
-                                <option value="irrigation">Irrigation Service</option>
-                                <option value="pressure-washing">Pressure Washing</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="preferredDate">Preferred Date</label>
-                            <input type="date" id="preferredDate" required min="">
-                        </div>
-                        <div class="form-group">
-                            <label for="preferredTime">Preferred Time</label>
-                            <select id="preferredTime" required>
-                                <option value="">Select a time</option>
-                                <option value="morning">Morning (8AM - 12PM)</option>
-                                <option value="afternoon">Afternoon (12PM - 4PM)</option>
-                                <option value="evening">Evening (4PM - 6PM)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="serviceNotes">Special Instructions</label>
-                            <textarea id="serviceNotes" rows="3" placeholder="Any specific requirements or notes for the service"></textarea>
-                        </div>
-                        <button type="submit" class="action-btn">
-                            <i class="fas fa-calendar-plus" aria-hidden="true"></i>
-                            Schedule Service
-                        </button>
-                    </form>
-                </div>
-                
-                <div class="dashboard-card" id="upcomingAppointments">
-                    <h3>Upcoming Appointments</h3>
-                    <div class="appointments-list">
-                        <!-- Appointments will be loaded dynamically -->
-                        <div class="no-appointments" style="display: none;">
-                            <p>No upcoming appointments</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="dashboard-card" id="serviceHistory">
-                    <h3>Service History</h3>
-                    <ul>
-                        <li class="service-history-item">
-                            <div class="service-info">
-                                <strong>Lawn Mowing</strong>
-                                <span class="date">March 15, 2024</span>
-                            </div>
-                            <span class="status completed">Completed</span>
-                        </li>
-                        <li class="service-history-item">
-                            <div class="service-info">
-                                <strong>Hedge Trimming</strong>
-                                <span class="date">March 1, 2024</span>
-                            </div>
-                            <span class="status completed">Completed</span>
-                        </li>
-                    </ul>
-                    <a href="#" class="view-all">View All Services</a>
-                </div>
-                
-                <div class="dashboard-card" id="paymentHistory">
-                    <h3>Payment History</h3>
-                    <ul>
-                        <li class="payment-history-item">
-                            <div class="payment-info">
-                                <strong>Lawn Mowing Service</strong>
-                                <span class="invoice-number">INV-2024-001</span>
-                                <span class="date">March 15, 2024</span>
-                            </div>
-                            <div class="payment-details">
-                                <span class="amount">$75.00</span>
-                                <span class="status completed">Paid</span>
-                            </div>
-                        </li>
-                        <li class="payment-history-item">
-                            <div class="payment-info">
-                                <strong>Hedge Trimming Service</strong>
-                                <span class="invoice-number">INV-2024-002</span>
-                                <span class="date">March 1, 2024</span>
-                            </div>
-                            <div class="payment-details">
-                                <span class="amount">$120.00</span>
-                                <span class="status completed">Paid</span>
-                            </div>
-                        </li>
-                    </ul>
-                    <a href="#" class="view-all">View All Payments</a>
-                </div>
-                
-                <div class="dashboard-card" id="profile">
-                    <h3>My Profile</h3>
-                    <ul class="profile-info">
-                        <li><strong>Name:</strong> <span id="profileName">Customer</span></li>
-                        <li><strong>Email:</strong> <span id="profileEmail">customer@email.com</span></li>
-                        <li><strong>Phone:</strong> <span id="profilePhone">Not provided</span></li>
-                        <li><strong>Address:</strong> <span id="profileAddress">Not provided</span></li>
-                        <li><strong>Member Since:</strong> <span id="profileJoinDate">Not available</span></li>
-                        <li><strong>Last Service:</strong> <span id="profileLastService">Not available</span></li>
-                    </ul>
-                    <button id="editProfileBtn" class="action-btn">
-                        <i class="fas fa-edit" aria-hidden="true"></i>
-                        Edit Profile
-                    </button>
-                </div>
-                
-                <div class="dashboard-card" id="support">
-                    <h3>Support / Contact</h3>
-                    <form id="supportForm">
-                        <div class="form-group">
-                            <label for="supportMessage">Message</label>
-                            <textarea id="supportMessage" required placeholder="How can we help you?"></textarea>
-                        </div>
-                        <button type="submit">Send Message</button>
-                    </form>
+        </header>
+
+        <div class="dashboard-container">
+            <!-- Profile Section -->
+            <section class="dashboard-section">
+                <h2>My Profile</h2>
+                <div id="userProfile" class="profile-card">
+                    <!-- Profile will be loaded dynamically -->
                 </div>
             </section>
-        </main>
-    </div>
-    
-    <footer class="footer" role="contentinfo" aria-label="Site footer">
-        <div class="footer-content">
-            <div class="footer-main">
-                <div class="footer-section">
-                    <h3>Contact Us</h3>
-                    <div class="footer-contact">
-                        <span class="footer-owner">Karl Holliday</span>
-                        <a href="tel:+15047171887" aria-label="Call us">
-                            <i class="fas fa-phone" aria-hidden="true"></i>
-                            <span>(504) 717-1887</span>
-                        </a>
-                        <a href="mailto:7holliday@gmail.com" aria-label="Email us">
-                            <i class="fas fa-envelope" aria-hidden="true"></i>
-                            <span>7holliday@gmail.com</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="education.html">Education</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Customer Portal</h3>
-                    <ul>
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="register.html">Register</a></li>
-                        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-                        <li><a href="customer-dashboard.html">Dashboard</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Legal</h3>
-                    <ul>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms.html">Terms of Service</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Connect With Us</h3>
-                    <div class="footer-social">
-                        <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
-                            <i class="fab fa-facebook" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
-                            <i class="fab fa-twitter" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
-                            <i class="fab fa-instagram" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 
-    <!-- Scripts -->
-    <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
-    <script type="module" src="assets/js/firebase-config.js?v=1.0.1"></script>
-    <script type="module" src="assets/js/main.js?v=1.0.1" defer></script>
-    <script type="module" src="assets/js/modules/customer_dashboard.js?v=1.0.1" defer></script>
-    <script type="module" src="assets/js/unpaid-invoices.js" defer></script>
+            <!-- Service History Section -->
+            <section class="dashboard-section">
+                <h2>Service History</h2>
+                <div id="serviceHistory" class="service-list">
+                    <!-- Service history will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Unpaid Invoices Section -->
+            <section class="dashboard-section">
+                <h2>Unpaid Invoices</h2>
+                <div id="unpaidInvoices" class="invoice-list">
+                    <!-- Unpaid invoices will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Appointment Management Section -->
+            <section class="dashboard-section">
+                <h2>Appointments</h2>
+                <div class="section-actions">
+                    <button onclick="viewAppointments()" class="btn btn-primary">
+                        <i class="fas fa-calendar"></i> View All
+                    </button>
+                    <button onclick="scheduleAppointment()" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Schedule New
+                    </button>
+                </div>
+                <div id="upcomingAppointments" class="appointment-list">
+                    <!-- Appointments will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Messages Section -->
+            <section class="dashboard-section">
+                <h2>Messages</h2>
+                <div class="section-actions">
+                    <button onclick="viewMessages()" class="btn btn-primary">
+                        <i class="fas fa-comments"></i> View Messages
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <nav class="nav-menu">
+        <ul>
+            <li><a href="#" onclick="viewProfile()"><i class="fas fa-user"></i> Profile</a></li>
+            <li><a href="#" onclick="viewServiceHistory()"><i class="fas fa-history"></i> History</a></li>
+            <li><a href="#" onclick="viewInvoices()"><i class="fas fa-file-invoice"></i> Invoices</a></li>
+            <li><a href="#" onclick="viewAppointments()"><i class="fas fa-calendar"></i> Appointments</a></li>
+            <li><a href="#" onclick="viewMessages()"><i class="fas fa-comments"></i> Messages</a></li>
+        </ul>
+    </nav>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+        <p id="loadingMessage">Loading...</p>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+
+    <!-- Custom Modules -->
+    <script type="module" src="assets/js/modules/customer_dashboard.js"></script>
 </body>
 </html>

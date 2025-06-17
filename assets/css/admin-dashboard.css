@@ -28,7 +28,11 @@
 .dashboard-overview,
 .appointment-management,
 .customer-management,
-.payment-management {
+.payment-management,
+.analytics-management,
+.inventory-management,
+.staff-management,
+.communication-management {
     background: var(--white);
     border-radius: 8px;
     padding: 1.5rem;
@@ -39,7 +43,11 @@
 .dashboard-overview h2,
 .appointment-management h2,
 .customer-management h2,
-.payment-management h2 {
+.payment-management h2,
+.analytics-management h2,
+.inventory-management h2,
+.staff-management h2,
+.communication-management h2 {
     font-size: 1.5rem;
     color: var(--text-color);
     margin-bottom: 1.5rem;
@@ -104,7 +112,11 @@
 }
 
 .customer-actions,
-.payment-actions {
+.payment-actions,
+.analytics-actions,
+.inventory-actions,
+.staff-actions,
+.communication-actions {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
@@ -162,6 +174,173 @@
     background: #e53935;
 }
 
+/* Analytics Styles */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.analytics-card {
+    background: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.analytics-card h3 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+/* Inventory Styles */
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.inventory-card {
+    background: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.inventory-card h3 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.inventory-card p {
+    margin: 0.5rem 0;
+    color: var(--text-color-light);
+}
+
+/* Staff Management Styles */
+.staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.staff-card {
+    background: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.staff-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.staff-card h3 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.staff-card p {
+    color: var(--text-color-light);
+    margin: 0.5rem 0;
+}
+
+/* Communication Styles */
+.messages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.message-card {
+    background: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.message-card h3 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.message-card p {
+    margin: 0.5rem 0;
+    color: var(--text-color-light);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    background: var(--white);
+    width: 90%;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-header h2 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-color-light);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.modal-body {
+    margin-bottom: 1.5rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
 @media (max-width: 768px) {
     .admin-dashboard-main {
         padding: 1rem;
@@ -187,12 +366,22 @@
     }
 
     .customer-actions,
-    .payment-actions {
+    .payment-actions,
+    .analytics-actions,
+    .inventory-actions,
+    .staff-actions,
+    .communication-actions {
         flex-direction: column;
     }
 
     .btn {
         width: 100%;
         justify-content: center;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 1rem auto;
+        padding: 1rem;
     }
 } 
