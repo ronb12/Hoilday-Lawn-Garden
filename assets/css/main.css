@@ -152,6 +152,45 @@ nav {
   width: 100%;
 }
 
+.nav-links a.btn-secondary {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-links a.btn-secondary:hover {
+  background-color: var(--primary-color-dark);
+}
+
+.nav-links a.btn-customer {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
+
+.nav-links a.btn-customer:hover {
+  background-color: var(--primary-color-dark);
+}
+
+.nav-links a.btn-admin {
+  background-color: var(--secondary-color);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  margin-left: 0.5rem;
+  font-weight: 500;
+}
+
+.nav-links a.btn-admin:hover {
+  background-color: #444;
+}
+
 /* Hamburger Menu Styles */
 .hamburger {
   display: none;
@@ -196,18 +235,6 @@ nav {
     margin: 2px 0;
     background-color: var(--text-color);
     transition: all 0.3s ease;
-  }
-
-  .hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-
-  .hamburger.active span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -6px);
   }
 
   nav {
@@ -267,42 +294,68 @@ nav {
     transform: translateY(-2px);
   }
 
-  body.menu-open {
-    overflow: hidden;
+  .nav-links a.btn-customer,
+  .nav-links a.btn-admin {
+    width: 100%;
+    text-align: center;
+    margin: 0.5rem 0;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
   }
 
-  body.menu-open::after {
-    content: '';
+  .nav-links a.btn-admin {
+    margin-left: 0;
+  }
+
+  body.menu-open {
+    overflow: hidden;
     position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+  }
+
+  /* Fix for mobile menu button alignment */
+  .hamburger {
+    margin-left: auto;
+    margin-right: 0.5rem;
+  }
+
+  /* Ensure logo doesn't get too large on mobile */
+  .logo {
+    max-width: 150px;
+  }
+
+  .logo img {
+    max-height: 40px;
   }
 }
 
 @media (max-width: 480px) {
   .main-header {
-    padding: 0.25rem;
+    padding: 0.5rem;
   }
 
   .logo {
-    max-width: 140px;
+    max-width: 120px;
   }
 
   .logo img {
-    height: 40px;
+    max-height: 35px;
   }
 
   .nav-links {
-    gap: 0.75rem;
-    padding: 0.75rem;
+    padding: 0.5rem;
   }
 
   .nav-links a {
     font-size: 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .nav-links a.btn-customer,
+  .nav-links a.btn-admin {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
   }
 }
 
@@ -3437,3 +3490,69 @@ nav {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
 }
+
+// ... existing code ...
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.service-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.service-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.service-card h3 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.service-card p {
+  color: var(--text-color-light);
+  margin-bottom: 1rem;
+}
+
+.service-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.service-card li {
+  padding: 0.5rem 0;
+  color: var(--text-color);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.service-card li::before {
+  content: "•";
+  color: var(--primary-color);
+  position: absolute;
+  left: 0;
+}
+
+.service-card .btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+// ... existing code ...
