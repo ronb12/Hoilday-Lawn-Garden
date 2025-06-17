@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v4';
 const CACHE_NAME = 'holliday-lawn-garden-' + CACHE_VERSION;
 const ASSETS_TO_CACHE = [
   '/Holliday-Lawn-Garden/',
@@ -60,16 +60,8 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   
+  // Skip cache-busting for HTML files
   if (url.pathname.includes('.html')) {
-    const cacheBuster = '?v=' + CACHE_VERSION;
-    if (!url.search.includes(cacheBuster)) {
-      url.search += (url.search ? '&' : '?') + cacheBuster;
-      event.respondWith(fetch(url.toString()));
-      return;
-    }
-  }
-  
-  if (url.pathname.includes('faq.html')) {
     event.respondWith(
       fetch(event.request)
         .then(response => {
@@ -89,10 +81,6 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
       if (response) {
-        const cacheTime = response.headers.get('sw-cache-time');
-        if (cacheTime && Date.now() - new Date(cacheTime).getTime() > 3600000) {
-          return fetchAndCache(event.request);
-        }
         return response;
       }
       return fetchAndCache(event.request);
@@ -109,17 +97,8 @@ async function fetchAndCache(request) {
     }
 
     const responseToCache = response.clone();
-    const headers = new Headers(responseToCache.headers);
-    headers.append('sw-cache-time', new Date().toISOString());
-
-    const cachedResponse = new Response(responseToCache.body, {
-      status: responseToCache.status,
-      statusText: responseToCache.statusText,
-      headers: headers
-    });
-
     const cache = await caches.open(CACHE_NAME);
-    await cache.put(request, cachedResponse);
+    await cache.put(request, responseToCache);
 
     return response;
   } catch (error) {
