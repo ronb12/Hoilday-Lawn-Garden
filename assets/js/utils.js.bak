@@ -1,0 +1,152 @@
+// Utility functions for both admin and customer dashboards
+import { getFirestore, collection, query, where, getDocs, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { app } from "./firebase-config.js";
+
+const db = getFirestore(app);
+
+// Notification system
+export function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Loading indicator
+export function showLoading(message = 'Loading...') {
+    const loading = document.createElement('div');
+    loading.id = 'loadingOverlay';
+    loading.innerHTML = `
+        <div class="loading-spinner"></div>
+        <p>${message}</p>
+    `;
+    document.body.appendChild(loading);
+}
+
+export function hideLoading() {
+    const loading = document.getElementById('loadingOverlay');
+    if (loading) {
+        loading.remove();
+    }
+}
+
+// Modal system
+export function showModal(content) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            ${content}
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    const closeButton = modal.querySelector('.close-button');
+    closeButton.onclick = () => modal.remove();
+    
+    return modal;
+}
+
+export function closeModal() {
+    const modal = document.querySelector('.modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Date formatting
+export function formatDate(date) {
+    if (!date) return 'N/A';
+    const d = date instanceof Date ? date : new Date(date);
+    return d.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+// Time formatting
+export function formatTime(time) {
+    if (!time) return 'N/A';
+    const d = time instanceof Date ? time : new Date(time);
+    return d.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+// Status formatting
+export function formatStatus(status) {
+    const statusMap = {
+        'scheduled': 'Scheduled',
+        'in-progress': 'In Progress',
+        'completed': 'Completed',
+        'cancelled': 'Cancelled',
+        'pending': 'Pending',
+        'paid': 'Paid',
+        'unpaid': 'Unpaid'
+    };
+    return statusMap[status] || status;
+}
+
+// Service type formatting
+export function formatServiceType(type) {
+    const typeMap = {
+        'lawn-mowing': 'Lawn Mowing',
+        'hedge-trimming': 'Hedge Trimming',
+        'garden-maintenance': 'Garden Maintenance',
+        'irrigation': 'Irrigation',
+        'landscaping': 'Landscaping'
+    };
+    return typeMap[type] || type;
+}
+
+// Error handling
+export function handleError(error, message = 'An error occurred') {
+    console.error(message, error);
+    showNotification(message, 'error');
+}
+
+// Data validation
+export function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+export function validatePhone(phone) {
+    return /^\+?[\d\s-]{10,}$/.test(phone);
+}
+
+// Firestore helpers
+export async function getUserData(userId) {
+    try {
+        const userDoc = await getDoc(doc(db, 'users', userId));
+        return userDoc.exists() ? userDoc.data() : null;
+    } catch (error) {
+        handleError(error, 'Error fetching user data');
+        return null;
+    }
+}
+
+export async function updateUserData(userId, data) {
+    try {
+        await updateDoc(doc(db, 'users', userId), {
+            ...data,
+            updatedAt: serverTimestamp()
+        });
+        return true;
+    } catch (error) {
+        handleError(error, 'Error updating user data');
+        return false;
+    }
+}
+
+// Export all functions
+export {
+    getUserData,
+    updateUserData
+}; 

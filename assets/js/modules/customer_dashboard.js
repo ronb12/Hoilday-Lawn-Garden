@@ -29,49 +29,59 @@ async function checkAdminAccess(user) {
   }
 }
 
-// Authentication state observer
-onAuthStateChanged(auth, async (user) => {
-  console.log('Auth state changed:', user ? 'User logged in' : 'No user');
-  
-  if (!user) {
-    // Check if we have a stored session
-    const storedUser = sessionStorage.getItem('user');
-    if (storedUser) {
-      try {
-        const userData = JSON.parse(storedUser);
-        // Attempt to restore the session
-        signInWithEmailAndPassword(auth, userData.email, userData.password)
-          .catch(() => {
-            // If restoration fails, redirect to login
+// Improved session management
+function handleSession(user) {
+    try {
+        if (user) {
+            // Store minimal session data
+            const sessionData = {
+                email: user.email,
+                uid: user.uid,
+                lastActive: new Date().toISOString()
+            };
+            sessionStorage.setItem('user', JSON.stringify(sessionData));
+        } else {
             sessionStorage.removeItem('user');
-            window.location.href = 'login.html';
-          });
-      } catch (error) {
+        }
+    } catch (error) {
+        console.error('Error handling session:', error);
         sessionStorage.removeItem('user');
-        window.location.href = 'login.html';
-      }
-    } else {
-      window.location.href = 'login.html';
     }
-    return;
-  }
+}
 
-  // Check if user is admin
-  const isAdmin = await checkAdminAccess(user);
-  if (isAdmin) {
-    // Redirect admin users to admin dashboard
-    window.location.href = 'admin-dashboard.html';
-    return;
-  }
+// Improved error handling for PayPal
+function handlePayPalError(error) {
+    console.warn('PayPal integration issue:', error);
+    showNotification('Payment processing may be limited. Please contact support if you need assistance.', 'warning');
+}
 
-  // Store user session
-  sessionStorage.setItem('user', JSON.stringify({
-    email: user.email,
-    uid: user.uid
-  }));
+// Update authentication state observer
+onAuthStateChanged(auth, async (user) => {
+    console.log('Auth state changed:', user ? 'User logged in' : 'No user');
+    
+    if (!user) {
+        handleSession(null);
+        window.location.href = 'login.html';
+        return;
+    }
 
-  // Initialize dashboard for regular users
-  initializeDashboard(user);
+    // Check if user is admin
+    const isAdmin = await checkAdminAccess(user);
+    if (isAdmin) {
+        window.location.href = 'admin-dashboard.html';
+        return;
+    }
+
+    // Handle session
+    handleSession(user);
+
+    // Initialize dashboard
+    try {
+        await initializeDashboard(user);
+    } catch (error) {
+        console.error('Error initializing dashboard:', error);
+        showNotification('Error loading dashboard. Please try again.', 'error');
+    }
 });
 
 export async function initializeDashboard(user) {
@@ -150,94 +160,115 @@ export async function initializeDashboard(user) {
   }
 }
 
+// Improved service history loading
 async function loadServiceHistory(userId) {
-  try {
-    console.log('Loading service history for user:', userId);
-    const servicesQuery = query(
-      collection(db, 'services'),
-      where('userId', '==', userId),
-      orderBy('date', 'desc'),
-      limit(1)
-    );
-    
-    const servicesSnapshot = await getDocs(servicesQuery);
-    const lastService = servicesSnapshot.docs[0];
-    
-    if (lastService) {
-      const serviceData = lastService.data();
-      console.log('Last service data:', serviceData);
-      
-      const profileLastService = document.getElementById('profileLastService');
-      if (profileLastService) {
-        const serviceDate = serviceData.date?.toDate();
-        profileLastService.textContent = serviceDate ? serviceDate.toLocaleDateString() : 'Not available';
-      }
-    } else {
-      console.log('No service history found');
-      const profileLastService = document.getElementById('profileLastService');
-      if (profileLastService) {
-        profileLastService.textContent = 'No services yet';
-      }
+    try {
+        console.log('Loading service history for user:', userId);
+        const servicesQuery = query(
+            collection(db, 'services'),
+            where('userId', '==', userId),
+            orderBy('date', 'desc')
+        );
+        
+        const servicesSnapshot = await getDocs(servicesQuery);
+        const serviceHistoryContainer = document.getElementById('serviceHistory');
+        
+        if (!serviceHistoryContainer) return;
+        
+        if (servicesSnapshot.empty) {
+            serviceHistoryContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-history"></i>
+                    <p>No service history found</p>
+                </div>
+            `;
+            return;
+        }
+        
+        serviceHistoryContainer.innerHTML = servicesSnapshot.docs.map(doc => {
+            const service = doc.data();
+            return `
+                <div class="service-card">
+                    <h4>${service.type}</h4>
+                    <p><i class="fas fa-calendar"></i> Date: ${formatDate(service.date)}</p>
+                    <p><i class="fas fa-dollar-sign"></i> Amount: $${service.amount.toFixed(2)}</p>
+                    <p><i class="fas fa-info-circle"></i> Status: ${service.status}</p>
+                    ${service.notes ? `<p><i class="fas fa-sticky-note"></i> Notes: ${service.notes}</p>` : ''}
+                </div>
+            `;
+        }).join('');
+        
+    } catch (error) {
+        console.error('Error loading service history:', error);
+        const serviceHistoryContainer = document.getElementById('serviceHistory');
+        if (serviceHistoryContainer) {
+            serviceHistoryContainer.innerHTML = `
+                <div class="error-state">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>Error loading service history. Please try again later.</p>
+                </div>
+            `;
+        }
     }
-  } catch (error) {
-    console.error('Error loading service history:', error);
-    const profileLastService = document.getElementById('profileLastService');
-    if (profileLastService) {
-      profileLastService.textContent = 'Error loading service history';
-    }
-  }
 }
 
-export async function loadUnpaidInvoices(userId) {
-  try {
-    console.log('Loading unpaid invoices for user:', userId);
-    const invoicesQuery = query(
-      collection(db, 'invoices'),
-      where('userId', '==', userId),
-      where('status', '==', 'unpaid'),
-      orderBy('dueDate', 'asc')
-    );
-    
-    const invoicesSnapshot = await getDocs(invoicesQuery);
-    const unpaidInvoicesContainer = document.getElementById('unpaidInvoices');
-    
-    if (unpaidInvoicesContainer) {
-      if (invoicesSnapshot.empty) {
-        unpaidInvoicesContainer.innerHTML = '<p>No unpaid invoices</p>';
-      } else {
-        unpaidInvoicesContainer.innerHTML = `
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Invoice #</th>
-                <th>Amount</th>
-                <th>Due Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${invoicesSnapshot.docs.map(doc => `
-                <tr>
-                  <td>${doc.data().invoiceNumber || 'N/A'}</td>
-                  <td>$${doc.data().amount || '0.00'}</td>
-                  <td>${doc.data().dueDate?.toDate().toLocaleDateString() || 'N/A'}</td>
-                  <td>
-                    <button class="btn-primary" onclick="payInvoice('${doc.id}')">Pay Now</button>
-                  </td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        `;
-      }
+// Improved unpaid invoices loading
+async function loadUnpaidInvoices(userId) {
+    try {
+        console.log('Loading unpaid invoices for user:', userId);
+        const invoicesQuery = query(
+            collection(db, 'invoices'),
+            where('userId', '==', userId),
+            where('status', '==', 'unpaid'),
+            orderBy('dueDate', 'asc')
+        );
+        
+        const invoicesSnapshot = await getDocs(invoicesQuery);
+        const unpaidInvoicesContainer = document.getElementById('unpaidInvoices');
+        
+        if (!unpaidInvoicesContainer) return;
+        
+        if (invoicesSnapshot.empty) {
+            unpaidInvoicesContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-file-invoice"></i>
+                    <p>No unpaid invoices</p>
+                </div>
+            `;
+            return;
+        }
+        
+        unpaidInvoicesContainer.innerHTML = invoicesSnapshot.docs.map(doc => {
+            const invoice = doc.data();
+            return `
+                <div class="invoice-card">
+                    <h4>Invoice #${doc.id.slice(-6)}</h4>
+                    <p><i class="fas fa-calendar"></i> Due Date: ${formatDate(invoice.dueDate)}</p>
+                    <p><i class="fas fa-dollar-sign"></i> Amount: $${invoice.amount.toFixed(2)}</p>
+                    <div class="invoice-actions">
+                        <button onclick="viewInvoice('${doc.id}')" class="btn btn-sm btn-info">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button onclick="payInvoice('${doc.id}')" class="btn btn-sm btn-success">
+                            <i class="fas fa-credit-card"></i> Pay Now
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+    } catch (error) {
+        console.error('Error loading unpaid invoices:', error);
+        const unpaidInvoicesContainer = document.getElementById('unpaidInvoices');
+        if (unpaidInvoicesContainer) {
+            unpaidInvoicesContainer.innerHTML = `
+                <div class="error-state">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>Error loading invoices. Please try again later.</p>
+                </div>
+            `;
+        }
     }
-  } catch (error) {
-    console.error('Error loading unpaid invoices:', error);
-    const unpaidInvoicesContainer = document.getElementById('unpaidInvoices');
-    if (unpaidInvoicesContainer) {
-      unpaidInvoicesContainer.innerHTML = '<p>Error loading unpaid invoices</p>';
-    }
-  }
 }
 
 export function initializeEventListeners() {
