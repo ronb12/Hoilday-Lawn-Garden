@@ -173,18 +173,6 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Function to clear cache and reload
-function clearCacheAndReload() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(registrations => {
-      for (let registration of registrations) {
-        registration.unregister();
-      }
-    });
-  }
-  window.location.reload(true);
-}
-
 // Add cache clearing to page load
 window.addEventListener('load', () => {
   // Hide loading spinner
@@ -193,8 +181,11 @@ window.addEventListener('load', () => {
     loadingSpinner.style.display = 'none';
   }
 
-  // Clear cache on page load if needed
-  if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD) {
+  // Only clear cache on explicit reload, not on initial page load
+  if (window.performance && 
+      window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD &&
+      sessionStorage.getItem('hasReloaded') !== 'true') {
+    sessionStorage.setItem('hasReloaded', 'true');
     clearCacheAndReload();
   }
 });
@@ -206,3 +197,18 @@ setTimeout(() => {
     loadingSpinner.style.display = 'none';
   }
 }, 5000);
+
+// Function to clear cache and reload
+function clearCacheAndReload() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+  // Only reload if we haven't already reloaded
+  if (sessionStorage.getItem('hasReloaded') !== 'true') {
+    window.location.reload(true);
+  }
+}
