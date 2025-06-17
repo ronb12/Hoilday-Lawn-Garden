@@ -20,7 +20,7 @@
   --touch-target-size: 44px;
 }
 
-/* Global Styles */
+/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -33,11 +33,12 @@ html, body {
 }
 
 body {
-  font-family: 'Montserrat', Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
   color: var(--text-color);
+  margin: 0;
+  padding: 0;
   background: var(--background-color);
-  overflow-x: hidden;
 }
 
 .container {
@@ -46,20 +47,19 @@ body {
   padding: 0 1rem;
 }
 
-/* Main Header Styles */
+/* Header Styles */
 .main-header {
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
-  min-height: 80px;
 }
 
 .logo {
@@ -665,4 +665,15 @@ footer a:focus {
   .service-card {
     padding: 1.5rem;
   }
+}
+
+/* Hero Section Styles */
+.hero {
+  margin-top: var(--header-height);
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
