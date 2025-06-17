@@ -6,7 +6,6 @@
     <title>Admin Dashboard - Holliday Lawn & Garden</title>
     <meta name="description" content="Admin dashboard for Holliday Lawn & Garden management system">
     <link rel="stylesheet" href="assets/css/main.css">
-<link rel="stylesheet" href="assets/css/mobile-enhancements.css">
     <link rel="stylesheet" href="assets/css/admin-dashboard.css">
     <link rel="stylesheet" href="assets/css/mobile-enhancements.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -15,97 +14,146 @@
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
     <meta name="theme-color" content="#2e7d32">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header class="main-header">
-        <div class="logo">
-            <a href="index.html">
-                <picture>
-                    <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
-                    <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" loading="lazy">
-                </picture>
-            </a>
-        </div>
-        <button class="hamburger" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="education.html">Education</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-                <li><a href="login.html" class="btn btn-secondary">Login</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="admin-dashboard-main">
-        <section class="dashboard-header">
+    <div class="container">
+        <header class="header">
             <h1>Admin Dashboard</h1>
-            <div class="dashboard-actions">
-                <button id="refreshDashboard" class="btn btn-secondary">
-                    <i class="fas fa-sync-alt"></i>
-                    Refresh
+            <div class="header-actions">
+                <button id="refreshDashboardBtn" class="btn btn-secondary">
+                    <i class="fas fa-sync-alt"></i> Refresh
                 </button>
                 <button id="logoutButton" class="btn btn-danger">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
+                    <i class="fas fa-sign-out-alt"></i> Logout
                 </button>
             </div>
-        </section>
+        </header>
 
-        <section class="dashboard-overview">
-            <h2>Overview</h2>
-            <div id="dashboardStats" class="stats-grid">
-                <!-- Stats will be loaded dynamically -->
-            </div>
-        </section>
+        <div class="dashboard-stats" id="dashboardStats">
+            <!-- Stats will be loaded dynamically -->
+        </div>
 
-        <section class="appointment-management">
-            <h2>Recent Appointments</h2>
-            <div id="recentAppointments" class="appointments-grid">
-                <!-- Appointments will be loaded dynamically -->
-            </div>
-        </section>
+        <div class="dashboard-container">
+            <!-- Appointments Section -->
+            <section class="dashboard-section">
+                <h2>Appointments</h2>
+                <div class="section-actions">
+                    <button id="viewAllAppointmentsBtn" class="btn btn-primary">
+                        <i class="fas fa-calendar"></i> View All
+                    </button>
+                    <button id="addNewAppointmentBtn" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Add New
+                    </button>
+                </div>
+                <div id="recentAppointments" class="appointment-list">
+                    <!-- Appointments will be loaded dynamically -->
+                </div>
+            </section>
 
-        <section class="customer-management">
-            <h2>Customer Management</h2>
-            <div class="customer-actions">
-                <button id="viewAllCustomers" class="btn btn-primary">
-                    <i class="fas fa-users"></i>
-                    View All Customers
-                </button>
-                <button id="addNewCustomer" class="btn btn-success">
-                    <i class="fas fa-user-plus"></i>
-                    Add New Customer
-                </button>
-            </div>
-        </section>
+            <!-- Customers Section -->
+            <section class="dashboard-section">
+                <h2>Customers</h2>
+                <div class="section-actions">
+                    <button id="viewAllCustomersBtn" class="btn btn-primary">
+                        <i class="fas fa-users"></i> View All
+                    </button>
+                    <button id="addNewCustomerBtn" class="btn btn-success">
+                        <i class="fas fa-user-plus"></i> Add New
+                    </button>
+                </div>
+                <div id="recentCustomers" class="customer-list">
+                    <!-- Customers will be loaded dynamically -->
+                </div>
+            </section>
 
-        <section class="payment-management">
-            <h2>Payment Management</h2>
-            <div class="payment-actions">
-                <button id="viewAllPayments" class="btn btn-primary">
-                    <i class="fas fa-money-bill-wave"></i>
-                    View All Payments
-                </button>
-                <button id="processPayment" class="btn btn-success">
-                    <i class="fas fa-plus-circle"></i>
-                    Process New Payment
-                </button>
-            </div>
-        </section>
-    </main>
+            <!-- Payments Section -->
+            <section class="dashboard-section">
+                <h2>Payments</h2>
+                <div class="section-actions">
+                    <button id="viewAllPaymentsBtn" class="btn btn-primary">
+                        <i class="fas fa-money-bill"></i> View All
+                    </button>
+                    <button id="processPaymentBtn" class="btn btn-success">
+                        <i class="fas fa-plus"></i> New Payment
+                    </button>
+                </div>
+                <div id="recentPayments" class="payment-list">
+                    <!-- Payments will be loaded dynamically -->
+                </div>
+            </section>
 
-    <div id="loading-overlay" class="loading-overlay" style="display: none">
-        <div class="spinner"></div>
-        <p id="loading-message">Loading...</p>
+            <!-- Analytics Section -->
+            <section class="dashboard-section">
+                <h2>Analytics</h2>
+                <div class="section-actions">
+                    <button id="viewAnalyticsBtn" class="btn btn-primary">
+                        <i class="fas fa-chart-bar"></i> View Analytics
+                    </button>
+                    <button id="generateReportBtn" class="btn btn-success">
+                        <i class="fas fa-file-alt"></i> Generate Report
+                    </button>
+                </div>
+            </section>
+
+            <!-- Inventory Section -->
+            <section class="dashboard-section">
+                <h2>Inventory</h2>
+                <div class="section-actions">
+                    <button id="manageInventoryBtn" class="btn btn-primary">
+                        <i class="fas fa-boxes"></i> Manage Inventory
+                    </button>
+                    <button id="scheduleMaintenanceBtn" class="btn btn-success">
+                        <i class="fas fa-tools"></i> Schedule Maintenance
+                    </button>
+                </div>
+            </section>
+
+            <!-- Staff Section -->
+            <section class="dashboard-section">
+                <h2>Staff</h2>
+                <div class="section-actions">
+                    <button id="viewStaffBtn" class="btn btn-primary">
+                        <i class="fas fa-user-tie"></i> View Staff
+                    </button>
+                    <button id="addStaffBtn" class="btn btn-success">
+                        <i class="fas fa-user-plus"></i> Add Staff
+                    </button>
+                </div>
+            </section>
+
+            <!-- Communication Section -->
+            <section class="dashboard-section">
+                <h2>Communication</h2>
+                <div class="section-actions">
+                    <button id="viewMessagesBtn" class="btn btn-primary">
+                        <i class="fas fa-comments"></i> View Messages
+                    </button>
+                    <button id="sendBulkMessageBtn" class="btn btn-success">
+                        <i class="fas fa-paper-plane"></i> Send Bulk Message
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <nav class="nav-menu">
+        <ul>
+            <li><a href="#" id="mobileAppointmentsBtn"><i class="fas fa-calendar"></i> Appointments</a></li>
+            <li><a href="#" id="mobileCustomersBtn"><i class="fas fa-users"></i> Customers</a></li>
+            <li><a href="#" id="mobilePaymentsBtn"><i class="fas fa-money-bill"></i> Payments</a></li>
+            <li><a href="#" id="mobileAnalyticsBtn"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+            <li><a href="#" id="mobileInventoryBtn"><i class="fas fa-boxes"></i> Inventory</a></li>
+            <li><a href="#" id="mobileStaffBtn"><i class="fas fa-user-tie"></i> Staff</a></li>
+            <li><a href="#" id="mobileMessagesBtn"><i class="fas fa-comments"></i> Messages</a></li>
+        </ul>
+    </nav>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+        <p id="loadingMessage">Loading...</p>
     </div>
 
     <footer class="footer" role="contentinfo" aria-label="Site footer">
@@ -139,14 +187,16 @@
     </footer>
 
     <!-- Firebase SDK -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"></script>
-
-    <!-- Custom Modules -->
-    <script type="module" src="assets/js/firebase-config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script type="module" src="assets/js/utils.js"></script>
+    <script type="module" src="assets/js/modules/analytics.js"></script>
+    <script type="module" src="assets/js/modules/inventory.js"></script>
+    <script type="module" src="assets/js/modules/staff.js"></script>
+    <script type="module" src="assets/js/modules/communication.js"></script>
     <script type="module" src="assets/js/modules/admin_dashboard.js"></script>
-    <script type="module" src="assets/js/clear-cache.js"></script>
 </body>
 </html> 
