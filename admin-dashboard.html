@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Holliday Lawn & Garden</title>
-    <meta name="description" content="Admin dashboard for managing Holliday Lawn & Garden services">
+    <meta name="description" content="Admin dashboard for Holliday Lawn & Garden management system">
     <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="assets/icons/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="assets/icons/favicon-16x16.png" sizes="16x16">
@@ -43,155 +44,61 @@
     </header>
 
     <main class="admin-dashboard-main">
-        <div class="dashboard-container">
-            <aside class="dashboard-sidebar">
-                <div class="admin-profile">
-                    <div class="profile-image">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <div class="profile-info">
-                        <h3 id="adminName">Admin User</h3>
-                        <p id="adminRole">Administrator</p>
-                    </div>
-                </div>
-                <nav class="dashboard-nav">
-                    <ul>
-                        <li>
-                            <a href="#overview" class="active">
-                                <i class="fas fa-chart-line"></i>
-                                Overview
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#services">
-                                <i class="fas fa-tools"></i>
-                                Services
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#customers">
-                                <i class="fas fa-users"></i>
-                                Customers
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#appointments">
-                                <i class="fas fa-calendar-alt"></i>
-                                Appointments
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#payments">
-                                <i class="fas fa-credit-card"></i>
-                                Payments
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#settings">
-                                <i class="fas fa-cog"></i>
-                                Settings
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <button id="logoutBtn" class="logout-button">
+        <section class="dashboard-header">
+            <h1>Admin Dashboard</h1>
+            <div class="dashboard-actions">
+                <button id="refreshDashboard" class="btn btn-secondary">
+                    <i class="fas fa-sync-alt"></i>
+                    Refresh
+                </button>
+                <button id="logoutButton" class="btn btn-danger">
                     <i class="fas fa-sign-out-alt"></i>
                     Logout
                 </button>
-            </aside>
-
-            <div class="dashboard-content">
-                <section id="overview" class="dashboard-section active">
-                    <div class="section-header">
-                        <h2>Dashboard Overview</h2>
-                        <div class="date-filter">
-                            <label for="dateRange">Date Range:</label>
-                            <select id="dateRange">
-                                <option value="today">Today</option>
-                                <option value="week">This Week</option>
-                                <option value="month" selected>This Month</option>
-                                <option value="year">This Year</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div id="adminOverview" class="stats-grid">
-                        <!-- Stats will be loaded here dynamically -->
-                    </div>
-
-                    <div class="dashboard-grid">
-                        <div class="dashboard-card">
-                            <h3>Recent Appointments</h3>
-                            <div id="recentAppointments" class="table-responsive">
-                                <!-- Recent appointments will be loaded here dynamically -->
-                            </div>
-                        </div>
-
-                        <div class="dashboard-card">
-                            <h3>Quick Actions</h3>
-                            <div class="quick-actions">
-                                <button class="action-button" id="newAppointmentBtn">
-                                    <i class="fas fa-plus"></i>
-                                    New Appointment
-                                </button>
-                                <button class="action-button" id="addCustomerBtn">
-                                    <i class="fas fa-user-plus"></i>
-                                    Add Customer
-                                </button>
-                                <button class="action-button" id="generateReportBtn">
-                                    <i class="fas fa-file-invoice"></i>
-                                    Generate Report
-                                </button>
-                                <button class="action-button" id="sendNotificationsBtn">
-                                    <i class="fas fa-bell"></i>
-                                    Send Notifications
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Appointments Section -->
-                <div class="dashboard-section">
-                    <div class="section-header">
-                        <h2>Appointment Management</h2>
-                        <div class="section-actions">
-                            <select id="appointmentFilter" class="filter-select">
-                                <option value="all">All Appointments</option>
-                                <option value="pending">Pending</option>
-                                <option value="confirmed">Confirmed</option>
-                                <option value="cancelled">Cancelled</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="appointments-container">
-                        <div class="appointments-list">
-                            <!-- Appointments will be loaded here dynamically -->
-                        </div>
-                        <div class="no-appointments" style="display: none;">
-                            <i class="fas fa-calendar-times"></i>
-                            <p>No appointments found</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Appointment Details Modal -->
-                <div id="appointmentModal" class="modal" style="display: none;">
-                    <div class="modal-content">
-                        <!-- Modal content will be loaded dynamically -->
-                    </div>
-                </div>
-
-                <!-- Loading Overlay -->
-                <div id="loadingOverlay" class="loading-overlay" style="display: none;">
-                    <div class="loading-content">
-                        <div class="spinner"></div>
-                        <p id="loadingMessage">Loading...</p>
-                    </div>
-                </div>
             </div>
-        </div>
+        </section>
+
+        <section class="dashboard-overview">
+            <h2>Overview</h2>
+            <div id="dashboardStats" class="stats-grid">
+                <!-- Stats will be loaded dynamically -->
+            </div>
+        </section>
+
+        <section class="appointment-management">
+            <h2>Recent Appointments</h2>
+            <div id="recentAppointments" class="appointments-grid">
+                <!-- Appointments will be loaded dynamically -->
+            </div>
+        </section>
+
+        <section class="customer-management">
+            <h2>Customer Management</h2>
+            <div class="customer-actions">
+                <button id="viewAllCustomers" class="btn btn-primary">
+                    <i class="fas fa-users"></i>
+                    View All Customers
+                </button>
+                <button id="addNewCustomer" class="btn btn-success">
+                    <i class="fas fa-user-plus"></i>
+                    Add New Customer
+                </button>
+            </div>
+        </section>
+
+        <section class="payment-management">
+            <h2>Payment Management</h2>
+            <div class="payment-actions">
+                <button id="viewAllPayments" class="btn btn-primary">
+                    <i class="fas fa-money-bill-wave"></i>
+                    View All Payments
+                </button>
+                <button id="processPayment" class="btn btn-success">
+                    <i class="fas fa-plus-circle"></i>
+                    Process New Payment
+                </button>
+            </div>
+        </section>
     </main>
 
     <div id="loading-overlay" class="loading-overlay" style="display: none">
@@ -229,16 +136,15 @@
         </div>
     </footer>
 
-    <!-- Loading Indicator -->
-    <div id="loadingIndicator" class="loading-indicator" style="display: none;">
-        <div class="spinner"></div>
-    </div>
+    <!-- Firebase SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"></script>
 
-    <!-- Notification Container -->
-    <div id="notificationContainer" class="notification-container"></div>
-
-    <!-- Scripts -->
+    <!-- Custom Modules -->
     <script type="module" src="assets/js/firebase-config.js"></script>
     <script type="module" src="assets/js/modules/admin_dashboard.js"></script>
+    <script type="module" src="assets/js/clear-cache.js"></script>
 </body>
 </html> 

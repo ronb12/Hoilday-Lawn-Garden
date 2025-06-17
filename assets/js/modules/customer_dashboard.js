@@ -2,7 +2,7 @@
 console.log('modules/customer_dashboard.js loaded'); 
 
 import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, orderBy, limit, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, orderBy, limit, addDoc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { app } from "../firebase-config.js";
 
 // Initialize Firebase services
@@ -378,44 +378,44 @@ function initializeAppointmentForm() {
 
 // Load appointments
 async function loadAppointments() {
-    const appointmentsList = document.querySelector('.appointments-list');
-    const noAppointments = document.querySelector('.no-appointments');
-    
-    if (!appointmentsList) return;
-    
     try {
-        showLoading('Loading appointments...');
-        
-        // Query appointments for current user
+        const appointmentsContainer = document.getElementById('appointmentsContainer');
+        if (!appointmentsContainer) return;
+
         const appointmentsQuery = query(
             collection(db, 'appointments'),
-            where('customerId', '==', auth.currentUser.uid),
-            where('status', 'in', ['pending', 'confirmed']),
-            orderBy('preferredDate', 'asc')
+            where('userId', '==', auth.currentUser.uid),
+            orderBy('date', 'desc')
         );
-        
-        const appointmentsSnapshot = await getDocs(appointmentsQuery);
-        
-        if (appointmentsSnapshot.empty) {
-            appointmentsList.innerHTML = '';
-            noAppointments.style.display = 'block';
-            return;
-        }
-        
-        noAppointments.style.display = 'none';
-        appointmentsList.innerHTML = '';
-        
-        appointmentsSnapshot.forEach(doc => {
-            const appointment = doc.data();
-            const appointmentElement = createAppointmentElement(doc.id, appointment);
-            appointmentsList.appendChild(appointmentElement);
+
+        // Set up real-time listener for appointments
+        onSnapshot(appointmentsQuery, (snapshot) => {
+            const appointments = [];
+            snapshot.forEach((doc) => {
+                appointments.push({
+                    id: doc.id,
+                    ...doc.data()
+                });
+            });
+
+            if (appointments.length === 0) {
+                appointmentsContainer.innerHTML = `
+                    <div class="no-appointments">
+                        <i class="fas fa-calendar-times"></i>
+                        <p>No appointments found</p>
+                    </div>
+                `;
+                return;
+            }
+
+            appointmentsContainer.innerHTML = appointments
+                .map(appointment => createAppointmentElement(appointment.id, appointment))
+                .join('');
         });
-        
+
     } catch (error) {
         console.error('Error loading appointments:', error);
-        showNotification('Failed to load appointments', 'error');
-    } finally {
-        hideLoading();
+        showNotification('Error loading appointments', 'error');
     }
 }
 
@@ -480,22 +480,42 @@ function formatTimeSlot(timeSlot) {
 
 // Cancel appointment
 async function cancelAppointment(appointmentId) {
-    if (!confirm('Are you sure you want to cancel this appointment?')) return;
-    
     try {
-        showLoading('Cancelling appointment...');
-        
-        await updateDoc(doc(db, 'appointments', appointmentId), {
+        showLoading();
+        const appointmentRef = doc(db, 'appointments', appointmentId);
+        const appointmentDoc = await getDoc(appointmentRef);
+
+        if (!appointmentDoc.exists()) {
+            throw new Error('Appointment not found');
+        }
+
+        const appointmentData = appointmentDoc.data();
+        if (appointmentData.userId !== auth.currentUser.uid) {
+            throw new Error('Unauthorized to cancel this appointment');
+        }
+
+        // Update appointment status
+        await updateDoc(appointmentRef, {
             status: 'cancelled',
-            updatedAt: serverTimestamp()
+            updatedAt: new Date().toISOString(),
+            cancelledBy: auth.currentUser.uid
         });
-        
+
+        // Create a notification for admin
+        const notificationRef = doc(collection(db, 'notifications'));
+        await setDoc(notificationRef, {
+            type: 'appointment_cancelled',
+            title: 'Appointment Cancelled',
+            message: `Customer ${auth.currentUser.email} cancelled an appointment`,
+            appointmentId: appointmentId,
+            read: false,
+            createdAt: new Date().toISOString()
+        });
+
         showNotification('Appointment cancelled successfully', 'success');
-        loadAppointments();
-        
     } catch (error) {
         console.error('Error cancelling appointment:', error);
-        showNotification('Failed to cancel appointment', 'error');
+        showNotification('Error cancelling appointment', 'error');
     } finally {
         hideLoading();
     }

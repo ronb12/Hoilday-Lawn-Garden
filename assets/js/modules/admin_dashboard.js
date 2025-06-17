@@ -1,6 +1,7 @@
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, collection, query, where, getDocs, doc, getDoc, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc, orderBy, limit, onSnapshot, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { app } from "../firebase-config.js";
+import { showLoading, hideLoading, showNotification, showModal, closeModal, createNotification } from "./utils.js";
 
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -9,10 +10,11 @@ const db = getFirestore(app);
 const adminName = document.getElementById("adminName");
 const adminRole = document.getElementById("adminRole");
 const logoutBtn = document.getElementById("logoutBtn");
+const headerLogoutBtn = document.getElementById("headerLogoutBtn");
 const adminOverview = document.getElementById("adminOverview");
 const recentAppointments = document.getElementById("recentAppointments");
-const loadingIndicator = document.getElementById("loadingIndicator");
-const notificationContainer = document.getElementById("notificationContainer");
+const dateRange = document.getElementById("dateRange");
+const appointmentFilter = document.getElementById("appointmentFilter");
 
 // Quick Action Buttons
 const newAppointmentBtn = document.getElementById("newAppointmentBtn");
@@ -26,9 +28,11 @@ onAuthStateChanged(auth, async (user) => {
     
     if (user) {
         try {
+            showLoading("Verifying admin access...");
             const userDoc = await getDoc(doc(db, "users", user.uid));
             if (!userDoc.exists() || userDoc.data().role !== 'admin') {
                 console.error("User is not an admin");
+                await auth.signOut();
                 window.location.href = "login.html";
                 return;
             }
@@ -38,6 +42,10 @@ onAuthStateChanged(auth, async (user) => {
         } catch (error) {
             console.error("Error checking admin status:", error);
             showNotification("Error verifying admin status", "error");
+            await auth.signOut();
+            window.location.href = "admin-login.html";
+        } finally {
+            hideLoading();
         }
     } else {
         window.location.href = "admin-login.html";
@@ -46,11 +54,14 @@ onAuthStateChanged(auth, async (user) => {
 
 async function initializeDashboard(user) {
     try {
-        showLoading();
+        showLoading("Loading dashboard data...");
         
         // Update admin profile info
         if (adminName) adminName.textContent = user.email;
         if (adminRole) adminRole.textContent = "Administrator";
+
+        // Set up real-time listeners
+        setupRealtimeListeners();
 
         // Load dashboard data
         await Promise.all([
@@ -66,6 +77,147 @@ async function initializeDashboard(user) {
         console.error("Error initializing dashboard:", error);
         showNotification("Error loading dashboard data", "error");
         hideLoading();
+    }
+}
+
+function setupRealtimeListeners() {
+    try {
+        // Listen for appointment changes
+        const appointmentsQuery = query(
+            collection(db, "appointments"),
+            orderBy("date", "desc")
+        );
+
+        onSnapshot(appointmentsQuery, (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === "modified" || change.type === "added") {
+                    // Refresh appointments list when an appointment is updated or added
+                    loadRecentAppointments();
+                    // Refresh overview stats
+                    loadAdminOverview();
+                }
+            });
+        });
+
+        // Listen for payment changes
+        const paymentsQuery = query(
+            collection(db, "payments"),
+            orderBy("date", "desc")
+        );
+
+        onSnapshot(paymentsQuery, (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === "added" || change.type === "modified") {
+                    // Refresh overview stats when payments change
+                    loadAdminOverview();
+                }
+            });
+        });
+
+        // Listen for customer changes
+        const customersQuery = query(collection(db, "users"));
+        onSnapshot(customersQuery, (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === "added" || change.type === "modified") {
+                    // Refresh overview stats when customer data changes
+                    loadAdminOverview();
+                }
+            });
+        });
+    } catch (error) {
+        console.error("Error setting up real-time listeners:", error);
+        showNotification("Error setting up real-time updates", "error");
+    }
+}
+
+async function getDashboardStats() {
+    try {
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+        // Get total customers
+        const customersSnapshot = await getDocs(collection(db, "users"));
+        const totalCustomers = customersSnapshot.size;
+
+        // Get last month's customers
+        const lastMonthCustomersQuery = query(
+            collection(db, "users"),
+            where("createdAt", ">=", startOfLastMonth),
+            where("createdAt", "<=", endOfLastMonth)
+        );
+        const lastMonthCustomersSnapshot = await getDocs(lastMonthCustomersQuery);
+        const lastMonthCustomers = lastMonthCustomersSnapshot.size;
+        const customerChange = lastMonthCustomers === 0 ? 100 : ((totalCustomers - lastMonthCustomers) / lastMonthCustomers) * 100;
+
+        // Get active appointments
+        const activeAppointmentsQuery = query(
+            collection(db, "appointments"),
+            where("status", "in", ["pending", "confirmed"])
+        );
+        const activeAppointmentsSnapshot = await getDocs(activeAppointmentsQuery);
+        const activeAppointments = activeAppointmentsSnapshot.size;
+
+        // Get last month's active appointments
+        const lastMonthAppointmentsQuery = query(
+            collection(db, "appointments"),
+            where("status", "in", ["pending", "confirmed"]),
+            where("date", ">=", startOfLastMonth),
+            where("date", "<=", endOfLastMonth)
+        );
+        const lastMonthAppointmentsSnapshot = await getDocs(lastMonthAppointmentsQuery);
+        const lastMonthAppointments = lastMonthAppointmentsSnapshot.size;
+        const appointmentChange = lastMonthAppointments === 0 ? 100 : ((activeAppointments - lastMonthAppointments) / lastMonthAppointments) * 100;
+
+        // Get monthly revenue
+        const monthlyPaymentsQuery = query(
+            collection(db, "payments"),
+            where("date", ">=", startOfMonth)
+        );
+        const monthlyPaymentsSnapshot = await getDocs(monthlyPaymentsQuery);
+        const monthlyRevenue = monthlyPaymentsSnapshot.docs.reduce((total, doc) => total + (doc.data().amount || 0), 0);
+
+        // Get last month's revenue
+        const lastMonthPaymentsQuery = query(
+            collection(db, "payments"),
+            where("date", ">=", startOfLastMonth),
+            where("date", "<=", endOfLastMonth)
+        );
+        const lastMonthPaymentsSnapshot = await getDocs(lastMonthPaymentsQuery);
+        const lastMonthRevenue = lastMonthPaymentsSnapshot.docs.reduce((total, doc) => total + (doc.data().amount || 0), 0);
+        const revenueChange = lastMonthRevenue === 0 ? 100 : ((monthlyRevenue - lastMonthRevenue) / lastMonthRevenue) * 100;
+
+        // Get customer satisfaction
+        const ratingsQuery = query(collection(db, "ratings"));
+        const ratingsSnapshot = await getDocs(ratingsQuery);
+        const ratings = ratingsSnapshot.docs.map(doc => doc.data().rating);
+        const satisfaction = ratings.length > 0 ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1) : 0;
+
+        // Get last month's satisfaction
+        const lastMonthRatingsQuery = query(
+            collection(db, "ratings"),
+            where("createdAt", ">=", startOfLastMonth),
+            where("createdAt", "<=", endOfLastMonth)
+        );
+        const lastMonthRatingsSnapshot = await getDocs(lastMonthRatingsQuery);
+        const lastMonthRatings = lastMonthRatingsSnapshot.docs.map(doc => doc.data().rating);
+        const lastMonthSatisfaction = lastMonthRatings.length > 0 ? (lastMonthRatings.reduce((a, b) => a + b, 0) / lastMonthRatings.length).toFixed(1) : 0;
+        const satisfactionChange = lastMonthSatisfaction === 0 ? 0 : satisfaction - lastMonthSatisfaction;
+
+        return {
+            totalCustomers,
+            customerChange,
+            activeAppointments,
+            appointmentChange,
+            monthlyRevenue,
+            revenueChange,
+            satisfaction,
+            satisfactionChange
+        };
+    } catch (error) {
+        console.error("Error getting dashboard stats:", error);
+        throw error;
     }
 }
 
@@ -134,6 +286,36 @@ async function loadAdminOverview() {
     }
 }
 
+async function getRecentAppointments() {
+    try {
+        const appointmentsQuery = query(
+            collection(db, "appointments"),
+            orderBy("date", "desc"),
+            limit(5)
+        );
+        const appointmentsSnapshot = await getDocs(appointmentsQuery);
+        
+        const appointments = await Promise.all(
+            appointmentsSnapshot.docs.map(async (doc) => {
+                const data = doc.data();
+                const userDoc = await getDoc(doc(db, "users", data.userId));
+                return {
+                    id: doc.id,
+                    customerName: userDoc.exists() ? userDoc.data().name : "Unknown",
+                    service: data.service,
+                    date: data.date,
+                    status: data.status
+                };
+            })
+        );
+
+        return appointments;
+    } catch (error) {
+        console.error("Error getting recent appointments:", error);
+        throw error;
+    }
+}
+
 async function loadRecentAppointments() {
     try {
         if (!recentAppointments) {
@@ -161,6 +343,7 @@ async function loadRecentAppointments() {
                         <th>Service</th>
                         <th>Date</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -170,6 +353,18 @@ async function loadRecentAppointments() {
                             <td>${appointment.service}</td>
                             <td>${formatDate(appointment.date)}</td>
                             <td><span class="status-badge ${appointment.status.toLowerCase()}">${appointment.status}</span></td>
+                            <td>
+                                ${appointment.status === 'pending' ? `
+                                    <button class="btn-confirm" onclick="updateAppointmentStatus('${appointment.id}', 'confirmed')">
+                                        <i class="fas fa-check"></i> Confirm
+                                    </button>
+                                ` : ''}
+                                ${appointment.status !== 'cancelled' ? `
+                                    <button class="btn-cancel" onclick="updateAppointmentStatus('${appointment.id}', 'cancelled')">
+                                        <i class="fas fa-times"></i> Cancel
+                                    </button>
+                                ` : ''}
+                            </td>
                         </tr>
                     `).join('')}
                 </tbody>
@@ -181,228 +376,139 @@ async function loadRecentAppointments() {
     }
 }
 
-async function getDashboardStats() {
+async function updateAppointmentStatus(appointmentId, newStatus) {
     try {
-        // Get total customers
-        const customersSnapshot = await getDocs(collection(db, "users"));
-        const totalCustomers = customersSnapshot.size;
-
-        // Get active appointments
-        const appointmentsSnapshot = await getDocs(
-            query(collection(db, "appointments"), 
-            where("status", "in", ["pending", "confirmed"]))
-        );
-        const activeAppointments = appointmentsSnapshot.size;
-
-        // Get monthly revenue
-        const now = new Date();
-        const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-        const paymentsSnapshot = await getDocs(
-            query(collection(db, "payments"),
-            where("date", ">=", firstDayOfMonth.toISOString()))
-        );
-        const monthlyRevenue = paymentsSnapshot.docs.reduce((total, doc) => {
-            const payment = doc.data();
-            return total + (payment.amount || 0);
-        }, 0);
-
-        // Get customer satisfaction
-        const reviewsSnapshot = await getDocs(collection(db, "reviews"));
-        const satisfaction = reviewsSnapshot.docs.reduce((total, doc) => {
-            const review = doc.data();
-            return total + (review.rating || 0);
-        }, 0) / (reviewsSnapshot.size || 1);
-
-        // Calculate changes from last month
-        const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-        const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0);
-
-        // Last month's customers
-        const lastMonthCustomersSnapshot = await getDocs(
-            query(collection(db, "users"),
-            where("createdAt", ">=", lastMonth.toISOString()),
-            where("createdAt", "<=", lastMonthEnd.toISOString()))
-        );
-        const lastMonthCustomers = lastMonthCustomersSnapshot.size;
-        const customerChange = lastMonthCustomers ? 
-            ((totalCustomers - lastMonthCustomers) / lastMonthCustomers) * 100 : 0;
-
-        // Last month's appointments
-        const lastMonthAppointmentsSnapshot = await getDocs(
-            query(collection(db, "appointments"),
-            where("date", ">=", lastMonth.toISOString()),
-            where("date", "<=", lastMonthEnd.toISOString()))
-        );
-        const lastMonthAppointments = lastMonthAppointmentsSnapshot.size;
-        const appointmentChange = lastMonthAppointments ?
-            ((activeAppointments - lastMonthAppointments) / lastMonthAppointments) * 100 : 0;
-
-        // Last month's revenue
-        const lastMonthPaymentsSnapshot = await getDocs(
-            query(collection(db, "payments"),
-            where("date", ">=", lastMonth.toISOString()),
-            where("date", "<=", lastMonthEnd.toISOString()))
-        );
-        const lastMonthRevenue = lastMonthPaymentsSnapshot.docs.reduce((total, doc) => {
-            const payment = doc.data();
-            return total + (payment.amount || 0);
-        }, 0);
-        const revenueChange = lastMonthRevenue ?
-            ((monthlyRevenue - lastMonthRevenue) / lastMonthRevenue) * 100 : 0;
-
-        // Last month's satisfaction
-        const lastMonthReviewsSnapshot = await getDocs(
-            query(collection(db, "reviews"),
-            where("date", ">=", lastMonth.toISOString()),
-            where("date", "<=", lastMonthEnd.toISOString()))
-        );
-        const lastMonthSatisfaction = lastMonthReviewsSnapshot.docs.reduce((total, doc) => {
-            const review = doc.data();
-            return total + (review.rating || 0);
-        }, 0) / (lastMonthReviewsSnapshot.size || 1);
-        const satisfactionChange = lastMonthSatisfaction ?
-            satisfaction - lastMonthSatisfaction : 0;
-
-        return {
-            totalCustomers,
-            customerChange,
-            activeAppointments,
-            appointmentChange,
-            monthlyRevenue,
-            revenueChange,
-            satisfaction: satisfaction.toFixed(1),
-            satisfactionChange: satisfactionChange.toFixed(1)
-        };
-    } catch (error) {
-        console.error("Error fetching dashboard stats:", error);
-        throw error;
-    }
-}
-
-async function getRecentAppointments() {
-    try {
-        const now = new Date();
-        const appointmentsSnapshot = await getDocs(
-            query(collection(db, "appointments"),
-            where("date", ">=", now.toISOString()),
-            orderBy("date", "asc"),
-            limit(5))
-        );
-
-        const appointments = [];
-        for (const doc of appointmentsSnapshot.docs) {
-            const appointment = doc.data();
-            const customerDoc = await getDoc(doc(db, "users", appointment.userId));
-            const customer = customerDoc.data();
-
-            appointments.push({
-                id: doc.id,
-                customerName: customer?.name || "Unknown Customer",
-                service: appointment.service,
-                date: appointment.date,
-                status: appointment.status
-            });
+        showLoading();
+        const appointmentRef = doc(db, "appointments", appointmentId);
+        const appointmentDoc = await getDoc(appointmentRef);
+        
+        if (!appointmentDoc.exists()) {
+            throw new Error("Appointment not found");
         }
 
-        return appointments;
+        const appointmentData = appointmentDoc.data();
+        const userId = appointmentData.userId;
+
+        // Update appointment status
+        await updateDoc(appointmentRef, {
+            status: newStatus,
+            updatedAt: new Date().toISOString(),
+            lastUpdatedBy: auth.currentUser.uid
+        });
+
+        // Create notification for customer
+        await createNotification(
+            userId,
+            "appointment_update",
+            "Appointment Update",
+            `Your appointment has been ${newStatus.toLowerCase()}`,
+            { appointmentId }
+        );
+
+        showNotification(`Appointment ${newStatus.toLowerCase()} successfully`, "success");
     } catch (error) {
-        console.error("Error fetching recent appointments:", error);
-        throw error;
+        console.error("Error updating appointment status:", error);
+        showNotification("Error updating appointment status", "error");
+    } finally {
+        hideLoading();
     }
 }
 
 function setupEventListeners() {
-    if (logoutBtn) {
-        logoutBtn.addEventListener("click", handleLogout);
-    }
+    try {
+        // Logout buttons
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', handleLogout);
+        }
+        if (headerLogoutBtn) {
+            headerLogoutBtn.addEventListener('click', handleLogout);
+        }
 
-    if (newAppointmentBtn) {
-        newAppointmentBtn.addEventListener("click", () => {
-            // TODO: Implement new appointment functionality
-            showNotification("New appointment feature coming soon", "info");
-        });
-    }
+        // Date range filter
+        if (dateRange) {
+            dateRange.addEventListener('change', () => {
+                loadAdminOverview();
+            });
+        }
 
-    if (addCustomerBtn) {
-        addCustomerBtn.addEventListener("click", () => {
-            // TODO: Implement add customer functionality
-            showNotification("Add customer feature coming soon", "info");
-        });
-    }
+        // Appointment filter
+        if (appointmentFilter) {
+            appointmentFilter.addEventListener('change', () => {
+                loadRecentAppointments();
+            });
+        }
 
-    if (generateReportBtn) {
-        generateReportBtn.addEventListener("click", () => {
-            // TODO: Implement report generation
-            showNotification("Report generation feature coming soon", "info");
-        });
-    }
+        // Quick action buttons
+        if (newAppointmentBtn) {
+            newAppointmentBtn.addEventListener('click', () => {
+                showModal(`
+                    <h2>New Appointment</h2>
+                    <form id="newAppointmentForm">
+                        <!-- Form content will be added -->
+                    </form>
+                `);
+            });
+        }
 
-    if (sendNotificationsBtn) {
-        sendNotificationsBtn.addEventListener("click", () => {
-            // TODO: Implement notification sending
-            showNotification("Notification feature coming soon", "info");
-        });
+        if (addCustomerBtn) {
+            addCustomerBtn.addEventListener('click', () => {
+                showModal(`
+                    <h2>Add New Customer</h2>
+                    <form id="newCustomerForm">
+                        <!-- Form content will be added -->
+                    </form>
+                `);
+            });
+        }
+
+        if (generateReportBtn) {
+            generateReportBtn.addEventListener('click', () => {
+                showModal(`
+                    <h2>Generate Report</h2>
+                    <form id="reportForm">
+                        <!-- Form content will be added -->
+                    </form>
+                `);
+            });
+        }
+
+        if (sendNotificationsBtn) {
+            sendNotificationsBtn.addEventListener('click', () => {
+                showModal(`
+                    <h2>Send Notifications</h2>
+                    <form id="notificationForm">
+                        <!-- Form content will be added -->
+                    </form>
+                `);
+            });
+        }
+    } catch (error) {
+        console.error("Error setting up event listeners:", error);
+        showNotification("Error setting up dashboard controls", "error");
     }
 }
 
 async function handleLogout() {
     try {
-        showLoading();
         await signOut(auth);
         window.location.href = "admin-login.html";
     } catch (error) {
         console.error("Error signing out:", error);
         showNotification("Error signing out", "error");
-        hideLoading();
     }
 }
 
-function showLoading() {
-    if (loadingIndicator) {
-        loadingIndicator.style.display = "flex";
-    }
-}
-
-function hideLoading() {
-    if (loadingIndicator) {
-        loadingIndicator.style.display = "none";
-    }
-}
-
-function showNotification(message, type = "info") {
-    if (!notificationContainer) return;
-
-    const notification = document.createElement("div");
-    notification.className = `notification ${type}`;
-    notification.innerHTML = `
-        <i class="fas ${getNotificationIcon(type)}"></i>
-        <span>${message}</span>
-    `;
-
-    notificationContainer.appendChild(notification);
-
-    setTimeout(() => {
-        notification.classList.add("fade-out");
-        setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, 3000);
-}
-
-function getNotificationIcon(type) {
-    switch (type) {
-        case "success":
-            return "fa-check-circle";
-        case "error":
-            return "fa-exclamation-circle";
-        case "warning":
-            return "fa-exclamation-triangle";
-        default:
-            return "fa-info-circle";
-    }
-}
-
+// Utility functions
 function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
+    const options = { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+    return new Date(dateString).toLocaleDateString('en-US', options);
 }
+
+// Make functions available globally
+window.updateAppointmentStatus = updateAppointmentStatus;

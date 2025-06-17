@@ -1,3 +1,8 @@
+import { getFirestore, collection, doc, setDoc, updateDoc, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { app } from "../firebase-config.js";
+
+const db = getFirestore(app);
+
 // Utility Functions
 export function showLoading(message = 'Loading...') {
     const overlay = document.getElementById('loadingOverlay');
@@ -64,4 +69,53 @@ export function closeModal() {
     if (modal) {
         modal.style.display = 'none';
     }
+}
+
+export async function createNotification(userId, type, title, message, data = {}) {
+    try {
+        const notificationRef = doc(collection(db, 'notifications'));
+        await setDoc(notificationRef, {
+            userId,
+            type,
+            title,
+            message,
+            data,
+            read: false,
+            createdAt: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error('Error creating notification:', error);
+    }
+}
+
+export async function markNotificationAsRead(notificationId) {
+    try {
+        const notificationRef = doc(db, 'notifications', notificationId);
+        await updateDoc(notificationRef, {
+            read: true,
+            readAt: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error('Error marking notification as read:', error);
+    }
+}
+
+export function setupNotificationListener(userId, callback) {
+    const notificationsQuery = query(
+        collection(db, 'notifications'),
+        where('userId', '==', userId),
+        where('read', '==', false),
+        orderBy('createdAt', 'desc')
+    );
+
+    return onSnapshot(notificationsQuery, (snapshot) => {
+        const notifications = [];
+        snapshot.forEach((doc) => {
+            notifications.push({
+                id: doc.id,
+                ...doc.data()
+            });
+        });
+        callback(notifications);
+    });
 } 
