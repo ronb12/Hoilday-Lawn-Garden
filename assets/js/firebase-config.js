@@ -4,15 +4,14 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
-  authDomain: "holiday-lawn-and-garden.firebaseapp.com",
-  projectId: "holiday-lawn-and-garden",
-  storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
-  messagingSenderId: "135322230444",
-  appId: "1:135322230444:web:1a487b25a48aae07368909",
-  measurementId: "G-KD6TBWR4ZT"
+// Firebase configuration
+export const firebaseConfig = {
+  apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  authDomain: "holliday-lawn-garden.firebaseapp.com",
+  projectId: "holliday-lawn-garden",
+  storageBucket: "holliday-lawn-garden.appspot.com",
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:abcdef1234567890"
 };
 
 // Initialize Firebase

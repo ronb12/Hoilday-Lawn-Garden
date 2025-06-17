@@ -1,149 +1,124 @@
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { showLoading, hideLoading, showNotification } from './modules/utils.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { firebaseConfig } from './firebase-config.js';
 
-// Initialize Firebase services
-const auth = getAuth();
-const db = getFirestore();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
-
-// List of allowed admin emails
-const ADMIN_EMAILS = [
-    '7holliday@gmail.com',
-    'admin@hollidaylawn.com'
-];
 
 // DOM Elements
 const adminLoginForm = document.getElementById('adminLoginForm');
-const googleSignInButton = document.getElementById('googleSignIn');
+const adminEmail = document.getElementById('adminEmail');
+const adminPassword = document.getElementById('adminPassword');
+const rememberMe = document.getElementById('remember');
+const googleSignIn = document.getElementById('googleSignIn');
 const errorContainer = document.getElementById('error-container');
 const errorMessage = document.getElementById('errorMessage');
 const successMessage = document.getElementById('successMessage');
+const loadingOverlay = document.getElementById('loading-overlay');
+const loadingMessage = document.getElementById('loading-message');
 
-// Check if user is already logged in
-onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists() && userDoc.data().role === 'admin') {
-            window.location.href = 'admin-dashboard.html';
-        }
-    }
-});
+// Show loading overlay
+function showLoading(message = 'Loading...') {
+  loadingMessage.textContent = message;
+  loadingOverlay.style.display = 'flex';
+}
+
+// Hide loading overlay
+function hideLoading() {
+  loadingOverlay.style.display = 'none';
+}
+
+// Show error message
+function showError(message) {
+  errorMessage.textContent = message;
+  errorContainer.style.display = 'block';
+  successMessage.style.display = 'none';
+}
+
+// Show success message
+function showSuccess(message) {
+  successMessage.textContent = message;
+  successMessage.style.display = 'block';
+  errorContainer.style.display = 'none';
+}
 
 // Handle form submission
 adminLoginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    showLoading('Logging in...');
+  e.preventDefault();
+  showLoading('Signing in...');
 
-    const email = document.getElementById('adminEmail').value;
-    const password = document.getElementById('adminPassword').value;
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, adminEmail.value, adminPassword.value);
+    const user = userCredential.user;
 
-    try {
-        // Check if email is in allowed admin list
-        if (!ADMIN_EMAILS.includes(email)) {
-            throw new Error('Unauthorized access attempt');
-        }
-
-        // Attempt to sign in
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        // Create or update user document
-        const userRef = doc(db, 'users', user.uid);
-        const userDoc = await getDoc(userRef);
-
-        if (!userDoc.exists()) {
-            await setDoc(userRef, {
-                email: user.email,
-                role: 'admin',
-                createdAt: new Date(),
-                lastLogin: new Date()
-            });
-        } else {
-            await setDoc(userRef, {
-                lastLogin: new Date()
-            }, { merge: true });
-        }
-
-        // Show success message and redirect
-        successMessage.style.display = 'block';
-        errorContainer.style.display = 'none';
-        setTimeout(() => {
-            window.location.href = 'admin-dashboard.html';
-        }, 1000);
-
-    } catch (error) {
-        console.error('Login error:', error);
-        errorContainer.style.display = 'block';
-        errorMessage.textContent = getErrorMessage(error.code);
-        successMessage.style.display = 'none';
-    } finally {
-        hideLoading();
+    // Check if user is an admin
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "admin") {
+      showSuccess('Login successful! Redirecting to admin dashboard...');
+      setTimeout(() => {
+        window.location.href = 'admin-dashboard.html';
+      }, 1500);
+    } else {
+      await auth.signOut();
+      showError('Access denied. Admin privileges required.');
     }
+  } catch (error) {
+    console.error('Login error:', error);
+    showError('Invalid email or password. Please try again.');
+  } finally {
+    hideLoading();
+  }
 });
 
 // Handle Google Sign In
-googleSignInButton.addEventListener('click', async () => {
-    showLoading('Signing in with Google...');
-    try {
-        const result = await signInWithPopup(auth, googleProvider);
-        const user = result.user;
+googleSignIn.addEventListener('click', async () => {
+  showLoading('Signing in with Google...');
 
-        // Check if email is in allowed admin list
-        if (!ADMIN_EMAILS.includes(user.email)) {
-            await auth.signOut();
-            throw new Error('Unauthorized access attempt');
-        }
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
 
-        // Create or update user document
-        const userRef = doc(db, 'users', user.uid);
-        const userDoc = await getDoc(userRef);
-
-        if (!userDoc.exists()) {
-            await setDoc(userRef, {
-                email: user.email,
-                role: 'admin',
-                createdAt: new Date(),
-                lastLogin: new Date()
-            });
-        } else {
-            await setDoc(userRef, {
-                lastLogin: new Date()
-            }, { merge: true });
-        }
-
-        // Show success message and redirect
-        successMessage.style.display = 'block';
-        errorContainer.style.display = 'none';
-        setTimeout(() => {
-            window.location.href = 'admin-dashboard.html';
-        }, 1000);
-
-    } catch (error) {
-        console.error('Google sign-in error:', error);
-        errorContainer.style.display = 'block';
-        errorMessage.textContent = getErrorMessage(error.code);
-        successMessage.style.display = 'none';
-    } finally {
-        hideLoading();
+    // Check if user is an admin
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists() && userDoc.data().role === "admin") {
+      showSuccess('Login successful! Redirecting to admin dashboard...');
+      setTimeout(() => {
+        window.location.href = 'admin-dashboard.html';
+      }, 1500);
+    } else {
+      await auth.signOut();
+      showError('Access denied. Admin privileges required.');
     }
+  } catch (error) {
+    console.error('Google sign-in error:', error);
+    showError('Failed to sign in with Google. Please try again.');
+  } finally {
+    hideLoading();
+  }
 });
 
-// Helper function to get user-friendly error messages
-function getErrorMessage(errorCode) {
-    switch (errorCode) {
-        case 'auth/invalid-email':
-            return 'Invalid email address';
-        case 'auth/user-disabled':
-            return 'This account has been disabled';
-        case 'auth/user-not-found':
-        case 'auth/wrong-password':
-            return 'Invalid email or password';
-        case 'auth/too-many-requests':
-            return 'Too many failed attempts. Please try again later';
-        case 'auth/network-request-failed':
-            return 'Network error. Please check your connection';
-        default:
-            return 'An error occurred. Please try again';
+// Handle remember me
+if (rememberMe) {
+  rememberMe.addEventListener('change', (e) => {
+    if (e.target.checked) {
+      localStorage.setItem('rememberAdmin', 'true');
+    } else {
+      localStorage.removeItem('rememberAdmin');
     }
+  });
 }
+
+// Check for remembered email
+window.addEventListener('load', () => {
+  if (localStorage.getItem('rememberAdmin') === 'true') {
+    rememberMe.checked = true;
+    const savedEmail = localStorage.getItem('adminEmail');
+    if (savedEmail) {
+      adminEmail.value = savedEmail;
+    }
+  }
+});
