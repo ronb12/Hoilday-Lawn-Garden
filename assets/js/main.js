@@ -187,8 +187,22 @@ function clearCacheAndReload() {
 
 // Add cache clearing to page load
 window.addEventListener('load', () => {
+  // Hide loading spinner
+  const loadingSpinner = document.getElementById('loading');
+  if (loadingSpinner) {
+    loadingSpinner.style.display = 'none';
+  }
+
   // Clear cache on page load if needed
   if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD) {
     clearCacheAndReload();
   }
 });
+
+// Fallback to hide loading spinner after 5 seconds
+setTimeout(() => {
+  const loadingSpinner = document.getElementById('loading');
+  if (loadingSpinner) {
+    loadingSpinner.style.display = 'none';
+  }
+}, 5000);
