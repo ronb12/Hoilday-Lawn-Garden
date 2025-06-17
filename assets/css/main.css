@@ -616,6 +616,7 @@ footer a:focus {
 .services {
   padding: 4rem 0;
   background: var(--white);
+  margin-top: var(--header-height);
 }
 
 .services h2 {
@@ -629,6 +630,8 @@ footer a:focus {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   padding: 0 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .service-card {
@@ -641,6 +644,7 @@ footer a:focus {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  height: 100%;
 }
 
 .service-card:hover {
