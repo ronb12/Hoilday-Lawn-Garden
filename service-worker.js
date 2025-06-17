@@ -1,4 +1,4 @@
-const CACHE_NAME = 'holliday-lawn-garden-v2';
+const CACHE_NAME = 'holliday-lawn-garden-' + Date.now();
 const ASSETS_TO_CACHE = [
   '/Holliday-Lawn-Garden/',
   '/Holliday-Lawn-Garden/index.html',
@@ -13,6 +13,7 @@ const ASSETS_TO_CACHE = [
 
 // Install event - cache assets
 self.addEventListener('install', event => {
+  self.skipWaiting();
   event.waitUntil(
     caches
       .open(CACHE_NAME)
@@ -40,6 +41,7 @@ self.addEventListener('activate', event => {
       );
     })
   );
+  self.clients.claim();
 });
 
 // Fetch event - serve from cache, fall back to network
