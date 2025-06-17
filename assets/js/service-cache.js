@@ -14,8 +14,7 @@ const services = {
       'Fertilization and weed control',
       'Leaf removal and cleanup',
       'Seasonal maintenance'
-    ],
-    image: 'assets/images/services/lawn-maintenance.jpg'
+    ]
   },
   'landscaping': {
     id: 'landscaping',
@@ -27,8 +26,7 @@ const services = {
       'Plant installation',
       'Hardscaping',
       'Irrigation systems'
-    ],
-    image: 'assets/images/services/landscaping.jpg'
+    ]
   },
   'garden-care': {
     id: 'garden-care',
@@ -40,8 +38,7 @@ const services = {
       'Plant health care',
       'Seasonal planting',
       'Garden design'
-    ],
-    image: 'assets/images/services/garden-care.jpg'
+    ]
   }
 };
 
@@ -50,12 +47,6 @@ async function initializeServiceCache() {
   try {
     // Store services in localStorage for offline access
     localStorage.setItem(SERVICES_KEY, JSON.stringify(services));
-    
-    // Cache service images
-    const cache = await caches.open(CACHE_NAME);
-    const imageUrls = Object.values(services).map(service => service.image);
-    await Promise.all(imageUrls.map(url => cache.add(url)));
-    
     console.log('Service cache initialized successfully');
   } catch (error) {
     console.error('Error initializing service cache:', error);
@@ -89,12 +80,6 @@ function getServiceById(serviceId) {
 async function updateServiceCache(newServices) {
   try {
     localStorage.setItem(SERVICES_KEY, JSON.stringify(newServices));
-    
-    // Update image cache
-    const cache = await caches.open(CACHE_NAME);
-    const imageUrls = Object.values(newServices).map(service => service.image);
-    await Promise.all(imageUrls.map(url => cache.add(url)));
-    
     console.log('Service cache updated successfully');
   } catch (error) {
     console.error('Error updating service cache:', error);
