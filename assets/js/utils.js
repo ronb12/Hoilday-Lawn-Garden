@@ -5,8 +5,8 @@ import { app } from "./firebase-config.js";
 const db = getFirestore(app);
 
 // Notification system
-export function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
+export function showNotification(message, type = "info") {
+    const notification = document.createElement("div");
     notification.className = `notification ${type}`;
     notification.textContent = message;
     document.body.appendChild(notification);
@@ -17,9 +17,9 @@ export function showNotification(message, type = 'info') {
 }
 
 // Loading indicator
-export function showLoading(message = 'Loading...') {
-    const loading = document.createElement('div');
-    loading.id = 'loadingOverlay';
+export function showLoading(message = "Loading...") {
+    const loading = document.createElement("div");
+    loading.id = "loadingOverlay";
     loading.innerHTML = `
         <div class="loading-spinner"></div>
         <p>${message}</p>
@@ -28,7 +28,7 @@ export function showLoading(message = 'Loading...') {
 }
 
 export function hideLoading() {
-    const loading = document.getElementById('loadingOverlay');
+    const loading = document.getElementById("loadingOverlay");
     if (loading) {
         loading.remove();
     }
@@ -36,8 +36,8 @@ export function hideLoading() {
 
 // Modal system
 export function showModal(content) {
-    const modal = document.createElement('div');
-    modal.className = 'modal';
+    const modal = document.createElement("div");
+    modal.className = "modal";
     modal.innerHTML = `
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -46,14 +46,14 @@ export function showModal(content) {
     `;
     document.body.appendChild(modal);
     
-    const closeButton = modal.querySelector('.close-button');
+    const closeButton = modal.querySelector(".close-button");
     closeButton.onclick = () => modal.remove();
     
     return modal;
 }
 
 export function closeModal() {
-    const modal = document.querySelector('.modal');
+    const modal = document.querySelector(".modal");
     if (modal) {
         modal.remove();
     }
@@ -61,35 +61,35 @@ export function closeModal() {
 
 // Date formatting
 export function formatDate(date) {
-    if (!date) return 'N/A';
+    if (!date) return "N/A";
     const d = date instanceof Date ? date : new Date(date);
-    return d.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+    return d.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
     });
 }
 
 // Time formatting
 export function formatTime(time) {
-    if (!time) return 'N/A';
+    if (!time) return "N/A";
     const d = time instanceof Date ? time : new Date(time);
-    return d.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit'
+    return d.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit"
     });
 }
 
 // Status formatting
 export function formatStatus(status) {
     const statusMap = {
-        'scheduled': 'Scheduled',
-        'in-progress': 'In Progress',
-        'completed': 'Completed',
-        'cancelled': 'Cancelled',
-        'pending': 'Pending',
-        'paid': 'Paid',
-        'unpaid': 'Unpaid'
+        "scheduled": "Scheduled",
+        "in-progress": "In Progress",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "pending": "Pending",
+        "paid": "Paid",
+        "unpaid": "Unpaid"
     };
     return statusMap[status] || status;
 }
@@ -97,19 +97,19 @@ export function formatStatus(status) {
 // Service type formatting
 export function formatServiceType(type) {
     const typeMap = {
-        'lawn-mowing': 'Lawn Mowing',
-        'hedge-trimming': 'Hedge Trimming',
-        'garden-maintenance': 'Garden Maintenance',
-        'irrigation': 'Irrigation',
-        'landscaping': 'Landscaping'
+        "lawn-mowing": "Lawn Mowing",
+        "hedge-trimming": "Hedge Trimming",
+        "garden-maintenance": "Garden Maintenance",
+        "irrigation": "Irrigation",
+        "landscaping": "Landscaping"
     };
     return typeMap[type] || type;
 }
 
 // Error handling
-export function handleError(error, message = 'An error occurred') {
+export function handleError(error, message = "An error occurred") {
     console.error(message, error);
-    showNotification(message, 'error');
+    showNotification(message, "error");
 }
 
 // Data validation
@@ -124,41 +124,23 @@ export function validatePhone(phone) {
 // Firestore helpers
 export async function getUserData(userId) {
     try {
-        const userDoc = await getDoc(doc(db, 'users', userId));
+        const userDoc = await getDoc(doc(db, "users", userId));
         return userDoc.exists() ? userDoc.data() : null;
     } catch (error) {
-        handleError(error, 'Error fetching user data');
+        handleError(error, "Error fetching user data");
         return null;
     }
 }
 
 export async function updateUserData(userId, data) {
     try {
-        await updateDoc(doc(db, 'users', userId), {
+        await updateDoc(doc(db, "users", userId), {
             ...data,
             updatedAt: serverTimestamp()
         });
         return true;
     } catch (error) {
-        handleError(error, 'Error updating user data');
+        handleError(error, "Error updating user data");
         return false;
     }
 }
-
-// Export all functions
-export {
-    showNotification,
-    showLoading,
-    hideLoading,
-    showModal,
-    closeModal,
-    formatDate,
-    formatTime,
-    formatStatus,
-    formatServiceType,
-    handleError,
-    validateEmail,
-    validatePhone,
-    getUserData,
-    updateUserData
-}; 
