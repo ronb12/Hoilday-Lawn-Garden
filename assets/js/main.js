@@ -1,4 +1,91 @@
-import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"; import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"; import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"; import { getAllServices, getServiceById } from './service-cache.js'; const firebaseConfig = { apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", authDomain: "holliday-lawn-garden.firebaseapp.com", projectId: "holliday-lawn-garden", storageBucket: "holliday-lawn-garden.appspot.com", messagingSenderId: "123456789012", appId: "1:123456789012:web:abcdef1234567890" }; // Initialize Firebase only if it hasn't been initialized yet let app; if (!getApps().length) { app = initializeApp(firebaseConfig); } else { app = getApps()[0]; } const db = getFirestore(app); const auth = getAuth(app); console.log("main.js loaded"); // List of pages that should not redirect const publicPages = [ 'index.html', 'about.html', 'services.html', 'education.html', 'faq.html', 'contact.html', 'privacy.html', 'terms.html', 'gallery.html', 'offline.html', 'admin-login.html' ]; onAuthStateChanged(auth, async (user) => { if (user) { try { const userDoc = await getDoc(doc(db, "users", user.uid)); if (userDoc.exists()) { const userData = userDoc.data(); console.log("User role:", userData.role); const currentPage = window.location.pathname.split("/").pop(); if (!publicPages.includes(currentPage)) { if (userData.role === "admin" && currentPage !== "admin-dashboard.html") { window.location.href = "admin-dashboard.html"; } else if (userData.role === "user" && currentPage !== "customer-dashboard.html") { window.location.href = "customer-dashboard.html"; } } } } catch (error) { console.error("Error checking user role:", error); } } }); document.getElementById("loginForm")?.addEventListener("submit", async (e) => { e.preventDefault(); const email = document.getElementById("email").value; const password = document.getElementById("password").value; try { const userCredential = await signInWithEmailAndPassword(auth, email, password); const user = userCredential.user; const userDoc = await getDoc(doc(db, "users", user.uid)); if (userDoc.exists()) { const userData = userDoc.data(); console.log("User role:", userData.role); if (userData.role === "admin") { window.location.href = "admin-dashboard.html"; } else { window.location.href = "customer-dashboard.html"; } } else { showError("User data not found. Please contact support."); } } catch (error) { console.error("Login error:", error); showError("Invalid email or password."); } }); document.getElementById("logoutBtn")?.addEventListener("click", async () => { try { await auth.signOut(); window.location.href = "login.html"; } catch (error) { console.error("Logout error:", error); showError("Error signing out. Please try again."); } }); function showError(message) { const errorDiv = document.getElementById("error-message"); if (errorDiv) { errorDiv.textContent = message; errorDiv.style.display = "block"; } else { alert(message); } }
+import { app, auth, db } from './firebase-config.js';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getAllServices, getServiceById } from './service-cache.js';
+
+console.log("main.js loaded");
+
+// List of pages that should not redirect
+const publicPages = [
+  'index.html',
+  'about.html',
+  'services.html',
+  'education.html',
+  'faq.html',
+  'contact.html',
+  'privacy.html',
+  'terms.html',
+  'gallery.html',
+  'offline.html',
+  'admin-login.html'
+];
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    try {
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        console.log("User role:", userData.role);
+        const currentPage = window.location.pathname.split("/").pop();
+        if (!publicPages.includes(currentPage)) {
+          if (userData.role === "admin" && currentPage !== "admin-dashboard.html") {
+            window.location.href = "admin-dashboard.html";
+          } else if (userData.role === "user" && currentPage !== "customer-dashboard.html") {
+            window.location.href = "customer-dashboard.html";
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error checking user role:", error);
+    }
+  }
+});
+
+document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      console.log("User role:", userData.role);
+      if (userData.role === "admin") {
+        window.location.href = "admin-dashboard.html";
+      } else {
+        window.location.href = "customer-dashboard.html";
+      }
+    } else {
+      showError("User data not found. Please contact support.");
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    showError("Invalid email or password.");
+  }
+});
+
+document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+  try {
+    await auth.signOut();
+    window.location.href = "login.html";
+  } catch (error) {
+    console.error("Logout error:", error);
+    showError("Error signing out. Please try again.");
+  }
+});
+
+function showError(message) {
+  const errorDiv = document.getElementById("error-message");
+  if (errorDiv) {
+    errorDiv.textContent = message;
+    errorDiv.style.display = "block";
+  } else {
+    alert(message);
+  }
+}
 
 // Mobile Menu Functionality
 document.addEventListener("DOMContentLoaded", function() {
@@ -8,32 +95,20 @@ document.addEventListener("DOMContentLoaded", function() {
     const body = document.body;
 
     if (hamburger) {
-        // Set initial ARIA state
         hamburger.setAttribute("aria-expanded", "false");
         hamburger.setAttribute("aria-controls", "nav-menu");
         nav.setAttribute("id", "nav-menu");
 
         hamburger.addEventListener("click", function() {
             const isExpanded = hamburger.getAttribute("aria-expanded") === "true";
-            
-            // Toggle classes
             hamburger.classList.toggle("active");
             nav.classList.toggle("active");
             navLinks.classList.toggle("active");
             body.classList.toggle("menu-open");
-            
-            // Update ARIA state
             hamburger.setAttribute("aria-expanded", !isExpanded);
-            
-            // Prevent body scroll when menu is open
-            if (!isExpanded) {
-                body.style.overflow = "hidden";
-            } else {
-                body.style.overflow = "";
-            }
+            body.style.overflow = !isExpanded ? "hidden" : "";
         });
 
-        // Close menu when clicking outside
         document.addEventListener("click", function(event) {
             const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
             if (!isClickInside && nav.classList.contains("active")) {
@@ -46,7 +121,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
-        // Close menu on escape key
         document.addEventListener("keydown", function(event) {
             if (event.key === "Escape" && nav.classList.contains("active")) {
                 hamburger.classList.remove("active");
@@ -58,7 +132,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
-        // Close menu on window resize
         let resizeTimer;
         window.addEventListener("resize", function() {
             clearTimeout(resizeTimer);
@@ -74,7 +147,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }, 250);
         });
 
-        // Handle navigation link clicks
         const navItems = navLinks.querySelectorAll("a");
         navItems.forEach(link => {
             link.addEventListener("click", function() {
@@ -93,14 +165,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Service-related functionality
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize service cards if they exist on the page
   const servicesGrid = document.querySelector('.services-grid');
   if (servicesGrid) {
     const services = getAllServices();
     renderServiceCards(services);
   }
 
-  // Initialize service details if on a service page
   const serviceId = window.location.hash.substring(1);
   if (serviceId) {
     const service = getServiceById(serviceId);
@@ -151,23 +221,13 @@ function renderServiceDetails(service) {
 
 // Service Worker Registration
 if ('serviceWorker' in navigator) {
-  // First, unregister any existing service workers
-  navigator.serviceWorker.getRegistrations().then(registrations => {
-    for (let registration of registrations) {
-      registration.unregister();
+  window.addEventListener('load', async () => {
+    try {
+      const registration = await navigator.serviceWorker.register('/Holliday-Lawn-Garden/service-worker.js');
+      console.log('ServiceWorker registration successful');
+    } catch (error) {
+      console.error('ServiceWorker registration failed:', error);
     }
-  }).then(() => {
-    // Then register the new service worker
-    return navigator.serviceWorker.register('/Holliday-Lawn-Garden/service-worker.js');
-  }).then(registration => {
-    console.log('ServiceWorker registration successful');
-    
-    // Check if there's an update available
-    if (registration.active) {
-      registration.update();
-    }
-  }).catch(error => {
-    console.error('ServiceWorker registration failed:', error);
   });
 }
 
