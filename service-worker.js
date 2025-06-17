@@ -1,4 +1,5 @@
-const CACHE_NAME = 'holliday-lawn-garden-' + Date.now();
+const CACHE_VERSION = 'v1';
+const CACHE_NAME = 'holliday-lawn-garden-' + CACHE_VERSION;
 const ASSETS_TO_CACHE = [
   '/Holliday-Lawn-Garden/',
   '/Holliday-Lawn-Garden/index.html',
@@ -54,27 +55,54 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
+      // Return cached response if found
       if (response) {
+        // Check if the cached response is stale (older than 1 hour)
+        const cacheTime = response.headers.get('sw-cache-time');
+        if (cacheTime && Date.now() - new Date(cacheTime).getTime() > 3600000) {
+          // Cache is stale, fetch fresh content
+          return fetchAndCache(event.request);
+        }
         return response;
       }
-      return fetch(event.request).then(response => {
-        // Check if we received a valid response
-        if (!response || response.status !== 200 || response.type !== 'basic') {
-          return response;
-        }
-
-        // Clone the response
-        const responseToCache = response.clone();
-
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, responseToCache);
-        });
-
-        return response;
-      });
+      // No cache found, fetch from network
+      return fetchAndCache(event.request);
     })
   );
 });
+
+// Helper function to fetch and cache
+async function fetchAndCache(request) {
+  try {
+    const response = await fetch(request);
+    if (!response || response.status !== 200 || response.type !== 'basic') {
+      return response;
+    }
+
+    // Clone the response
+    const responseToCache = response.clone();
+
+    // Add cache timestamp
+    const headers = new Headers(responseToCache.headers);
+    headers.append('sw-cache-time', new Date().toISOString());
+
+    // Create new response with cache headers
+    const cachedResponse = new Response(responseToCache.body, {
+      status: responseToCache.status,
+      statusText: responseToCache.statusText,
+      headers: headers
+    });
+
+    // Cache the response
+    const cache = await caches.open(CACHE_NAME);
+    await cache.put(request, cachedResponse);
+
+    return response;
+  } catch (error) {
+    console.error('Fetch failed:', error);
+    return new Response('Network error occurred', { status: 408, headers: { 'Content-Type': 'text/plain' } });
+  }
+}
 
 // Add message event listener for cache clearing
 self.addEventListener('message', event => {

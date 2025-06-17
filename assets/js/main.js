@@ -148,3 +148,47 @@ function renderServiceDetails(service) {
     </div>
   `;
 }
+
+// Cache control
+if ('serviceWorker' in navigator) {
+  // Register service worker
+  navigator.serviceWorker.register('/Holliday-Lawn-Garden/service-worker.js')
+    .then(registration => {
+      console.log('ServiceWorker registration successful');
+      
+      // Check for updates every hour
+      setInterval(() => {
+        registration.update();
+      }, 3600000);
+    })
+    .catch(error => {
+      console.error('ServiceWorker registration failed:', error);
+    });
+
+  // Listen for messages from service worker
+  navigator.serviceWorker.addEventListener('message', event => {
+    if (event.data === 'RELOAD_PAGE') {
+      window.location.reload();
+    }
+  });
+}
+
+// Function to clear cache and reload
+function clearCacheAndReload() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+  window.location.reload(true);
+}
+
+// Add cache clearing to page load
+window.addEventListener('load', () => {
+  // Clear cache on page load if needed
+  if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD) {
+    clearCacheAndReload();
+  }
+});
