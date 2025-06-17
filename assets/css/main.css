@@ -615,23 +615,22 @@ footer a:focus {
 /* Service Card Styles */
 .services {
   padding: 4rem 0;
-  background: var(--white);
   margin-top: var(--header-height);
 }
 
 .services h2 {
   text-align: center;
   margin-bottom: 3rem;
-  color: var(--secondary-color);
+  color: var(--text-color);
 }
 
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  padding: 0 1rem;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .service-card {
@@ -642,38 +641,37 @@ footer a:focus {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
   height: 100%;
 }
 
 .service-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .service-emoji {
-  font-size: 3rem;
+  font-size: 2.5rem;
+  text-align: center;
   margin-bottom: 1rem;
 }
 
 .service-card h3 {
-  color: var(--secondary-color);
+  color: var(--text-color);
   margin-bottom: 1rem;
-  font-size: 1.5rem;
+  text-align: center;
 }
 
 .service-card p {
   color: var(--text-color-light);
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .service-features {
   list-style: none;
   padding: 0;
   margin: 0 0 1.5rem 0;
-  text-align: left;
-  width: 100%;
+  flex-grow: 1;
 }
 
 .service-features li {
@@ -694,6 +692,7 @@ footer a:focus {
 .service-card .btn {
   margin-top: auto;
   width: 100%;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
