@@ -3593,7 +3593,7 @@ nav {
 // ... existing code ...
 
 .hero {
-  position: relative;
+  position: relative !important;
   width: 100%;
   min-height: 350px;
   display: flex;
@@ -3603,7 +3603,7 @@ nav {
   background: #222;
 }
 .hero img {
-  position: absolute;
+  position: absolute !important;
   top: 0;
   left: 0;
   width: 100%;
@@ -3613,8 +3613,8 @@ nav {
   filter: brightness(0.6);
 }
 .hero-content {
-  position: relative;
-  z-index: 2;
+  position: relative !important;
+  z-index: 2 !important;
   text-align: center;
   color: #fff;
   padding: 2rem;
@@ -3623,6 +3623,7 @@ nav {
   margin: 0 auto;
   opacity: 1 !important;
   transform: none !important;
+  display: block !important;
 }
 @media (max-width: 768px) {
   .hero {
