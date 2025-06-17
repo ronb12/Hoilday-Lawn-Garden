@@ -1,6 +1,6 @@
 // Service Cache Implementation
-const CACHE_NAME = 'holliday-services-v3';
-const SERVICES_KEY = 'cached-services-v3';
+const CACHE_VERSION = 'v4';
+const SERVICES_KEY = 'cached-services-' + CACHE_VERSION;
 
 // Service data structure
 const services = {
@@ -42,16 +42,21 @@ const services = {
   }
 };
 
-// Initialize service cache
+// Initialize service cache only if needed
 async function initializeServiceCache() {
   try {
-    // Clear old cache versions
-    const oldKeys = Object.keys(localStorage).filter(key => key.startsWith('cached-services-'));
-    oldKeys.forEach(key => localStorage.removeItem(key));
-    
-    // Store services in localStorage for offline access
-    localStorage.setItem(SERVICES_KEY, JSON.stringify(services));
-    console.log('Service cache initialized successfully');
+    const cachedServices = localStorage.getItem(SERVICES_KEY);
+    if (!cachedServices) {
+      // Only clear old cache versions if we're initializing
+      const oldKeys = Object.keys(localStorage).filter(key => 
+        key.startsWith('cached-services-') && key !== SERVICES_KEY
+      );
+      oldKeys.forEach(key => localStorage.removeItem(key));
+      
+      // Store services in localStorage for offline access
+      localStorage.setItem(SERVICES_KEY, JSON.stringify(services));
+      console.log('Service cache initialized successfully');
+    }
   } catch (error) {
     console.error('Error initializing service cache:', error);
   }
@@ -97,17 +102,8 @@ async function updateServiceCache(newServices) {
 // Clear service cache
 async function clearServiceCache() {
   try {
-    // Clear all service-related caches
-    const oldKeys = Object.keys(localStorage).filter(key => key.startsWith('cached-services-'));
-    oldKeys.forEach(key => localStorage.removeItem(key));
-    
-    // Clear service worker cache
-    if ('caches' in window) {
-      const cacheNames = await caches.keys();
-      await Promise.all(
-        cacheNames.map(cacheName => caches.delete(cacheName))
-      );
-    }
+    // Clear only the current version cache
+    localStorage.removeItem(SERVICES_KEY);
     console.log('Service cache cleared successfully');
   } catch (error) {
     console.error('Error clearing service cache:', error);
