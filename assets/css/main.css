@@ -3484,12 +3484,9 @@ nav {
 // ... existing code ...
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   padding: 2rem 0;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .service-card {
@@ -3500,34 +3497,30 @@ nav {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   height: 100%;
-  position: relative;
-  overflow: hidden;
 }
 
 .service-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .service-emoji {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  display: block;
   text-align: center;
 }
 
 .service-card h3 {
   color: var(--primary-color);
+  margin-bottom: 1rem;
   font-size: 1.5rem;
-  margin-bottom: 0.5rem;
   text-align: center;
 }
 
 .service-card p {
   color: var(--text-color-light);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
@@ -3543,7 +3536,6 @@ nav {
   color: var(--text-color);
   position: relative;
   padding-left: 1.5rem;
-  text-align: left;
 }
 
 .service-card li::before {
@@ -3551,20 +3543,20 @@ nav {
   color: var(--primary-color);
   position: absolute;
   left: 0;
+  font-size: 1.2rem;
 }
 
 .service-card .btn {
-  margin-top: auto;
-  align-self: center;
-  width: 100%;
-  max-width: 200px;
-  text-align: center;
-  padding: 0.75rem 1.5rem;
   background-color: var(--primary-color);
   color: var(--white);
+  padding: 0.75rem 1.5rem;
   border-radius: 4px;
   text-decoration: none;
+  text-align: center;
   transition: background-color 0.3s ease;
+  margin-top: auto;
+  display: inline-block;
+  width: 100%;
 }
 
 .service-card .btn:hover {
@@ -3574,8 +3566,8 @@ nav {
 @media (max-width: 768px) {
   .services-grid {
     grid-template-columns: 1fr;
-    padding: 1rem;
     gap: 1.5rem;
+    padding: 1rem 0;
   }
 
   .service-card {
@@ -3587,7 +3579,7 @@ nav {
   }
 
   .service-card h3 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
   }
 
   .service-card p {
