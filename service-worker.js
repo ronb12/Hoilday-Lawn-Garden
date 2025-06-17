@@ -2,6 +2,12 @@ const CACHE_NAME = 'holliday-lawn-garden-' + Date.now();
 const ASSETS_TO_CACHE = [
   '/Holliday-Lawn-Garden/',
   '/Holliday-Lawn-Garden/index.html',
+  '/Holliday-Lawn-Garden/about.html',
+  '/Holliday-Lawn-Garden/services.html',
+  '/Holliday-Lawn-Garden/faq.html',
+  '/Holliday-Lawn-Garden/contact.html',
+  '/Holliday-Lawn-Garden/education.html',
+  '/Holliday-Lawn-Garden/pay-your-bill.html',
   '/Holliday-Lawn-Garden/assets/css/main.css',
   '/Holliday-Lawn-Garden/assets/js/main.js',
   '/Holliday-Lawn-Garden/assets/images/favicon/favicon-16x16.png',
