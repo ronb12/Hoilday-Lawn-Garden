@@ -85,12 +85,12 @@ function setupRealtimeListeners() {
         // Listen for appointment changes
         const appointmentsQuery = query(
             collection(db, "appointments"),
-            orderBy("date", "desc")
+            where("status", "in", ["scheduled", "in-progress"])
         );
 
         onSnapshot(appointmentsQuery, (snapshot) => {
             snapshot.docChanges().forEach((change) => {
-                if (change.type === "modified" || change.type === "added") {
+                if (change.type === "added" || change.type === "modified") {
                     // Refresh appointments list when an appointment is updated or added
                     loadRecentAppointments();
                     // Refresh overview stats
@@ -102,27 +102,17 @@ function setupRealtimeListeners() {
         // Listen for payment changes
         const paymentsQuery = query(
             collection(db, "payments"),
-            orderBy("date", "desc")
+            where("status", "==", "completed")
         );
 
-        onSnapshot(paymentsQuery, (snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === "added" || change.type === "modified") {
-                    // Refresh overview stats when payments change
-                    loadAdminOverview();
-                }
-            });
+        onSnapshot(paymentsQuery, () => {
+            loadAdminOverview();
         });
 
         // Listen for customer changes
-        const customersQuery = query(collection(db, "users"));
-        onSnapshot(customersQuery, (snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === "added" || change.type === "modified") {
-                    // Refresh overview stats when customer data changes
-                    loadAdminOverview();
-                }
-            });
+        const customersQuery = collection(db, "users");
+        onSnapshot(customersQuery, () => {
+            loadAdminOverview();
         });
     } catch (error) {
         console.error("Error setting up real-time listeners:", error);
@@ -154,7 +144,7 @@ async function getDashboardStats() {
         // Get active appointments
         const activeAppointmentsQuery = query(
             collection(db, "appointments"),
-            where("status", "in", ["pending", "confirmed"])
+            where("status", "in", ["scheduled", "in-progress"])
         );
         const activeAppointmentsSnapshot = await getDocs(activeAppointmentsQuery);
         const activeAppointments = activeAppointmentsSnapshot.size;
@@ -162,7 +152,7 @@ async function getDashboardStats() {
         // Get last month's active appointments
         const lastMonthAppointmentsQuery = query(
             collection(db, "appointments"),
-            where("status", "in", ["pending", "confirmed"]),
+            where("status", "in", ["scheduled", "in-progress"]),
             where("date", ">=", startOfLastMonth),
             where("date", "<=", endOfLastMonth)
         );
@@ -173,7 +163,7 @@ async function getDashboardStats() {
         // Get monthly revenue
         const monthlyPaymentsQuery = query(
             collection(db, "payments"),
-            where("date", ">=", startOfMonth)
+            where("status", "==", "completed")
         );
         const monthlyPaymentsSnapshot = await getDocs(monthlyPaymentsQuery);
         const monthlyRevenue = monthlyPaymentsSnapshot.docs.reduce((total, doc) => total + (doc.data().amount || 0), 0);
@@ -290,7 +280,8 @@ async function getRecentAppointments() {
     try {
         const appointmentsQuery = query(
             collection(db, "appointments"),
-            orderBy("date", "desc"),
+            where("status", "in", ["scheduled", "in-progress"]),
+            orderBy("date", "asc"),
             limit(5)
         );
         const appointmentsSnapshot = await getDocs(appointmentsQuery);
@@ -354,9 +345,9 @@ async function loadRecentAppointments() {
                             <td>${formatDate(appointment.date)}</td>
                             <td><span class="status-badge ${appointment.status.toLowerCase()}">${appointment.status}</span></td>
                             <td>
-                                ${appointment.status === 'pending' ? `
-                                    <button class="btn-confirm" onclick="updateAppointmentStatus('${appointment.id}', 'confirmed')">
-                                        <i class="fas fa-check"></i> Confirm
+                                ${appointment.status === 'scheduled' ? `
+                                    <button class="btn-confirm" onclick="updateAppointmentStatus('${appointment.id}', 'in-progress')">
+                                        <i class="fas fa-check"></i> Start
                                     </button>
                                 ` : ''}
                                 ${appointment.status !== 'cancelled' ? `
