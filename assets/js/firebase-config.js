@@ -5,7 +5,7 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Firebase configuration
-export const firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
   authDomain: "holliday-lawn-garden.firebaseapp.com",
   projectId: "holliday-lawn-garden",
