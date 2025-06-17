@@ -1,6 +1,6 @@
 // Service Cache Implementation
-const CACHE_NAME = 'holliday-services-v1';
-const SERVICES_KEY = 'cached-services';
+const CACHE_NAME = 'holliday-services-v3';
+const SERVICES_KEY = 'cached-services-v3';
 
 // Service data structure
 const services = {
@@ -45,6 +45,10 @@ const services = {
 // Initialize service cache
 async function initializeServiceCache() {
   try {
+    // Clear old cache versions
+    const oldKeys = Object.keys(localStorage).filter(key => key.startsWith('cached-services-'));
+    oldKeys.forEach(key => localStorage.removeItem(key));
+    
     // Store services in localStorage for offline access
     localStorage.setItem(SERVICES_KEY, JSON.stringify(services));
     console.log('Service cache initialized successfully');
@@ -57,7 +61,12 @@ async function initializeServiceCache() {
 function getAllServices() {
   try {
     const cachedServices = localStorage.getItem(SERVICES_KEY);
-    return cachedServices ? JSON.parse(cachedServices) : services;
+    if (!cachedServices) {
+      // If no cache exists, initialize it
+      initializeServiceCache();
+      return services;
+    }
+    return JSON.parse(cachedServices);
   } catch (error) {
     console.error('Error retrieving services:', error);
     return services;
@@ -67,9 +76,8 @@ function getAllServices() {
 // Get a specific service by ID
 function getServiceById(serviceId) {
   try {
-    const cachedServices = localStorage.getItem(SERVICES_KEY);
-    const services = cachedServices ? JSON.parse(cachedServices) : services;
-    return services[serviceId] || null;
+    const cachedServices = getAllServices();
+    return cachedServices[serviceId] || null;
   } catch (error) {
     console.error('Error retrieving service:', error);
     return null;
@@ -89,8 +97,17 @@ async function updateServiceCache(newServices) {
 // Clear service cache
 async function clearServiceCache() {
   try {
-    localStorage.removeItem(SERVICES_KEY);
-    await caches.delete(CACHE_NAME);
+    // Clear all service-related caches
+    const oldKeys = Object.keys(localStorage).filter(key => key.startsWith('cached-services-'));
+    oldKeys.forEach(key => localStorage.removeItem(key));
+    
+    // Clear service worker cache
+    if ('caches' in window) {
+      const cacheNames = await caches.keys();
+      await Promise.all(
+        cacheNames.map(cacheName => caches.delete(cacheName))
+      );
+    }
     console.log('Service cache cleared successfully');
   } catch (error) {
     console.error('Error clearing service cache:', error);
