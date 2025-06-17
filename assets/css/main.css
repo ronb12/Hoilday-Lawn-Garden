@@ -3591,3 +3591,49 @@ nav {
   }
 }
 // ... existing code ...
+
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #222;
+}
+.hero img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  filter: brightness(0.6);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  padding: 2rem;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+@media (max-width: 768px) {
+  .hero {
+    min-height: 220px;
+    padding: 2rem 0;
+  }
+  .hero-content {
+    padding: 1rem;
+  }
+  .hero-content h1 {
+    font-size: 1.5rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
+}
