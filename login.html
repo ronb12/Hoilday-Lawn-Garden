@@ -798,12 +798,23 @@
     <script>
       // Aggressive cache busting script to force reload of updated content
       (function() {
+        // Always generate a new timestamp and redirect to force fresh load
+        const newTimestamp = Date.now();
+        const baseUrl = window.location.href.split('?')[0];
+        const newUrl = baseUrl + '?v=' + newTimestamp;
+        
+        // Only redirect if we're not already on the new URL
+        if (window.location.href !== newUrl) {
+          window.location.href = newUrl;
+          return;
+        }
+        
         // Add timestamp to main.css to force cache refresh
         const mainCss = document.getElementById('main-css');
         if (mainCss) {
           const href = mainCss.href;
           const separator = href.includes('?') ? '&' : '?';
-          mainCss.href = href + separator + 'v=' + Date.now();
+          mainCss.href = href + separator + 'v=' + newTimestamp;
         }
         
         // Force reload if page was loaded from cache
@@ -825,12 +836,6 @@
         // Clear localStorage and sessionStorage
         localStorage.clear();
         sessionStorage.clear();
-        
-        // Force reload if URL doesn't have timestamp
-        if (!window.location.search.includes('v=')) {
-          const separator = window.location.href.includes('?') ? '&' : '?';
-          window.location.href = window.location.href + separator + 'v=' + Date.now();
-        }
       })();
     </script>
   </body>
