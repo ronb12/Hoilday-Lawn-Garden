@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Holliday Lawn & Garden</title>
+    <title>Admin Dashboard - Holliday's Lawn & Garden</title>
     <meta name="description" content="Admin dashboard for Holliday Lawn & Garden management system">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/admin-dashboard.css">
@@ -15,127 +15,303 @@
     <link rel="manifest" href="site.webmanifest">
     <meta name="theme-color" content="#2e7d32">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #222;
+        }
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            padding: 1.5rem 2rem 1.5rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .admin-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .admin-header .logo img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+        }
+        .admin-header .admin-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .admin-header .admin-nav a {
+            color: #2c5530;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+        .admin-header .admin-nav a:hover {
+            color: #4caf50;
+        }
+        .admin-header .admin-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        .admin-header .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .admin-header .btn-logout {
+            background: #222;
+            color: #fff;
+        }
+        .admin-header .btn-logout:hover {
+            background: #111;
+        }
+        .admin-header .btn-refresh {
+            background: #4caf50;
+            color: #fff;
+        }
+        .admin-header .btn-refresh:hover {
+            background: #388e3c;
+        }
+        .dashboard-main {
+            max-width: 1200px;
+            margin: 2.5rem auto 0 auto;
+            padding: 0 2rem 2rem 2rem;
+        }
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 2rem;
+        }
+        .dashboard-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(44,85,48,0.07);
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.2rem;
+            transition: box-shadow 0.2s, transform 0.2s;
+            border: 1px solid #e0e0e0;
+        }
+        .dashboard-card:hover {
+            box-shadow: 0 8px 32px rgba(44,85,48,0.13);
+            transform: translateY(-4px) scale(1.02);
+        }
+        .dashboard-card .card-icon {
+            font-size: 2.2rem;
+            color: #4caf50;
+            margin-bottom: 0.5rem;
+        }
+        .dashboard-card .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 0.5rem;
+        }
+        .dashboard-card .card-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .dashboard-card .card-btn {
+            background: #2c5530;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .dashboard-card .card-btn:hover {
+            background: #4caf50;
+            color: #fff;
+        }
+        .dashboard-footer {
+            background: #222;
+            color: #fff;
+            padding: 2rem 0 1rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        .dashboard-footer .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+        .dashboard-footer .footer-section {
+            flex: 1 1 200px;
+            min-width: 180px;
+            text-align: left;
+        }
+        .dashboard-footer h3 {
+            color: #4caf50;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        .dashboard-footer a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .dashboard-footer a:hover {
+            color: #4caf50;
+        }
+        @media (max-width: 700px) {
+            .dashboard-main {
+                padding: 0 0.5rem 2rem 0.5rem;
+            }
+            .dashboard-footer .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 0 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>Admin Dashboard</h1>
-            <div class="header-actions">
-                <button id="refreshDashboardBtn" class="btn btn-secondary">
-                    <i class="fas fa-sync-alt"></i> Refresh
-                </button>
-                <button id="logoutButton" class="btn btn-danger">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" />
+            <span style="font-size:1.3rem;font-weight:700;color:#2c5530;">Admin Dashboard</span>
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="admin.html">Admin Home</a>
+            <a href="index.html">Website</a>
+        </nav>
+        <div class="admin-actions">
+            <button class="btn btn-refresh" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Refresh</button>
+            <button class="btn btn-logout" onclick="window.location.href='admin-login.html'"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </header>
+    <main class="dashboard-main">
+        <div class="dashboard-title">Welcome, Admin</div>
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="card-icon"><i class="fas fa-calendar-check"></i></div>
+                <div class="card-title">Appointments</div>
+                <div class="card-actions">
+                    <button class="card-btn" onclick="window.location.href='appointments.html'">View All</button>
+                    <button class="card-btn" onclick="window.location.href='add-appointment.html'">Add New</button>
+                </div>
             </div>
-        </header>
-
-        <div class="dashboard-stats" id="dashboardStats">
-            <!-- Stats will be loaded dynamically -->
+            <div class="dashboard-card">
+                <div class="card-icon"><i class="fas fa-users"></i></div>
+                <div class="card-title">Customers</div>
+                <div class="card-actions">
+                    <button class="card-btn" onclick="window.location.href='customers.html'">View All</button>
+                    <button class="card-btn" onclick="window.location.href='add-customer.html'">Add New</button>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-icon"><i class="fas fa-credit-card"></i></div>
+                <div class="card-title">Payments</div>
+                <div class="card-actions">
+                    <button class="card-btn" onclick="window.location.href='payments.html'">View All</button>
+                    <button class="card-btn" onclick="window.location.href='add-payment.html'">New Payment</button>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="card-title">Analytics</div>
+                <div class="card-actions">
+                    <button class="card-btn" onclick="window.location.href='analytics.html'">View Analytics</button>
+                    <button class="card-btn" onclick="window.location.href='generate-report.html'">Generate Report</button>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-icon"><i class="fas fa-boxes"></i></div>
+                <div class="card-title">Inventory</div>
+                <div class="card-actions">
+                    <button class="card-btn" onclick="window.location.href='inventory.html'">Manage Inventory</button>
+                    <button class="card-btn" onclick="window.location.href='schedule-maintenance.html'">Schedule Maintenance</button>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-icon"><i class="fas fa-user-tie"></i></div>
+                <div class="card-title">Staff</div>
+                <div class="card-actions">
+                    <button class="card-btn" onclick="window.location.href='staff.html'">View Staff</button>
+                    <button class="card-btn" onclick="window.location.href='add-staff.html'">Add Staff</button>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-icon"><i class="fas fa-envelope"></i></div>
+                <div class="card-title">Communication</div>
+                <div class="card-actions">
+                    <button class="card-btn" onclick="window.location.href='messages.html'">View Messages</button>
+                    <button class="card-btn" onclick="window.location.href='bulk-message.html'">Send Bulk Message</button>
+                </div>
+            </div>
         </div>
-
-        <div class="dashboard-container">
-            <!-- Appointments Section -->
-            <section class="dashboard-section">
-                <h2>Appointments</h2>
-                <div class="section-actions">
-                    <button id="viewAllAppointmentsBtn" class="btn btn-primary">
-                        <i class="fas fa-calendar"></i> View All
-                    </button>
-                    <button id="addNewAppointmentBtn" class="btn btn-success">
-                        <i class="fas fa-plus"></i> Add New
-                    </button>
-                </div>
-                <div id="recentAppointments" class="appointment-list">
-                    <!-- Appointments will be loaded dynamically -->
-                </div>
-            </section>
-
-            <!-- Customers Section -->
-            <section class="dashboard-section">
-                <h2>Customers</h2>
-                <div class="section-actions">
-                    <button id="viewAllCustomersBtn" class="btn btn-primary">
-                        <i class="fas fa-users"></i> View All
-                    </button>
-                    <button id="addNewCustomerBtn" class="btn btn-success">
-                        <i class="fas fa-user-plus"></i> Add New
-                    </button>
-                </div>
-                <div id="recentCustomers" class="customer-list">
-                    <!-- Customers will be loaded dynamically -->
-                </div>
-            </section>
-
-            <!-- Payments Section -->
-            <section class="dashboard-section">
-                <h2>Payments</h2>
-                <div class="section-actions">
-                    <button id="viewAllPaymentsBtn" class="btn btn-primary">
-                        <i class="fas fa-money-bill"></i> View All
-                    </button>
-                    <button id="processPaymentBtn" class="btn btn-success">
-                        <i class="fas fa-plus"></i> New Payment
-                    </button>
-                </div>
-                <div id="recentPayments" class="payment-list">
-                    <!-- Payments will be loaded dynamically -->
-                </div>
-            </section>
-
-            <!-- Analytics Section -->
-            <section class="dashboard-section">
-                <h2>Analytics</h2>
-                <div class="section-actions">
-                    <button id="viewAnalyticsBtn" class="btn btn-primary">
-                        <i class="fas fa-chart-bar"></i> View Analytics
-                    </button>
-                    <button id="generateReportBtn" class="btn btn-success">
-                        <i class="fas fa-file-alt"></i> Generate Report
-                    </button>
-                </div>
-            </section>
-
-            <!-- Inventory Section -->
-            <section class="dashboard-section">
-                <h2>Inventory</h2>
-                <div class="section-actions">
-                    <button id="manageInventoryBtn" class="btn btn-primary">
-                        <i class="fas fa-boxes"></i> Manage Inventory
-                    </button>
-                    <button id="scheduleMaintenanceBtn" class="btn btn-success">
-                        <i class="fas fa-tools"></i> Schedule Maintenance
-                    </button>
-                </div>
-            </section>
-
-            <!-- Staff Section -->
-            <section class="dashboard-section">
-                <h2>Staff</h2>
-                <div class="section-actions">
-                    <button id="viewStaffBtn" class="btn btn-primary">
-                        <i class="fas fa-user-tie"></i> View Staff
-                    </button>
-                    <button id="addStaffBtn" class="btn btn-success">
-                        <i class="fas fa-user-plus"></i> Add Staff
-                    </button>
-                </div>
-            </section>
-
-            <!-- Communication Section -->
-            <section class="dashboard-section">
-                <h2>Communication</h2>
-                <div class="section-actions">
-                    <button id="viewMessagesBtn" class="btn btn-primary">
-                        <i class="fas fa-comments"></i> View Messages
-                    </button>
-                    <button id="sendBulkMessageBtn" class="btn btn-success">
-                        <i class="fas fa-paper-plane"></i> Send Bulk Message
-                    </button>
-                </div>
-            </section>
+    </main>
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <div>Karl Holliday<br/>(504) 717-1887<br/><a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a></div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul style="padding-left:1rem;">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Portal</h3>
+                <ul style="padding-left:1rem;">
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                    <li><a href="customer-dashboard.html">Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul style="padding-left:1rem;">
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
+        <div style="margin-top:2rem;font-size:0.95rem;color:#bbb;">&copy; Holliday's Lawn & Garden. All rights reserved.</div>
+    </footer>
 
     <!-- Mobile Navigation Menu -->
     <nav class="nav-menu">
@@ -155,36 +331,6 @@
         <div class="loading-spinner"></div>
         <p id="loadingMessage">Loading...</p>
     </div>
-
-    <footer class="footer" role="contentinfo" aria-label="Site footer">
-        <div class="footer-content">
-            <div class="footer-main">
-                <div class="footer-section">
-                    <h3>Contact Us</h3>
-                    <div class="footer-contact">
-                        <span class="footer-owner">Karl Holliday</span>
-                        <a href="tel:+15047171887" aria-label="Call us">
-                            <i class="fas fa-phone" aria-hidden="true"></i>
-                            <span>(504) 717-1887</span>
-                        </a>
-                        <a href="mailto:7holliday@gmail.com" aria-label="Email us">
-                            <i class="fas fa-envelope" aria-hidden="true"></i>
-                            <span>7holliday@gmail.com</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="education.html">Education</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
