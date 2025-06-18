@@ -105,17 +105,29 @@
         margin: 0 auto;
       }
       
-      .login-section, .login-container, .login-layout {
+      .login-section {
+        min-height: 100vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         background: #fff !important;
+        padding: 0 !important;
+      }
+      .login-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        background: #fff !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
       }
       .login-layout {
+        width: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 0 !important;
-        padding: 0 !important;
-        align-items: stretch;
-        justify-content: center;
-        margin: 0 auto;
+        background: #fff !important;
         box-shadow: none !important;
         border: none !important;
       }
