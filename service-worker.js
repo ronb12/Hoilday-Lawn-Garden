@@ -68,31 +68,9 @@ self.addEventListener('activate', event => {
 
 // Fetch event
 self.addEventListener('fetch', event => {
-  // Never cache education.html - always fetch from network
-  if (event.request.url.includes('education.html')) {
-    event.respondWith(fetch(event.request));
-    return;
-  }
-  
-  if (event.request.mode === 'navigate') {
-    // Network-first for HTML
-    event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
-  } else {
-    // Cache-first for assets
-    event.respondWith(
-      caches.match(event.request).then(
-        response => response || fetch(event.request)
-      )
-    );
-  }
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match(event.request))
+  );
 });
 
 // Message event for manual cache clearing
