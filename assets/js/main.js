@@ -3,6 +3,22 @@ import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https:/
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { getAllServices, getServiceById } from './service-cache.js';
 
+// TEMP: Force unregister all service workers and clear all caches
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for (let registration of registrations) {
+      registration.unregister();
+    }
+  });
+}
+if (window.caches) {
+  caches.keys().then(function(names) {
+    for (let name of names) {
+      caches.delete(name);
+    }
+  });
+}
+
 console.log("main.js loaded");
 
 // List of pages that should not redirect
