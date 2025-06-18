@@ -20,7 +20,12 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS_TO_CACHE))
+    caches.open(CACHE_NAME).then(cache => 
+      cache.addAll(ASSETS_TO_CACHE).catch(err => {
+        // Log which asset failed to cache
+        console.error('Failed to cache asset during install:', err);
+      })
+    )
   );
 });
 
@@ -39,7 +44,7 @@ self.addEventListener('activate', event => {
   });
 });
 
-// Fetch event - cache first, then network
+// Fetch event
 self.addEventListener('fetch', event => {
   if (event.request.mode === 'navigate') {
     // Network-first for HTML
@@ -62,7 +67,7 @@ self.addEventListener('fetch', event => {
   }
 });
 
-// Add message event listener for cache clearing
+// Message event for manual cache clearing
 self.addEventListener('message', event => {
   if (event.data === 'CLEAR_CACHE') {
     caches.keys().then(cacheNames => {
