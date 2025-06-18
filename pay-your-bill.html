@@ -35,12 +35,18 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <style>
       .payment-section {
-        max-width: 800px;
-        margin: 120px auto 40px;
-        padding: 2rem;
+        max-width: 600px;
+        margin: 3rem auto;
+        padding: 2.5rem;
         background: white;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+      .payment-section h2 {
+        color: #2c5530;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
       }
       .payment-form {
         display: grid;
@@ -54,42 +60,86 @@
       .form-group label {
         font-weight: 600;
         color: #333;
-      }
-      .form-group input {
-        padding: 0.8rem;
-        border: 1px solid #ddd;
-        border-radius: 5px;
         font-size: 1rem;
       }
-      .payment-options {
-        margin: 2rem 0;
-        text-align: center;
+      .form-group input {
+        padding: 0.75rem;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
       }
-      .payment-options h2 {
-        margin-bottom: 1rem;
-        color: #333;
-        font-size: 1.5rem;
+      .form-group input:focus {
+        outline: none;
+        border-color: #2c5530;
+        box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
       }
-      .paypal-container {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-        margin-top: 1rem;
+      .form-group input.error {
+        border-color: #dc3545;
       }
       .error-message {
         color: #dc3545;
         font-size: 0.9rem;
-        margin-top: 0.5rem;
+        margin-top: 0.25rem;
         display: none;
       }
-      .hero { position: relative !important; display: flex !important; align-items: center !important; justify-content: center !important; min-height: 350px !important; }
-      .hero img { position: absolute !important; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; filter: brightness(0.6); }
-      .hero-content { position: relative !important; z-index: 2 !important; color: #fff !important; text-align: center !important; width: 100%; max-width: 700px; margin: 0 auto; opacity: 1 !important; transform: none !important; }
-      @media (max-width: 900px) {
-        .main-header .nav-links {
-          margin-top: 0 !important;
-          padding-top: 0.5em !important;
+      .error-message.show {
+        display: block;
+      }
+      .payment-note {
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        text-align: center;
+        border-left: 4px solid #2e7d32;
+      }
+      .payment-note i {
+        margin-right: 0.5rem;
+        color: #2e7d32;
+      }
+      .security-badges {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 1.5rem 0;
+        flex-wrap: wrap;
+      }
+      .security-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: #f8f9fa;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        color: #666;
+      }
+      .security-badge i {
+        color: #2c5530;
+      }
+      .payment-amount-display {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        text-align: center;
+        margin: 1rem 0;
+        border: 2px solid #e1e5e9;
+      }
+      .payment-amount-display .amount {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2c5530;
+      }
+      @media (max-width: 768px) {
+        .payment-section {
+          margin: 2rem 1rem;
+          padding: 1.5rem;
+        }
+        .security-badges {
+          flex-direction: column;
+          align-items: center;
         }
       }
     </style>
@@ -136,7 +186,6 @@
       </nav>
     </header>
     <section class="hero">
-      <div class="hero-overlay"></div>
       <img
         src="assets/images/hero-garden-landscaping.jpg"
         alt="Beautiful garden landscaping"
@@ -147,18 +196,43 @@
         <p>Quick and secure online payment options for your lawn care and landscaping services.</p>
       </div>
     </section>
-    <!-- PayPal SDK with test client ID: must be before the button rendering code -->
-    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&components=buttons,funding-eligibility&disable-funding=venmo,paylater"></script>
+    
     <!-- Payment Section -->
     <section class="payment-section">
-      <h2>Pay Your Bill</h2>
-      <form id="payment-form" style="max-width: 400px; margin: 0 auto">
-        <div class="form-group">
-          <label for="accountNumber">Account Number</label>
-          <input type="text" id="accountNumber" name="accountNumber" required />
+      <h2>Secure Payment</h2>
+      
+      <div class="security-badges">
+        <div class="security-badge">
+          <i class="fas fa-shield-alt"></i>
+          <span>SSL Secured</span>
         </div>
+        <div class="security-badge">
+          <i class="fas fa-lock"></i>
+          <span>PCI Compliant</span>
+        </div>
+        <div class="security-badge">
+          <i class="fas fa-credit-card"></i>
+          <span>Secure Processing</span>
+        </div>
+      </div>
+      
+      <form id="payment-form" class="payment-form">
         <div class="form-group">
-          <label for="paymentAmount">Payment Amount ($)</label>
+          <label for="accountNumber">Account Number *</label>
+          <input 
+            type="text" 
+            id="accountNumber" 
+            name="accountNumber" 
+            required 
+            placeholder="Enter your account number"
+            pattern="[A-Za-z0-9]+"
+            minlength="6"
+          />
+          <div class="error-message" id="accountError">Please enter a valid account number (minimum 6 characters)</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="paymentAmount">Payment Amount ($) *</label>
           <input
             type="number"
             id="paymentAmount"
@@ -166,55 +240,145 @@
             min="1"
             step="0.01"
             required
+            placeholder="0.00"
           />
+          <div class="error-message" id="amountError">Please enter a valid payment amount (minimum $1.00)</div>
+        </div>
+        
+        <div class="payment-amount-display" id="amountDisplay" style="display: none;">
+          <div>Payment Total:</div>
+          <div class="amount" id="displayAmount">$0.00</div>
         </div>
       </form>
+      
       <!-- PayPal Button Container -->
-      <div id="paypal-button-container" style="margin: 2rem 0"></div>
-      <div
-        class="payment-note"
-        style="
-          background: #e8f5e9;
-          color: #2e7d32;
-          padding: 1rem;
-          border-radius: 6px;
-          max-width: 400px;
-          margin: 0 auto 2rem auto;
-        "
-      >
-        <i class="fab fa-paypal" style="margin-right: 0.5rem"></i>
-        Don't have a PayPal account? No problem! You can pay securely using your credit or debit
-        card as a guest.
+      <div id="paypal-button-container"></div>
+      
+      <div class="payment-note">
+        <i class="fab fa-paypal"></i>
+        <strong>Secure Payment Options:</strong> Don't have a PayPal account? No problem! You can pay securely using your credit or debit card as a guest.
+      </div>
+      
+      <div style="text-align: center; margin-top: 2rem; color: #666; font-size: 0.9rem;">
+        <i class="fas fa-info-circle"></i>
+        Need help? Contact us at <a href="tel:+15047171887">(504) 717-1887</a> or <a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
       </div>
     </section>
-    <!-- PayPal Button Rendering Code -->
+    
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&components=buttons,funding-eligibility&disable-funding=venmo,paylater"></script>
+    
+    <!-- Payment Script -->
     <script>
       document.addEventListener('DOMContentLoaded', function () {
+        const accountInput = document.getElementById('accountNumber');
+        const amountInput = document.getElementById('paymentAmount');
+        const accountError = document.getElementById('accountError');
+        const amountError = document.getElementById('amountError');
+        const amountDisplay = document.getElementById('amountDisplay');
+        const displayAmount = document.getElementById('displayAmount');
+        
+        // Form validation
+        function validateAccount() {
+          const value = accountInput.value.trim();
+          if (value.length < 6) {
+            accountInput.classList.add('error');
+            accountError.classList.add('show');
+            return false;
+          } else {
+            accountInput.classList.remove('error');
+            accountError.classList.remove('show');
+            return true;
+          }
+        }
+        
+        function validateAmount() {
+          const value = parseFloat(amountInput.value);
+          if (isNaN(value) || value < 1) {
+            amountInput.classList.add('error');
+            amountError.classList.add('show');
+            return false;
+          } else {
+            amountInput.classList.remove('error');
+            amountError.classList.remove('show');
+            return true;
+          }
+        }
+        
+        // Update amount display
+        function updateAmountDisplay() {
+          const amount = parseFloat(amountInput.value);
+          if (!isNaN(amount) && amount > 0) {
+            displayAmount.textContent = `$${amount.toFixed(2)}`;
+            amountDisplay.style.display = 'block';
+          } else {
+            amountDisplay.style.display = 'none';
+          }
+        }
+        
+        // Event listeners
+        accountInput.addEventListener('input', validateAccount);
+        accountInput.addEventListener('blur', validateAccount);
+        amountInput.addEventListener('input', function() {
+          validateAmount();
+          updateAmountDisplay();
+        });
+        amountInput.addEventListener('blur', validateAmount);
+        
+        // PayPal button rendering
         function renderPayPalButtons() {
           if (window.paypal && window.paypal.Buttons) {
             window.paypal
               .Buttons({
-                style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+                style: { 
+                  layout: 'vertical', 
+                  color: 'gold', 
+                  shape: 'rect', 
+                  label: 'paypal' 
+                },
                 createOrder: function (data, actions) {
+                  const amount = document.getElementById('paymentAmount').value;
+                  const account = document.getElementById('accountNumber').value;
+                  
+                  if (!validateAccount() || !validateAmount()) {
+                    alert('Please fix the form errors before proceeding.');
+                    return;
+                  }
+                  
                   return actions.order.create({
                     purchase_units: [
                       {
                         amount: {
-                          value: document.getElementById('paymentAmount')
-                            ? document.getElementById('paymentAmount').value
-                            : '10.00',
+                          value: amount || '10.00',
                         },
+                        description: `Payment for account ${account}`,
                       },
                     ],
                   });
                 },
                 onApprove: function (data, actions) {
                   return actions.order.capture().then(function (details) {
-                    alert('Payment completed by ' + details.payer.name.given_name + '!');
+                    // Show success message
+                    const successMessage = `
+                      Payment completed successfully!
+                      
+                      Transaction ID: ${details.id}
+                      Payer: ${details.payer.name.given_name} ${details.payer.name.surname}
+                      Amount: $${details.purchase_units[0].amount.value}
+                      Account: ${document.getElementById('accountNumber').value}
+                      
+                      Thank you for your payment!
+                    `;
+                    alert(successMessage);
+                    
+                    // Reset form
+                    document.getElementById('payment-form').reset();
+                    amountDisplay.style.display = 'none';
                   });
                 },
                 onError: function (err) {
-                  alert('An error occurred during payment. Please try again.');
+                  console.error('PayPal Error:', err);
+                  alert('An error occurred during payment. Please try again or contact us for assistance.');
                 },
               })
               .render('#paypal-button-container');
@@ -222,9 +386,11 @@
             setTimeout(renderPayPalButtons, 100);
           }
         }
+        
         renderPayPalButtons();
       });
     </script>
+    
     <script type="module" src="assets/js/firebase-config.js"></script>
     <script type="module" src="assets/js/main.js"></script>
     <footer class="footer" role="contentinfo" aria-label="Site footer">
