@@ -1,1 +1,571 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>FAQ - Holliday Lawn & Garden</title><link rel="stylesheet" href="assets/css/main.css?v=2024-01-15"></head><body><header class="main-header"><div class="logo"><a href="index.html"><img src="assets/images/hollidays-logo.optimized-1280.png" alt="Logo"></a></div><nav><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="education.html">Education</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul></nav></header><main><h1>Frequently Asked Questions</h1><p>Find answers to common questions about our services</p><div class="faq-container"><div class="faq-item"><h3>What areas do you serve?</h3><p>We provide lawn care and landscaping services throughout New Orleans and surrounding areas.</p></div><div class="faq-item"><h3>How often should I schedule lawn maintenance?</h3><p>We recommend weekly or bi-weekly maintenance for optimal lawn health.</p></div><div class="faq-item"><h3>Do you offer emergency services?</h3><p>Yes, we provide emergency services for storm damage and urgent maintenance needs.</p></div></div></main><footer><p>&copy; 2024 Holliday Lawn & Garden</p></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Frequently Asked Questions - Holliday's Lawn & Garden</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/main.css?v=2024-01-15">
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: #f7f7f7;
+            color: #222;
+        }
+        .hero {
+            position: relative;
+            width: 100vw;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #222;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+        .hero img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.6);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+            padding: 2rem;
+            max-width: 800px;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .hero-content p {
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .faq-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+        }
+        .faq-section h2 {
+            color: #2c5530;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid #4caf50;
+            padding-bottom: 0.5rem;
+        }
+        .faq-item {
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .faq-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-left: 4px solid #4caf50;
+            margin-bottom: 0.5rem;
+        }
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+        .faq-question h3 {
+            color: #2c5530;
+            margin: 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .faq-question .icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        .faq-question.active .icon {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            display: none;
+            line-height: 1.6;
+            color: #555;
+        }
+        .faq-answer.active {
+            display: block;
+        }
+        .contact-section {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .contact-section h2 {
+            color: white;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+        }
+        .contact-item i {
+            font-size: 1.2rem;
+            width: 20px;
+        }
+        .btn {
+            background: white;
+            color: #4caf50;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            margin: 0.5rem;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .faq-section {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 900px) {
+            .main-header .nav-links {
+                margin-top: 0 !important;
+                padding-top: 0.5em !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <picture>
+                    <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+                    <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" loading="lazy">
+                </picture>
+            </a>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                <li class="login-buttons">
+                    <a href="login.html" class="btn-login btn-customer">
+                        <i class="fas fa-user"></i>
+                        Customer Login
+                    </a>
+                    <a href="admin-login.html" class="btn-login btn-admin">
+                        <i class="fas fa-lock"></i>
+                        Admin Login
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <picture>
+            <source srcset="assets/images/hero-garden-landscaping-1280-1280.webp" type="image/webp">
+            <img src="assets/images/hero-garden-landscaping-1280-1280.jpg" alt="Beautiful garden landscaping" loading="lazy">
+        </picture>
+        <div class="hero-content">
+            <h1>Frequently Asked Questions</h1>
+            <p>Find answers to common questions about our lawn care and landscaping services. Can't find what you're looking for? Contact us directly!</p>
+        </div>
+    </div>
+
+    <main>
+        <div class="faq-container">
+            <!-- General Questions -->
+            <div class="faq-section">
+                <h2>🌱 General Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>📍 What areas do you serve?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We provide comprehensive lawn care and landscaping services throughout New Orleans and the surrounding areas including Metairie, Kenner, Gretna, and nearby communities. Contact us to confirm service availability in your specific neighborhood.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>📅 How often should I schedule lawn maintenance?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We recommend weekly or bi-weekly maintenance for optimal lawn health. However, we can customize a schedule based on your specific needs, property size, and grass type. During peak growing seasons (spring and fall), more frequent maintenance may be beneficial.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>📋 Do you provide free estimates?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer free, no-obligation estimates for all our services. Our team will visit your property to assess your needs and provide a detailed quote. Contact us to schedule a consultation at your convenience.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>📜 Are you licensed and insured?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we are fully licensed and insured for all our services. We carry comprehensive liability insurance and workers' compensation coverage. We can provide proof of insurance upon request for your peace of mind.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services & Scheduling -->
+            <div class="faq-section">
+                <h2>🛠️ Services & Scheduling</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🌤️ Do you offer seasonal services?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we provide comprehensive seasonal services including spring cleanup, summer maintenance, fall preparation, and winter protection. Our seasonal programs are designed to keep your lawn healthy year-round and prepare it for the changing weather conditions.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🚨 Do you offer emergency services?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we provide emergency services for storm damage, fallen trees, and urgent maintenance needs. We understand that landscaping emergencies can happen at any time, so we're available for immediate assistance when you need us most.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>⏰ What is your cancellation policy?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We require 24-hour notice for service cancellations. Please contact us as soon as possible if you need to reschedule. This helps us manage our schedule efficiently and accommodate other customers who may need our services.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🌳 What types of trees and shrubs do you work with?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We work with all types of trees and shrubs commonly found in Louisiana landscapes, including live oaks, magnolias, crepe myrtles, azaleas, and many others. Our team has extensive experience with local plant species and their specific care requirements.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment & Billing -->
+            <div class="faq-section">
+                <h2>💳 Payment & Billing</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>💳 What payment methods do you accept?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept all major credit cards (Visa, MasterCard, American Express, Discover), cash, and online payments through our secure payment system. We also offer convenient payment plans for larger projects.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>📊 Do you offer payment plans?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer flexible payment plans for larger landscaping projects. We understand that major landscape improvements can be a significant investment, so we work with you to create a payment schedule that fits your budget.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🧾 How do I pay my bill online?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can easily pay your bill online through our secure customer portal. Simply visit our "Pay Your Bill" page, enter your account information, and complete your payment using any major credit card or bank account.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maintenance & Care -->
+            <div class="faq-section">
+                <h2>🌿 Maintenance & Care</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🌱 What grass types do you specialize in?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We specialize in warm-season grasses common to Louisiana, including St. Augustine, Bermuda, Zoysia, and Centipede grass. Each type has specific care requirements, and we tailor our maintenance programs accordingly.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>💧 Do you provide irrigation services?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we provide complete irrigation services including system installation, repair, maintenance, and seasonal adjustments. We can also help you upgrade to smart irrigation systems for better water efficiency.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🌺 Do you handle garden maintenance?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! We provide comprehensive garden maintenance including planting, pruning, fertilizing, pest control, and seasonal cleanup. Our team can help you maintain beautiful flower beds, vegetable gardens, and ornamental plants.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🦗 Do you offer pest control services?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer integrated pest management services for common lawn and garden pests. We use environmentally responsible methods to control insects, weeds, and diseases while protecting beneficial organisms.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="contact-section">
+                <h2>📞 Still Have Questions?</h2>
+                <p>Can't find the answer you're looking for? We're here to help!</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(504) 717-1887</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>7holliday@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-user"></i>
+                        <span>Karl Holliday</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <a href="contact.html" class="btn">Contact Us</a>
+                    <a href="services.html" class="btn">View Services</a>
+                    <a href="pay-your-bill.html" class="btn">Pay Your Bill</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="footer-contact">
+                        <span class="footer-owner">Karl Holliday</span>
+                        <a href="tel:+15047171887">
+                            <i class="fas fa-phone"></i>
+                            <span>(504) 717-1887</span>
+                        </a>
+                        <a href="mailto:7holliday@gmail.com">
+                            <i class="fas fa-envelope"></i>
+                            <span>7holliday@gmail.com</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Portal</h3>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                        <li><a href="customer-dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // FAQ Accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('.icon');
+                
+                // Close all other answers
+                document.querySelectorAll('.faq-answer').forEach(ans => {
+                    if (ans !== answer) {
+                        ans.classList.remove('active');
+                        ans.previousElementSibling.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current answer
+                answer.classList.toggle('active');
+                question.classList.toggle('active');
+            });
+        });
+        
+        // Cache clearing
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for (let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+        }
+        
+        if (window.caches) {
+            caches.keys().then(function(names) {
+                for (let name of names) {
+                    caches.delete(name);
+                }
+            });
+        }
+    </script>
+</body>
+</html> 
