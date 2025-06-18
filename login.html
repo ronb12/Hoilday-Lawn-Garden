@@ -106,42 +106,51 @@
       }
       
       .login-section {
-        min-height: 100vh !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        background: #fff !important;
-        padding: 0 !important;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        padding: 0;
       }
       .login-container {
         width: 100%;
         max-width: 1200px;
         margin: 0 auto;
-        background: #fff !important;
-        box-shadow: none !important;
-        border: none !important;
-        padding: 0 !important;
+        background: #fff;
+        box-shadow: none;
+        border: none;
+        padding: 0;
       }
       .login-layout {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 0 !important;
-        background: #fff !important;
-        box-shadow: none !important;
-        border: none !important;
         max-width: 900px;
         margin: 0 auto;
         justify-content: center;
         align-items: start;
+        background: #fff;
+        box-shadow: none;
+        border: none;
+      }
+      .login-form-container,
+      .login-info {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        padding: 2.5rem;
+        margin: 0 1rem;
+        min-width: 340px;
+        max-width: 420px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
       }
       .login-layout::before, .login-layout::after, .login-section::before, .login-section::after, .login-container::before, .login-container::after {
         display: none !important;
         content: none !important;
       }
-      .login-form-container, .login-info {
-        margin: 0 !important;
-      }
-      .login-form-container { background: #fff !important; padding: 2.5rem !important; border-radius: 12px !important; box-shadow: none !important; }
       .login-form-container h2 { color: #2c5530; margin-bottom: 1rem; font-size: 2rem; }
       .login-form-container > p { color: #666; margin-bottom: 2rem; font-size: 1.1rem; }
       .login-form .form-group { margin-bottom: 1.5rem; }
@@ -150,7 +159,6 @@
       .login-form input:focus { outline: none; border-color: #2c5530; box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1); }
       .btn-primary { background: #2c5530; color: white; padding: 1rem 2rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s; }
       .btn-primary:hover { background: #1e3a21; }
-      .login-info { background: #fff !important; padding: 2rem !important; border-radius: 12px !important; box-shadow: none !important; }
       .login-info h3 { color: #2c5530; margin-bottom: 1.5rem; font-size: 1.5rem; }
       .info-content p { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; color: #333; font-size: 0.95rem; line-height: 1.5; }
       .info-content i { color: #2c5530; width: 20px; font-size: 1rem; }
@@ -216,9 +224,17 @@
         100% { transform: rotate(360deg); }
       }
       @media (max-width: 900px) {
-        .login-section { padding: 2rem 0; min-height: unset; display: block; }
-        .login-layout { grid-template-columns: 1fr; gap: 2rem; }
-        .login-form-container, .login-info { padding: 1.5rem; min-width: 0; max-width: 100%; height: auto; }
+        .login-layout {
+          grid-template-columns: 1fr;
+          max-width: 500px;
+        }
+        .login-form-container,
+        .login-info {
+          margin: 1rem 0;
+          min-width: 0;
+          max-width: 100%;
+          padding: 1.5rem;
+        }
       }
       .google-sign-in {
         display: flex;
