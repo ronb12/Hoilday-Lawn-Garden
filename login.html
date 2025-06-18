@@ -51,13 +51,12 @@
     <link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.png" />
     <link rel="manifest" href="manifest.json" />
     <style>
-      /* Login page styles - clean and simple approach */
+      /* Login page styles - simplified approach */
       .hero-section {
         background: linear-gradient(135deg, #2c5530 0%, #1e3a21 100%);
         color: white;
         padding: 4rem 2rem;
-        text-align: left;
-        display: block;
+        text-align: center;
         width: 100%;
         margin: 0;
       }
@@ -72,37 +71,28 @@
         font-size: 3rem;
         margin-bottom: 1rem;
         font-weight: 600;
-        text-align: left;
       }
       
       .hero-content p {
         font-size: 1.2rem;
         opacity: 0.9;
         max-width: 600px;
-        margin: 0;
-        text-align: left;
+        margin: 0 auto;
       }
       
       .login-section {
-        min-height: calc(100vh - 400px);
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
         padding: 3rem 2rem;
         background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        position: relative;
+        min-height: calc(100vh - 400px);
       }
       
-      .login-grid {
-        display: grid;
-        grid-template-columns: minmax(400px, 1fr) minmax(400px, 1fr);
-        gap: 4rem;
-        max-width: 1400px;
-        width: 100%;
+      .login-container {
+        max-width: 1200px;
         margin: 0 auto;
-        align-items: start;
-        position: relative;
-        z-index: 1;
+        display: flex;
+        gap: 4rem;
+        align-items: flex-start;
+        justify-content: center;
       }
       
       .login-form-container {
@@ -112,20 +102,17 @@
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         width: 100%;
         max-width: 500px;
-        margin: 0;
-        text-align: left;
+        flex-shrink: 0;
       }
       
       .login-form-container h2 {
         color: #2c5530;
         margin-bottom: 0.5rem;
         font-size: 1.75rem;
-        text-align: left;
         font-weight: 600;
       }
       
       .login-form-container > p {
-        text-align: left;
         color: #666;
         margin-bottom: 2rem;
         font-size: 1rem;
@@ -137,7 +124,7 @@
         gap: 2rem;
         width: 100%;
         max-width: 500px;
-        margin: 0;
+        flex-shrink: 0;
       }
       
       .info-card {
@@ -152,7 +139,6 @@
         margin-bottom: 1.5rem;
         font-size: 1.5rem;
         font-weight: 600;
-        text-align: left;
       }
       
       .form-group {
@@ -379,18 +365,13 @@
         100% { transform: rotate(360deg); }
       }
       @media (max-width: 1200px) {
-        .login-grid {
-          grid-template-columns: 1fr;
+        .login-container {
+          flex-direction: column;
           gap: 3rem;
-          padding: 0 1rem;
-          justify-items: center;
+          align-items: center;
         }
         .login-form-container {
           padding: 2.5rem;
-          justify-self: center;
-        }
-        .login-info {
-          justify-self: center;
         }
         .info-card {
           padding: 2rem;
@@ -473,7 +454,7 @@
         </div>
       </section>
       <section class="login-section">
-        <div class="login-grid">
+        <div class="login-container">
           <div class="login-form-container">
             <h2>Sign In to Your Account</h2>
             <p>Enter your credentials to access your lawn care services</p>
