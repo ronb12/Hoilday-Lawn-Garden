@@ -1,5 +1,5 @@
 // Service Cache Implementation
-const CACHE_VERSION = 'v4';
+const CACHE_VERSION = 'v5';
 const SERVICES_KEY = 'cached-services-' + CACHE_VERSION;
 
 // Service data structure
@@ -8,36 +8,67 @@ const services = {
     id: 'lawn-maintenance',
     title: 'Lawn Maintenance',
     icon: 'fas fa-leaf',
-    description: 'Professional lawn care services to keep your yard looking its best year-round.',
+    description: 'Keep your lawn looking its best with our comprehensive maintenance services.',
     features: [
       'Regular mowing and edging',
-      'Fertilization and weed control',
-      'Leaf removal and cleanup',
-      'Seasonal maintenance'
+      'Lawn fertilization',
+      'Weed control',
+      'Leaf removal',
+      'Seasonal clean-up'
     ]
   },
   'landscaping': {
     id: 'landscaping',
     title: 'Landscaping',
     icon: 'fas fa-tree',
-    description: 'Transform your outdoor space with our expert landscaping services.',
+    description: 'Transform your outdoor space with our professional landscaping services.',
     features: [
       'Custom landscape design',
-      'Plant installation',
+      'Garden installation',
       'Hardscaping',
-      'Irrigation systems'
+      'Mulching',
+      'Plant selection and installation'
     ]
   },
   'garden-care': {
     id: 'garden-care',
     title: 'Garden Care',
     icon: 'fas fa-seedling',
-    description: 'Specialized care for your garden to ensure healthy, beautiful plants.',
+    description: 'Expert care for your garden to ensure healthy, beautiful plants year-round.',
     features: [
       'Garden maintenance',
-      'Plant health care',
+      'Plant care and pruning',
+      'Flower bed maintenance',
       'Seasonal planting',
-      'Garden design'
+      'Garden clean-up'
+    ]
+  },
+  'commercial': {
+    id: 'commercial',
+    title: 'Commercial Services',
+    icon: 'fas fa-building',
+    description: 'Professional landscaping and maintenance solutions for businesses and commercial properties.',
+    features: [
+      'Commercial property maintenance',
+      'Business landscape design',
+      'Regular maintenance schedules',
+      'Seasonal commercial services',
+      'Property enhancement'
+    ]
+  },
+  'pressure-washing': {
+    id: 'pressure-washing',
+    title: 'Pressure Washing',
+    icon: 'fas fa-spray-can',
+    description: 'Restore the beauty of your property with our professional pressure washing services.',
+    features: [
+      'House washing',
+      'Driveway and sidewalk cleaning',
+      'Deck and patio cleaning',
+      'Fence cleaning',
+      'Commercial building cleaning',
+      'Soft washing for delicate surfaces',
+      'Mold and mildew removal'
     ]
   }
 };
