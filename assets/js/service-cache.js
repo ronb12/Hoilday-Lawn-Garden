@@ -1,5 +1,5 @@
 // Service Cache Implementation
-const CACHE_VERSION = 'v5';
+const CACHE_VERSION = 'v6';
 const SERVICES_KEY = 'cached-services-' + CACHE_VERSION;
 
 // Service data structure
@@ -7,7 +7,7 @@ const services = {
   'lawn-maintenance': {
     id: 'lawn-maintenance',
     title: 'Lawn Maintenance',
-    icon: 'fas fa-leaf',
+    icon: '🌱',
     description: 'Keep your lawn looking its best with our comprehensive maintenance services.',
     features: [
       'Regular mowing and edging',
@@ -20,7 +20,7 @@ const services = {
   'landscaping': {
     id: 'landscaping',
     title: 'Landscaping',
-    icon: 'fas fa-tree',
+    icon: '🏡',
     description: 'Transform your outdoor space with our professional landscaping services.',
     features: [
       'Custom landscape design',
@@ -33,7 +33,7 @@ const services = {
   'garden-care': {
     id: 'garden-care',
     title: 'Garden Care',
-    icon: 'fas fa-seedling',
+    icon: '🌸',
     description: 'Expert care for your garden to ensure healthy, beautiful plants year-round.',
     features: [
       'Garden maintenance',
@@ -46,7 +46,7 @@ const services = {
   'commercial': {
     id: 'commercial',
     title: 'Commercial Services',
-    icon: 'fas fa-building',
+    icon: '🏢',
     description: 'Professional landscaping and maintenance solutions for businesses and commercial properties.',
     features: [
       'Commercial property maintenance',
@@ -59,7 +59,7 @@ const services = {
   'pressure-washing': {
     id: 'pressure-washing',
     title: 'Pressure Washing',
-    icon: 'fas fa-spray-can',
+    icon: '🚿',
     description: 'Restore the beauty of your property with our professional pressure washing services.',
     features: [
       'House washing',

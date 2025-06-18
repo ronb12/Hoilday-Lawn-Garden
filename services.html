@@ -153,9 +153,9 @@
         margin-bottom: 1.5rem;
       }
       
-      .service-icon i {
-        font-size: 1.5rem;
-        color: white;
+      .service-emoji {
+        font-size: 2rem;
+        line-height: 1;
       }
       
       .service-card h3 {
@@ -353,7 +353,7 @@
           
           serviceCard.innerHTML = `
             <div class="service-icon">
-              <i class="${service.icon}"></i>
+              <span class="service-emoji">${service.icon}</span>
             </div>
             <h3>${service.title}</h3>
             <p>${service.description}</p>
