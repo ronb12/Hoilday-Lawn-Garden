@@ -51,6 +51,13 @@
     <link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.png" />
     <link rel="manifest" href="manifest.json" />
     <style>
+      /* Reset body styles to prevent shadows */
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f8f9fa;
+      }
+      
       /* Login page styles - simplified approach */
       .hero { 
         position: relative !important; 
@@ -98,6 +105,7 @@
         padding: 3rem 2rem;
         background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         min-height: calc(100vh - 400px);
+        margin: 0;
       }
       
       .login-container {
@@ -113,7 +121,7 @@
         background: white;
         padding: 3rem;
         border-radius: 16px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e0e0e0;
         width: 100%;
         max-width: 500px;
         flex-shrink: 0;
@@ -145,7 +153,7 @@
         background: white;
         padding: 2.5rem;
         border-radius: 16px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e0e0e0;
       }
       
       .info-card h3 {
