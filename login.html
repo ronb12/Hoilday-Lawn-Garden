@@ -604,6 +604,33 @@
         }
       }
       
+      /* Additional Desktop Force - More aggressive approach */
+      @media (min-width: 1025px) {
+        .login-layout {
+          display: grid !important;
+          grid-template-columns: 1fr 1fr !important;
+          gap: 3rem !important;
+          align-items: start !important;
+          max-width: 1000px !important;
+          margin: 0 auto !important;
+        }
+        .login-container {
+          max-width: 1200px !important;
+          margin: 0 auto !important;
+          padding: 0 2rem !important;
+        }
+      }
+      
+      /* Force Desktop Layout with JavaScript */
+      .force-desktop-layout {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 3rem !important;
+        align-items: start !important;
+        max-width: 1000px !important;
+        margin: 0 auto !important;
+      }
+      
       /* Header Override Styles */
       .main-header {
         position: fixed !important;
@@ -1016,6 +1043,7 @@
             loginLayout.style.alignItems = 'start';
             loginLayout.style.maxWidth = '1000px';
             loginLayout.style.margin = '0 auto';
+            loginLayout.classList.add('force-desktop-layout');
           }
           
           if (isDesktop && navLinks) {
@@ -1030,6 +1058,10 @@
         // Check viewport on load and resize
         checkViewport();
         window.addEventListener('resize', checkViewport);
+        
+        // Force check after a short delay to ensure DOM is ready
+        setTimeout(checkViewport, 100);
+        setTimeout(checkViewport, 500);
         
         // Hide success and error messages on page load
         const successMessage = document.getElementById('successMessage');
@@ -1058,6 +1090,34 @@
           passwordInput.addEventListener('input', clearMessages);
         }
       });
+
+      // Immediate execution for viewport check
+      (function() {
+        function forceDesktopLayout() {
+          const isDesktop = window.innerWidth >= 1025;
+          const loginLayout = document.querySelector('.login-layout');
+          
+          if (isDesktop && loginLayout) {
+            loginLayout.style.cssText = `
+              display: grid !important;
+              grid-template-columns: 1fr 1fr !important;
+              gap: 3rem !important;
+              align-items: start !important;
+              max-width: 1000px !important;
+              margin: 0 auto !important;
+            `;
+            loginLayout.classList.add('force-desktop-layout');
+          }
+        }
+        
+        // Run immediately and after DOM is ready
+        forceDesktopLayout();
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', forceDesktopLayout);
+        } else {
+          forceDesktopLayout();
+        }
+      })();
 
       // Clear error and success messages
       function clearMessages() {
@@ -1220,18 +1280,13 @@
     <script>
       // Aggressive cache busting script to force reload of updated content
       (function() {
-        // Check if we've already redirected in this session
-        const hasRedirected = sessionStorage.getItem('loginPageRedirected');
+        // Force hard refresh if this is an old version
+        const currentVersion = '2024-01-15-v3-desktop-fix';
+        const storedVersion = sessionStorage.getItem('loginPageVersion');
         
-        if (!hasRedirected) {
-          // Generate a new timestamp and redirect only once
-          const newTimestamp = Date.now();
-          const baseUrl = window.location.href.split('?')[0];
-          const newUrl = baseUrl + '?v=' + newTimestamp;
-          
-          // Mark that we've redirected and redirect
-          sessionStorage.setItem('loginPageRedirected', 'true');
-          window.location.href = newUrl;
+        if (storedVersion !== currentVersion) {
+          sessionStorage.setItem('loginPageVersion', currentVersion);
+          window.location.reload(true);
           return;
         }
         
@@ -1246,7 +1301,7 @@
         // Force reload if page was loaded from cache
         window.addEventListener('pageshow', function(event) {
           if (event.persisted) {
-            window.location.reload();
+            window.location.reload(true);
           }
         });
         
@@ -1259,8 +1314,21 @@
           });
         }
         
-        // Clear localStorage but keep sessionStorage for redirect tracking
-        localStorage.clear();
+        // Force desktop layout check
+        setTimeout(function() {
+          const isDesktop = window.innerWidth >= 1025;
+          const loginLayout = document.querySelector('.login-layout');
+          if (isDesktop && loginLayout) {
+            loginLayout.style.cssText = `
+              display: grid !important;
+              grid-template-columns: 1fr 1fr !important;
+              gap: 3rem !important;
+              align-items: start !important;
+              max-width: 1000px !important;
+              margin: 0 auto !important;
+            `;
+          }
+        }, 100);
       })();
     </script>
     <script>
