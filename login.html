@@ -105,48 +105,11 @@
         margin: 0 auto;
       }
       
-      .login-section {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #fff;
-        padding: 0;
-      }
-      .login-container {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        background: #fff;
-        box-shadow: none;
-        border: none;
-        padding: 0;
-      }
-      .login-layout {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        max-width: 900px;
-        margin: 0 auto;
-        justify-content: center;
-        align-items: start;
-        background: #fff;
-        box-shadow: none;
-        border: none;
-      }
-      .login-form-container,
-      .login-info {
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-        padding: 2.5rem;
-        margin: 0 1rem;
-        min-width: 340px;
-        max-width: 420px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-      }
+      .login-section { padding: 4rem 0; background: #f8f9fa; }
+      .login-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+      .login-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
+      .login-form-container { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+      .login-info { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
       .login-layout::before, .login-layout::after, .login-section::before, .login-section::after, .login-container::before, .login-container::after {
         display: none !important;
         content: none !important;
@@ -224,17 +187,8 @@
         100% { transform: rotate(360deg); }
       }
       @media (max-width: 900px) {
-        .login-layout {
-          grid-template-columns: 1fr;
-          max-width: 500px;
-        }
-        .login-form-container,
-        .login-info {
-          margin: 1rem 0;
-          min-width: 0;
-          max-width: 100%;
-          padding: 1.5rem;
-        }
+        .login-layout { grid-template-columns: 1fr; gap: 2rem; }
+        .login-form-container, .login-info { padding: 1.5rem; }
       }
       .google-sign-in {
         display: flex;
