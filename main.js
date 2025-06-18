@@ -73,37 +73,6 @@ window.addEventListener('beforeinstallprompt', e => {
   }
 });
 
-// Register service worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/Holliday-Lawn-Garden/service-worker.js')
-      .then(registration => {
-        console.log('✅ Service Worker registered:', registration.scope);
-
-        // Check for updates
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing;
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // New content is available, show update banner
-              const updateBanner = document.getElementById('updateBanner');
-              if (updateBanner) {
-                updateBanner.style.display = 'block';
-                updateBanner.addEventListener('click', () => {
-                  clearCacheAndReload();
-                });
-              }
-            }
-          });
-        });
-      })
-      .catch(error => {
-        console.error('❌ Service Worker registration failed:', error);
-      });
-  });
-}
-
 // Initialize Firebase
 function initializeFirebaseDB() {
   return new Promise((resolve, reject) => {
