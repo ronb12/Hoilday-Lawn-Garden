@@ -1,19 +1,18 @@
 const CACHE_VERSION = 'v7';
 const CACHE_NAME = `holliday-cache-${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/about.html',
-  '/services.html',
-  '/education.html',
-  '/faq.html',
-  '/contact.html',
-  '/assets/css/main.css',
-  '/assets/js/main.js',
-  '/assets/js/service-cache.js',
-  '/assets/images/hollidays-logo.optimized-1280.png',
-  '/assets/images/favicon/favicon-32x32.png',
-  '/assets/images/favicon/favicon-16x16.png',
+  'index.html',
+  'about.html',
+  'services.html',
+  'education.html',
+  'faq.html',
+  'contact.html',
+  'assets/css/main.css',
+  'assets/js/main.js',
+  'assets/js/service-cache.js',
+  'assets/images/hollidays-logo.optimized-1280.png',
+  'assets/images/favicon/favicon-32x32.png',
+  'assets/images/favicon/favicon-16x16.png',
   // Add other static assets as needed
 ];
 
