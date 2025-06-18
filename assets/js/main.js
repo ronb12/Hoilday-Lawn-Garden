@@ -235,15 +235,10 @@ function renderServiceDetails(service) {
   `;
 }
 
-// Service Worker Registration
+// Register the service worker (only once, on page load)
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', async () => {
-    try {
-      const registration = await navigator.serviceWorker.register('/Holliday-Lawn-Garden/service-worker.js');
-      console.log('ServiceWorker registration successful');
-    } catch (error) {
-      console.error('ServiceWorker registration failed:', error);
-    }
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('service-worker.js');
   });
 }
 
