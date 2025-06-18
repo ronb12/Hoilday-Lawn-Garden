@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Login - Holliday's Lawn & Garden</title>
     <meta name="description" content="Sign in to your Holliday's Lawn & Garden account to access your services, schedule appointments, and manage your account." />
     <meta name="keywords" content="login, customer portal, lawn care login, garden services login" />
@@ -20,7 +23,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/main.css" id="main-css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -40,8 +43,8 @@
     <link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.png" />
     <link rel="manifest" href="manifest.json" />
     <style>
-      /* Login page specific styles with high specificity */
-      body .login-section {
+      /* Login page specific styles with maximum specificity to override main.css */
+      html body .login-section {
         min-height: calc(100vh - 400px) !important;
         display: flex !important;
         align-items: flex-start !important;
@@ -49,8 +52,10 @@
         padding: 3rem 2rem !important;
         background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
         position: relative !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
       }
-      body .login-section::before {
+      html body .login-section::before {
         content: '';
         position: absolute;
         top: 0;
@@ -60,7 +65,7 @@
         background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
         pointer-events: none;
       }
-      body .login-section .login-grid {
+      html body .login-section .login-grid {
         display: grid !important;
         grid-template-columns: minmax(400px, 1fr) minmax(400px, 1fr) !important;
         gap: 4rem !important;
@@ -72,29 +77,68 @@
         z-index: 1 !important;
         justify-items: start !important;
       }
-      body .login-section .login-form-container {
-        background: white;
-        padding: 3rem;
-        border-radius: 16px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      html body .login-section .login-form-container {
+        background: white !important;
+        padding: 3rem !important;
+        border-radius: 16px !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
         width: 100% !important;
         max-width: 500px !important;
         margin: 0 !important;
         text-align: left !important;
         justify-self: start !important;
+        display: block !important;
       }
-      body .login-section .login-form-container h2 {
-        color: #2c5530;
-        margin-bottom: 0.5rem;
-        font-size: 1.75rem;
+      html body .login-section .login-form-container h2 {
+        color: #2c5530 !important;
+        margin-bottom: 0.5rem !important;
+        font-size: 1.75rem !important;
         text-align: left !important;
-        font-weight: 600;
+        font-weight: 600 !important;
       }
-      body .login-section .login-form-container > p {
+      html body .login-section .login-form-container > p {
         text-align: left !important;
-        color: #666;
-        margin-bottom: 2rem;
-        font-size: 1rem;
+        color: #666 !important;
+        margin-bottom: 2rem !important;
+        font-size: 1rem !important;
+      }
+      html body .login-section .login-info {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2rem !important;
+        width: 100% !important;
+        max-width: 500px !important;
+        margin: 0 !important;
+        justify-self: start !important;
+      }
+      html body .hero-section {
+        background: linear-gradient(135deg, #2c5530 0%, #1e3a21 100%) !important;
+        color: white !important;
+        padding: 4rem 2rem !important;
+        text-align: left !important;
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        position: relative !important;
+        z-index: 1 !important;
+      }
+      html body .hero-content {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 0 2rem !important;
+      }
+      html body .hero-content h1 {
+        font-size: 3rem !important;
+        margin-bottom: 1rem !important;
+        font-weight: 600 !important;
+        text-align: left !important;
+      }
+      html body .hero-content p {
+        font-size: 1.2rem !important;
+        opacity: 0.9 !important;
+        max-width: 600px !important;
+        margin: 0 !important;
+        text-align: left !important;
       }
       .login-grid {
         display: grid !important;
@@ -256,15 +300,6 @@
         color: #666;
         font-weight: 400;
       }
-      .login-info {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 2rem !important;
-        width: 100% !important;
-        max-width: 500px !important;
-        margin: 0 !important;
-        justify-self: start !important;
-      }
       .info-card {
         background: white;
         padding: 2.5rem;
@@ -376,17 +411,17 @@
         100% { transform: rotate(360deg); }
       }
       @media (max-width: 1200px) {
-        body .login-section .login-grid {
+        html body .login-section .login-grid {
           grid-template-columns: 1fr !important;
           gap: 3rem !important;
           padding: 0 1rem !important;
           justify-items: center !important;
         }
-        body .login-section .login-form-container {
+        html body .login-section .login-form-container {
           padding: 2.5rem !important;
           justify-self: center !important;
         }
-        body .login-section .login-info {
+        html body .login-section .login-info {
           justify-self: center !important;
         }
         .info-card {
@@ -394,19 +429,19 @@
         }
       }
       @media (max-width: 768px) {
-        body .hero-content h1 {
+        html body .hero-content h1 {
           font-size: 2rem !important;
         }
-        body .hero-content p {
+        html body .hero-content p {
           font-size: 1rem !important;
         }
-        body .login-section {
+        html body .login-section {
           padding: 2rem 1rem !important;
         }
-        body .login-section .login-form-container {
+        html body .login-section .login-form-container {
           padding: 2rem !important;
         }
-        body .login-section .login-form-container h2 {
+        html body .login-section .login-form-container h2 {
           font-size: 1.5rem !important;
         }
         .form-group input {
@@ -418,41 +453,6 @@
         .google-sign-in {
           padding: 0.75rem 1rem !important;
         }
-      }
-      body .login-section .login-info {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 2rem !important;
-        width: 100% !important;
-        max-width: 500px !important;
-        margin: 0 !important;
-      }
-      body .hero-section {
-        background: linear-gradient(135deg, #2c5530 0%, #1e3a21 100%) !important;
-        color: white !important;
-        padding: 4rem 2rem !important;
-        text-align: left !important;
-        display: block !important;
-        width: 100% !important;
-        margin: 0 !important;
-      }
-      body .hero-content {
-        max-width: 1200px !important;
-        margin: 0 auto !important;
-        padding: 0 2rem !important;
-      }
-      body .hero-content h1 {
-        font-size: 3rem !important;
-        margin-bottom: 1rem !important;
-        font-weight: 600 !important;
-        text-align: left !important;
-      }
-      body .hero-content p {
-        font-size: 1.2rem !important;
-        opacity: 0.9 !important;
-        max-width: 600px !important;
-        margin: 0 !important;
-        text-align: left !important;
       }
     </style>
   </head>
@@ -812,5 +812,32 @@
       });
     </script>
     <script type="module" src="assets/js/main.min.js" defer></script>
+    <script>
+      // Cache busting script to force reload of updated CSS
+      (function() {
+        // Add timestamp to main.css to force cache refresh
+        const mainCss = document.getElementById('main-css');
+        if (mainCss) {
+          const href = mainCss.href;
+          mainCss.href = href + '?v=' + Date.now();
+        }
+        
+        // Force reload if page was loaded from cache
+        window.addEventListener('pageshow', function(event) {
+          if (event.persisted) {
+            window.location.reload();
+          }
+        });
+        
+        // Additional cache clearing
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            for (let name of names) {
+              caches.delete(name);
+            }
+          });
+        }
+      })();
+    </script>
   </body>
 </html>
