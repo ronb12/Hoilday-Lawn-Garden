@@ -56,6 +56,10 @@
         margin: 0;
         padding: 0;
         background: #f8f9fa;
+        box-sizing: border-box;
+      }
+      *, *:before, *:after {
+        box-sizing: inherit;
       }
       
       /* Login page styles - simplified approach */
@@ -102,13 +106,18 @@
       }
       
       .login-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 500px;
         padding: 3rem 2rem;
         background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        min-height: calc(100vh - 400px);
         margin: 0;
+        width: 100%;
       }
       
       .login-container {
+        width: 100%;
         max-width: 1200px;
         margin: 0 auto;
         display: flex;
