@@ -342,11 +342,18 @@
         const servicesContainer = document.getElementById('services-container');
         const services = getAllServices();
         
-        if (!servicesContainer || !services) return;
+        console.log('Services loaded:', services);
+        
+        if (!servicesContainer || !services) {
+          console.error('Services container or services not found');
+          return;
+        }
         
         servicesContainer.innerHTML = '';
         
         Object.values(services).forEach(service => {
+          console.log('Processing service:', service.title, 'with icon:', service.icon);
+          
           const serviceCard = document.createElement('div');
           serviceCard.className = 'service-card';
           serviceCard.id = service.id;

@@ -1,5 +1,5 @@
 // Service Cache Implementation
-const CACHE_VERSION = 'v6';
+const CACHE_VERSION = 'v7';
 const SERVICES_KEY = 'cached-services-' + CACHE_VERSION;
 
 // Service data structure
