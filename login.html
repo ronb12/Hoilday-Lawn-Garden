@@ -448,6 +448,7 @@
         margin-bottom: 2rem;
         border: 1px solid #f5c6cb;
         box-shadow: 0 4px 12px rgba(220, 53, 69, 0.1);
+        animation: slideIn 0.3s ease-out;
       }
       .error-message {
         display: flex;
@@ -467,6 +468,18 @@
         gap: 0.75rem;
         box-shadow: 0 4px 12px rgba(40, 167, 69, 0.1);
         font-weight: 600;
+        animation: slideIn 0.3s ease-out;
+      }
+      
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
       .loading-overlay {
         display: none;
@@ -785,7 +798,7 @@
                   <span id="errorMessage"></span>
                 </div>
               </div>
-              <div class="success-message" id="successMessage" style="display: none">
+              <div class="success-message" id="successMessage">
                 <i class="fas fa-check-circle"></i>
                 <span>Login successful! Redirecting...</span>
               </div>
@@ -946,22 +959,77 @@
       const auth = getAuth(app);
       const db = getFirestore(app);
 
+      // Initialize page
+      document.addEventListener('DOMContentLoaded', function() {
+        // Hide success and error messages on page load
+        const successMessage = document.getElementById('successMessage');
+        const errorContainer = document.getElementById('error-container');
+        if (successMessage) {
+          successMessage.style.display = 'none';
+        }
+        if (errorContainer) {
+          errorContainer.style.display = 'none';
+        }
+        
+        // Clear any existing form data
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+          loginForm.reset();
+        }
+        
+        // Clear messages when user starts typing
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        
+        if (emailInput) {
+          emailInput.addEventListener('input', clearMessages);
+        }
+        if (passwordInput) {
+          passwordInput.addEventListener('input', clearMessages);
+        }
+      });
+
+      // Clear error and success messages
+      function clearMessages() {
+        const successMessage = document.getElementById('successMessage');
+        const errorContainer = document.getElementById('error-container');
+        
+        if (successMessage) {
+          successMessage.style.display = 'none';
+        }
+        if (errorContainer) {
+          errorContainer.style.display = 'none';
+        }
+      }
+
       // Show error message
       function showError(message) {
         const errorContainer = document.getElementById('error-container');
         const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        
+        // Hide success message if showing
+        if (successMessage) {
+          successMessage.style.display = 'none';
+        }
+        
         if (errorContainer && errorMessage) {
           errorMessage.textContent = message;
           errorContainer.style.display = 'block';
-          setTimeout(() => {
-            errorContainer.style.display = 'none';
-          }, 5000);
         }
       }
 
       // Show success message
       function showSuccess() {
         const successMessage = document.getElementById('successMessage');
+        const errorContainer = document.getElementById('error-container');
+        
+        // Hide error message if showing
+        if (errorContainer) {
+          errorContainer.style.display = 'none';
+        }
+        
+        // Show success message
         if (successMessage) {
           successMessage.style.display = 'flex';
         }
