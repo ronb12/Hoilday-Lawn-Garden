@@ -10,10 +10,10 @@ const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
 // DOM Elements
-const adminLoginForm = document.getElementById('adminLoginForm');
-const adminEmail = document.getElementById('adminEmail');
-const adminPassword = document.getElementById('adminPassword');
-const rememberMe = document.getElementById('remember');
+const adminLoginForm = document.getElementById('admin-login-form');
+const adminEmail = document.getElementById('admin-email');
+const adminPassword = document.getElementById('admin-password');
+const rememberMe = document.getElementById('remember-me');
 const googleSignIn = document.getElementById('googleSignIn');
 const errorContainer = document.getElementById('error-container');
 const errorMessage = document.getElementById('errorMessage');
