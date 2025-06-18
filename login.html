@@ -563,44 +563,22 @@
         }
       }
       
-      /* Force Desktop Layout - Override any mobile styles */
+      /* Fix for desktop layout: wide columns */
       @media screen and (min-width: 1025px) {
-        body {
-          min-width: 1025px !important;
-        }
         .login-layout {
-          display: grid !important;
           grid-template-columns: 1fr 1fr !important;
           gap: 3rem !important;
-          align-items: start !important;
+          align-items: flex-start !important;
           max-width: 1000px !important;
           margin: 0 auto !important;
         }
-        .login-container {
-          max-width: 1200px !important;
-          margin: 0 auto !important;
-          padding: 0 2rem !important;
-        }
-        .main-header .nav-links {
-          display: flex !important;
-          gap: 1.5rem !important;
-          align-items: center !important;
-          list-style: none !important;
-          margin: 0 !important;
-          padding: 0 !important;
-        }
-        .main-header .hamburger {
-          display: none !important;
-        }
-        .hero-content h1 {
-          font-size: 3.5rem !important;
-        }
-        .hero-content p {
-          font-size: 1.3rem !important;
-        }
         .login-form-container,
         .login-info {
-          padding: 3rem !important;
+          max-width: none !important;
+          min-width: 350px !important;
+          width: 100% !important;
+          padding: 2.5rem 2rem !important;
+          box-sizing: border-box !important;
         }
       }
       
