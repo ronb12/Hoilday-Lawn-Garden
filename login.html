@@ -107,8 +107,22 @@
       
       .login-section { padding: 4rem 0; background: #f8f9fa; }
       .login-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-      .login-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
-      .login-form-container { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+      .login-layout {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 3rem;
+        align-items: start;
+      }
+      .login-form-container {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 100%;
+      }
       .login-info { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
       .login-layout::before, .login-layout::after, .login-section::before, .login-section::after, .login-container::before, .login-container::after {
         display: none !important;
