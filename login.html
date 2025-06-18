@@ -124,7 +124,8 @@
       .login-layout {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 2.5rem;
+        gap: 0 !important;
+        padding: 0 !important;
         align-items: stretch;
         justify-content: center;
         margin: 0 auto;
@@ -140,7 +141,7 @@
         min-width: 400px;
         max-width: 600px;
         width: 100%;
-        margin: 0 auto;
+        margin: 2.5rem 1.25rem !important;
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -150,7 +151,7 @@
         border: none !important;
         background-clip: padding-box !important;
       }
-      .login-form-container { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+      .login-form-container { background: #fff !important; padding: 2.5rem !important; border-radius: 12px !important; box-shadow: none !important; }
       .login-form-container h2 { color: #2c5530; margin-bottom: 1rem; font-size: 2rem; }
       .login-form-container > p { color: #666; margin-bottom: 2rem; font-size: 1.1rem; }
       .login-form .form-group { margin-bottom: 1.5rem; }
@@ -159,7 +160,7 @@
       .login-form input:focus { outline: none; border-color: #2c5530; box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1); }
       .btn-primary { background: #2c5530; color: white; padding: 1rem 2rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s; }
       .btn-primary:hover { background: #1e3a21; }
-      .login-info { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+      .login-info { background: #fff !important; padding: 2rem !important; border-radius: 12px !important; box-shadow: none !important; }
       .login-info h3 { color: #2c5530; margin-bottom: 1.5rem; font-size: 1.5rem; }
       .info-content p { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; color: #333; font-size: 0.95rem; line-height: 1.5; }
       .info-content i { color: #2c5530; width: 20px; font-size: 1rem; }
