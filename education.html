@@ -6,6 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="refresh" content="1;url=education.html?refresh=true" />
     <meta
       name="description"
       content="Comprehensive landscaping and lawn care education resources. Learn seasonal care, mowing techniques, watering practices, landscape design, garden maintenance, and tree care."
@@ -39,7 +40,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/main.css?v=2024-01-15" />
     <link
       rel="icon"
       type="image/png"
@@ -292,9 +293,9 @@
         </div>
       </div>
     </footer>
-    <script type="module" src="assets/js/firebase-config.js"></script>
-    <script type="module" src="assets/js/main.js"></script>
-    <script type="module" src="assets/js/main.min.js" defer></script>
+    <script type="module" src="assets/js/firebase-config.js?v=2024-01-15"></script>
+    <script type="module" src="assets/js/main.js?v=2024-01-15"></script>
+    <script type="module" src="assets/js/main.min.js?v=2024-01-15" defer></script>
     <script>
       // Force cache refresh for education page
       if ('serviceWorker' in navigator) {
@@ -320,6 +321,14 @@
           window.location.reload();
         }
       });
+      
+      // Add timestamp to force fresh load
+      const timestamp = new Date().getTime();
+      const currentUrl = window.location.href;
+      if (!currentUrl.includes('timestamp=')) {
+        const separator = currentUrl.includes('?') ? '&' : '?';
+        window.location.href = currentUrl + separator + 'timestamp=' + timestamp;
+      }
       
       document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>

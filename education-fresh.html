@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to Education Page</title>
+    <meta http-equiv="refresh" content="0;url=education.html?fresh=true&timestamp=<?php echo time(); ?>">
+    <script>
+        // Force redirect with cache busting
+        const timestamp = new Date().getTime();
+        window.location.href = 'education.html?fresh=true&timestamp=' + timestamp;
+    </script>
+</head>
+<body>
+    <p>Redirecting to fresh education page...</p>
+    <script>
+        // Fallback redirect
+        setTimeout(function() {
+            const timestamp = new Date().getTime();
+            window.location.href = 'education.html?fresh=true&timestamp=' + timestamp;
+        }, 100);
+    </script>
+</body>
+</html> 
