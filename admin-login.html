@@ -150,8 +150,10 @@
                             <input type="password" id="admin-password" name="admin-password" required autocomplete="current-password" placeholder="Enter your password" />
                         </div>
                         <div class="remember-me">
-                            <input type="checkbox" id="remember-me" name="remember-me" />
-                            <label for="remember-me">Remember me</label>
+                            <label for="remember-me" style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; margin: 0;">
+                                <input type="checkbox" id="remember-me" name="remember-me" style="margin: 0;" />
+                                Remember me
+                            </label>
                         </div>
                         <button type="submit" class="btn btn-primary" id="adminSubmitBtn">Login to Admin Panel</button>
                     </form>
