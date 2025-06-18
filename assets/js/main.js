@@ -284,3 +284,12 @@ function clearCacheAndReload() {
     window.location.reload(true);
   }
 }
+
+// Listen for service worker messages to reload the page
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('message', event => {
+    if (event.data && event.data.type === 'RELOAD_PAGE') {
+      window.location.reload(true); // Force reload from the server
+    }
+  });
+}
