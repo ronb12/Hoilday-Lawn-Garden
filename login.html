@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
@@ -563,6 +563,47 @@
         }
       }
       
+      /* Force Desktop Layout - Override any mobile styles */
+      @media screen and (min-width: 1025px) {
+        body {
+          min-width: 1025px !important;
+        }
+        .login-layout {
+          display: grid !important;
+          grid-template-columns: 1fr 1fr !important;
+          gap: 3rem !important;
+          align-items: start !important;
+          max-width: 1000px !important;
+          margin: 0 auto !important;
+        }
+        .login-container {
+          max-width: 1200px !important;
+          margin: 0 auto !important;
+          padding: 0 2rem !important;
+        }
+        .main-header .nav-links {
+          display: flex !important;
+          gap: 1.5rem !important;
+          align-items: center !important;
+          list-style: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        .main-header .hamburger {
+          display: none !important;
+        }
+        .hero-content h1 {
+          font-size: 3.5rem !important;
+        }
+        .hero-content p {
+          font-size: 1.3rem !important;
+        }
+        .login-form-container,
+        .login-info {
+          padding: 3rem !important;
+        }
+      }
+      
       /* Header Override Styles */
       .main-header {
         position: fixed !important;
@@ -961,6 +1002,35 @@
 
       // Initialize page
       document.addEventListener('DOMContentLoaded', function() {
+        // Force desktop layout if screen is wide enough
+        function checkViewport() {
+          const isDesktop = window.innerWidth >= 1025;
+          const loginLayout = document.querySelector('.login-layout');
+          const navLinks = document.querySelector('.main-header .nav-links');
+          const hamburger = document.querySelector('.main-header .hamburger');
+          
+          if (isDesktop && loginLayout) {
+            loginLayout.style.display = 'grid';
+            loginLayout.style.gridTemplateColumns = '1fr 1fr';
+            loginLayout.style.gap = '3rem';
+            loginLayout.style.alignItems = 'start';
+            loginLayout.style.maxWidth = '1000px';
+            loginLayout.style.margin = '0 auto';
+          }
+          
+          if (isDesktop && navLinks) {
+            navLinks.style.display = 'flex';
+          }
+          
+          if (isDesktop && hamburger) {
+            hamburger.style.display = 'none';
+          }
+        }
+        
+        // Check viewport on load and resize
+        checkViewport();
+        window.addEventListener('resize', checkViewport);
+        
         // Hide success and error messages on page load
         const successMessage = document.getElementById('successMessage');
         const errorContainer = document.getElementById('error-container');
