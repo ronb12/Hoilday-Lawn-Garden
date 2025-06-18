@@ -105,242 +105,27 @@
         margin: 0 auto;
       }
       
-      .login-section {
-        padding: 3rem 2rem;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        min-height: calc(100vh - 400px);
-        margin: 0;
-        width: 100%;
-      }
-      
-      .login-container {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        gap: 4rem;
-        align-items: flex-start;
-        justify-content: center;
-        padding: 0 1rem;
-        overflow-x: auto;
-      }
-      
-      .login-form-container, .login-info {
-        min-width: 0;
-        flex: 1 1 0;
-      }
-      
-      .login-form-container {
-        background: white;
-        padding: 3rem;
-        border-radius: 16px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        width: 100%;
-        max-width: 500px;
-      }
-      
-      .login-form-container h2 {
-        color: #2c5530;
-        margin-bottom: 0.5rem;
-        font-size: 1.75rem;
-        font-weight: 600;
-      }
-      
-      .login-form-container > p {
-        color: #666;
-        margin-bottom: 2rem;
-        font-size: 1rem;
-      }
-      
-      .login-info {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        width: 100%;
-        max-width: 500px;
-      }
-      
-      .info-card {
-        background: white;
-        padding: 2.5rem;
-        border-radius: 16px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      }
-      
-      .info-card h3 {
-        color: #2c5530;
-        margin-bottom: 1.5rem;
-        font-size: 1.5rem;
-        font-weight: 600;
-      }
-      
-      .form-group {
-        margin-bottom: 1.5rem;
-      }
-      .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: 600;
-        color: #333;
-        font-size: 0.95rem;
-      }
-      .form-group input {
-        width: 100%;
-        padding: 0.875rem;
-        border: 2px solid #e1e5e9;
-        border-radius: 8px;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        box-sizing: border-box;
-      }
-      .form-group input:focus {
-        outline: none;
-        border-color: #2c5530;
-        box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
-      }
-      .form-group input::placeholder {
-        color: #999;
-        font-size: 0.95rem;
-      }
-      .btn-primary {
-        width: 100%;
-        background: #2c5530;
-        color: white;
-        padding: 0.875rem;
-        border: none;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-top: 0.5rem;
-      }
-      .btn-primary:hover {
-        background: #1e3a21;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(44, 85, 48, 0.3);
-      }
-      .btn-primary:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-        transform: none;
-        box-shadow: none;
-      }
-      .social-login {
-        text-align: center;
-        margin: 2rem 0 1.5rem 0;
-      }
-      .social-login p {
-        margin: 1rem 0;
-        color: #666;
-        position: relative;
-        font-size: 0.9rem;
-        font-weight: 500;
-      }
-      .social-login p::before,
-      .social-login p::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        width: 45%;
-        height: 1px;
-        background: #e1e5e9;
-      }
-      .social-login p::before {
-        left: 0;
-      }
-      .social-login p::after {
-        right: 0;
-      }
-      .google-sign-in {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem;
-        width: 100%;
-        padding: 0.875rem 1.5rem;
-        background: white;
-        border: 2px solid #e1e5e9;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: 500;
-        color: #333;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-sizing: border-box;
-      }
-      .google-sign-in:hover {
-        background: #f8f9fa;
-        border-color: #2c5530;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-      .google-sign-in img {
-        width: 18px;
-        height: 18px;
-      }
-      .login-links {
-        text-align: center;
-        margin-top: 1.5rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid #e1e5e9;
-      }
-      .login-links a {
-        color: #2c5530;
-        text-decoration: none;
-        margin: 0 0.5rem;
-        font-weight: 500;
-        transition: color 0.3s ease;
-      }
-      .login-links a:hover {
-        text-decoration: underline;
-        color: #1e3a21;
-      }
-      .separator {
-        color: #666;
-        font-weight: 400;
-      }
-      .info-content p {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 1rem;
-        color: #333;
-        font-size: 0.95rem;
-        line-height: 1.5;
-      }
-      .info-content i {
-        color: #2c5530;
-        width: 20px;
-        font-size: 1rem;
-      }
-      .contact-info {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-      .contact-item {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 0.95rem;
-        line-height: 1.5;
-      }
-      .contact-item i {
-        color: #2c5530;
-        width: 20px;
-        font-size: 1rem;
-      }
-      .contact-item a {
-        color: #2c5530;
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.3s ease;
-      }
-      .contact-item a:hover {
-        text-decoration: underline;
-        color: #1e3a21;
-      }
+      .login-section { padding: 4rem 0; background: #f8f9fa; }
+      .login-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+      .login-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
+      .login-form-container { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+      .login-form-container h2 { color: #2c5530; margin-bottom: 1rem; font-size: 2rem; }
+      .login-form-container > p { color: #666; margin-bottom: 2rem; font-size: 1.1rem; }
+      .login-form .form-group { margin-bottom: 1.5rem; }
+      .login-form label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333; }
+      .login-form input { width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; }
+      .login-form input:focus { outline: none; border-color: #2c5530; box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1); }
+      .btn-primary { background: #2c5530; color: white; padding: 1rem 2rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s; }
+      .btn-primary:hover { background: #1e3a21; }
+      .login-info { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+      .login-info h3 { color: #2c5530; margin-bottom: 1.5rem; font-size: 1.5rem; }
+      .info-content p { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; color: #333; font-size: 0.95rem; line-height: 1.5; }
+      .info-content i { color: #2c5530; width: 20px; font-size: 1rem; }
+      .contact-info { display: flex; flex-direction: column; gap: 1rem; }
+      .contact-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.95rem; line-height: 1.5; }
+      .contact-item i { color: #2c5530; width: 20px; font-size: 1rem; }
+      .contact-item a { color: #2c5530; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+      .contact-item a:hover { text-decoration: underline; color: #1e3a21; }
       .error-container {
         display: none;
         background: #f8d7da;
@@ -398,14 +183,8 @@
         100% { transform: rotate(360deg); }
       }
       @media (max-width: 900px) {
-        .login-container {
-          flex-direction: column;
-          gap: 2rem;
-          align-items: center;
-        }
-        .login-form-container, .login-info {
-          max-width: 100%;
-        }
+        .login-layout { grid-template-columns: 1fr; gap: 2rem; }
+        .login-form-container, .login-info { padding: 1.5rem; }
       }
     </style>
   </head>
@@ -464,57 +243,57 @@
       </section>
       <section class="login-section">
         <div class="login-container">
-          <div class="login-form-container">
-            <h2>Sign In to Your Account</h2>
-            <p>Enter your credentials to access your lawn care services</p>
-            <div class="error-container" id="error-container">
-              <div class="error-message">
-                <i class="fas fa-exclamation-circle"></i>
-                <span id="errorMessage"></span>
+          <div class="login-layout">
+            <div class="login-form-container">
+              <h2>Sign In to Your Account</h2>
+              <p>Enter your credentials to access your lawn care services</p>
+              <div class="error-container" id="error-container">
+                <div class="error-message">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <span id="errorMessage"></span>
+                </div>
+              </div>
+              <div class="success-message" id="successMessage" style="display: none">
+                <i class="fas fa-check-circle"></i>
+                <span>Login successful! Redirecting...</span>
+              </div>
+              <form id="login-form" class="login-form">
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" name="email" required autocomplete="email" placeholder="Enter your email" />
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    autocomplete="current-password"
+                    placeholder="Enter your password"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary" id="submitBtn">Sign In</button>
+              </form>
+              <div class="social-login">
+                <p>or</p>
+                <button id="googleSignIn" class="google-sign-in">
+                  <img
+                    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                    alt="Google logo"
+                    width="18"
+                    height="18"
+                  />
+                  Sign in with Google
+                </button>
+              </div>
+              <div class="login-links">
+                <a href="forgot-password.html">Forgot Password?</a>
+                <span class="separator">|</span>
+                <a href="register.html">Create Account</a>
               </div>
             </div>
-            <div class="success-message" id="successMessage" style="display: none">
-              <i class="fas fa-check-circle"></i>
-              <span>Login successful! Redirecting...</span>
-            </div>
-            <form id="login-form" class="login-form">
-              <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required autocomplete="email" placeholder="Enter your email" />
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  required
-                  autocomplete="current-password"
-                  placeholder="Enter your password"
-                />
-              </div>
-              <button type="submit" class="btn btn-primary" id="submitBtn">Sign In</button>
-            </form>
-            <div class="social-login">
-              <p>or</p>
-              <button id="googleSignIn" class="google-sign-in">
-                <img
-                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                  alt="Google logo"
-                  width="18"
-                  height="18"
-                />
-                Sign in with Google
-              </button>
-            </div>
-            <div class="login-links">
-              <a href="forgot-password.html">Forgot Password?</a>
-              <span class="separator">|</span>
-              <a href="register.html">Create Account</a>
-            </div>
-          </div>
-          <div class="login-info">
-            <div class="info-card">
+            <div class="login-info">
               <h3>Why Create an Account?</h3>
               <div class="info-content">
                 <p>
@@ -534,9 +313,7 @@
                   Receive service updates and notifications
                 </p>
               </div>
-            </div>
-            <div class="info-card">
-              <h3>Need Help?</h3>
+              <h3 style="margin-top: 2rem;">Need Help?</h3>
               <div class="contact-info">
                 <div class="contact-item">
                   <i class="fas fa-phone"></i>
