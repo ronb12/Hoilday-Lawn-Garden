@@ -78,17 +78,21 @@
         padding: 2.5rem;
         border-radius: 12px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
       }
       .login-form-container h2 {
         color: #2c5530;
         margin-bottom: 0.5rem;
-        font-size: 2rem;
+        font-size: 1.75rem;
         text-align: center;
+        font-weight: 600;
       }
       .login-form-container > p {
         text-align: center;
         color: #666;
         margin-bottom: 2rem;
+        font-size: 1rem;
       }
       .form-group {
         margin-bottom: 1.5rem;
@@ -98,47 +102,60 @@
         margin-bottom: 0.5rem;
         font-weight: 600;
         color: #333;
+        font-size: 0.95rem;
       }
       .form-group input {
         width: 100%;
-        padding: 0.75rem;
+        padding: 0.875rem;
         border: 2px solid #e1e5e9;
         border-radius: 8px;
         font-size: 1rem;
-        transition: border-color 0.3s;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
       }
       .form-group input:focus {
         outline: none;
         border-color: #2c5530;
         box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
       }
+      .form-group input::placeholder {
+        color: #999;
+        font-size: 0.95rem;
+      }
       .btn-primary {
         width: 100%;
         background: #2c5530;
         color: white;
-        padding: 0.75rem;
+        padding: 0.875rem;
         border: none;
         border-radius: 8px;
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
-        transition: background 0.3s;
+        transition: all 0.3s ease;
+        margin-top: 0.5rem;
       }
       .btn-primary:hover {
         background: #1e3a21;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(44, 85, 48, 0.3);
       }
       .btn-primary:disabled {
         background: #ccc;
         cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
       }
       .social-login {
         text-align: center;
-        margin: 1.5rem 0;
+        margin: 2rem 0 1.5rem 0;
       }
       .social-login p {
         margin: 1rem 0;
         color: #666;
         position: relative;
+        font-size: 0.9rem;
+        font-weight: 500;
       }
       .social-login p::before,
       .social-login p::after {
@@ -161,7 +178,7 @@
         justify-content: center;
         gap: 0.75rem;
         width: 100%;
-        padding: 0.75rem 1.5rem;
+        padding: 0.875rem 1.5rem;
         background: white;
         border: 2px solid #e1e5e9;
         border-radius: 8px;
@@ -170,10 +187,13 @@
         color: #333;
         cursor: pointer;
         transition: all 0.3s ease;
+        box-sizing: border-box;
       }
       .google-sign-in:hover {
         background: #f8f9fa;
         border-color: #2c5530;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
       .google-sign-in img {
         width: 18px;
@@ -182,22 +202,30 @@
       .login-links {
         text-align: center;
         margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e1e5e9;
       }
       .login-links a {
         color: #2c5530;
         text-decoration: none;
         margin: 0 0.5rem;
+        font-weight: 500;
+        transition: color 0.3s ease;
       }
       .login-links a:hover {
         text-decoration: underline;
+        color: #1e3a21;
       }
       .separator {
         color: #666;
+        font-weight: 400;
       }
       .login-info {
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        max-width: 500px;
+        width: 100%;
       }
       .info-card {
         background: white;
@@ -209,6 +237,8 @@
         color: #2c5530;
         margin-bottom: 1.5rem;
         font-size: 1.5rem;
+        font-weight: 600;
+        text-align: center;
       }
       .info-content p {
         display: flex;
@@ -216,10 +246,13 @@
         gap: 0.75rem;
         margin-bottom: 1rem;
         color: #333;
+        font-size: 0.95rem;
+        line-height: 1.5;
       }
       .info-content i {
         color: #2c5530;
         width: 20px;
+        font-size: 1rem;
       }
       .contact-info {
         display: flex;
@@ -230,17 +263,23 @@
         display: flex;
         align-items: center;
         gap: 0.75rem;
+        font-size: 0.95rem;
+        line-height: 1.5;
       }
       .contact-item i {
         color: #2c5530;
         width: 20px;
+        font-size: 1rem;
       }
       .contact-item a {
         color: #2c5530;
         text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
       }
       .contact-item a:hover {
         text-decoration: underline;
+        color: #1e3a21;
       }
       .error-container {
         display: none;
@@ -308,12 +347,27 @@
         .login-grid {
           grid-template-columns: 1fr;
           gap: 2rem;
+          padding: 0 1rem;
         }
         .login-form-container {
           padding: 1.5rem;
+          margin: 0 auto;
         }
         .info-card {
           padding: 1.5rem;
+          margin: 0 auto;
+        }
+        .login-form-container h2 {
+          font-size: 1.5rem;
+        }
+        .form-group input {
+          padding: 0.75rem;
+        }
+        .btn-primary {
+          padding: 0.75rem;
+        }
+        .google-sign-in {
+          padding: 0.75rem 1rem;
         }
       }
     </style>
@@ -369,8 +423,8 @@
       <section class="login-section">
         <div class="login-grid">
           <div class="login-form-container">
-            <h2>Welcome Back</h2>
-            <p>Sign in to access your account</p>
+            <h2>Sign In to Your Account</h2>
+            <p>Enter your credentials to access your lawn care services</p>
             <div class="error-container" id="error-container">
               <div class="error-message">
                 <i class="fas fa-exclamation-circle"></i>
@@ -383,8 +437,8 @@
             </div>
             <form id="login-form" class="login-form">
               <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required autocomplete="email" />
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required autocomplete="email" placeholder="Enter your email" />
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
@@ -394,6 +448,7 @@
                   name="password"
                   required
                   autocomplete="current-password"
+                  placeholder="Enter your password"
                 />
               </div>
               <button type="submit" class="btn btn-primary" id="submitBtn">Sign In</button>
