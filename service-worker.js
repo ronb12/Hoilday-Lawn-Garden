@@ -1,10 +1,9 @@
-const CACHE_VERSION = 'v8';
+const CACHE_VERSION = 'v9';
 const CACHE_NAME = `holliday-cache-${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
   'index.html',
   'about.html',
   'services.html',
-  'education.html',
   'faq.html',
   'contact.html',
   'assets/css/main.css',
@@ -46,6 +45,12 @@ self.addEventListener('activate', event => {
 
 // Fetch event
 self.addEventListener('fetch', event => {
+  // Never cache education.html - always fetch from network
+  if (event.request.url.includes('education.html')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+  
   if (event.request.mode === 'navigate') {
     // Network-first for HTML
     event.respondWith(
