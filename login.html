@@ -215,6 +215,34 @@
         .login-layout { grid-template-columns: 1fr; gap: 2rem; }
         .login-form-container, .login-info { padding: 1.5rem; min-width: 0; max-width: 100%; height: auto; }
       }
+      .google-sign-in {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 1.25rem 2rem;
+        background: white;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        margin: 1.5rem 0 1.5rem 0;
+      }
+      .google-sign-in img {
+        width: 28px;
+        height: 28px;
+      }
+      .google-sign-in:hover {
+        background: #f8f9fa;
+        border-color: #2c5530;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
     </style>
   </head>
   <body>
