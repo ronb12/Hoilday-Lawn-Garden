@@ -86,6 +86,66 @@
         border: 1.5px solid #e0e4e8;
         margin: 0;
       }
+      .remember-me label {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        cursor: pointer;
+        margin: 0;
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: #2c5530;
+      }
+      .custom-checkbox {
+        position: relative;
+        width: 22px;
+        height: 22px;
+        display: inline-block;
+      }
+      .custom-checkbox input[type="checkbox"] {
+        opacity: 0;
+        width: 22px;
+        height: 22px;
+        margin: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        cursor: pointer;
+      }
+      .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 22px;
+        width: 22px;
+        background: #fff;
+        border: 2px solid #bfc9be;
+        border-radius: 6px;
+        transition: border-color 0.2s;
+      }
+      .custom-checkbox input[type="checkbox"]:checked ~ .checkmark {
+        border-color: #2c5530;
+        background: #e6f2ea;
+      }
+      .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+      }
+      .custom-checkbox input[type="checkbox"]:checked ~ .checkmark:after {
+        display: block;
+      }
+      .custom-checkbox .checkmark:after {
+        left: 6px;
+        top: 2px;
+        width: 6px;
+        height: 12px;
+        border: solid #2c5530;
+        border-width: 0 3px 3px 0;
+        border-radius: 1px;
+        transform: rotate(45deg);
+        content: '';
+      }
     </style>
 </head>
 <body>
@@ -152,8 +212,11 @@
                             <input type="password" id="admin-password" name="admin-password" required autocomplete="current-password" placeholder="Enter your password" />
                         </div>
                         <div class="remember-me" style="margin-bottom:2rem;">
-                            <label for="remember-me" style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; margin: 0;">
-                                <input type="checkbox" id="remember-me" name="remember-me" style="margin: 0;" />
+                            <label for="remember-me">
+                                <span class="custom-checkbox">
+                                    <input type="checkbox" id="remember-me" name="remember-me" />
+                                    <span class="checkmark"></span>
+                                </span>
                                 Remember me
                             </label>
                         </div>
