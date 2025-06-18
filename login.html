@@ -660,5 +660,24 @@
         });
       }
     </script>
+    <script>
+      // Cache-busting for CSS and JS assets
+      document.addEventListener('DOMContentLoaded', function() {
+        var assets = [
+          document.getElementById('main-css'),
+          ...Array.from(document.querySelectorAll('script[src*="main.min.js"]'))
+        ];
+        assets.forEach(function(asset) {
+          if (asset && asset.src) {
+            var separator = asset.src.includes('?') ? '&' : '?';
+            asset.src = asset.src + separator + 'v=' + Date.now();
+          }
+          if (asset && asset.href) {
+            var separator = asset.href.includes('?') ? '&' : '?';
+            asset.href = asset.href + separator + 'v=' + Date.now();
+          }
+        });
+      });
+    </script>
   </body>
 </html>
