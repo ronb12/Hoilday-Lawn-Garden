@@ -30,14 +30,40 @@
     <link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.png" />
     <link rel="manifest" href="manifest.json" />
     <style>
-      .hero { position: relative !important; display: flex !important; align-items: center !important; justify-content: center !important; min-height: 350px !important; }
+      .hero { position: relative !important; display: flex !important; align-items: center !important; justify-content: center !important; min-height: 300px !important; }
       .hero img { position: absolute !important; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; filter: brightness(0.6); }
       .hero-content { position: relative !important; z-index: 2 !important; color: #fff !important; text-align: center !important; width: 100%; max-width: 700px; margin: 0 auto; opacity: 1 !important; transform: none !important; }
+      .contact-section { padding: 4rem 0; background: #f8f9fa; }
+      .contact-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+      .contact-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
+      .contact-form-container { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+      .contact-form-container h2 { color: #2c5530; margin-bottom: 1rem; font-size: 2rem; }
+      .form-intro { color: #666; margin-bottom: 2rem; font-size: 1.1rem; }
+      .contact-form .form-group { margin-bottom: 1.5rem; }
+      .contact-form label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333; }
+      .contact-form input, .contact-form select, .contact-form textarea { 
+        width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; 
+      }
+      .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { 
+        outline: none; border-color: #2c5530; box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1); 
+      }
+      .contact-form textarea { resize: vertical; min-height: 120px; }
+      .btn-primary { background: #2c5530; color: white; padding: 1rem 2rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s; }
+      .btn-primary:hover { background: #1e3a21; }
+      .contact-info { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+      .contact-info h3 { color: #2c5530; margin-bottom: 1.5rem; font-size: 1.5rem; }
+      .contact-item { display: flex; align-items: center; margin-bottom: 1rem; padding: 0.75rem; background: #f8f9fa; border-radius: 8px; }
+      .contact-item i { color: #2c5530; margin-right: 0.75rem; font-size: 1.2rem; width: 20px; }
+      .contact-item a { color: #333; text-decoration: none; }
+      .contact-item a:hover { color: #2c5530; }
+      .hours-item { display: flex; justify-content: space-between; margin-bottom: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid #e1e5e9; }
+      .hours-item:last-child { border-bottom: none; }
+      .days { font-weight: 600; color: #333; }
+      .time { color: #666; }
       @media (max-width: 900px) {
-        .main-header .nav-links {
-          margin-top: 0 !important;
-          padding-top: 0.5em !important;
-        }
+        .main-header .nav-links { margin-top: 0 !important; padding-top: 0.5em !important; }
+        .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+        .contact-form-container, .contact-info { padding: 1.5rem; }
       }
     </style>
   </head>
@@ -89,95 +115,89 @@
         loading="eager"
       />
       <div class="hero-content">
-        <h1>Contact Us</h1>
+        <h1>Get In Touch</h1>
         <p>
-          We'd love to hear from you. Fill out the form below and we'll get back to you as soon as
-          possible.
+          Ready to transform your outdoor space? Contact us today for a free consultation and quote.
         </p>
       </div>
     </section>
     <section class="contact-section">
-      <div class="container">
-        <div class="contact-grid">
+      <div class="contact-container">
+        <div class="contact-layout">
           <div class="contact-form-container">
-            <h2>Contact Us</h2>
+            <h2>Send Us a Message</h2>
             <p class="form-intro">
-              We'd love to hear from you. Fill out the form below and we'll get back to you as soon
-              as possible.
+              Fill out the form below and we'll get back to you within 24 hours to discuss your landscaping needs.
             </p>
             <form class="contact-form" id="contactForm" action="#" method="POST">
               <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required />
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your full name" />
               </div>
               <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required />
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email address" />
               </div>
               <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="tel" id="phone" name="phone" required />
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number" />
               </div>
               <div class="form-group">
-                <label for="service">Service Interested In</label>
+                <label for="service">Service Interested In *</label>
                 <select id="service" name="service" required>
                   <option value="">Select a service</option>
-                  <option value="lawn-care">Lawn Care</option>
-                  <option value="landscaping">Landscaping</option>
+                  <option value="lawn-care">Lawn Care & Maintenance</option>
+                  <option value="landscaping">Landscaping & Design</option>
                   <option value="pressure-washing">Pressure Washing</option>
                   <option value="commercial">Commercial Services</option>
+                  <option value="consultation">Free Consultation</option>
                   <option value="other">Other</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
+                <label for="message">Project Details *</label>
+                <textarea id="message" name="message" rows="6" required placeholder="Tell us about your project, property size, timeline, and any specific requirements..."></textarea>
               </div>
               <button type="submit" class="btn btn-primary btn-block">
                 <i class="fas fa-paper-plane"></i> Send Message
               </button>
             </form>
           </div>
-          <div class="services-grid">
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="fas fa-user"></i>
-              </div>
-              <h3>Contact Information</h3>
-              <div class="contact-details">
-                <div class="contact-item">
-                  <i class="fas fa-user"></i>
-                  <span>Karl Holliday</span>
-                </div>
-                <div class="contact-item">
-                  <i class="fas fa-phone"></i>
-                  <a href="tel:+15047171887">(504) 717-1887</a>
-                </div>
-                <div class="contact-item">
-                  <i class="fas fa-envelope"></i>
-                  <a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
-                </div>
-              </div>
+          <div class="contact-info">
+            <h3>Contact Information</h3>
+            <div class="contact-item">
+              <i class="fas fa-user"></i>
+              <span>Karl Holliday</span>
             </div>
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="fas fa-clock"></i>
-              </div>
-              <h3>Service Hours</h3>
-              <div class="service-hours">
-                <div class="hours-item">
-                  <span class="days">Monday - Thursday</span>
-                  <span class="time">7:00 AM - 6:00 PM</span>
-                </div>
-                <div class="hours-item">
-                  <span class="days">Saturday</span>
-                  <span class="time">8:00 AM - 4:00 PM</span>
-                </div>
-                <div class="hours-item">
-                  <span class="days">Friday</span>
-                  <span class="time">Closed</span>
-                </div>
-              </div>
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <a href="tel:+15047171887">(504) 717-1887</a>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Serving New Orleans Area</span>
+            </div>
+            
+            <h3 style="margin-top: 2rem;">Service Hours</h3>
+            <div class="hours-item">
+              <span class="days">Monday - Thursday</span>
+              <span class="time">7:00 AM - 6:00 PM</span>
+            </div>
+            <div class="hours-item">
+              <span class="days">Saturday</span>
+              <span class="time">8:00 AM - 4:00 PM</span>
+            </div>
+            <div class="hours-item">
+              <span class="days">Friday</span>
+              <span class="time">Closed</span>
+            </div>
+            <div class="hours-item">
+              <span class="days">Sunday</span>
+              <span class="time">Closed</span>
             </div>
           </div>
         </div>
