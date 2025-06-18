@@ -70,6 +70,7 @@
         justify-content: center !important; 
         min-height: 350px !important; 
         background: linear-gradient(135deg, #2c5530 0%, #1e3a21 100%);
+        margin-top: 80px;
       }
       .hero img { 
         position: absolute !important; 
@@ -230,6 +231,175 @@
       @media (max-width: 900px) {
         .login-info {
           margin-top: 1rem !important;
+        }
+      }
+      
+      /* Header Override Styles */
+      .main-header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        background: #fff !important;
+        padding: 1rem 2rem !important;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+        z-index: 1000 !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+      }
+      
+      .main-header .logo {
+        flex: 0 0 auto !important;
+        max-width: 200px !important;
+        padding: 0.5rem !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+      
+      .main-header .logo a {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+      
+      .main-header .logo picture {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+      
+      .main-header .logo img {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 60px !important;
+        object-fit: contain !important;
+        display: block !important;
+      }
+      
+      .main-header nav {
+        display: flex !important;
+        align-items: center !important;
+      }
+      
+      .main-header .nav-links {
+        display: flex !important;
+        gap: 1.5rem !important;
+        align-items: center !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      
+      .main-header .nav-links li {
+        position: relative !important;
+      }
+      
+      .main-header .nav-links a {
+        color: #333 !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: color 0.3s ease !important;
+        padding: 0.5rem 0 !important;
+      }
+      
+      .main-header .nav-links a:hover {
+        color: #4caf50 !important;
+      }
+      
+      .main-header .nav-links .login-buttons {
+        display: flex !important;
+        gap: 1rem !important;
+        margin-left: 1rem !important;
+      }
+      
+      .main-header .nav-links .btn-login {
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+      }
+      
+      .main-header .nav-links .btn-customer {
+        background-color: #4caf50 !important;
+        color: #fff !important;
+      }
+      
+      .main-header .nav-links .btn-customer:hover {
+        background-color: #45a049 !important;
+        color: #fff !important;
+      }
+      
+      .main-header .nav-links .btn-admin {
+        background-color: #222 !important;
+        color: #fff !important;
+      }
+      
+      .main-header .nav-links .btn-admin:hover {
+        background-color: #111 !important;
+        color: #fff !important;
+      }
+      
+      .main-header .hamburger {
+        display: none !important;
+        background: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        padding: 0 !important;
+        width: 30px !important;
+        height: 24px !important;
+        position: relative !important;
+        z-index: 1000 !important;
+      }
+      
+      .main-header .hamburger span {
+        display: block !important;
+        position: absolute !important;
+        height: 3px !important;
+        width: 100% !important;
+        background: #333 !important;
+        border-radius: 3px !important;
+        opacity: 1 !important;
+        left: 0 !important;
+        transform: rotate(0deg) !important;
+        transition: .25s ease-in-out !important;
+      }
+      
+      .main-header .hamburger span:nth-child(1) {
+        top: 0 !important;
+      }
+      
+      .main-header .hamburger span:nth-child(2) {
+        top: 10px !important;
+      }
+      
+      .main-header .hamburger span:nth-child(3) {
+        top: 20px !important;
+      }
+      
+      @media (max-width: 768px) {
+        .main-header .nav-links {
+          display: none !important;
+        }
+        
+        .main-header .hamburger {
+          display: block !important;
+        }
+        
+        .main-header {
+          padding: 0.75rem 1rem !important;
+        }
+        
+        .main-header .logo {
+          max-width: 150px !important;
+        }
+        
+        .main-header .logo img {
+          max-height: 50px !important;
         }
       }
     </style>
