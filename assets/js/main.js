@@ -6,16 +6,20 @@ import { getAllServices, getServiceById } from './service-cache.js';
 // TEMP: Force unregister all service workers and clear all caches
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then(function(registrations) {
-    for (let registration of registrations) {
+    for(let registration of registrations) {
       registration.unregister();
+      console.log('Unregistered service worker:', registration.scope);
     }
   });
-}
-if (window.caches) {
-  caches.keys().then(function(names) {
-    for (let name of names) {
-      caches.delete(name);
-    }
+  
+  // Clear all caches
+  caches.keys().then(function(cacheNames) {
+    return Promise.all(
+      cacheNames.map(function(cacheName) {
+        console.log('Deleting cache:', cacheName);
+        return caches.delete(cacheName);
+      })
+    );
   });
 }
 
@@ -238,7 +242,32 @@ function renderServiceDetails(service) {
 // Register the service worker (only once, on page load)
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('service-worker.js');
+    // First, unregister any existing service workers to prevent conflicts
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+      const unregisterPromises = registrations.map(registration => {
+        console.log('Unregistering old service worker:', registration.scope);
+        return registration.unregister();
+      });
+      
+      return Promise.all(unregisterPromises);
+    }).then(() => {
+      // Clear all caches
+      return caches.keys().then(cacheNames => {
+        const deletePromises = cacheNames.map(cacheName => {
+          console.log('Deleting old cache:', cacheName);
+          return caches.delete(cacheName);
+        });
+        return Promise.all(deletePromises);
+      });
+    }).then(() => {
+      // Now register the new service worker
+      console.log('Registering new service worker...');
+      return navigator.serviceWorker.register('service-worker.js');
+    }).then(registration => {
+      console.log('Service Worker registered successfully:', registration.scope);
+    }).catch(error => {
+      console.error('Service Worker registration failed:', error);
+    });
   });
 }
 

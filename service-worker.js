@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v10';
+const CACHE_VERSION = 'v11';
 const CACHE_NAME = `holliday-cache-${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
   'index.html',
@@ -20,15 +20,23 @@ const ASSETS_TO_CACHE = [
 // Install event - cache assets
 self.addEventListener('install', event => {
   console.log('Service Worker installing...');
+  
+  // Force skip waiting to activate immediately
   self.skipWaiting();
+  
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => 
-      cache.addAll(ASSETS_TO_CACHE).catch(err => {
+    caches.open(CACHE_NAME).then(cache => {
+      console.log('Opened cache:', CACHE_NAME);
+      return cache.addAll(ASSETS_TO_CACHE).catch(err => {
         // Log which asset failed to cache
         console.error('Failed to cache asset during install:', err);
-      })
-    ).catch(err => {
+        // Don't fail the install if some assets can't be cached
+        return Promise.resolve();
+      });
+    }).catch(err => {
       console.error('Service Worker install failed:', err);
+      // Don't fail the install
+      return Promise.resolve();
     })
   );
 });
@@ -36,25 +44,26 @@ self.addEventListener('install', event => {
 // Activate event - clean up old caches
 self.addEventListener('activate', event => {
   console.log('Service Worker activating...');
+  
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
+    caches.keys().then(keys => {
+      console.log('Found caches:', keys);
+      return Promise.all(
         keys.filter(key => key !== CACHE_NAME).map(key => {
           console.log('Deleting old cache:', key);
           return caches.delete(key);
         })
-      )
-    ).then(() => {
+      );
+    }).then(() => {
       console.log('Service Worker activated');
+      // Claim all clients immediately
       return self.clients.claim();
     }).catch(err => {
       console.error('Service Worker activation failed:', err);
+      // Don't fail activation
+      return Promise.resolve();
     })
   );
-  // Notify all clients to reload
-  self.clients.matchAll().then(clients => {
-    clients.forEach(client => client.postMessage({ type: 'RELOAD_PAGE' }));
-  });
 });
 
 // Fetch event
@@ -117,4 +126,9 @@ self.addEventListener('error', event => {
 
 self.addEventListener('unhandledrejection', event => {
   console.error('Service Worker unhandled rejection:', event.reason);
+});
+
+// Handle service worker state changes
+self.addEventListener('statechange', event => {
+  console.log('Service Worker state changed:', event.target.state);
 });
