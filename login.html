@@ -6,6 +6,14 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
+    <!-- Force cache refresh with timestamp -->
+    <script>
+      // Redirect to timestamped URL to force cache refresh
+      if (!window.location.search.includes('v=')) {
+        const separator = window.location.href.includes('?') ? '&' : '?';
+        window.location.href = window.location.href + separator + 'v=' + Date.now();
+      }
+    </script>
     <title>Login - Holliday's Lawn & Garden</title>
     <meta name="description" content="Sign in to your Holliday's Lawn & Garden account to access your services, schedule appointments, and manage your account." />
     <meta name="keywords" content="login, customer portal, lawn care login, garden services login" />
@@ -773,13 +781,14 @@
     </script>
     <script type="module" src="assets/js/main.min.js" defer></script>
     <script>
-      // Cache busting script to force reload of updated CSS
+      // Aggressive cache busting script to force reload of updated content
       (function() {
         // Add timestamp to main.css to force cache refresh
         const mainCss = document.getElementById('main-css');
         if (mainCss) {
           const href = mainCss.href;
-          mainCss.href = href + '?v=' + Date.now();
+          const separator = href.includes('?') ? '&' : '?';
+          mainCss.href = href + separator + 'v=' + Date.now();
         }
         
         // Force reload if page was loaded from cache
@@ -789,13 +798,23 @@
           }
         });
         
-        // Additional cache clearing
+        // Clear all caches aggressively
         if ('caches' in window) {
           caches.keys().then(function(names) {
             for (let name of names) {
               caches.delete(name);
             }
           });
+        }
+        
+        // Clear localStorage and sessionStorage
+        localStorage.clear();
+        sessionStorage.clear();
+        
+        // Force reload if URL doesn't have timestamp
+        if (!window.location.search.includes('v=')) {
+          const separator = window.location.href.includes('?') ? '&' : '?';
+          window.location.href = window.location.href + separator + 'v=' + Date.now();
         }
       })();
     </script>
