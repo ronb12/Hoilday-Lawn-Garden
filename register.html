@@ -178,15 +178,32 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="services.html">Services</a></li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="faq.html">FAQ</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-          <li><a href="education.html">Education</a></li>
-          <li class="auth-not-required"><a href="login.html">Login</a></li>
-          <li class="auth-required" style="display: none;"><a href="customer-dashboard.html">Dashboard</a></li>
-          <li id="adminLink" style="display: none;"><a href="admin-login.html">Admin</a></li>
+          <li class="login-buttons">
+            <a href="login.html" class="btn-login btn-customer">
+              <i class="fas fa-user"></i>
+              Customer Login
+            </a>
+            <a href="admin-login.html" class="btn-login btn-admin">
+              <i class="fas fa-lock"></i>
+              Admin Login
+            </a>
+          </li>
         </ul>
       </nav>
     </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <img src="assets/images/hero-garden-landscaping.jpg" alt="Beautiful garden landscaping" loading="eager" />
+      <div class="hero-content">
+        <h1>Join Our Community</h1>
+        <p>Create your account to access our lawn care services and manage your account</p>
+      </div>
+    </section>
 
     <!-- Main Content -->
     <main id="main-content" class="register-section">
@@ -383,10 +400,18 @@
         </div>
         
         <div class="footer-copyright">
-          <p>&copy; <span id="current-year"></span> Holliday Lawn & Garden. All rights reserved.</p>
+          <p>&copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
         </div>
       </div>
     </footer>
+
+    <script>
+      // Set current year in footer
+      document.addEventListener('DOMContentLoaded', function() {
+        var yearSpan = document.getElementById('current-year');
+        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+      });
+    </script>
 
     <!-- Service Worker Registration -->
     <script type="module">
