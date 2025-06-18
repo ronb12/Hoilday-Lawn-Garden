@@ -224,11 +224,12 @@
             id="accountNumber" 
             name="accountNumber" 
             required 
-            placeholder="Enter your account number"
-            pattern="[A-Za-z0-9]+"
-            minlength="6"
+            placeholder="e.g., HLG1234"
+            pattern="HLG[0-9]{4}"
+            minlength="7"
+            maxlength="7"
           />
-          <div class="error-message" id="accountError">Please enter a valid account number (minimum 6 characters)</div>
+          <div class="error-message" id="accountError">Please enter a valid account number (format: HLG followed by 4 digits)</div>
         </div>
         
         <div class="form-group">
@@ -281,7 +282,9 @@
         // Form validation
         function validateAccount() {
           const value = accountInput.value.trim();
-          if (value.length < 6) {
+          const hlgPattern = /^HLG[0-9]{4}$/;
+          
+          if (value.length !== 7 || !hlgPattern.test(value)) {
             accountInput.classList.add('error');
             accountError.classList.add('show');
             return false;
