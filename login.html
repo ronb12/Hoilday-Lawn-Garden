@@ -105,22 +105,36 @@
         margin: 0 auto;
       }
       
-      .login-section { padding: 4rem 0; background: #f8f9fa; }
-      .login-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+      .login-section {
+        padding: 4rem 0;
+        background: #f8f9fa;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+      }
+      .login-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        width: 100%;
+      }
       .login-layout {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-        align-items: start;
+        gap: 2.5rem;
+        align-items: stretch;
         justify-content: center;
-        background: none;
-        box-shadow: none;
+        margin: 0 auto;
       }
       .login-form-container, .login-info {
         min-width: 400px;
         max-width: 600px;
         width: 100%;
         margin: 0 auto;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
       }
       .login-form-container { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
       .login-form-container h2 { color: #2c5530; margin-bottom: 1rem; font-size: 2rem; }
@@ -197,8 +211,9 @@
         100% { transform: rotate(360deg); }
       }
       @media (max-width: 900px) {
+        .login-section { padding: 2rem 0; min-height: unset; display: block; }
         .login-layout { grid-template-columns: 1fr; gap: 2rem; }
-        .login-form-container, .login-info { padding: 1.5rem; min-width: 0; max-width: 100%; }
+        .login-form-container, .login-info { padding: 1.5rem; min-width: 0; max-width: 100%; height: auto; }
       }
     </style>
   </head>
