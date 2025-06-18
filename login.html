@@ -107,7 +107,19 @@
       
       .login-section { padding: 4rem 0; background: #f8f9fa; }
       .login-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-      .login-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
+      .login-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: start;
+        justify-content: center;
+      }
+      .login-form-container, .login-info {
+        min-width: 320px;
+        max-width: 500px;
+        width: 100%;
+        margin: 0 auto;
+      }
       .login-form-container { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
       .login-form-container h2 { color: #2c5530; margin-bottom: 1rem; font-size: 2rem; }
       .login-form-container > p { color: #666; margin-bottom: 2rem; font-size: 1.1rem; }
@@ -184,7 +196,7 @@
       }
       @media (max-width: 900px) {
         .login-layout { grid-template-columns: 1fr; gap: 2rem; }
-        .login-form-container, .login-info { padding: 1.5rem; }
+        .login-form-container, .login-info { padding: 1.5rem; min-width: 0; max-width: 100%; }
       }
     </style>
   </head>
