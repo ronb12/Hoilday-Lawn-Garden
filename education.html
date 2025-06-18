@@ -3,87 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landscaping & Lawn Care Education - Holliday's Lawn & Garden</title>
+    <title>Lawn Care Education & Tips - Holliday's Lawn & Garden</title>
     <link rel="stylesheet" href="assets/css/main.css?v=2024-01-15">
     <style>
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem auto;
+        .education-content {
             max-width: 1200px;
+            margin: 0 auto;
             padding: 0 1rem;
         }
-        .service-card {
+        .education-section {
             background: white;
             border-radius: 12px;
             padding: 2rem;
+            margin: 2rem 0;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
             border: 1px solid #e0e0e0;
         }
-        .service-card:hover {
-            transform: translateY(-5px);
-        }
-        .service-emoji {
+        .education-section h2 {
+            color: #2c5530;
             font-size: 2rem;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        .service-card h3 {
-            color: #333;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        .service-card p {
-            color: #666;
-            line-height: 1.6;
             margin-bottom: 1.5rem;
+            border-bottom: 3px solid #4caf50;
+            padding-bottom: 0.5rem;
         }
-        .service-card ul {
+        .education-section h3 {
+            color: #333;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+        .tip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .tip-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid #4caf50;
+        }
+        .tip-card h4 {
+            color: #2c5530;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .tip-card p {
+            color: #555;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .seasonal-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .season {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .season h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.2rem;
+        }
+        .season ul {
             list-style: none;
             padding: 0;
-            margin-bottom: 2rem;
+            margin: 0;
+            text-align: left;
         }
-        .service-card li {
-            padding: 0.5rem 0;
-            color: #555;
-            position: relative;
-            padding-left: 1.5rem;
+        .season li {
+            padding: 0.3rem 0;
+            font-size: 0.9rem;
         }
-        .service-card li:before {
+        .season li:before {
             content: "✓";
-            position: absolute;
-            left: 0;
-            color: #4caf50;
+            margin-right: 0.5rem;
             font-weight: bold;
         }
-        .btn {
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .warning-box h4 {
+            color: #856404;
+            margin: 0 0 0.5rem 0;
+        }
+        .warning-box p {
+            color: #856404;
+            margin: 0;
+        }
+        .success-box {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .success-box h4 {
+            color: #155724;
+            margin: 0 0 0.5rem 0;
+        }
+        .success-box p {
+            color: #155724;
+            margin: 0;
+        }
+        .frequency-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .frequency-table th,
+        .frequency-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .frequency-table th {
             background: #4caf50;
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            text-decoration: none;
-            display: inline-block;
-            transition: background 0.3s ease;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
         }
-        .btn:hover {
-            background: #45a049;
+        .frequency-table tr:nth-child(even) {
+            background: #f2f2f2;
         }
         main {
             padding: 2rem 0;
-            text-align: center;
         }
         main h1 {
-            color: #333;
+            text-align: center;
+            color: #2c5530;
             font-size: 2.5rem;
             margin-bottom: 1rem;
         }
         main > p {
+            text-align: center;
             color: #666;
             font-size: 1.2rem;
             margin-bottom: 3rem;
@@ -92,9 +152,15 @@
             margin-right: auto;
         }
         @media (max-width: 768px) {
-            .services-grid {
+            .education-section {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            .tip-grid {
                 grid-template-columns: 1fr;
-                padding: 0 0.5rem;
+            }
+            .seasonal-tips {
+                grid-template-columns: 1fr;
             }
             main h1 {
                 font-size: 2rem;
@@ -123,92 +189,303 @@
     </header>
 
     <main>
-        <h1>Landscaping & Lawn Care Education</h1>
-        <p>Comprehensive landscaping and lawn care education resources. Learn seasonal care, mowing techniques, watering practices, landscape design, garden maintenance, and tree care.</p>
+        <h1>Lawn Care Education & Tips</h1>
+        <p>Expert advice and practical tips to help you maintain a healthy, beautiful lawn year-round.</p>
         
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-emoji">🌱</div>
-                <h3>Seasonal Lawn Care</h3>
-                <p>Understanding the different needs of your lawn throughout the year is crucial for maintaining its health and appearance.</p>
-                <ul>
-                    <li>Spring lawn preparation and maintenance</li>
-                    <li>Summer watering and mowing tips</li>
-                    <li>Fall cleanup and winter preparation</li>
-                    <li>Seasonal fertilization schedule</li>
-                    <li>Dormant season care strategies</li>
-                </ul>
-                <a href="contact.html" class="btn">Get Expert Advice</a>
+        <div class="education-content">
+            <!-- Seasonal Lawn Care -->
+            <div class="education-section">
+                <h2>🌱 Seasonal Lawn Care Guide</h2>
+                <p>Your lawn has different needs throughout the year. Follow this seasonal guide to keep your grass healthy and vibrant.</p>
+                
+                <div class="seasonal-tips">
+                    <div class="season">
+                        <h4>Spring (March - May)</h4>
+                        <ul>
+                            <li>Rake up winter debris</li>
+                            <li>Apply pre-emergent weed control</li>
+                            <li>Start mowing when grass reaches 3 inches</li>
+                            <li>Fertilize with slow-release formula</li>
+                            <li>Check irrigation system</li>
+                        </ul>
+                    </div>
+                    <div class="season">
+                        <h4>Summer (June - August)</h4>
+                        <ul>
+                            <li>Water deeply but infrequently</li>
+                            <li>Mow at higher setting (3-4 inches)</li>
+                            <li>Apply summer fertilizer</li>
+                            <li>Watch for pests and diseases</li>
+                            <li>Avoid mowing during drought</li>
+                        </ul>
+                    </div>
+                    <div class="season">
+                        <h4>Fall (September - November)</h4>
+                        <ul>
+                            <li>Continue mowing until growth stops</li>
+                            <li>Apply fall fertilizer</li>
+                            <li>Rake leaves regularly</li>
+                            <li>Overseed thin areas</li>
+                            <li>Winterize irrigation system</li>
+                        </ul>
+                    </div>
+                    <div class="season">
+                        <h4>Winter (December - February)</h4>
+                        <ul>
+                            <li>Keep off frozen grass</li>
+                            <li>Remove heavy snow carefully</li>
+                            <li>Plan spring maintenance</li>
+                            <li>Service lawn equipment</li>
+                            <li>Monitor for winter damage</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            
-            <div class="service-card">
-                <div class="service-emoji">✂️</div>
-                <h3>Proper Mowing Techniques</h3>
-                <p>Learn the correct way to mow your lawn for optimal health and appearance.</p>
-                <ul>
-                    <li>Recommended mowing heights by grass type</li>
-                    <li>Mowing frequency guidelines</li>
-                    <li>Proper mower maintenance</li>
-                    <li>Safety tips and best practices</li>
-                    <li>Pattern mowing for professional results</li>
-                </ul>
-                <a href="contact.html" class="btn">Learn More</a>
+
+            <!-- Mowing Best Practices -->
+            <div class="education-section">
+                <h2>✂️ Mowing Best Practices</h2>
+                <p>Proper mowing is crucial for lawn health. Follow these guidelines for professional results.</p>
+                
+                <div class="tip-grid">
+                    <div class="tip-card">
+                        <h4>Mowing Height</h4>
+                        <p>Keep grass at 3-4 inches tall. Taller grass develops deeper roots and shades out weeds.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>One-Third Rule</h4>
+                        <p>Never remove more than one-third of the grass blade length in a single mowing.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Sharp Blades</h4>
+                        <p>Sharp mower blades create clean cuts that heal quickly and prevent disease.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Mowing Pattern</h4>
+                        <p>Change your mowing direction each time to prevent grass from leaning in one direction.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Dry Grass</h4>
+                        <p>Mow when grass is dry to prevent clumping and ensure even cutting.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Leave Clippings</h4>
+                        <p>Leave grass clippings on the lawn - they provide natural fertilizer and don't cause thatch.</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Common Mowing Mistakes</h4>
+                    <p>• Mowing too short (scalping)<br>
+                    • Mowing wet grass<br>
+                    • Using dull blades<br>
+                    • Mowing too infrequently</p>
+                </div>
             </div>
-            
-            <div class="service-card">
-                <div class="service-emoji">💧</div>
-                <h3>Watering Best Practices</h3>
-                <p>Proper watering is essential for a healthy lawn. Learn when and how to water effectively.</p>
-                <ul>
-                    <li>Optimal watering schedules by season</li>
-                    <li>Water conservation tips</li>
-                    <li>Signs of over/under watering</li>
-                    <li>Irrigation system maintenance</li>
-                    <li>Smart irrigation technology</li>
-                </ul>
-                <a href="contact.html" class="btn">Get Tips</a>
+
+            <!-- Watering Guidelines -->
+            <div class="education-section">
+                <h2>💧 Watering Guidelines</h2>
+                <p>Proper watering is essential for a healthy lawn. Learn when and how much to water.</p>
+                
+                <div class="tip-grid">
+                    <div class="tip-card">
+                        <h4>Watering Schedule</h4>
+                        <p>Water deeply 2-3 times per week rather than daily light watering. This encourages deep root growth.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Early Morning Watering</h4>
+                        <p>Water between 6-10 AM to minimize evaporation and prevent fungal diseases.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Water Amount</h4>
+                        <p>Apply 1-1.5 inches of water per week, including rainfall. Use a rain gauge to measure.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Signs of Under-Watering</h4>
+                        <p>Grass blades fold, footprints remain visible, and grass turns bluish-gray.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Signs of Over-Watering</h4>
+                        <p>Excessive thatch, fungal growth, and shallow root systems.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Drought Response</h4>
+                        <p>During drought, grass may go dormant. This is normal and it will green up when rain returns.</p>
+                    </div>
+                </div>
+
+                <table class="frequency-table">
+                    <thead>
+                        <tr>
+                            <th>Season</th>
+                            <th>Frequency</th>
+                            <th>Amount</th>
+                            <th>Best Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Spring</td>
+                            <td>2-3 times/week</td>
+                            <td>1 inch</td>
+                            <td>6-10 AM</td>
+                        </tr>
+                        <tr>
+                            <td>Summer</td>
+                            <td>2-3 times/week</td>
+                            <td>1-1.5 inches</td>
+                            <td>6-10 AM</td>
+                        </tr>
+                        <tr>
+                            <td>Fall</td>
+                            <td>1-2 times/week</td>
+                            <td>1 inch</td>
+                            <td>6-10 AM</td>
+                        </tr>
+                        <tr>
+                            <td>Winter</td>
+                            <td>As needed</td>
+                            <td>0.5 inches</td>
+                            <td>Midday</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            
-            <div class="service-card">
-                <div class="service-emoji">🌿</div>
-                <h3>Landscape Design Tips</h3>
-                <p>Create beautiful outdoor spaces with professional landscape design principles.</p>
-                <ul>
-                    <li>Plant selection for your climate</li>
-                    <li>Color coordination and seasonal interest</li>
-                    <li>Hardscaping integration</li>
-                    <li>Focal points and visual hierarchy</li>
-                    <li>Low-maintenance design strategies</li>
-                </ul>
-                <a href="contact.html" class="btn">Design Consultation</a>
+
+            <!-- Fertilization Guide -->
+            <div class="education-section">
+                <h2>🌿 Fertilization Guide</h2>
+                <p>Proper fertilization provides essential nutrients for healthy grass growth and development.</p>
+                
+                <div class="tip-grid">
+                    <div class="tip-card">
+                        <h4>Soil Testing</h4>
+                        <p>Test your soil every 2-3 years to determine nutrient needs and pH levels.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>NPK Ratio</h4>
+                        <p>Look for balanced fertilizers (e.g., 16-4-8) with nitrogen for growth, phosphorus for roots, and potassium for health.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Slow-Release Fertilizer</h4>
+                        <p>Use slow-release formulas that feed grass gradually over 6-8 weeks.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Application Timing</h4>
+                        <p>Fertilize when grass is actively growing, typically spring and fall for cool-season grasses.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Even Application</h4>
+                        <p>Use a spreader and apply fertilizer evenly to prevent burning and uneven growth.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Water After Application</h4>
+                        <p>Water lightly after fertilizing to activate the nutrients and prevent burning.</p>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h4>✅ Fertilization Schedule</h4>
+                    <p><strong>Spring:</strong> Apply when grass starts growing (March-April)<br>
+                    <strong>Summer:</strong> Light application if needed (June)<br>
+                    <strong>Fall:</strong> Most important application (September-October)<br>
+                    <strong>Winter:</strong> No fertilization needed</p>
+                </div>
             </div>
-            
-            <div class="service-card">
-                <div class="service-emoji">🌺</div>
-                <h3>Garden Care & Maintenance</h3>
-                <p>Expert tips for maintaining healthy gardens and flower beds year-round.</p>
-                <ul>
-                    <li>Plant health monitoring</li>
-                    <li>Pruning techniques and timing</li>
-                    <li>Pest and disease management</li>
-                    <li>Soil health and amendments</li>
-                    <li>Seasonal garden tasks</li>
-                </ul>
-                <a href="contact.html" class="btn">Garden Care Tips</a>
+
+            <!-- Weed Control -->
+            <div class="education-section">
+                <h2>🌱 Weed Control Strategies</h2>
+                <p>Prevent and control weeds with these effective strategies for a weed-free lawn.</p>
+                
+                <div class="tip-grid">
+                    <div class="tip-card">
+                        <h4>Pre-Emergent Herbicides</h4>
+                        <p>Apply in early spring before weed seeds germinate to prevent annual weeds.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Post-Emergent Herbicides</h4>
+                        <p>Use selective herbicides to kill existing weeds without harming grass.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Manual Removal</h4>
+                        <p>Pull weeds by hand when soil is moist, ensuring you remove the entire root system.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Healthy Lawn Prevention</h4>
+                        <p>A thick, healthy lawn naturally prevents weeds by crowding them out.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Proper Mowing</h4>
+                        <p>Mowing at the correct height prevents weed seeds from getting sunlight to germinate.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Regular Maintenance</h4>
+                        <p>Address weed problems early before they spread and become difficult to control.</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Weed Control Safety</h4>
+                    <p>• Always read and follow herbicide labels<br>
+                    • Apply on calm days to prevent drift<br>
+                    • Keep children and pets off treated areas<br>
+                    • Store herbicides safely out of reach</p>
+                </div>
             </div>
-            
-            <div class="service-card">
-                <div class="service-emoji">🌳</div>
-                <h3>Tree & Shrub Care</h3>
-                <p>Proper care for trees and shrubs ensures long-term health and beauty.</p>
-                <ul>
-                    <li>Tree planting and establishment</li>
-                    <li>Pruning for health and structure</li>
-                    <li>Disease prevention and treatment</li>
-                    <li>Root care and soil management</li>
-                    <li>Storm damage prevention</li>
-                </ul>
-                <a href="contact.html" class="btn">Tree Care Guide</a>
+
+            <!-- Problem Solving -->
+            <div class="education-section">
+                <h2>🔍 Common Lawn Problems & Solutions</h2>
+                <p>Identify and solve common lawn problems before they become serious issues.</p>
+                
+                <div class="tip-grid">
+                    <div class="tip-card">
+                        <h4>Brown Patches</h4>
+                        <p>Usually caused by drought, disease, or pests. Check soil moisture and look for signs of disease or insect damage.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Thin Grass</h4>
+                        <p>Overseed in fall, improve soil quality, and ensure proper watering and fertilization.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Mushrooms</h4>
+                        <p>Indicate excess moisture. Improve drainage and reduce watering frequency.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Thatch Buildup</h4>
+                        <p>Remove excess thatch with a dethatcher in early spring or fall.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Compacted Soil</h4>
+                        <p>Aerate in spring or fall to improve root growth and water penetration.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Grub Damage</h4>
+                        <p>Apply grub control in late spring or early summer to prevent damage.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Help -->
+            <div class="education-section">
+                <h2>📞 When to Call the Professionals</h2>
+                <p>While many lawn care tasks can be done yourself, some situations require professional expertise.</p>
+                
+                <div class="success-box">
+                    <h4>✅ Call Holliday's Lawn & Garden When:</h4>
+                    <p>• You need a complete lawn renovation<br>
+                    • Severe pest or disease problems persist<br>
+                    • You want professional landscape design<br>
+                    • Large trees need trimming or removal<br>
+                    • You need irrigation system installation<br>
+                    • You prefer regular maintenance service</p>
+                </div>
+                
+                <p style="text-align: center; margin-top: 2rem;">
+                    <a href="contact.html" style="background: #4caf50; color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 6px; display: inline-block;">Contact Us for Professional Help</a>
+                </p>
             </div>
         </div>
     </main>
