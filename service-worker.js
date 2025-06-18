@@ -44,7 +44,7 @@ self.addEventListener('activate', event => {
   });
 });
 
-// Fetch event - cache first, then network
+// Fetch event
 self.addEventListener('fetch', event => {
   if (event.request.mode === 'navigate') {
     // Network-first for HTML
@@ -67,7 +67,7 @@ self.addEventListener('fetch', event => {
   }
 });
 
-// Add message event listener for cache clearing
+// Message event for manual cache clearing
 self.addEventListener('message', event => {
   if (event.data === 'CLEAR_CACHE') {
     caches.keys().then(cacheNames => {
