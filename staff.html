@@ -435,6 +435,114 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Schedule Management Styles */
+        .schedule-container {
+            padding: 1rem;
+        }
+        
+        .schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .schedule-header h3 {
+            margin: 0;
+            color: #2c5530;
+        }
+        
+        .schedule-filters {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .schedule-item {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+        
+        .schedule-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .schedule-item-header {
+            background: #2c5530;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .schedule-item-header h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .shift-time {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .schedule-item-body {
+            padding: 1rem;
+        }
+        
+        .schedule-item-body p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .schedule-item-actions {
+            padding: 1rem;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+        
+        .schedule-item-actions button {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        
+        .schedule-item-actions .btn-edit {
+            background: #2196f3;
+            color: white;
+        }
+        
+        .schedule-item-actions .btn-edit:hover {
+            background: #1976d2;
+        }
+        
+        .schedule-item-actions .btn-delete {
+            background: #f44336;
+            color: white;
+        }
+        
+        .schedule-item-actions .btn-delete:hover {
+            background: #d32f2f;
+        }
     </style>
 </head>
 <body>
@@ -987,12 +1095,283 @@
         function loadScheduleData() {
             const scheduleContent = document.getElementById('scheduleContent');
             scheduleContent.innerHTML = `
-                <div style="text-align: center; padding: 2rem;">
-                    <h3>Staff Schedule</h3>
-                    <p>Schedule management feature coming soon...</p>
-                    <p>This will include shift scheduling, time tracking, and availability management.</p>
+                <div class="schedule-container">
+                    <div class="schedule-header">
+                        <h3>Staff Schedule Management</h3>
+                        <button class="btn-add" onclick="addScheduleShift()" style="background: #4caf50;">
+                            <i class="fas fa-plus"></i>
+                            Add Shift
+                        </button>
+                    </div>
+                    
+                    <div class="schedule-filters">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="scheduleDate">Date</label>
+                                <input type="date" id="scheduleDate" value="${new Date().toISOString().split('T')[0]}">
+                            </div>
+                            <div class="filter-group">
+                                <label for="scheduleStaff">Staff Member</label>
+                                <select id="scheduleStaff">
+                                    <option value="">All Staff</option>
+                                    ${staffData.filter(staff => staff.status === 'active').map(staff => 
+                                        `<option value="${staff.id}">${staff.name}</option>`
+                                    ).join('')}
+                                </select>
+                            </div>
+                            <button class="btn-filter" onclick="loadSchedule()">
+                                <i class="fas fa-search"></i>
+                                View Schedule
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-grid" id="scheduleGrid">
+                        <!-- Schedule will be populated here -->
+                    </div>
                 </div>
             `;
+            
+            loadSchedule();
+        }
+
+        async function loadSchedule() {
+            const scheduleGrid = document.getElementById('scheduleGrid');
+            const selectedDate = document.getElementById('scheduleDate').value;
+            const selectedStaff = document.getElementById('scheduleStaff').value;
+            
+            try {
+                showLoading('Loading schedule...');
+                
+                // Get schedule data from Firebase
+                let scheduleSnapshot;
+                try {
+                    const timeoutPromise = new Promise((_, reject) => {
+                        setTimeout(() => reject(new Error('Request timeout')), 10000);
+                    });
+                    
+                    scheduleSnapshot = await Promise.race([
+                        db.collection('schedule').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Schedule collection not accessible:', error);
+                    scheduleSnapshot = { forEach: () => {} };
+                }
+                
+                const scheduleData = [];
+                scheduleSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    scheduleData.push({
+                        id: doc.id,
+                        ...data
+                    });
+                });
+                
+                // Filter schedule data
+                const filteredSchedule = scheduleData.filter(shift => {
+                    const shiftDate = new Date(shift.date).toISOString().split('T')[0];
+                    const matchesDate = !selectedDate || shiftDate === selectedDate;
+                    const matchesStaff = !selectedStaff || shift.staffId === selectedStaff;
+                    return matchesDate && matchesStaff;
+                });
+                
+                displaySchedule(filteredSchedule);
+                hideLoading();
+                
+            } catch (error) {
+                console.error('Error loading schedule:', error);
+                hideLoading();
+                showError('Failed to load schedule');
+            }
+        }
+
+        function displaySchedule(scheduleData) {
+            const scheduleGrid = document.getElementById('scheduleGrid');
+            
+            if (scheduleData.length === 0) {
+                scheduleGrid.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-calendar" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <h3>No shifts scheduled</h3>
+                        <p>Add shifts to create the schedule</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            scheduleGrid.innerHTML = scheduleData.map(shift => {
+                const staffMember = staffData.find(staff => staff.id === shift.staffId);
+                const staffName = staffMember ? staffMember.name : 'Unknown Staff';
+                
+                return `
+                    <div class="schedule-item">
+                        <div class="schedule-item-header">
+                            <h4>${staffName}</h4>
+                            <span class="shift-time">${shift.startTime} - ${shift.endTime}</span>
+                        </div>
+                        <div class="schedule-item-body">
+                            <p><strong>Date:</strong> ${formatDate(shift.date)}</p>
+                            <p><strong>Role:</strong> ${shift.role || 'General'}</p>
+                            <p><strong>Location:</strong> ${shift.location || 'Main Office'}</p>
+                            ${shift.notes ? `<p><strong>Notes:</strong> ${shift.notes}</p>` : ''}
+                        </div>
+                        <div class="schedule-item-actions">
+                            <button class="btn-edit" onclick="editScheduleShift('${shift.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-delete" onclick="deleteScheduleShift('${shift.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addScheduleShift() {
+            openScheduleShiftModal();
+        }
+
+        function openScheduleShiftModal(shiftId = null) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>${shiftId ? 'Edit Shift' : 'Add New Shift'}</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <form id="scheduleShiftForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="shiftStaff">Staff Member</label>
+                                <select id="shiftStaff" required>
+                                    <option value="">Select Staff Member</option>
+                                    ${staffData.filter(staff => staff.status === 'active').map(staff => 
+                                        `<option value="${staff.id}">${staff.name}</option>`
+                                    ).join('')}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="shiftDate">Date</label>
+                                <input type="date" id="shiftDate" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="shiftStartTime">Start Time</label>
+                                <input type="time" id="shiftStartTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="shiftEndTime">End Time</label>
+                                <input type="time" id="shiftEndTime" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="shiftRole">Role</label>
+                                <input type="text" id="shiftRole" placeholder="e.g., Landscaping, Maintenance">
+                            </div>
+                            <div class="form-group">
+                                <label for="shiftLocation">Location</label>
+                                <input type="text" id="shiftLocation" placeholder="e.g., Main Office, Site A">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shiftNotes">Notes</label>
+                            <textarea id="shiftNotes" rows="3" placeholder="Additional notes..."></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="submit" class="btn-save">Save Shift</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Set default date to today
+            document.getElementById('shiftDate').value = new Date().toISOString().split('T')[0];
+            
+            // Form submission
+            document.getElementById('scheduleShiftForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveScheduleShift(shiftId);
+            });
+        }
+
+        async function saveScheduleShift(shiftId) {
+            try {
+                showLoading('Saving shift...');
+                
+                const shiftData = {
+                    staffId: document.getElementById('shiftStaff').value,
+                    date: new Date(document.getElementById('shiftDate').value),
+                    startTime: document.getElementById('shiftStartTime').value,
+                    endTime: document.getElementById('shiftEndTime').value,
+                    role: document.getElementById('shiftRole').value,
+                    location: document.getElementById('shiftLocation').value,
+                    notes: document.getElementById('shiftNotes').value,
+                    lastUpdated: new Date()
+                };
+
+                if (shiftId) {
+                    await db.collection('schedule').doc(shiftId).update(shiftData);
+                    showSuccess('Shift updated successfully');
+                } else {
+                    await db.collection('schedule').add(shiftData);
+                    showSuccess('Shift added successfully');
+                }
+
+                // Close modal and reload schedule
+                document.querySelector('.modal').remove();
+                loadSchedule();
+                hideLoading();
+            } catch (error) {
+                console.error('Error saving shift:', error);
+                hideLoading();
+                showError('Failed to save shift');
+            }
+        }
+
+        async function deleteScheduleShift(shiftId) {
+            if (!confirm('Are you sure you want to delete this shift?')) return;
+
+            try {
+                showLoading('Deleting shift...');
+                await db.collection('schedule').doc(shiftId).delete();
+                showSuccess('Shift deleted successfully');
+                loadSchedule();
+                hideLoading();
+            } catch (error) {
+                console.error('Error deleting shift:', error);
+                hideLoading();
+                showError('Failed to delete shift');
+            }
+        }
+
+        function editScheduleShift(shiftId) {
+            // Load shift data and open modal
+            db.collection('schedule').doc(shiftId).get().then(doc => {
+                if (doc.exists) {
+                    const shiftData = doc.data();
+                    openScheduleShiftModal(shiftId);
+                    
+                    // Populate form with existing data
+                    setTimeout(() => {
+                        document.getElementById('shiftStaff').value = shiftData.staffId;
+                        document.getElementById('shiftDate').value = formatDateForInput(shiftData.date);
+                        document.getElementById('shiftStartTime').value = shiftData.startTime;
+                        document.getElementById('shiftEndTime').value = shiftData.endTime;
+                        document.getElementById('shiftRole').value = shiftData.role || '';
+                        document.getElementById('shiftLocation').value = shiftData.location || '';
+                        document.getElementById('shiftNotes').value = shiftData.notes || '';
+                    }, 100);
+                }
+            });
         }
 
         function openMessageModal() {
@@ -1037,13 +1416,47 @@
         }
 
         function viewSchedule(id) {
-            // Placeholder for individual staff schedule view
-            alert('Individual schedule view coming soon...');
+            const staff = staffData.find(staff => staff.id === id);
+            if (!staff) return;
+            
+            // Open schedule modal and filter for this staff member
+            openScheduleModal();
+            
+            // Set the staff filter to this specific staff member
+            setTimeout(() => {
+                const staffSelect = document.getElementById('scheduleStaff');
+                if (staffSelect) {
+                    staffSelect.value = id;
+                    loadSchedule();
+                }
+            }, 100);
         }
 
         function messageStaff(id) {
-            // Placeholder for individual staff messaging
-            alert('Individual messaging coming soon...');
+            const staff = staffData.find(staff => staff.id === id);
+            if (!staff) return;
+            
+            // Open message modal and pre-select this staff member
+            openMessageModal();
+            
+            // Set the recipient to this specific staff member
+            setTimeout(() => {
+                const recipientsSelect = document.getElementById('messageRecipients');
+                if (recipientsSelect) {
+                    // Clear previous selections
+                    Array.from(recipientsSelect.options).forEach(option => {
+                        option.selected = false;
+                    });
+                    
+                    // Select this staff member
+                    const staffOption = Array.from(recipientsSelect.options).find(option => 
+                        option.value === id
+                    );
+                    if (staffOption) {
+                        staffOption.selected = true;
+                    }
+                }
+            }, 100);
         }
 
         // Utility functions
@@ -1052,14 +1465,14 @@
         }
 
         function formatDate(date) {
-            if (!date) return '-';
-            const d = date.toDate ? date.toDate() : new Date(date);
-            return d.toLocaleDateString();
+            if (!date) return 'N/A';
+            const d = new Date(date);
+            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         }
 
         function formatDateForInput(date) {
             if (!date) return '';
-            const d = date.toDate ? date.toDate() : new Date(date);
+            const d = new Date(date);
             return d.toISOString().split('T')[0];
         }
 
