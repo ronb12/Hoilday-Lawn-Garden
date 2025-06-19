@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Inventory Collections - Holliday's Lawn & Garden</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c5530;
+            text-align: center;
+        }
+        .button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 1rem 0;
+            width: 100%;
+        }
+        .button:hover {
+            background: #45a049;
+        }
+        .button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .status {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 1rem;
+            border-radius: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Setup Inventory Collections</h1>
+        
+        <div id="status" class="status info">
+            Ready to set up Firebase collections for inventory management
+        </div>
+        
+        <button id="checkBtn" class="button" onclick="checkCollections()">
+            Check Current Collections
+        </button>
+        
+        <button id="setupBtn" class="button" onclick="setupInventoryCollections()">
+            Create Collections with Sample Data
+        </button>
+        
+        <button id="clearBtn" class="button" onclick="clearCollections()" style="background: #dc3545;">
+            Clear All Collections (Danger!)
+        </button>
+        
+        <div class="log" id="log">
+            <div>Console output will appear here...</div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+            authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+            projectId: "holiday-lawn-and-garden",
+            storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+            messagingSenderId: "135322230444",
+            appId: "1:135322230444:web:1a487b25a48aae07368909",
+            measurementId: "G-KD6TBWR4ZT"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Sample data
+        const equipmentData = [
+            {
+                name: "Lawn Mower",
+                category: "equipment",
+                sku: "LM-001",
+                quantity: 3,
+                status: "available",
+                location: "Garage A",
+                description: "Gas-powered lawn mower for large properties",
+                lastUpdated: new Date()
+            },
+            {
+                name: "Leaf Blower",
+                category: "equipment",
+                sku: "LB-002",
+                quantity: 2,
+                status: "available",
+                location: "Garage B",
+                description: "Electric leaf blower for fall cleanup",
+                lastUpdated: new Date()
+            },
+            {
+                name: "Hedge Trimmer",
+                category: "equipment",
+                sku: "HT-003",
+                quantity: 1,
+                status: "maintenance",
+                location: "Tool Shed",
+                description: "Battery-powered hedge trimmer",
+                lastUpdated: new Date()
+            },
+            {
+                name: "Pressure Washer",
+                category: "equipment",
+                sku: "PW-004",
+                quantity: 0,
+                status: "out",
+                location: "Garage A",
+                description: "Commercial pressure washer for driveways",
+                lastUpdated: new Date()
+            }
+        ];
+
+        const suppliesData = [
+            {
+                name: "Garden Hose",
+                category: "supplies",
+                sku: "GH-001",
+                quantity: 5,
+                status: "available",
+                location: "Storage Room",
+                description: "50ft garden hose with spray nozzle",
+                lastUpdated: new Date()
+            },
+            {
+                name: "Fertilizer",
+                category: "supplies",
+                sku: "FERT-002",
+                quantity: 2,
+                status: "low",
+                location: "Warehouse",
+                description: "Organic fertilizer 20lb bag",
+                lastUpdated: new Date()
+            },
+            {
+                name: "Grass Seed",
+                category: "supplies",
+                sku: "GS-003",
+                quantity: 8,
+                status: "available",
+                location: "Warehouse",
+                description: "Premium grass seed mix 10lb bag",
+                lastUpdated: new Date()
+            },
+            {
+                name: "Mulch",
+                category: "supplies",
+                sku: "MULCH-004",
+                quantity: 0,
+                status: "out",
+                location: "Warehouse",
+                description: "Cedar mulch 2 cubic feet",
+                lastUpdated: new Date()
+            },
+            {
+                name: "Safety Gloves",
+                category: "supplies",
+                sku: "SG-005",
+                quantity: 12,
+                status: "available",
+                location: "Tool Shed",
+                description: "Heavy-duty work gloves size L",
+                lastUpdated: new Date()
+            }
+        ];
+
+        const maintenanceData = [
+            {
+                equipmentId: "HT-003",
+                equipmentName: "Hedge Trimmer",
+                issue: "Battery not holding charge",
+                status: "pending",
+                reportedDate: new Date(),
+                priority: "medium",
+                assignedTo: "John Smith"
+            },
+            {
+                equipmentId: "LM-001",
+                equipmentName: "Lawn Mower",
+                issue: "Annual service due",
+                status: "pending",
+                reportedDate: new Date(),
+                priority: "low",
+                assignedTo: "Mike Johnson"
+            }
+        ];
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `<span style="color: #666;">[${timestamp}]</span> ${message}`;
+            logDiv.appendChild(logEntry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+
+        async function checkCollections() {
+            try {
+                updateStatus('Checking collections...', 'info');
+                log('Checking existing collections...');
+                
+                const equipmentSnapshot = await db.collection('equipment').get();
+                const suppliesSnapshot = await db.collection('supplies').get();
+                const maintenanceSnapshot = await db.collection('maintenance').get();
+                
+                log(`Equipment collection: ${equipmentSnapshot.size} documents`);
+                log(`Supplies collection: ${suppliesSnapshot.size} documents`);
+                log(`Maintenance collection: ${maintenanceSnapshot.size} documents`);
+                
+                const total = equipmentSnapshot.size + suppliesSnapshot.size + maintenanceSnapshot.size;
+                
+                if (total === 0) {
+                    updateStatus('All collections are empty. Click "Create Collections" to add sample data.', 'info');
+                } else {
+                    updateStatus(`Found ${total} total documents across all collections.`, 'success');
+                }
+                
+            } catch (error) {
+                log(`Error checking collections: ${error.message}`, 'error');
+                updateStatus('Error checking collections', 'error');
+            }
+        }
+
+        async function setupInventoryCollections() {
+            try {
+                updateStatus('Setting up collections...', 'info');
+                log('Setting up inventory collections...');
+                
+                // Create equipment collection
+                log('Creating equipment collection...');
+                for (const item of equipmentData) {
+                    await db.collection('equipment').add(item);
+                }
+                log(`Equipment collection created with ${equipmentData.length} items`);
+                
+                // Create supplies collection
+                log('Creating supplies collection...');
+                for (const item of suppliesData) {
+                    await db.collection('supplies').add(item);
+                }
+                log(`Supplies collection created with ${suppliesData.length} items`);
+                
+                // Create maintenance collection
+                log('Creating maintenance collection...');
+                for (const item of maintenanceData) {
+                    await db.collection('maintenance').add(item);
+                }
+                log(`Maintenance collection created with ${maintenanceData.length} items`);
+                
+                const total = equipmentData.length + suppliesData.length + maintenanceData.length;
+                log(`✅ All inventory collections created successfully! Total: ${total} items`);
+                updateStatus(`Collections created successfully! ${total} items added.`, 'success');
+                
+            } catch (error) {
+                log(`❌ Error setting up collections: ${error.message}`, 'error');
+                updateStatus('Error creating collections', 'error');
+            }
+        }
+
+        async function clearCollections() {
+            if (!confirm('Are you sure you want to delete ALL inventory data? This cannot be undone!')) {
+                return;
+            }
+            
+            try {
+                updateStatus('Clearing collections...', 'info');
+                log('Clearing all collections...');
+                
+                // Clear equipment
+                const equipmentSnapshot = await db.collection('equipment').get();
+                const equipmentDeletes = equipmentSnapshot.docs.map(doc => doc.ref.delete());
+                await Promise.all(equipmentDeletes);
+                log(`Cleared ${equipmentSnapshot.size} equipment items`);
+                
+                // Clear supplies
+                const suppliesSnapshot = await db.collection('supplies').get();
+                const suppliesDeletes = suppliesSnapshot.docs.map(doc => doc.ref.delete());
+                await Promise.all(suppliesDeletes);
+                log(`Cleared ${suppliesSnapshot.size} supplies items`);
+                
+                // Clear maintenance
+                const maintenanceSnapshot = await db.collection('maintenance').get();
+                const maintenanceDeletes = maintenanceSnapshot.docs.map(doc => doc.ref.delete());
+                await Promise.all(maintenanceDeletes);
+                log(`Cleared ${maintenanceSnapshot.size} maintenance items`);
+                
+                const total = equipmentSnapshot.size + suppliesSnapshot.size + maintenanceSnapshot.size;
+                log(`✅ All collections cleared! Removed ${total} items`);
+                updateStatus(`Collections cleared! ${total} items removed.`, 'success');
+                
+            } catch (error) {
+                log(`❌ Error clearing collections: ${error.message}`, 'error');
+                updateStatus('Error clearing collections', 'error');
+            }
+        }
+
+        // Auto-check on page load
+        window.onload = function() {
+            log('Setup page loaded. Checking collections...');
+            checkCollections();
+        };
+    </script>
+</body>
+</html> 
