@@ -332,17 +332,31 @@
         <p id="loadingMessage">Loading...</p>
     </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
-    
-    <!-- Custom Scripts -->
-    <script type="module" src="assets/js/utils.js"></script>
-    <script type="module" src="assets/js/modules/analytics.js"></script>
-    <script type="module" src="assets/js/modules/inventory.js"></script>
-    <script type="module" src="assets/js/modules/staff.js"></script>
-    <script type="module" src="assets/js/modules/communication.js"></script>
-    <script type="module" src="assets/js/modules/admin_dashboard.js"></script>
+    <!-- Firebase SDK (Compat for browser) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+      // Your real Firebase config
+      const firebaseConfig = {
+        apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+        authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+        projectId: "holiday-lawn-and-garden",
+        storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+        messagingSenderId: "135322230444",
+        appId: "1:135322230444:web:1a487b25a48aae07368909",
+        measurementId: "G-KD6TBWR4ZT"
+      };
+      firebase.initializeApp(firebaseConfig);
+      // If you want analytics (optional, only if you include analytics compat CDN)
+      // firebase.analytics();
+    </script>
+    <!-- Custom Scripts (no type=module) -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/modules/analytics.js"></script>
+    <script src="assets/js/modules/inventory.js"></script>
+    <script src="assets/js/modules/staff.js"></script>
+    <script src="assets/js/modules/communication.js"></script>
+    <script src="assets/js/modules/admin_dashboard.js"></script>
 </body>
 </html> 
