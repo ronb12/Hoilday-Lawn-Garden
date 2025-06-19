@@ -1,1 +1,557 @@
-<!DOCTYPE html><html><head><title>Payments</title></head><body><h1>Payments Page</h1><p>This page is under construction.</p><a href="admin-dashboard.html">Back to Dashboard</a></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments - Admin Dashboard</title>
+    <meta name="description" content="Manage payments for Holliday Lawn & Garden">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="assets/icons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/icons/favicon-16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#2e7d32">
+</head>
+<body>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" />
+            <span style="font-size:1.3rem;font-weight:700;color:#2c5530;">Admin Dashboard</span>
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="customers.html">Customers</a>
+            <a href="payments.html" class="active">Payments</a>
+            <a href="analytics.html">Analytics</a>
+        </nav>
+        <div class="admin-actions">
+            <button class="btn btn-secondary" onclick="location.reload()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button class="btn btn-danger" onclick="window.location.href='admin-login.html'">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Payments</h1>
+                <p class="page-subtitle">Manage and track all payment transactions</p>
+            </div>
+            <button class="btn btn-primary" onclick="openAddModal()">
+                <i class="fas fa-plus"></i> Add Payment
+            </button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalRevenue">$0</div>
+                <div class="stat-label">Total Revenue</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pendingPayments">0</div>
+                <div class="stat-label">Pending Payments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="monthlyRevenue">$0</div>
+                <div class="stat-label">This Month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="averagePayment">$0</div>
+                <div class="stat-label">Average Payment</div>
+            </div>
+        </div>
+
+        <div class="filters-section">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label>Status</label>
+                    <select id="statusFilter" onchange="filterPayments()">
+                        <option value="">All Statuses</option>
+                        <option value="completed">Completed</option>
+                        <option value="pending">Pending</option>
+                        <option value="failed">Failed</option>
+                        <option value="refunded">Refunded</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Payment Method</label>
+                    <select id="methodFilter" onchange="filterPayments()">
+                        <option value="">All Methods</option>
+                        <option value="credit-card">Credit Card</option>
+                        <option value="debit-card">Debit Card</option>
+                        <option value="cash">Cash</option>
+                        <option value="check">Check</option>
+                        <option value="paypal">PayPal</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Date From</label>
+                    <input type="date" id="dateFromFilter" onchange="filterPayments()">
+                </div>
+                <div class="filter-group">
+                    <label>Date To</label>
+                    <input type="date" id="dateToFilter" onchange="filterPayments()">
+                </div>
+                <div class="filter-group">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-secondary" onclick="clearFilters()">
+                        <i class="fas fa-times"></i> Clear Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">All Payments</h3>
+                <div class="table-actions">
+                    <button class="btn btn-secondary" onclick="exportPayments()">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table id="paymentsTable">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Reference</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentsTableBody">
+                        <tr>
+                            <td colspan="8">
+                                <div class="empty-state">
+                                    <i class="fas fa-credit-card"></i>
+                                    <h3>No Payments Found</h3>
+                                    <p>There are no payments matching your criteria.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Add New Payment</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="paymentForm" onsubmit="savePayment(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerId">Customer *</label>
+                        <select id="customerId" name="customerId" required>
+                            <option value="">Select Customer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount *</label>
+                        <input type="number" id="amount" name="amount" step="0.01" min="0" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method *</label>
+                        <select id="paymentMethod" name="paymentMethod" required>
+                            <option value="">Select Method</option>
+                            <option value="credit-card">Credit Card</option>
+                            <option value="debit-card">Debit Card</option>
+                            <option value="cash">Cash</option>
+                            <option value="check">Check</option>
+                            <option value="paypal">PayPal</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" name="status">
+                            <option value="completed">Completed</option>
+                            <option value="pending">Pending</option>
+                            <option value="failed">Failed</option>
+                            <option value="refunded">Refunded</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="reference">Reference Number</label>
+                    <input type="text" id="reference" name="reference">
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" name="notes"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Payment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+            authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+            projectId: "holiday-lawn-and-garden",
+            storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+            messagingSenderId: "135322230444",
+            appId: "1:135322230444:web:1a487b25a48aae07368909",
+            measurementId: "G-KD6TBWR4ZT"
+        };
+        firebase.initializeApp(firebaseConfig);
+        
+        // Initialize Firestore
+        const db = firebase.firestore();
+        let payments = [];
+        let customers = [];
+        let currentEditId = null;
+        
+        // Load payments
+        async function loadPayments() {
+            try {
+                showLoading();
+                const paymentsSnapshot = await db.collection('payments').orderBy('paymentDate', 'desc').get();
+                payments = paymentsSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                
+                // Load customers for dropdown
+                const customersSnapshot = await db.collection('customers').get();
+                customers = customersSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                
+                displayPayments(payments);
+                updateStats();
+                populateCustomerDropdown();
+                hideLoading();
+            } catch (error) {
+                console.error('Error loading payments:', error);
+                hideLoading();
+                showNotification('Error loading payments', 'error');
+            }
+        }
+        
+        // Display payments in table
+        function displayPayments(paymentsToShow) {
+            const tbody = document.getElementById('paymentsTableBody');
+            
+            if (paymentsToShow.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8">
+                            <div class="empty-state">
+                                <i class="fas fa-credit-card"></i>
+                                <h3>No Payments Found</h3>
+                                <p>There are no payments matching your criteria.</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = paymentsToShow.map(payment => {
+                const customer = customers.find(c => c.id === payment.customerId);
+                const customerName = customer ? `${customer.firstName || ''} ${customer.lastName || ''}` : 'Unknown Customer';
+                
+                return `
+                    <tr>
+                        <td><strong>${customerName}</strong></td>
+                        <td>$${(payment.amount || 0).toFixed(2)}</td>
+                        <td>${formatPaymentMethod(payment.paymentMethod)}</td>
+                        <td><span class="status-badge status-${payment.status || 'pending'}">${payment.status || 'pending'}</span></td>
+                        <td>${formatDate(payment.paymentDate)}</td>
+                        <td>${payment.reference || 'N/A'}</td>
+                        <td>${payment.description || 'N/A'}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-small btn-secondary" onclick="editPayment('${payment.id}')">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn-small btn-primary" onclick="viewPaymentDetails('${payment.id}')">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn-small btn-danger" onclick="deletePayment('${payment.id}')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const totalRevenue = payments.filter(p => p.status === 'completed').reduce((sum, p) => sum + (p.amount || 0), 0);
+            const pendingPayments = payments.filter(p => p.status === 'pending').length;
+            
+            const now = new Date();
+            const monthlyRevenue = payments.filter(p => {
+                if (p.status !== 'completed') return false;
+                const paymentDate = new Date(p.paymentDate);
+                return paymentDate.getMonth() === now.getMonth() && paymentDate.getFullYear() === now.getFullYear();
+            }).reduce((sum, p) => sum + (p.amount || 0), 0);
+            
+            const completedPayments = payments.filter(p => p.status === 'completed');
+            const averagePayment = completedPayments.length > 0 ? 
+                completedPayments.reduce((sum, p) => sum + (p.amount || 0), 0) / completedPayments.length : 0;
+            
+            document.getElementById('totalRevenue').textContent = `$${totalRevenue.toFixed(2)}`;
+            document.getElementById('pendingPayments').textContent = pendingPayments;
+            document.getElementById('monthlyRevenue').textContent = `$${monthlyRevenue.toFixed(2)}`;
+            document.getElementById('averagePayment').textContent = `$${averagePayment.toFixed(2)}`;
+        }
+        
+        // Filter payments
+        function filterPayments() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const methodFilter = document.getElementById('methodFilter').value;
+            const dateFromFilter = document.getElementById('dateFromFilter').value;
+            const dateToFilter = document.getElementById('dateToFilter').value;
+            
+            let filtered = payments.filter(payment => {
+                if (statusFilter && payment.status !== statusFilter) return false;
+                if (methodFilter && payment.paymentMethod !== methodFilter) return false;
+                if (dateFromFilter && payment.paymentDate < dateFromFilter) return false;
+                if (dateToFilter && payment.paymentDate > dateToFilter) return false;
+                return true;
+            });
+            
+            displayPayments(filtered);
+        }
+        
+        // Clear filters
+        function clearFilters() {
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('methodFilter').value = '';
+            document.getElementById('dateFromFilter').value = '';
+            document.getElementById('dateToFilter').value = '';
+            displayPayments(payments);
+        }
+        
+        // Populate customer dropdown
+        function populateCustomerDropdown() {
+            const select = document.getElementById('customerId');
+            select.innerHTML = '<option value="">Select Customer</option>';
+            customers.forEach(customer => {
+                const option = document.createElement('option');
+                option.value = customer.id;
+                option.textContent = `${customer.firstName || ''} ${customer.lastName || ''} - ${customer.email || ''}`;
+                select.appendChild(option);
+            });
+        }
+        
+        // Modal functions
+        function openAddModal() {
+            currentEditId = null;
+            document.getElementById('modalTitle').textContent = 'Add New Payment';
+            document.getElementById('paymentForm').reset();
+            document.getElementById('paymentModal').style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            currentEditId = null;
+        }
+        
+        // Edit payment
+        async function editPayment(id) {
+            const payment = payments.find(p => p.id === id);
+            if (!payment) return;
+            
+            currentEditId = id;
+            document.getElementById('modalTitle').textContent = 'Edit Payment';
+            
+            // Fill form
+            document.getElementById('customerId').value = payment.customerId || '';
+            document.getElementById('amount').value = payment.amount || '';
+            document.getElementById('paymentMethod').value = payment.paymentMethod || '';
+            document.getElementById('status').value = payment.status || 'pending';
+            document.getElementById('description').value = payment.description || '';
+            document.getElementById('reference').value = payment.reference || '';
+            document.getElementById('notes').value = payment.notes || '';
+            
+            document.getElementById('paymentModal').style.display = 'block';
+        }
+        
+        // Save payment
+        async function savePayment(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const paymentData = {
+                customerId: formData.get('customerId'),
+                amount: parseFloat(formData.get('amount')),
+                paymentMethod: formData.get('paymentMethod'),
+                status: formData.get('status'),
+                description: formData.get('description'),
+                reference: formData.get('reference'),
+                notes: formData.get('notes'),
+                updatedAt: new Date()
+            };
+            
+            try {
+                showLoading();
+                if (currentEditId) {
+                    await db.collection('payments').doc(currentEditId).update(paymentData);
+                    showNotification('Payment updated successfully', 'success');
+                } else {
+                    paymentData.paymentDate = new Date();
+                    paymentData.createdAt = new Date();
+                    await db.collection('payments').add(paymentData);
+                    showNotification('Payment created successfully', 'success');
+                }
+                
+                closeModal();
+                loadPayments();
+                hideLoading();
+            } catch (error) {
+                console.error('Error saving payment:', error);
+                hideLoading();
+                showNotification('Error saving payment', 'error');
+            }
+        }
+        
+        // View payment details
+        function viewPaymentDetails(id) {
+            const payment = payments.find(p => p.id === id);
+            if (!payment) return;
+            
+            const customer = customers.find(c => c.id === payment.customerId);
+            const customerName = customer ? `${customer.firstName} ${customer.lastName}` : 'Unknown Customer';
+            
+            alert(`Payment Details:\nCustomer: ${customerName}\nAmount: $${(payment.amount || 0).toFixed(2)}\nMethod: ${formatPaymentMethod(payment.paymentMethod)}\nStatus: ${payment.status}\nDate: ${formatDate(payment.paymentDate)}\nReference: ${payment.reference || 'N/A'}\nDescription: ${payment.description || 'N/A'}`);
+        }
+        
+        // Delete payment
+        async function deletePayment(id) {
+            if (!confirm('Are you sure you want to delete this payment?')) return;
+            
+            try {
+                showLoading();
+                await db.collection('payments').doc(id).delete();
+                showNotification('Payment deleted successfully', 'success');
+                loadPayments();
+                hideLoading();
+            } catch (error) {
+                console.error('Error deleting payment:', error);
+                hideLoading();
+                showNotification('Error deleting payment', 'error');
+            }
+        }
+        
+        // Export payments
+        function exportPayments() {
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "Customer,Amount,Method,Status,Date,Reference,Description\n"
+                + payments.map(p => {
+                    const customer = customers.find(c => c.id === p.customerId);
+                    const customerName = customer ? `${customer.firstName || ''} ${customer.lastName || ''}` : 'Unknown Customer';
+                    return `"${customerName}","${(p.amount || 0).toFixed(2)}","${formatPaymentMethod(p.paymentMethod)}","${p.status || ''}","${formatDate(p.paymentDate)}","${p.reference || ''}","${p.description || ''}"`;
+                }).join("\n");
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "payments.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Utility functions
+        function formatDate(date) {
+            if (!date) return 'N/A';
+            try {
+                if (date.toDate) {
+                    return date.toDate().toLocaleDateString();
+                }
+                return new Date(date).toLocaleDateString();
+            } catch (error) {
+                return 'Invalid Date';
+            }
+        }
+        
+        function formatPaymentMethod(method) {
+            const methods = {
+                'credit-card': 'Credit Card',
+                'debit-card': 'Debit Card',
+                'cash': 'Cash',
+                'check': 'Check',
+                'paypal': 'PayPal'
+            };
+            return methods[method] || method || 'N/A';
+        }
+        
+        function showLoading() {
+            const loading = document.createElement('div');
+            loading.id = 'loading';
+            loading.innerHTML = '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9999;"><div style="background:white;padding:2rem;border-radius:8px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div></div>';
+            document.body.appendChild(loading);
+        }
+        
+        function hideLoading() {
+            const loading = document.getElementById('loading');
+            if (loading) loading.remove();
+        }
+        
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px; 
+                background: ${type === 'error' ? '#f44336' : type === 'success' ? '#4caf50' : '#2196f3'}; 
+                color: white; padding: 1rem; border-radius: 8px; z-index: 10000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('paymentModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+        
+        // Load payments when page loads
+        document.addEventListener('DOMContentLoaded', loadPayments);
+    </script>
+</body>
+</html>
