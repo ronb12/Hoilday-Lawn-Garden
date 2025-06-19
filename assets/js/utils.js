@@ -4,29 +4,96 @@
 // Notification system
 function showNotification(message, type = "info") {
     const notification = document.createElement("div");
-    notification.className = `notification ${type}`;
-    notification.textContent = message;
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-message">${message}</span>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+        </div>
+    `;
+    
+    // Add styles if not already present
+    if (!document.getElementById("notification-styles")) {
+        const style = document.createElement("style");
+        style.id = "notification-styles";
+        style.textContent = `
+            .notification {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                padding: 1rem;
+                z-index: 1000;
+                max-width: 300px;
+                border-left: 4px solid #4caf50;
+                animation: slideIn 0.3s ease-out;
+            }
+            .notification-error {
+                border-left-color: #f44336;
+            }
+            .notification-warning {
+                border-left-color: #ff9800;
+            }
+            .notification-info {
+                border-left-color: #2196f3;
+            }
+            .notification-content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .notification-close {
+                background: none;
+                border: none;
+                font-size: 1.2rem;
+                cursor: pointer;
+                color: #666;
+                margin-left: 0.5rem;
+            }
+            .notification-close:hover {
+                color: #333;
+            }
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Add to page
     document.body.appendChild(notification);
+    
+    // Auto remove after 5 seconds
     setTimeout(() => {
-        notification.remove();
-    }, 3000);
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 5000);
 }
 
 // Loading indicator
 function showLoading(message = "Loading...") {
-    const loading = document.createElement("div");
-    loading.id = "loadingOverlay";
-    loading.innerHTML = `
-        <div class="loading-spinner"></div>
-        <p>${message}</p>
-    `;
-    document.body.appendChild(loading);
+    const overlay = document.getElementById("loadingOverlay");
+    const messageEl = document.getElementById("loadingMessage");
+    if (overlay) {
+        if (messageEl) messageEl.textContent = message;
+        overlay.classList.remove("hidden");
+    }
 }
 
 function hideLoading() {
-    const loading = document.getElementById("loadingOverlay");
-    if (loading) {
-        loading.remove();
+    const overlay = document.getElementById("loadingOverlay");
+    if (overlay) {
+        overlay.classList.add("hidden");
     }
 }
 
@@ -154,3 +221,44 @@ window.validateEmail = validateEmail;
 window.validatePhone = validatePhone;
 window.getUserData = getUserData;
 window.updateUserData = updateUserData;
+
+// Loading overlay styles
+if (!document.getElementById("loading-overlay-styles")) {
+    const style = document.createElement("style");
+    style.id = "loading-overlay-styles";
+    style.textContent = `
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+        }
+        .loading-overlay.hidden {
+            display: none;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4caf50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+console.log("Utility functions loaded successfully");

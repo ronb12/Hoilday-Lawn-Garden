@@ -1,0 +1,49 @@
+name: Deploy to Firebase Hosting on merge
+'on':
+  push:
+    branches:
+      - main
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            
+      - name: Install Dependencies
+        run: |
+          npm ci
+          npm install -g firebase-tools@latest
+        continue-on-error: false
+        
+      - name: Build
+        run: |
+          npm run build
+          ls -la public/
+        continue-on-error: false
+        
+      - name: Deploy to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseToken: '${{ secrets.FIREBASE_TOKEN }}'
+          channelId: live
+          projectId: holiday-lawn-and-garden
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          DEBUG: 'firebase-tools:*'
+        continue-on-error: false 
