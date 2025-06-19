@@ -257,7 +257,7 @@
         }
         
         .btn-delete:hover {
-            background: #c82333;
+            background: #d32f2f;
         }
         
         .modal {
@@ -412,6 +412,41 @@
                 padding: 0.5rem;
                 font-size: 0.9rem;
             }
+        }
+
+        /* Loading overlay styles */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: white;
+        }
+
+        .loading-overlay.hidden {
+            display: none;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4caf50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -629,7 +664,7 @@
             // Set a maximum loading time of 15 seconds
             const maxLoadingTime = setTimeout(() => {
                 console.warn('Maximum loading time reached, forcing page to load');
-                hideLoading();
+                forceHideLoading();
                 displayInventory([]);
                 updateStats([]);
                 showError('Page loaded with limited functionality. Some features may not work properly.');
@@ -638,7 +673,7 @@
             // Set a shorter timeout for immediate fallback
             const quickFallback = setTimeout(() => {
                 console.warn('Quick fallback: Loading page without Firebase');
-                hideLoading();
+                forceHideLoading();
                 displayInventory([]);
                 updateStats([]);
                 showError('Loading with limited functionality. Firebase connection may be slow.');
@@ -994,7 +1029,20 @@
         }
 
         function hideLoading() {
-            document.getElementById('loadingOverlay').classList.add('hidden');
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                overlay.style.display = 'none'; // Force hide
+            }
+        }
+
+        function forceHideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                overlay.style.display = 'none';
+                overlay.style.visibility = 'hidden';
+            }
         }
 
         function showSuccess(message) {
