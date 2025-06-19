@@ -1,11 +1,10 @@
-// No imports, use global firebase and global utility functions
-const db = firebase.firestore();
+// Use global window.db
 
 // View messages
 async function viewMessages() {
     try {
         window.showLoading("Loading messages...");
-        const messagesSnapshot = await db.collection("messages").orderBy("timestamp", "desc").get();
+        const messagesSnapshot = await window.db.collection("messages").orderBy("timestamp", "desc").get();
         window.showModal(`
             <div class="modal-header">
                 <h2>Messages</h2>
@@ -83,7 +82,7 @@ async function sendBulkMessage() {
                 senderId: "admin"
             };
             try {
-                await db.collection("messages").add(messageData);
+                await window.db.collection("messages").add(messageData);
                 window.showNotification("Bulk message sent successfully", "success");
                 window.closeModal();
             } catch (error) {

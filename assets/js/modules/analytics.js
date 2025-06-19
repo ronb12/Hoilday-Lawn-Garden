@@ -1,5 +1,4 @@
-// No imports, use global firebase and global utility functions
-const db = firebase.firestore();
+// Use global window.db
 
 // View analytics
 async function viewAnalytics() {
@@ -67,7 +66,7 @@ async function viewAnalytics() {
 
 // Get revenue analytics
 async function getRevenueAnalytics() {
-    const paymentsSnapshot = await db.collection("payments").orderBy("date", "desc").get();
+    const paymentsSnapshot = await window.db.collection("payments").orderBy("date", "desc").get();
     const payments = paymentsSnapshot.docs.map(doc => doc.data());
     
     const total = payments.reduce((sum, payment) => sum + payment.amount, 0);
@@ -88,7 +87,7 @@ async function getRevenueAnalytics() {
 
 // Get service analytics
 async function getServiceAnalytics() {
-    const appointmentsSnapshot = await db.collection("appointments").orderBy("date", "desc").get();
+    const appointmentsSnapshot = await window.db.collection("appointments").orderBy("date", "desc").get();
     const appointments = appointmentsSnapshot.docs.map(doc => doc.data());
     
     const serviceCounts = {};
@@ -109,7 +108,7 @@ async function getServiceAnalytics() {
 
 // Get customer analytics
 async function getCustomerAnalytics() {
-    const customersSnapshot = await db.collection("customers").orderBy("createdAt", "desc").get();
+    const customersSnapshot = await window.db.collection("customers").orderBy("createdAt", "desc").get();
     const customers = customersSnapshot.docs.map(doc => doc.data());
     
     const now = new Date();
@@ -126,7 +125,7 @@ async function getCustomerAnalytics() {
 
 // Get staff analytics
 async function getStaffAnalytics() {
-    const staffSnapshot = await db.collection("staff").get();
+    const staffSnapshot = await window.db.collection("staff").get();
     const staff = staffSnapshot.docs.map(doc => doc.data());
     
     const topPerformer = staff

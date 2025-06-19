@@ -1,6 +1,8 @@
-// No imports, use global firebase and global utility functions
-const db = firebase.firestore();
-const auth = firebase.auth();
+// Set global db and auth if not already set
+if (!window.db) window.db = firebase.firestore();
+if (!window.auth) window.auth = firebase.auth();
+
+// Use global window.db and window.auth
 
 // DOM Elements
 const refreshDashboardBtn = document.getElementById("refreshDashboardBtn");
@@ -62,9 +64,9 @@ async function initializeDashboard() {
 async function loadDashboardStats() {
     try {
         const [customersSnapshot, appointmentsSnapshot, paymentsSnapshot] = await Promise.all([
-            db.collection("customers").get(),
-            db.collection("appointments").get(),
-            db.collection("payments").get()
+            window.db.collection("customers").get(),
+            window.db.collection("appointments").get(),
+            window.db.collection("payments").get()
         ]);
 
         const totalCustomers = customersSnapshot.size;
@@ -99,7 +101,7 @@ async function loadDashboardStats() {
 // Load recent appointments
 async function loadRecentAppointments() {
     try {
-        const appointmentsQuery = db.collection("appointments").orderBy("date", "desc").limit(5);
+        const appointmentsQuery = window.db.collection("appointments").orderBy("date", "desc").limit(5);
         const appointmentsSnapshot = await appointmentsQuery.get();
 
         if (appointmentsSnapshot.empty) {
@@ -171,7 +173,7 @@ function setupEventListeners() {
     if (logoutButton) {
         logoutButton.addEventListener("click", async () => {
             try {
-                await auth.signOut();
+                await window.auth.signOut();
                 window.location.href = "login.html";
             } catch (error) {
                 console.error("Error signing out:", error);
@@ -326,7 +328,7 @@ function formatTime(time) {
 
 // Initialize the dashboard when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    auth.onAuthStateChanged((user) => {
+    window.auth.onAuthStateChanged((user) => {
         if (user) {
             initializeDashboard();
         } else {
@@ -345,7 +347,7 @@ window.adminDashboard = {
 // Load appointments
 async function loadAppointments() {
     try {
-        const appointmentsQuery = db.collection("appointments").orderBy("date", "desc");
+        const appointmentsQuery = window.db.collection("appointments").orderBy("date", "desc");
         const appointmentsSnapshot = await appointmentsQuery.get();
         
         const appointmentsContainer = document.getElementById("appointmentsContainer");
@@ -385,7 +387,7 @@ async function loadAppointments() {
 // Load customers
 async function loadCustomers() {
     try {
-        const customersQuery = db.collection("users").where("role", "==", "customer").orderBy("createdAt", "desc");
+        const customersQuery = window.db.collection("users").where("role", "==", "customer").orderBy("createdAt", "desc");
         const customersSnapshot = await customersQuery.get();
         
         const customersContainer = document.getElementById("customersContainer");
@@ -424,7 +426,7 @@ async function loadCustomers() {
 // Load payments
 async function loadPayments() {
     try {
-        const paymentsQuery = db.collection("payments").orderBy("date", "desc");
+        const paymentsQuery = window.db.collection("payments").orderBy("date", "desc");
         const paymentsSnapshot = await paymentsQuery.get();
         
         const paymentsContainer = document.getElementById("paymentsContainer");
@@ -465,9 +467,9 @@ async function loadPayments() {
 async function loadAnalytics() {
     try {
         const [customersSnapshot, appointmentsSnapshot, paymentsSnapshot] = await Promise.all([
-            db.collection("users").get(),
-            db.collection("appointments").get(),
-            db.collection("payments").get()
+            window.db.collection("users").get(),
+            window.db.collection("appointments").get(),
+            window.db.collection("payments").get()
         ]);
 
         const totalCustomers = customersSnapshot.size;
@@ -518,7 +520,7 @@ async function loadAnalytics() {
 // Load inventory
 async function loadInventory() {
     try {
-        const inventoryQuery = db.collection("inventory").orderBy("name", "asc");
+        const inventoryQuery = window.db.collection("inventory").orderBy("name", "asc");
         const inventorySnapshot = await inventoryQuery.get();
         
         const inventoryContainer = document.getElementById("inventoryContainer");
@@ -557,7 +559,7 @@ async function loadInventory() {
 // Load staff
 async function loadStaff() {
     try {
-        const staffQuery = db.collection("users").where("role", "==", "staff").orderBy("name", "asc");
+        const staffQuery = window.db.collection("users").where("role", "==", "staff").orderBy("name", "asc");
         const staffSnapshot = await staffQuery.get();
         
         const staffContainer = document.getElementById("staffContainer");
@@ -596,7 +598,7 @@ async function loadStaff() {
 // Load messages
 async function loadMessages() {
     try {
-        const messagesQuery = db.collection("messages").orderBy("timestamp", "desc");
+        const messagesQuery = window.db.collection("messages").orderBy("timestamp", "desc");
         const messagesSnapshot = await messagesQuery.get();
         
         const messagesContainer = document.getElementById("messagesContainer");

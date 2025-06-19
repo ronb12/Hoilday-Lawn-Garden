@@ -1,14 +1,13 @@
-// No imports, use global firebase and global utility functions
-const db = firebase.firestore();
+// Use global window.db
 
 // Manage inventory
 async function manageInventory() {
     try {
         window.showLoading("Loading inventory...");
         const [equipmentSnapshot, suppliesSnapshot, maintenanceSnapshot] = await Promise.all([
-            db.collection("equipment").get(),
-            db.collection("supplies").get(),
-            db.collection("maintenance").where("status", "==", "pending").get()
+            window.db.collection("equipment").get(),
+            window.db.collection("supplies").get(),
+            window.db.collection("maintenance").where("status", "==", "pending").get()
         ]);
         const equipment = equipmentSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         const supplies = suppliesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));

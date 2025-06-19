@@ -1,11 +1,10 @@
-// No imports, use global firebase and global utility functions
-const db = firebase.firestore();
+// Use global window.db
 
 // View staff
 async function viewStaff() {
     try {
         window.showLoading("Loading staff...");
-        const staffSnapshot = await db.collection("staff").orderBy("name").get();
+        const staffSnapshot = await window.db.collection("staff").orderBy("name").get();
         window.showModal(`
             <div class="modal-header">
                 <h2>Staff Management</h2>
@@ -93,7 +92,7 @@ async function addStaff() {
                 performance: 0
             };
             try {
-                await db.collection("staff").add(staffData);
+                await window.db.collection("staff").add(staffData);
                 window.showNotification("Staff member added successfully", "success");
                 window.closeModal();
                 viewStaff();

@@ -1,8 +1,6 @@
 // Utility functions for both admin and customer dashboards
 // No imports, use global firebase
 
-const db = firebase.firestore();
-
 // Notification system
 function showNotification(message, type = "info") {
     const notification = document.createElement("div");
@@ -120,7 +118,7 @@ function validatePhone(phone) {
 // Firestore helpers
 async function getUserData(userId) {
     try {
-        const userDoc = await db.collection("users").doc(userId).get();
+        const userDoc = await window.db.collection("users").doc(userId).get();
         return userDoc.exists ? userDoc.data() : null;
     } catch (error) {
         handleError(error, "Error fetching user data");
@@ -130,7 +128,7 @@ async function getUserData(userId) {
 
 async function updateUserData(userId, data) {
     try {
-        await db.collection("users").doc(userId).update({
+        await window.db.collection("users").doc(userId).update({
             ...data,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         });
