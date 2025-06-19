@@ -624,6 +624,8 @@
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing inventory page...');
+            
             // Set a maximum loading time of 15 seconds
             const maxLoadingTime = setTimeout(() => {
                 console.warn('Maximum loading time reached, forcing page to load');
@@ -633,9 +635,31 @@
                 showError('Page loaded with limited functionality. Some features may not work properly.');
             }, 15000);
 
-            loadInventory().finally(() => {
+            // Set a shorter timeout for immediate fallback
+            const quickFallback = setTimeout(() => {
+                console.warn('Quick fallback: Loading page without Firebase');
+                hideLoading();
+                displayInventory([]);
+                updateStats([]);
+                showError('Loading with limited functionality. Firebase connection may be slow.');
+            }, 5000); // 5 second quick fallback
+
+            // Try to initialize Firebase and load data
+            try {
+                console.log('Attempting to load inventory data...');
+                loadInventory().finally(() => {
+                    clearTimeout(maxLoadingTime);
+                    clearTimeout(quickFallback);
+                });
+            } catch (error) {
+                console.error('Error during initialization:', error);
                 clearTimeout(maxLoadingTime);
-            });
+                clearTimeout(quickFallback);
+                hideLoading();
+                displayInventory([]);
+                updateStats([]);
+                showError('Failed to initialize. Please refresh the page.');
+            }
             
             setupEventListeners();
         });
