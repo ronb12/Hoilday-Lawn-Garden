@@ -624,7 +624,19 @@
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-            loadInventory();
+            // Set a maximum loading time of 15 seconds
+            const maxLoadingTime = setTimeout(() => {
+                console.warn('Maximum loading time reached, forcing page to load');
+                hideLoading();
+                displayInventory([]);
+                updateStats([]);
+                showError('Page loaded with limited functionality. Some features may not work properly.');
+            }, 15000);
+
+            loadInventory().finally(() => {
+                clearTimeout(maxLoadingTime);
+            });
+            
             setupEventListeners();
         });
 
@@ -645,11 +657,48 @@
             try {
                 showLoading('Loading inventory...');
                 
-                const [equipmentSnapshot, suppliesSnapshot, maintenanceSnapshot] = await Promise.all([
-                    db.collection('equipment').get(),
-                    db.collection('supplies').get(),
-                    db.collection('maintenance').where('status', '==', 'pending').get()
-                ]);
+                // Check if Firebase is properly initialized
+                if (!firebase || !firebase.firestore) {
+                    throw new Error('Firebase not initialized');
+                }
+
+                // Add timeout to prevent infinite loading
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Request timeout')), 10000); // 10 second timeout
+                });
+
+                // Try to load data with better error handling and timeout
+                let equipmentSnapshot, suppliesSnapshot, maintenanceSnapshot;
+                
+                try {
+                    equipmentSnapshot = await Promise.race([
+                        db.collection('equipment').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Equipment collection not accessible:', error);
+                    equipmentSnapshot = { forEach: () => {} }; // Empty snapshot
+                }
+
+                try {
+                    suppliesSnapshot = await Promise.race([
+                        db.collection('supplies').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Supplies collection not accessible:', error);
+                    suppliesSnapshot = { forEach: () => {} }; // Empty snapshot
+                }
+
+                try {
+                    maintenanceSnapshot = await Promise.race([
+                        db.collection('maintenance').where('status', '==', 'pending').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Maintenance collection not accessible:', error);
+                    maintenanceSnapshot = { forEach: () => {} }; // Empty snapshot
+                }
 
                 inventoryData = [];
                 
@@ -689,10 +738,30 @@
                 displayInventory(inventoryData);
                 updateStats(inventoryData);
                 hideLoading();
+                
+                // Show a message if no data was loaded
+                if (inventoryData.length === 0) {
+                    console.log('No inventory data found. Collections may be empty or not exist yet.');
+                }
+                
             } catch (error) {
                 console.error('Error loading inventory:', error);
                 hideLoading();
-                showError('Failed to load inventory data');
+                
+                // Show a more user-friendly error message
+                let errorMessage = 'Failed to load inventory data. Please try refreshing the page.';
+                
+                if (error.message.includes('Firebase not initialized')) {
+                    errorMessage = 'Firebase connection failed. Please check your internet connection and try again.';
+                } else if (error.message.includes('Request timeout')) {
+                    errorMessage = 'Request timed out. Please check your internet connection and try again.';
+                }
+                
+                showError(errorMessage);
+                
+                // Display empty state
+                displayInventory([]);
+                updateStats([]);
             }
         }
 
@@ -905,11 +974,71 @@
         }
 
         function showSuccess(message) {
-            alert(message); // Simple alert for now
+            // Create a success notification
+            const notification = document.createElement('div');
+            notification.className = 'notification success';
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">&times;</button>
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4caf50;
+                color: white;
+                padding: 1rem;
+                border-radius: 5px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                max-width: 300px;
+            `;
+            document.body.appendChild(notification);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
         }
 
         function showError(message) {
-            alert('Error: ' + message); // Simple alert for now
+            // Create an error notification
+            const notification = document.createElement('div');
+            notification.className = 'notification error';
+            notification.innerHTML = `
+                <i class="fas fa-exclamation-circle"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">&times;</button>
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #f44336;
+                color: white;
+                padding: 1rem;
+                border-radius: 5px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                max-width: 300px;
+            `;
+            document.body.appendChild(notification);
+            
+            // Auto-remove after 8 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 8000);
         }
 
         // Close modal when clicking outside
