@@ -1,1 +1,1170 @@
-<!DOCTYPE html><html><head><title>Staff</title></head><body><h1>Staff Page</h1><p>This page is under construction.</p><a href="admin-dashboard.html">Back to Dashboard</a></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Management - Holliday's Lawn & Garden</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <style>
+        .staff-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .staff-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .staff-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c5530;
+            margin: 0;
+        }
+        
+        .staff-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-add {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.2s;
+        }
+        
+        .btn-add:hover {
+            background: #45a049;
+        }
+        
+        .staff-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4caf50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .staff-filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: end;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            min-width: 150px;
+        }
+        
+        .filter-group label {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+        
+        .filter-group input,
+        .filter-group select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-filter {
+            background: #2c5530;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        
+        .btn-filter:hover {
+            background: #4caf50;
+        }
+        
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .staff-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        
+        .staff-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .staff-card-header {
+            background: #2c5530;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .staff-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .staff-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: #4caf50;
+        }
+        
+        .status-inactive {
+            background: #f44336;
+        }
+        
+        .status-on-leave {
+            background: #ff9800;
+        }
+        
+        .staff-card-body {
+            padding: 1rem;
+        }
+        
+        .staff-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .info-value {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .staff-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-edit, .btn-delete, .btn-schedule, .btn-message {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .btn-edit {
+            background: #2196f3;
+            color: white;
+        }
+        
+        .btn-edit:hover {
+            background: #1976d2;
+        }
+        
+        .btn-delete {
+            background: #f44336;
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background: #d32f2f;
+        }
+        
+        .btn-schedule {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .btn-schedule:hover {
+            background: #f57c00;
+        }
+        
+        .btn-message {
+            background: #9c27b0;
+            color: white;
+        }
+        
+        .btn-message:hover {
+            background: #7b1fa2;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c5530;
+            margin: 0;
+        }
+        
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+        
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-save {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-cancel:hover {
+            background: #5a6268;
+        }
+        
+        .btn-save:hover {
+            background: #45a049;
+        }
+        
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: white;
+        }
+        
+        .loading-overlay.hidden {
+            display: none;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4caf50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .staff-container {
+                padding: 1rem;
+            }
+            
+            .staff-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .staff-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .staff-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="staff-container">
+        <div class="staff-header">
+            <h1 class="staff-title">Staff Management</h1>
+            <div class="staff-actions">
+                <button class="btn-add" onclick="openAddModal()">
+                    <i class="fas fa-plus"></i>
+                    Add Employee
+                </button>
+                <button class="btn-add" onclick="openScheduleModal()" style="background: #ff9800;">
+                    <i class="fas fa-calendar"></i>
+                    Schedule
+                </button>
+                <button class="btn-add" onclick="openMessageModal()" style="background: #9c27b0;">
+                    <i class="fas fa-envelope"></i>
+                    Send Message
+                </button>
+            </div>
+        </div>
+
+        <div class="staff-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalStaff">0</div>
+                <div class="stat-label">Total Staff</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="activeStaff">0</div>
+                <div class="stat-label">Active Staff</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="onLeaveStaff">0</div>
+                <div class="stat-label">On Leave</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="newHires">0</div>
+                <div class="stat-label">New This Month</div>
+            </div>
+        </div>
+
+        <div class="staff-filters">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="searchStaff">Search</label>
+                    <input type="text" id="searchStaff" placeholder="Search by name, email, or role...">
+                </div>
+                <div class="filter-group">
+                    <label for="filterDepartment">Department</label>
+                    <select id="filterDepartment">
+                        <option value="">All Departments</option>
+                        <option value="landscaping">Landscaping</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="administration">Administration</option>
+                        <option value="sales">Sales</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filterStatus">Status</label>
+                    <select id="filterStatus">
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="on-leave">On Leave</option>
+                    </select>
+                </div>
+                <button class="btn-filter" onclick="applyFilters()">
+                    <i class="fas fa-filter"></i>
+                    Filter
+                </button>
+            </div>
+        </div>
+
+        <div class="staff-grid" id="staffGrid">
+            <!-- Staff cards will be populated here -->
+        </div>
+    </div>
+
+    <!-- Add/Edit Staff Modal -->
+    <div id="staffModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Employee</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="staffForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select id="department" required>
+                            <option value="">Select Department</option>
+                            <option value="landscaping">Landscaping</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="administration">Administration</option>
+                            <option value="sales">Sales</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="position">Position</label>
+                        <input type="text" id="position" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hireDate">Hire Date</label>
+                        <input type="date" id="hireDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" required>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="on-leave">On Leave</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-save">Save Employee</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Staff Schedule</h2>
+                <span class="close" onclick="closeScheduleModal()">&times;</span>
+            </div>
+            <div id="scheduleContent">
+                <!-- Schedule content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Send Message to Staff</h2>
+                <span class="close" onclick="closeMessageModal()">&times;</span>
+            </div>
+            <form id="messageForm">
+                <div class="form-group">
+                    <label for="messageRecipients">Recipients</label>
+                    <select id="messageRecipients" multiple required>
+                        <!-- Recipients will be populated here -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="messageSubject">Subject</label>
+                    <input type="text" id="messageSubject" required>
+                </div>
+                <div class="form-group">
+                    <label for="messageContent">Message</label>
+                    <textarea id="messageContent" rows="6" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeMessageModal()">Cancel</button>
+                    <button type="submit" class="btn-save">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+        <p id="loadingMessage">Loading...</p>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+            authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+            projectId: "holiday-lawn-and-garden",
+            storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+            messagingSenderId: "135322230444",
+            appId: "1:135322230444:web:1a487b25a48aae07368909",
+            measurementId: "G-KD6TBWR4ZT"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        let currentEditId = null;
+        let staffData = [];
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing staff page...');
+            
+            // Set a maximum loading time of 15 seconds
+            const maxLoadingTime = setTimeout(() => {
+                console.warn('Maximum loading time reached, forcing page to load');
+                forceHideLoading();
+                displayStaff([]);
+                updateStats([]);
+                showError('Page loaded with limited functionality. Some features may not work properly.');
+            }, 15000);
+
+            // Set a shorter timeout for immediate fallback
+            const quickFallback = setTimeout(() => {
+                console.warn('Quick fallback: Loading page without Firebase');
+                forceHideLoading();
+                displayStaff([]);
+                updateStats([]);
+                showError('Loading with limited functionality. Firebase connection may be slow.');
+            }, 5000);
+
+            // Try to initialize Firebase and load data
+            try {
+                console.log('Attempting to load staff data...');
+                loadStaff().finally(() => {
+                    clearTimeout(maxLoadingTime);
+                    clearTimeout(quickFallback);
+                });
+            } catch (error) {
+                console.error('Error during initialization:', error);
+                clearTimeout(maxLoadingTime);
+                clearTimeout(quickFallback);
+                forceHideLoading();
+                displayStaff([]);
+                updateStats([]);
+                showError('Failed to initialize. Please refresh the page.');
+            }
+            
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Search functionality
+            document.getElementById('searchStaff').addEventListener('input', function() {
+                applyFilters();
+            });
+
+            // Form submission
+            document.getElementById('staffForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveStaff();
+            });
+
+            document.getElementById('messageForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                sendMessage();
+            });
+        }
+
+        async function loadStaff() {
+            try {
+                showLoading('Loading staff data...');
+                
+                // Check if Firebase is properly initialized
+                if (!firebase || !firebase.firestore) {
+                    throw new Error('Firebase not initialized');
+                }
+
+                // Add timeout to prevent infinite loading
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Request timeout')), 10000);
+                });
+
+                // Try to load staff data
+                let staffSnapshot;
+                try {
+                    staffSnapshot = await Promise.race([
+                        db.collection('staff').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Staff collection not accessible:', error);
+                    staffSnapshot = { forEach: () => {} };
+                }
+
+                staffData = [];
+                
+                staffSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    staffData.push({
+                        id: doc.id,
+                        firstName: data.firstName || '',
+                        lastName: data.lastName || '',
+                        email: data.email || '',
+                        phone: data.phone || '',
+                        department: data.department || '',
+                        position: data.position || '',
+                        hireDate: data.hireDate || new Date(),
+                        status: data.status || 'active',
+                        address: data.address || '',
+                        notes: data.notes || '',
+                        lastUpdated: data.lastUpdated || new Date(),
+                        ...data
+                    });
+                });
+
+                displayStaff(staffData);
+                updateStats(staffData);
+                hideLoading();
+                
+                if (staffData.length === 0) {
+                    console.log('No staff data found. Collection may be empty.');
+                }
+                
+            } catch (error) {
+                console.error('Error loading staff:', error);
+                hideLoading();
+                showError('Failed to load staff data. Please try refreshing the page.');
+                displayStaff([]);
+                updateStats([]);
+            }
+        }
+
+        function displayStaff(data) {
+            const grid = document.getElementById('staffGrid');
+            
+            if (data.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #666;">
+                        <i class="fas fa-users" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>No staff members found</h3>
+                        <p>Add your first employee to get started</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = data.map(staff => `
+                <div class="staff-card">
+                    <div class="staff-card-header">
+                        <h3 class="staff-name">${staff.firstName} ${staff.lastName}</h3>
+                        <span class="staff-status status-${staff.status}">${capitalizeFirst(staff.status)}</span>
+                    </div>
+                    <div class="staff-card-body">
+                        <div class="staff-info">
+                            <div class="info-item">
+                                <span class="info-label">Position</span>
+                                <span class="info-value">${staff.position}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Department</span>
+                                <span class="info-value">${capitalizeFirst(staff.department)}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Email</span>
+                                <span class="info-value">${staff.email}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Phone</span>
+                                <span class="info-value">${staff.phone}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Hire Date</span>
+                                <span class="info-value">${formatDate(staff.hireDate)}</span>
+                            </div>
+                        </div>
+                        <div class="staff-actions">
+                            <button class="btn-edit" onclick="editStaff('${staff.id}')">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                            <button class="btn-schedule" onclick="viewSchedule('${staff.id}')">
+                                <i class="fas fa-calendar"></i>
+                                Schedule
+                            </button>
+                            <button class="btn-message" onclick="messageStaff('${staff.id}')">
+                                <i class="fas fa-envelope"></i>
+                                Message
+                            </button>
+                            <button class="btn-delete" onclick="deleteStaff('${staff.id}')">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats(data) {
+            const stats = {
+                total: data.length,
+                active: data.filter(staff => staff.status === 'active').length,
+                onLeave: data.filter(staff => staff.status === 'on-leave').length,
+                newHires: data.filter(staff => {
+                    const hireDate = new Date(staff.hireDate);
+                    const now = new Date();
+                    const monthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+                    return hireDate >= monthAgo;
+                }).length
+            };
+
+            document.getElementById('totalStaff').textContent = stats.total;
+            document.getElementById('activeStaff').textContent = stats.active;
+            document.getElementById('onLeaveStaff').textContent = stats.onLeave;
+            document.getElementById('newHires').textContent = stats.newHires;
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchStaff').value.toLowerCase();
+            const departmentFilter = document.getElementById('filterDepartment').value;
+            const statusFilter = document.getElementById('filterStatus').value;
+
+            const filteredData = staffData.filter(staff => {
+                const matchesSearch = !searchTerm || 
+                    `${staff.firstName} ${staff.lastName}`.toLowerCase().includes(searchTerm) ||
+                    staff.email.toLowerCase().includes(searchTerm) ||
+                    staff.position.toLowerCase().includes(searchTerm);
+                
+                const matchesDepartment = !departmentFilter || staff.department === departmentFilter;
+                const matchesStatus = !statusFilter || staff.status === statusFilter;
+
+                return matchesSearch && matchesDepartment && matchesStatus;
+            });
+
+            displayStaff(filteredData);
+        }
+
+        function openAddModal() {
+            currentEditId = null;
+            document.getElementById('modalTitle').textContent = 'Add New Employee';
+            document.getElementById('staffForm').reset();
+            document.getElementById('staffModal').style.display = 'block';
+        }
+
+        function editStaff(id) {
+            const staff = staffData.find(staff => staff.id === id);
+            if (!staff) return;
+
+            currentEditId = id;
+            document.getElementById('modalTitle').textContent = 'Edit Employee';
+            
+            // Populate form
+            document.getElementById('firstName').value = staff.firstName;
+            document.getElementById('lastName').value = staff.lastName;
+            document.getElementById('email').value = staff.email;
+            document.getElementById('phone').value = staff.phone;
+            document.getElementById('department').value = staff.department;
+            document.getElementById('position').value = staff.position;
+            document.getElementById('hireDate').value = formatDateForInput(staff.hireDate);
+            document.getElementById('status').value = staff.status;
+            document.getElementById('address').value = staff.address || '';
+            document.getElementById('notes').value = staff.notes || '';
+            
+            document.getElementById('staffModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('staffModal').style.display = 'none';
+            currentEditId = null;
+        }
+
+        async function saveStaff() {
+            try {
+                showLoading('Saving employee...');
+                
+                const staffData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    department: document.getElementById('department').value,
+                    position: document.getElementById('position').value,
+                    hireDate: new Date(document.getElementById('hireDate').value),
+                    status: document.getElementById('status').value,
+                    address: document.getElementById('address').value,
+                    notes: document.getElementById('notes').value,
+                    lastUpdated: new Date()
+                };
+
+                if (currentEditId) {
+                    await db.collection('staff').doc(currentEditId).update(staffData);
+                    showSuccess('Employee updated successfully');
+                } else {
+                    await db.collection('staff').add(staffData);
+                    showSuccess('Employee added successfully');
+                }
+
+                closeModal();
+                await loadStaff();
+                hideLoading();
+            } catch (error) {
+                console.error('Error saving employee:', error);
+                hideLoading();
+                showError('Failed to save employee');
+            }
+        }
+
+        async function deleteStaff(id) {
+            if (!confirm('Are you sure you want to delete this employee?')) return;
+
+            try {
+                showLoading('Deleting employee...');
+                await db.collection('staff').doc(id).delete();
+                showSuccess('Employee deleted successfully');
+                await loadStaff();
+                hideLoading();
+            } catch (error) {
+                console.error('Error deleting employee:', error);
+                hideLoading();
+                showError('Failed to delete employee');
+            }
+        }
+
+        function openScheduleModal() {
+            document.getElementById('scheduleModal').style.display = 'block';
+            loadScheduleData();
+        }
+
+        function closeScheduleModal() {
+            document.getElementById('scheduleModal').style.display = 'none';
+        }
+
+        function loadScheduleData() {
+            const scheduleContent = document.getElementById('scheduleContent');
+            scheduleContent.innerHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <h3>Staff Schedule</h3>
+                    <p>Schedule management feature coming soon...</p>
+                    <p>This will include shift scheduling, time tracking, and availability management.</p>
+                </div>
+            `;
+        }
+
+        function openMessageModal() {
+            document.getElementById('messageModal').style.display = 'block';
+            populateRecipients();
+        }
+
+        function closeMessageModal() {
+            document.getElementById('messageModal').style.display = 'none';
+        }
+
+        function populateRecipients() {
+            const recipientsSelect = document.getElementById('messageRecipients');
+            recipientsSelect.innerHTML = staffData
+                .filter(staff => staff.status === 'active')
+                .map(staff => `<option value="${staff.id}">${staff.firstName} ${staff.lastName} - ${staff.position}</option>`)
+                .join('');
+        }
+
+        async function sendMessage() {
+            try {
+                showLoading('Sending message...');
+                
+                const messageData = {
+                    recipients: Array.from(document.getElementById('messageRecipients').selectedOptions).map(option => option.value),
+                    subject: document.getElementById('messageSubject').value,
+                    content: document.getElementById('messageContent').value,
+                    sentBy: 'admin',
+                    sentAt: new Date(),
+                    status: 'sent'
+                };
+
+                await db.collection('messages').add(messageData);
+                showSuccess('Message sent successfully');
+                closeMessageModal();
+                hideLoading();
+            } catch (error) {
+                console.error('Error sending message:', error);
+                hideLoading();
+                showError('Failed to send message');
+            }
+        }
+
+        function viewSchedule(id) {
+            // Placeholder for individual staff schedule view
+            alert('Individual schedule view coming soon...');
+        }
+
+        function messageStaff(id) {
+            // Placeholder for individual staff messaging
+            alert('Individual messaging coming soon...');
+        }
+
+        // Utility functions
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function formatDate(date) {
+            if (!date) return '-';
+            const d = date.toDate ? date.toDate() : new Date(date);
+            return d.toLocaleDateString();
+        }
+
+        function formatDateForInput(date) {
+            if (!date) return '';
+            const d = date.toDate ? date.toDate() : new Date(date);
+            return d.toISOString().split('T')[0];
+        }
+
+        function showLoading(message) {
+            document.getElementById('loadingMessage').textContent = message;
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                overlay.style.display = 'none';
+            }
+        }
+
+        function forceHideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                overlay.style.display = 'none';
+                overlay.style.visibility = 'hidden';
+            }
+        }
+
+        function showSuccess(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification success';
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">&times;</button>
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4caf50;
+                color: white;
+                padding: 1rem;
+                border-radius: 5px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                max-width: 300px;
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        function showError(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification error';
+            notification.innerHTML = `
+                <i class="fas fa-exclamation-circle"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">&times;</button>
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #f44336;
+                color: white;
+                padding: 1rem;
+                border-radius: 5px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                max-width: 300px;
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 8000);
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const staffModal = document.getElementById('staffModal');
+            const scheduleModal = document.getElementById('scheduleModal');
+            const messageModal = document.getElementById('messageModal');
+            
+            if (event.target === staffModal) {
+                closeModal();
+            }
+            if (event.target === scheduleModal) {
+                closeScheduleModal();
+            }
+            if (event.target === messageModal) {
+                closeMessageModal();
+            }
+        }
+    </script>
+</body>
+</html>
