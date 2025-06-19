@@ -1,23 +1,15 @@
-// Import Firebase modules
-import { getFirestore, collection, query, orderBy, getDocs, addDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { showLoading, hideLoading, showNotification, showModal, closeModal } from "../utils.js";
-
-const db = getFirestore();
+// No imports, use global firebase and global utility functions
+const db = firebase.firestore();
 
 // View staff
-export async function viewStaff() {
+async function viewStaff() {
     try {
-        showLoading("Loading staff...");
-        const staffQuery = query(
-            collection(db, "staff"),
-            orderBy("name")
-        );
-        const staffSnapshot = await getDocs(staffQuery);
-
-        showModal(`
+        window.showLoading("Loading staff...");
+        const staffSnapshot = await db.collection("staff").orderBy("name").get();
+        window.showModal(`
             <div class="modal-header">
                 <h2>Staff Management</h2>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <button class="modal-close" onclick="window.closeModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="staff-grid">
@@ -31,12 +23,8 @@ export async function viewStaff() {
                                 <p><i class="fas fa-phone"></i> ${staff.phone}</p>
                                 <p><i class="fas fa-envelope"></i> ${staff.email}</p>
                                 <div class="staff-actions">
-                                    <button onclick="staff.editStaff('${doc.id}')" class="btn btn-secondary">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </button>
-                                    <button onclick="staff.viewStaffSchedule('${doc.id}')" class="btn btn-primary">
-                                        <i class="fas fa-calendar"></i> Schedule
-                                    </button>
+                                    <button onclick="window.staff.editStaff('${doc.id}')" class="btn btn-secondary"><i class="fas fa-edit"></i> Edit</button>
+                                    <button onclick="window.staff.viewStaffSchedule('${doc.id}')" class="btn btn-primary"><i class="fas fa-calendar"></i> Schedule</button>
                                 </div>
                             </div>
                         `;
@@ -46,19 +34,19 @@ export async function viewStaff() {
         `);
     } catch (error) {
         console.error("Error loading staff:", error);
-        showNotification("Error loading staff", "error");
+        window.showNotification("Error loading staff", "error");
     } finally {
-        hideLoading();
+        window.hideLoading();
     }
 }
 
 // Add staff
-export async function addStaff() {
+async function addStaff() {
     try {
-        showModal(`
+        window.showModal(`
             <div class="modal-header">
                 <h2>Add New Staff Member</h2>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <button class="modal-close" onclick="window.closeModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="addStaffForm" class="form">
@@ -92,7 +80,6 @@ export async function addStaff() {
                 </form>
             </div>
         `);
-
         document.getElementById("addStaffForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
@@ -105,33 +92,25 @@ export async function addStaff() {
                 createdAt: new Date(),
                 performance: 0
             };
-
             try {
-                await addDoc(collection(db, "staff"), staffData);
-                showNotification("Staff member added successfully", "success");
-                closeModal();
+                await db.collection("staff").add(staffData);
+                window.showNotification("Staff member added successfully", "success");
+                window.closeModal();
                 viewStaff();
             } catch (error) {
                 console.error("Error adding staff:", error);
-                showNotification("Error adding staff member", "error");
+                window.showNotification("Error adding staff member", "error");
             }
         });
     } catch (error) {
         console.error("Error showing add staff form:", error);
-        showNotification("Error showing add staff form", "error");
+        window.showNotification("Error showing add staff form", "error");
     }
 }
 
-// Export functions for use in HTML
 window.staff = {
     viewStaff,
     addStaff,
-    editStaff: (id) => {
-        // TODO: Implement edit staff functionality
-        showNotification("Edit staff functionality coming soon", "info");
-    },
-    viewStaffSchedule: (id) => {
-        // TODO: Implement view staff schedule functionality
-        showNotification("View staff schedule functionality coming soon", "info");
-    }
+    editStaff: (id) => window.showNotification("Edit staff functionality coming soon", "info"),
+    viewStaffSchedule: (id) => window.showNotification("View staff schedule functionality coming soon", "info")
 }; 

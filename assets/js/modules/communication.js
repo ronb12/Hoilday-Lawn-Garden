@@ -1,23 +1,15 @@
-// Import Firebase modules
-import { getFirestore, collection, query, orderBy, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { showLoading, hideLoading, showNotification, showModal, closeModal } from "../utils.js";
-
-const db = getFirestore();
+// No imports, use global firebase and global utility functions
+const db = firebase.firestore();
 
 // View messages
-export async function viewMessages() {
+async function viewMessages() {
     try {
-        showLoading("Loading messages...");
-        const messagesQuery = query(
-            collection(db, "messages"),
-            orderBy("timestamp", "desc")
-        );
-        const messagesSnapshot = await getDocs(messagesQuery);
-
-        showModal(`
+        window.showLoading("Loading messages...");
+        const messagesSnapshot = await db.collection("messages").orderBy("timestamp", "desc").get();
+        window.showModal(`
             <div class="modal-header">
                 <h2>Messages</h2>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <button class="modal-close" onclick="window.closeModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="messages-grid">
@@ -27,15 +19,11 @@ export async function viewMessages() {
                             <div class="message-card">
                                 <h3>${message.subject}</h3>
                                 <p><i class="fas fa-user"></i> From: ${message.senderName}</p>
-                                <p><i class="fas fa-calendar"></i> ${formatDate(message.timestamp)}</p>
+                                <p><i class="fas fa-calendar"></i> ${window.formatDate(message.timestamp)}</p>
                                 <p><i class="fas fa-info-circle"></i> ${message.content}</p>
                                 <div class="message-actions">
-                                    <button onclick="communication.replyToMessage('${doc.id}')" class="btn btn-primary">
-                                        <i class="fas fa-reply"></i> Reply
-                                    </button>
-                                    <button onclick="communication.deleteMessage('${doc.id}')" class="btn btn-danger">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </button>
+                                    <button onclick="window.communication.replyToMessage('${doc.id}')" class="btn btn-primary"><i class="fas fa-reply"></i> Reply</button>
+                                    <button onclick="window.communication.deleteMessage('${doc.id}')" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
                                 </div>
                             </div>
                         `;
@@ -45,19 +33,19 @@ export async function viewMessages() {
         `);
     } catch (error) {
         console.error("Error loading messages:", error);
-        showNotification("Error loading messages", "error");
+        window.showNotification("Error loading messages", "error");
     } finally {
-        hideLoading();
+        window.hideLoading();
     }
 }
 
 // Send bulk message
-export async function sendBulkMessage() {
+async function sendBulkMessage() {
     try {
-        showModal(`
+        window.showModal(`
             <div class="modal-header">
                 <h2>Send Bulk Message</h2>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <button class="modal-close" onclick="window.closeModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="bulkMessageForm" class="form">
@@ -83,7 +71,6 @@ export async function sendBulkMessage() {
                 </form>
             </div>
         `);
-
         document.getElementById("bulkMessageForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
@@ -91,23 +78,22 @@ export async function sendBulkMessage() {
                 subject: formData.get("subject"),
                 content: formData.get("content"),
                 recipients: formData.getAll("recipients"),
-                timestamp: serverTimestamp(),
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 senderName: "Admin",
                 senderId: "admin"
             };
-
             try {
-                await addDoc(collection(db, "messages"), messageData);
-                showNotification("Bulk message sent successfully", "success");
-                closeModal();
+                await db.collection("messages").add(messageData);
+                window.showNotification("Bulk message sent successfully", "success");
+                window.closeModal();
             } catch (error) {
                 console.error("Error sending bulk message:", error);
-                showNotification("Error sending bulk message", "error");
+                window.showNotification("Error sending bulk message", "error");
             }
         });
     } catch (error) {
         console.error("Error showing bulk message form:", error);
-        showNotification("Error showing bulk message form", "error");
+        window.showNotification("Error showing bulk message form", "error");
     }
 }
 
@@ -126,12 +112,6 @@ function formatDate(date) {
 window.communication = {
     viewMessages,
     sendBulkMessage,
-    replyToMessage: (id) => {
-        // TODO: Implement reply to message functionality
-        showNotification("Reply to message functionality coming soon", "info");
-    },
-    deleteMessage: (id) => {
-        // TODO: Implement delete message functionality
-        showNotification("Delete message functionality coming soon", "info");
-    }
+    replyToMessage: (id) => window.showNotification("Reply to message functionality coming soon", "info"),
+    deleteMessage: (id) => window.showNotification("Delete message functionality coming soon", "info")
 }; 

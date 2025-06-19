@@ -1,13 +1,10 @@
-// Import Firebase modules
-import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { showLoading, hideLoading, showNotification, showModal, closeModal } from "../utils.js";
-
-const db = getFirestore();
+// No imports, use global firebase and global utility functions
+const db = firebase.firestore();
 
 // View analytics
-export async function viewAnalytics() {
+async function viewAnalytics() {
     try {
-        showLoading("Loading analytics...");
+        window.showLoading("Loading analytics...");
         
         const [revenueData, serviceData, customerData, staffData] = await Promise.all([
             getRevenueAnalytics(),
@@ -56,25 +53,21 @@ export async function viewAnalytics() {
             </div>
         `;
 
-        showModal("Analytics Dashboard", modalContent);
+        window.showModal("Analytics Dashboard", modalContent);
 
         // Initialize charts after modal is shown
         initializeCharts(revenueData, serviceData, customerData, staffData);
     } catch (error) {
         console.error("Error loading analytics:", error);
-        showNotification("Error loading analytics", "error");
+        window.showNotification("Error loading analytics", "error");
     } finally {
-        hideLoading();
+        window.hideLoading();
     }
 }
 
 // Get revenue analytics
 async function getRevenueAnalytics() {
-    const paymentsQuery = query(
-        collection(db, "payments"),
-        orderBy("date", "desc")
-    );
-    const paymentsSnapshot = await getDocs(paymentsQuery);
+    const paymentsSnapshot = await db.collection("payments").orderBy("date", "desc").get();
     const payments = paymentsSnapshot.docs.map(doc => doc.data());
     
     const total = payments.reduce((sum, payment) => sum + payment.amount, 0);
@@ -82,7 +75,7 @@ async function getRevenueAnalytics() {
     
     const monthlyData = {};
     payments.forEach(payment => {
-        const month = payment.date.toDate().toLocaleString('default', { month: 'short' });
+        const month = new Date(payment.date).toLocaleString('default', { month: 'short' });
         monthlyData[month] = (monthlyData[month] || 0) + payment.amount;
     });
 
@@ -95,11 +88,7 @@ async function getRevenueAnalytics() {
 
 // Get service analytics
 async function getServiceAnalytics() {
-    const appointmentsQuery = query(
-        collection(db, "appointments"),
-        orderBy("date", "desc")
-    );
-    const appointmentsSnapshot = await getDocs(appointmentsQuery);
+    const appointmentsSnapshot = await db.collection("appointments").orderBy("date", "desc").get();
     const appointments = appointmentsSnapshot.docs.map(doc => doc.data());
     
     const serviceCounts = {};
@@ -120,17 +109,13 @@ async function getServiceAnalytics() {
 
 // Get customer analytics
 async function getCustomerAnalytics() {
-    const customersQuery = query(
-        collection(db, "customers"),
-        orderBy("createdAt", "desc")
-    );
-    const customersSnapshot = await getDocs(customersQuery);
+    const customersSnapshot = await db.collection("customers").orderBy("createdAt", "desc").get();
     const customers = customersSnapshot.docs.map(doc => doc.data());
     
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const newThisMonth = customers.filter(
-        customer => customer.createdAt.toDate() >= startOfMonth
+        customer => new Date(customer.createdAt) >= startOfMonth
     ).length;
 
     return {
@@ -141,7 +126,7 @@ async function getCustomerAnalytics() {
 
 // Get staff analytics
 async function getStaffAnalytics() {
-    const staffSnapshot = await getDocs(collection(db, "staff"));
+    const staffSnapshot = await db.collection("staff").get();
     const staff = staffSnapshot.docs.map(doc => doc.data());
     
     const topPerformer = staff
@@ -199,7 +184,7 @@ function initializeCharts(revenueData, serviceData, customerData, staffData) {
         data: {
             labels: staffData.staff.map(member => member.name),
             datasets: [{
-                label: "Performance Rating",
+                label: "Rating",
                 data: staffData.staff.map(member => member.rating || 0),
                 backgroundColor: "#4CAF50"
             }]
@@ -226,4 +211,7 @@ function formatDate(date) {
         month: "short",
         day: "numeric"
     });
-} 
+}
+
+// Expose main function
+window.analytics = { viewAnalytics }; 

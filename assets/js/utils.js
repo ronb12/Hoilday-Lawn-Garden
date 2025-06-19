@@ -1,23 +1,21 @@
 // Utility functions for both admin and customer dashboards
-import { getFirestore, collection, query, where, getDocs, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { app } from "./firebase-config.js";
+// No imports, use global firebase
 
-const db = getFirestore(app);
+const db = firebase.firestore();
 
 // Notification system
-export function showNotification(message, type = "info") {
+function showNotification(message, type = "info") {
     const notification = document.createElement("div");
     notification.className = `notification ${type}`;
     notification.textContent = message;
     document.body.appendChild(notification);
-    
     setTimeout(() => {
         notification.remove();
     }, 3000);
 }
 
 // Loading indicator
-export function showLoading(message = "Loading...") {
+function showLoading(message = "Loading...") {
     const loading = document.createElement("div");
     loading.id = "loadingOverlay";
     loading.innerHTML = `
@@ -27,7 +25,7 @@ export function showLoading(message = "Loading...") {
     document.body.appendChild(loading);
 }
 
-export function hideLoading() {
+function hideLoading() {
     const loading = document.getElementById("loadingOverlay");
     if (loading) {
         loading.remove();
@@ -35,7 +33,7 @@ export function hideLoading() {
 }
 
 // Modal system
-export function showModal(content) {
+function showModal(content) {
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.innerHTML = `
@@ -45,14 +43,12 @@ export function showModal(content) {
         </div>
     `;
     document.body.appendChild(modal);
-    
     const closeButton = modal.querySelector(".close-button");
     closeButton.onclick = () => modal.remove();
-    
     return modal;
 }
 
-export function closeModal() {
+function closeModal() {
     const modal = document.querySelector(".modal");
     if (modal) {
         modal.remove();
@@ -60,7 +56,7 @@ export function closeModal() {
 }
 
 // Date formatting
-export function formatDate(date) {
+function formatDate(date) {
     if (!date) return "N/A";
     const d = date instanceof Date ? date : new Date(date);
     return d.toLocaleDateString("en-US", {
@@ -71,7 +67,7 @@ export function formatDate(date) {
 }
 
 // Time formatting
-export function formatTime(time) {
+function formatTime(time) {
     if (!time) return "N/A";
     const d = time instanceof Date ? time : new Date(time);
     return d.toLocaleTimeString("en-US", {
@@ -81,7 +77,7 @@ export function formatTime(time) {
 }
 
 // Status formatting
-export function formatStatus(status) {
+function formatStatus(status) {
     const statusMap = {
         "scheduled": "Scheduled",
         "in-progress": "In Progress",
@@ -95,7 +91,7 @@ export function formatStatus(status) {
 }
 
 // Service type formatting
-export function formatServiceType(type) {
+function formatServiceType(type) {
     const typeMap = {
         "lawn-mowing": "Lawn Mowing",
         "hedge-trimming": "Hedge Trimming",
@@ -107,36 +103,36 @@ export function formatServiceType(type) {
 }
 
 // Error handling
-export function handleError(error, message = "An error occurred") {
+function handleError(error, message = "An error occurred") {
     console.error(message, error);
     showNotification(message, "error");
 }
 
 // Data validation
-export function validateEmail(email) {
+function validateEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-export function validatePhone(phone) {
+function validatePhone(phone) {
     return /^\+?[\d\s-]{10,}$/.test(phone);
 }
 
 // Firestore helpers
-export async function getUserData(userId) {
+async function getUserData(userId) {
     try {
-        const userDoc = await getDoc(doc(db, "users", userId));
-        return userDoc.exists() ? userDoc.data() : null;
+        const userDoc = await db.collection("users").doc(userId).get();
+        return userDoc.exists ? userDoc.data() : null;
     } catch (error) {
         handleError(error, "Error fetching user data");
         return null;
     }
 }
 
-export async function updateUserData(userId, data) {
+async function updateUserData(userId, data) {
     try {
-        await updateDoc(doc(db, "users", userId), {
+        await db.collection("users").doc(userId).update({
             ...data,
-            updatedAt: serverTimestamp()
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         });
         return true;
     } catch (error) {
@@ -144,3 +140,19 @@ export async function updateUserData(userId, data) {
         return false;
     }
 }
+
+// Expose functions globally
+window.showNotification = showNotification;
+window.showLoading = showLoading;
+window.hideLoading = hideLoading;
+window.showModal = showModal;
+window.closeModal = closeModal;
+window.formatDate = formatDate;
+window.formatTime = formatTime;
+window.formatStatus = formatStatus;
+window.formatServiceType = formatServiceType;
+window.handleError = handleError;
+window.validateEmail = validateEmail;
+window.validatePhone = validatePhone;
+window.getUserData = getUserData;
+window.updateUserData = updateUserData;

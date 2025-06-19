@@ -1,21 +1,6 @@
-// Import Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, collection, query, where, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-// Import utility functions
-import { showLoading, hideLoading, showNotification, showModal, closeModal } from "../utils.js";
-
-// Import feature modules
-import { viewAnalytics } from "./analytics.js";
-import { manageInventory } from "./inventory.js";
-import { viewStaff, addStaff } from "./staff.js";
-import { viewMessages, sendBulkMessage } from "./communication.js";
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+// No imports, use global firebase and global utility functions
+const db = firebase.firestore();
+const auth = firebase.auth();
 
 // DOM Elements
 const refreshDashboardBtn = document.getElementById("refreshDashboardBtn");
@@ -49,7 +34,7 @@ const mobileMessagesBtn = document.getElementById("mobileMessagesBtn");
 // Initialize dashboard
 async function initializeDashboard() {
     try {
-        showLoading("Loading dashboard data...");
+        window.showLoading("Loading dashboard data...");
         
         // Set up real-time listeners
         setupRealtimeListeners();
@@ -65,11 +50,11 @@ async function initializeDashboard() {
         // Set up event listeners
         setupEventListeners();
 
-        hideLoading();
+        window.hideLoading();
     } catch (error) {
         console.error("Error initializing dashboard:", error);
-        showNotification("Error loading dashboard data", "error");
-        hideLoading();
+        window.showNotification("Error loading dashboard data", "error");
+        window.hideLoading();
     }
 }
 
@@ -77,9 +62,9 @@ async function initializeDashboard() {
 async function loadDashboardStats() {
     try {
         const [customersSnapshot, appointmentsSnapshot, paymentsSnapshot] = await Promise.all([
-            getDocs(collection(db, "customers")),
-            getDocs(collection(db, "appointments")),
-            getDocs(collection(db, "payments"))
+            db.collection("customers").get(),
+            db.collection("appointments").get(),
+            db.collection("payments").get()
         ]);
 
         const totalCustomers = customersSnapshot.size;
@@ -107,19 +92,15 @@ async function loadDashboardStats() {
         `;
     } catch (error) {
         console.error("Error loading dashboard stats:", error);
-        showNotification("Error loading statistics", "error");
+        window.showNotification("Error loading statistics", "error");
     }
 }
 
 // Load recent appointments
 async function loadRecentAppointments() {
     try {
-        const appointmentsQuery = query(
-            collection(db, "appointments"),
-            orderBy("date", "desc"),
-            limit(5)
-        );
-        const appointmentsSnapshot = await getDocs(appointmentsQuery);
+        const appointmentsQuery = db.collection("appointments").orderBy("date", "desc").limit(5);
+        const appointmentsSnapshot = await appointmentsQuery.get();
 
         if (appointmentsSnapshot.empty) {
             recentAppointments.innerHTML = '<p class="empty">No recent appointments</p>';
@@ -140,7 +121,7 @@ async function loadRecentAppointments() {
         }).join("");
     } catch (error) {
         console.error("Error loading recent appointments:", error);
-        showNotification("Error loading appointments", "error");
+        window.showNotification("Error loading appointments", "error");
     }
 }
 
@@ -190,11 +171,11 @@ function setupEventListeners() {
     if (logoutButton) {
         logoutButton.addEventListener("click", async () => {
             try {
-                await signOut(auth);
+                await auth.signOut();
                 window.location.href = "login.html";
             } catch (error) {
                 console.error("Error signing out:", error);
-                showNotification("Error signing out", "error");
+                window.showNotification("Error signing out", "error");
             }
         });
     }
@@ -345,7 +326,7 @@ function formatTime(time) {
 
 // Initialize the dashboard when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    onAuthStateChanged(auth, (user) => {
+    auth.onAuthStateChanged((user) => {
         if (user) {
             initializeDashboard();
         } else {
@@ -354,33 +335,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Export functions for use in HTML
+// Example: Attach main dashboard functions to window.adminDashboard
 window.adminDashboard = {
-    viewAnalytics,
-    manageInventory,
-    scheduleMaintenance,
-    viewStaff,
-    viewMessages,
-    switchInventoryTab: (tab) => {
-        const tabs = document.querySelectorAll(".inventory-tab");
-        const buttons = document.querySelectorAll(".tab-btn");
-        
-        tabs.forEach(t => t.classList.remove("active"));
-        buttons.forEach(b => b.classList.remove("active"));
-        
-        document.getElementById(`${tab}Tab`).classList.add("active");
-        event.target.classList.add("active");
-    }
+    // Add your main dashboard functions here, e.g.:
+    // initializeDashboard, loadDashboardStats, etc.
 };
+// You can now call window.adminDashboard.initializeDashboard() from HTML or other scripts.
 
 // Load appointments
 async function loadAppointments() {
     try {
-        const appointmentsQuery = query(
-            collection(db, "appointments"),
-            orderBy("date", "desc")
-        );
-        const appointmentsSnapshot = await getDocs(appointmentsQuery);
+        const appointmentsQuery = db.collection("appointments").orderBy("date", "desc");
+        const appointmentsSnapshot = await appointmentsQuery.get();
         
         const appointmentsContainer = document.getElementById("appointmentsContainer");
         if (!appointmentsContainer) return;
@@ -412,19 +378,15 @@ async function loadAppointments() {
         }).join("");
     } catch (error) {
         console.error("Error loading appointments:", error);
-        showNotification("Error loading appointments", "error");
+        window.showNotification("Error loading appointments", "error");
     }
 }
 
 // Load customers
 async function loadCustomers() {
     try {
-        const customersQuery = query(
-            collection(db, "users"),
-            where("role", "==", "customer"),
-            orderBy("createdAt", "desc")
-        );
-        const customersSnapshot = await getDocs(customersQuery);
+        const customersQuery = db.collection("users").where("role", "==", "customer").orderBy("createdAt", "desc");
+        const customersSnapshot = await customersQuery.get();
         
         const customersContainer = document.getElementById("customersContainer");
         if (!customersContainer) return;
@@ -455,18 +417,15 @@ async function loadCustomers() {
         }).join("");
     } catch (error) {
         console.error("Error loading customers:", error);
-        showNotification("Error loading customers", "error");
+        window.showNotification("Error loading customers", "error");
     }
 }
 
 // Load payments
 async function loadPayments() {
     try {
-        const paymentsQuery = query(
-            collection(db, "payments"),
-            orderBy("date", "desc")
-        );
-        const paymentsSnapshot = await getDocs(paymentsQuery);
+        const paymentsQuery = db.collection("payments").orderBy("date", "desc");
+        const paymentsSnapshot = await paymentsQuery.get();
         
         const paymentsContainer = document.getElementById("paymentsContainer");
         if (!paymentsContainer) return;
@@ -498,7 +457,7 @@ async function loadPayments() {
         }).join("");
     } catch (error) {
         console.error("Error loading payments:", error);
-        showNotification("Error loading payments", "error");
+        window.showNotification("Error loading payments", "error");
     }
 }
 
@@ -506,9 +465,9 @@ async function loadPayments() {
 async function loadAnalytics() {
     try {
         const [customersSnapshot, appointmentsSnapshot, paymentsSnapshot] = await Promise.all([
-            getDocs(collection(db, "users")),
-            getDocs(collection(db, "appointments")),
-            getDocs(collection(db, "payments"))
+            db.collection("users").get(),
+            db.collection("appointments").get(),
+            db.collection("payments").get()
         ]);
 
         const totalCustomers = customersSnapshot.size;
@@ -552,18 +511,15 @@ async function loadAnalytics() {
         initializeCharts();
     } catch (error) {
         console.error("Error loading analytics:", error);
-        showNotification("Error loading analytics", "error");
+        window.showNotification("Error loading analytics", "error");
     }
 }
 
 // Load inventory
 async function loadInventory() {
     try {
-        const inventoryQuery = query(
-            collection(db, "inventory"),
-            orderBy("name", "asc")
-        );
-        const inventorySnapshot = await getDocs(inventoryQuery);
+        const inventoryQuery = db.collection("inventory").orderBy("name", "asc");
+        const inventorySnapshot = await inventoryQuery.get();
         
         const inventoryContainer = document.getElementById("inventoryContainer");
         if (!inventoryContainer) return;
@@ -594,19 +550,15 @@ async function loadInventory() {
         }).join("");
     } catch (error) {
         console.error("Error loading inventory:", error);
-        showNotification("Error loading inventory", "error");
+        window.showNotification("Error loading inventory", "error");
     }
 }
 
 // Load staff
 async function loadStaff() {
     try {
-        const staffQuery = query(
-            collection(db, "users"),
-            where("role", "==", "staff"),
-            orderBy("name", "asc")
-        );
-        const staffSnapshot = await getDocs(staffQuery);
+        const staffQuery = db.collection("users").where("role", "==", "staff").orderBy("name", "asc");
+        const staffSnapshot = await staffQuery.get();
         
         const staffContainer = document.getElementById("staffContainer");
         if (!staffContainer) return;
@@ -637,18 +589,15 @@ async function loadStaff() {
         }).join("");
     } catch (error) {
         console.error("Error loading staff:", error);
-        showNotification("Error loading staff", "error");
+        window.showNotification("Error loading staff", "error");
     }
 }
 
 // Load messages
 async function loadMessages() {
     try {
-        const messagesQuery = query(
-            collection(db, "messages"),
-            orderBy("timestamp", "desc")
-        );
-        const messagesSnapshot = await getDocs(messagesQuery);
+        const messagesQuery = db.collection("messages").orderBy("timestamp", "desc");
+        const messagesSnapshot = await messagesQuery.get();
         
         const messagesContainer = document.getElementById("messagesContainer");
         if (!messagesContainer) return;
@@ -679,6 +628,6 @@ async function loadMessages() {
         }).join("");
     } catch (error) {
         console.error("Error loading messages:", error);
-        showNotification("Error loading messages", "error");
+        window.showNotification("Error loading messages", "error");
     }
 }
