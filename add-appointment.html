@@ -1,1 +1,248 @@
-<!DOCTYPE html><html><head><title>Add Appointment</title></head><body><h1>Add Appointment Page</h1><p>This page is under construction.</p><a href="admin-dashboard.html">Back to Dashboard</a></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Appointment - Holliday's Lawn & Garden</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .appointment-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .appointment-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c5530;
+        }
+        .appointment-form-container, .appointment-list-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-320.png" alt="Logo">
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="staff.html">Staff</a>
+            <a href="add-appointment.html">Appointments</a>
+            <a href="customers.html">Customers</a>
+        </nav>
+    </header>
+
+    <div class="appointment-container">
+        <div class="appointment-header">
+            <h1 class="appointment-title">Manage Appointments</h1>
+        </div>
+
+        <div class="appointment-form-container">
+            <h2>Add New Appointment</h2>
+            <form id="appointmentForm">
+                <div class="form-group">
+                    <label for="customer">Customer</label>
+                    <select id="customer" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="service">Service</label>
+                    <input type="text" id="service" required>
+                </div>
+                <div class="form-group">
+                    <label for="appointmentDate">Date</label>
+                    <input type="date" id="appointmentDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="appointmentTime">Time</label>
+                    <input type="time" id="appointmentTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="assignedTo">Assign to Staff</label>
+                    <select id="assignedTo" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" rows="4"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">Add Appointment</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="appointment-list-container">
+            <h2>Upcoming Appointments</h2>
+            <div id="appointmentList">
+                <p>No upcoming appointments.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="firebase-init.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const db = firebase.firestore();
+
+            async function fetchCustomers() {
+                const customerSelect = document.getElementById('customer');
+                customerSelect.innerHTML = '<option value="">Loading...</option>';
+                try {
+                    const snapshot = await db.collection('customers').get();
+                    let options = '<option value="">Select Customer</option>';
+                    snapshot.forEach(doc => {
+                        const customer = doc.data();
+                        options += `<option value="${doc.id}">${customer.name}</option>`;
+                    });
+                    customerSelect.innerHTML = options;
+                } catch (error) {
+                    console.error("Error fetching customers:", error);
+                    customerSelect.innerHTML = '<option value="">Could not load customers</option>';
+                }
+            }
+
+            async function fetchStaff() {
+                const staffSelect = document.getElementById('assignedTo');
+                staffSelect.innerHTML = '<option value="">Loading...</option>';
+                try {
+                    const snapshot = await db.collection('staff').where('status', '==', 'active').get();
+                    let options = '<option value="">Select Staff</option>';
+                    snapshot.forEach(doc => {
+                        const staff = doc.data();
+                        options += `<option value="${doc.id}">${staff.firstName} ${staff.lastName}</option>`;
+                    });
+                    staffSelect.innerHTML = options;
+                } catch (error) {
+                    console.error("Error fetching staff:", error);
+                    staffSelect.innerHTML = '<option value="">Could not load staff</option>';
+                }
+            }
+
+            async function fetchAppointments() {
+                const db = firebase.firestore();
+                const appointmentList = document.getElementById('appointmentList');
+                appointmentList.innerHTML = '<p>Loading...</p>';
+                try {
+                    const snapshot = await db.collection('appointments').orderBy('date').get();
+                    if (snapshot.empty) {
+                        appointmentList.innerHTML = '<p>No upcoming appointments.</p>';
+                        return;
+                    }
+                    let html = '<table><thead><tr><th>Customer</th><th>Service</th><th>Date</th><th>Assigned To</th><th>Actions</th></tr></thead><tbody>';
+                    const staffCache = {};
+                    const customerCache = {};
+
+                    // Pre-fetch all staff and customers
+                    const staffPromise = db.collection('staff').get();
+                    const customerPromise = db.collection('customers').get();
+                    const [staffSnapshot, customerSnapshot] = await Promise.all([staffPromise, customerPromise]);
+                    staffSnapshot.forEach(doc => staffCache[doc.id] = doc.data());
+                    customerSnapshot.forEach(doc => customerCache[doc.id] = doc.data());
+
+                    snapshot.forEach(doc => {
+                        const appointment = doc.data();
+                        const customer = customerCache[appointment.customerId];
+                        const staff = staffCache[appointment.assignedTo];
+                        html += `
+                            <tr>
+                                <td>${customer ? customer.name : 'N/A'}</td>
+                                <td>${appointment.service}</td>
+                                <td>${new Date(appointment.date.seconds * 1000).toLocaleString()}</td>
+                                <td>${staff ? staff.firstName + ' ' + staff.lastName : 'N/A'}</td>
+                                <td>
+                                    <button class="btn-edit" data-id="${doc.id}">Edit</button>
+                                    <button class="btn-delete" data-id="${doc.id}">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    html += '</tbody></table>';
+                    appointmentList.innerHTML = html;
+                    addTableButtonListeners();
+                } catch (error) {
+                    console.error("Error fetching appointments:", error);
+                    appointmentList.innerHTML = '<p>Error loading appointments.</p>';
+                }
+            }
+
+            fetchCustomers();
+            fetchStaff();
+            fetchAppointments();
+
+            const appointmentForm = document.getElementById('appointmentForm');
+            appointmentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const editingId = appointmentForm.dataset.editingId;
+                const appointmentData = {
+                    customerId: document.getElementById('customer').value,
+                    service: document.getElementById('service').value,
+                    date: new Date(document.getElementById('appointmentDate').value + 'T' + document.getElementById('appointmentTime').value),
+                    assignedTo: document.getElementById('assignedTo').value,
+                    notes: document.getElementById('notes').value,
+                };
+
+                try {
+                    if (editingId) {
+                        await db.collection('appointments').doc(editingId).update(appointmentData);
+                    } else {
+                        appointmentData.createdAt = new Date();
+                        await db.collection('appointments').add(appointmentData);
+                    }
+                    appointmentForm.reset();
+                    delete appointmentForm.dataset.editingId;
+                    fetchAppointments();
+                } catch (error) {
+                    console.error("Error saving appointment:", error);
+                }
+            });
+
+            function addTableButtonListeners() {
+                const db = firebase.firestore();
+                document.querySelectorAll('.btn-delete').forEach(button => {
+                    button.addEventListener('click', async (e) => {
+                        const docId = e.target.dataset.id;
+                        if (confirm('Are you sure you want to delete this appointment?')) {
+                            await db.collection('appointments').doc(docId).delete();
+                            fetchAppointments();
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.btn-edit').forEach(button => {
+                    button.addEventListener('click', async (e) => {
+                        const docId = e.target.dataset.id;
+                        const doc = await db.collection('appointments').doc(docId).get();
+                        if (doc.exists) {
+                            const appointment = doc.data();
+                            document.getElementById('customer').value = appointment.customerId;
+                            document.getElementById('service').value = appointment.service;
+                            const date = new Date(appointment.date.seconds * 1000);
+                            document.getElementById('appointmentDate').value = date.toISOString().split('T')[0];
+                            document.getElementById('appointmentTime').value = date.toTimeString().split(' ')[0].substring(0,5);
+                            document.getElementById('assignedTo').value = appointment.assignedTo;
+                            document.getElementById('notes').value = appointment.notes;
+                            document.getElementById('appointmentForm').dataset.editingId = docId;
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
