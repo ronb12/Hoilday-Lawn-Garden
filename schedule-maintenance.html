@@ -1,1 +1,320 @@
-<!DOCTYPE html><html><head><title>Schedule Maintenance</title></head><body><h1>Schedule Maintenance Page</h1><p>This page is under construction.</p><a href="admin-dashboard.html">Back to Dashboard</a></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Maintenance - Holliday's Lawn & Garden</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .maintenance-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .maintenance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .maintenance-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c5530;
+        }
+        .btn-add-maintenance {
+            background: #4caf50;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .maintenance-calendar {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .maintenance-list {
+             background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-320.png" alt="Logo">
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="staff.html">Staff</a>
+            <a href="schedule-maintenance.html">Maintenance</a>
+            <a href="inventory.html">Inventory</a>
+        </nav>
+    </header>
+
+    <div class="maintenance-container">
+        <div class="maintenance-header">
+            <h1 class="maintenance-title">Schedule Maintenance</h1>
+            <button class="btn-add-maintenance">
+                <i class="fas fa-plus"></i>
+                Schedule New Maintenance
+            </button>
+        </div>
+
+        <div class="maintenance-calendar">
+            <h2>Maintenance Calendar</h2>
+            <!-- Calendar will be implemented here -->
+            <p>Calendar view coming soon.</p>
+        </div>
+
+        <div class="maintenance-list">
+            <h2>Upcoming Maintenance</h2>
+            <!-- Maintenance list will be populated here -->
+            <p>No upcoming maintenance scheduled.</p>
+        </div>
+    </div>
+
+    <!-- Add/Edit Maintenance Modal -->
+    <div id="maintenanceModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Schedule New Maintenance</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="maintenanceForm">
+                <div class="form-group">
+                    <label for="taskName">Task Name</label>
+                    <input type="text" id="taskName" required>
+                </div>
+                <div class="form-group">
+                    <label for="maintenanceType">Maintenance Type</label>
+                    <select id="maintenanceType" required>
+                        <option value="">Select Type</option>
+                        <option value="equipment">Equipment</option>
+                        <option value="customer-service">Customer Service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="assignedTo">Assign to Staff</label>
+                    <select id="assignedTo" required>
+                        <option value="">Select Staff</option>
+                        <!-- Staff will be populated here -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="maintenanceDate">Date</label>
+                    <input type="date" id="maintenanceDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="maintenanceStatus">Status</label>
+                    <select id="maintenanceStatus" required>
+                        <option value="scheduled">Scheduled</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" rows="4"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="firebase-init.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const addMaintenanceBtn = document.querySelector('.btn-add-maintenance');
+            const modal = document.getElementById('maintenanceModal');
+            const closeModalBtn = document.querySelector('.close-modal');
+            const cancelBtn = document.querySelector('.btn-cancel');
+
+            addMaintenanceBtn.addEventListener('click', () => {
+                modal.style.display = 'block';
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            cancelBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        const db = firebase.firestore();
+        const maintenanceForm = document.getElementById('maintenanceForm');
+
+        async function fetchStaff() {
+            const staffSelect = document.getElementById('assignedTo');
+            staffSelect.innerHTML = '<option value="">Loading...</option>';
+            try {
+                const snapshot = await db.collection('staff').where('status', '==', 'active').get();
+                let options = '<option value="">Select Staff</option>';
+                snapshot.forEach(doc => {
+                    const staff = doc.data();
+                    options += `<option value="${doc.id}">${staff.firstName} ${staff.lastName}</option>`;
+                });
+                staffSelect.innerHTML = options;
+            } catch (error) {
+                console.error("Error fetching staff:", error);
+                staffSelect.innerHTML = '<option value="">Could not load staff</option>';
+            }
+        }
+
+        maintenanceForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editingId = maintenanceForm.dataset.editingId;
+
+            const taskData = {
+                taskName: document.getElementById('taskName').value,
+                maintenanceType: document.getElementById('maintenanceType').value,
+                assignedTo: document.getElementById('assignedTo').value,
+                date: new Date(document.getElementById('maintenanceDate').value),
+                status: document.getElementById('maintenanceStatus').value,
+                notes: document.getElementById('notes').value,
+            };
+
+            try {
+                if (editingId) {
+                    // Update existing task
+                    await db.collection('maintenance').doc(editingId).update(taskData);
+                } else {
+                    // Add new task
+                    taskData.createdAt = new Date();
+                    await db.collection('maintenance').add(taskData);
+                }
+                maintenanceForm.reset();
+                delete maintenanceForm.dataset.editingId; // Clear editing id
+                document.getElementById('maintenanceModal').style.display = 'none';
+                fetchMaintenanceTasks();
+            } catch (error) {
+                console.error("Error saving maintenance task: ", error);
+            }
+        });
+
+        async function fetchMaintenanceTasks() {
+            const maintenanceList = document.querySelector('.maintenance-list');
+            maintenanceList.innerHTML = '<h2>Upcoming Maintenance</h2><p>Loading...</p>';
+            try {
+                const snapshot = await db.collection('maintenance').orderBy('date').get();
+                if (snapshot.empty) {
+                    maintenanceList.innerHTML = '<h2>Upcoming Maintenance</h2><p>No upcoming maintenance scheduled.</p>';
+                    return;
+                }
+                let html = '<h2>Upcoming Maintenance</h2><table><thead><tr><th>Task</th><th>Assigned To</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
+                
+                const staffCache = {};
+                const staffPromises = [];
+
+                snapshot.forEach(doc => {
+                    const task = doc.data();
+                    if (task.assignedTo && !staffCache[task.assignedTo]) {
+                        const staffPromise = db.collection('staff').doc(task.assignedTo).get().then(staffDoc => {
+                            if (staffDoc.exists) {
+                                staffCache[task.assignedTo] = staffDoc.data();
+                            }
+                        });
+                        staffPromises.push(staffPromise);
+                    }
+                });
+
+                await Promise.all(staffPromises);
+
+                snapshot.forEach(doc => {
+                    const task = doc.data();
+                    const staffMember = staffCache[task.assignedTo];
+                    const staffName = staffMember ? `${staffMember.firstName} ${staffMember.lastName}` : 'N/A';
+                    html += `
+                        <tr>
+                            <td>${task.taskName}</td>
+                            <td>${staffName}</td>
+                            <td>${new Date(task.date.seconds * 1000).toLocaleDateString()}</td>
+                            <td>${task.status}</td>
+                            <td>
+                                <button class="btn-edit" data-id="${doc.id}">Edit</button>
+                                <button class="btn-delete" data-id="${doc.id}">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                html += '</tbody></table>';
+                maintenanceList.innerHTML = html;
+
+                // Add event listeners for edit and delete buttons
+                addTableButtonListeners();
+
+            } catch (error) {
+                console.error("Error fetching maintenance tasks:", error);
+                maintenanceList.innerHTML = '<h2>Upcoming Maintenance</h2><p>Error loading tasks.</p>';
+            }
+        }
+
+        function addTableButtonListeners() {
+            const deleteButtons = document.querySelectorAll('.btn-delete');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    const docId = e.target.dataset.id;
+                    if (confirm('Are you sure you want to delete this task?')) {
+                        try {
+                            await db.collection('maintenance').doc(docId).delete();
+                            fetchMaintenanceTasks();
+                        } catch (error) {
+                            console.error("Error deleting task:", error);
+                        }
+                    }
+                });
+            });
+
+            const editButtons = document.querySelectorAll('.btn-edit');
+            editButtons.forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    const docId = e.target.dataset.id;
+                    const doc = await db.collection('maintenance').doc(docId).get();
+                    if (doc.exists) {
+                        const task = doc.data();
+                        document.getElementById('taskName').value = task.taskName;
+                        document.getElementById('maintenanceType').value = task.maintenanceType;
+                        document.getElementById('assignedTo').value = task.assignedTo;
+                        document.getElementById('maintenanceDate').value = new Date(task.date.seconds * 1000).toISOString().split('T')[0];
+                        document.getElementById('maintenanceStatus').value = task.status;
+                        document.getElementById('notes').value = task.notes;
+                        
+                        // Store the id of the document being edited
+                        maintenanceForm.dataset.editingId = docId;
+                        
+                        document.getElementById('maintenanceModal').style.display = 'block';
+                    }
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchStaff();
+            fetchMaintenanceTasks();
+            // ... more event listeners
+        });
+
+    </script>
+</body>
+</html>
