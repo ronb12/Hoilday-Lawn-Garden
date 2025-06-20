@@ -1286,7 +1286,7 @@
                     <div class="filter-row">
                         <div class="filter-group">
                             <label for="scheduleDate">Date</label>
-                            <input type="date" id="scheduleDate" value="${new Date().toISOString().split('T')[0]}">
+                            <input type="date" id="scheduleDate">
                         </div>
                         <div class="filter-group">
                             <label for="scheduleStaff">Staff Member</label>
@@ -1508,6 +1508,12 @@
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, initializing staff page...');
+            
+            // Set default date for schedule tab
+            const scheduleDateInput = document.getElementById('scheduleDate');
+            if (scheduleDateInput) {
+                scheduleDateInput.value = new Date().toISOString().split('T')[0];
+            }
             
             // Set a maximum loading time of 15 seconds
             const maxLoadingTime = setTimeout(() => {
@@ -1845,7 +1851,7 @@
                         <div class="filter-row">
                             <div class="filter-group">
                                 <label for="scheduleDate">Date</label>
-                                <input type="date" id="scheduleDate" value="${new Date().toISOString().split('T')[0]}">
+                                <input type="date" id="scheduleDate">
                             </div>
                             <div class="filter-group">
                                 <label for="scheduleStaff">Staff Member</label>
@@ -1865,6 +1871,12 @@
                     </div>
                 </div>
             `;
+            
+            // Set default date to today after HTML is created
+            const scheduleDateInput = document.getElementById('scheduleDate');
+            if (scheduleDateInput) {
+                scheduleDateInput.value = new Date().toISOString().split('T')[0];
+            }
             
             loadSchedule();
         }
