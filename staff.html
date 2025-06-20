@@ -1116,7 +1116,7 @@
 <body>
     <div class="admin-header">
         <div class="admin-header .logo">
-            <img src="logo.png" alt="Logo">
+            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Logo">
         </div>
         <nav class="admin-nav">
             <a href="dashboard.html">Dashboard</a>
@@ -1801,13 +1801,14 @@
             try {
                 showLoading('Loading schedule...');
                 
+                // Define timeout promise at function level
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Request timeout')), 10000);
+                });
+                
                 // Get schedule data from Firebase
                 let scheduleSnapshot;
                 try {
-                    const timeoutPromise = new Promise((_, reject) => {
-                        setTimeout(() => reject(new Error('Request timeout')), 10000);
-                    });
-                    
                     scheduleSnapshot = await Promise.race([
                         db.collection('schedule').get(),
                         timeoutPromise
@@ -2246,13 +2247,14 @@
             try {
                 showLoading('Loading contractor data...');
                 
+                // Define timeout promise at function level
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Request timeout')), 10000);
+                });
+                
                 // Get contractors from Firebase
                 let contractorSnapshot;
                 try {
-                    const timeoutPromise = new Promise((_, reject) => {
-                        setTimeout(() => reject(new Error('Request timeout')), 10000);
-                    });
-                    
                     contractorSnapshot = await Promise.race([
                         db.collection('contractors').get(),
                         timeoutPromise
@@ -2981,7 +2983,7 @@
             
             // Load specific data based on tab
             if (tabName === 'schedule') {
-                loadScheduleData();
+                loadSchedule();
             } else if (tabName === 'contractors') {
                 loadContractorData();
             }

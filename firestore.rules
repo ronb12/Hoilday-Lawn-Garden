@@ -19,6 +19,20 @@ service cloud.firestore {
       allow read, write: if true; // Allow full access for admin dashboard
     }
     
+    // Contractor management
+    match /contractors/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    match /contractor_projects/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    // Schedule management
+    match /schedule/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
     // Inventory management
     match /equipment/{document} {
       allow read, write: if true; // Allow full access for admin dashboard
