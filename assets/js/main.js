@@ -37,7 +37,8 @@ const publicPages = [
   'terms.html',
   'gallery.html',
   'offline.html',
-  'admin-login.html'
+  'admin-login.html',
+  'pay-your-bill.html'
 ];
 
 onAuthStateChanged(auth, async (user) => {
