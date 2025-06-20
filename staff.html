@@ -543,6 +543,431 @@
         .schedule-item-actions .btn-delete:hover {
             background: #d32f2f;
         }
+
+        /* Contractor Management Styles */
+        .contractors-container {
+            padding: 1rem;
+        }
+        
+        .contractors-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contractors-header h3 {
+            margin: 0;
+            color: #2c5530;
+        }
+        
+        .contractor-actions-header {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .btn-tax {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: white;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-tax:hover {
+            background: #7b1fa2 !important;
+        }
+        
+        .contractors-filters {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contractors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1rem;
+        }
+        
+        .contractor-item {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+        
+        .contractor-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .contractor-header {
+            background: #ff9800;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .contractor-header h4 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        
+        .contractor-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .contractor-status.active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+        
+        .contractor-status.inactive {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+        
+        .contractor-status.pending {
+            background: rgba(255, 152, 0, 0.2);
+            color: #ff9800;
+        }
+        
+        .contractor-body {
+            padding: 1rem;
+        }
+        
+        .contractor-body p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .contractor-actions {
+            padding: 1rem;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+        
+        .contractor-actions button {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        
+        .contractor-actions .btn-view {
+            background: #2196f3;
+            color: white;
+        }
+        
+        .contractor-actions .btn-view:hover {
+            background: #1976d2;
+        }
+        
+        .contractor-actions .btn-edit {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .contractor-actions .btn-edit:hover {
+            background: #f57c00;
+        }
+        
+        .contractor-actions .btn-project {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .contractor-actions .btn-project:hover {
+            background: #388e3c;
+        }
+        
+        .contractor-actions .btn-payment {
+            background: #9c27b0;
+            color: white;
+        }
+        
+        .contractor-actions .btn-payment:hover {
+            background: #7b1fa2;
+        }
+        
+        .contractor-actions .btn-delete {
+            background: #f44336;
+            color: white;
+        }
+        
+        .contractor-actions .btn-delete:hover {
+            background: #d32f2f;
+        }
+        
+        /* Contractor Details Modal */
+        .contractor-details {
+            padding: 1rem;
+        }
+        
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .detail-section h3 {
+            margin: 0 0 0.5rem 0;
+            color: #2c5530;
+        }
+        
+        .detail-section h4 {
+            margin: 0 0 0.5rem 0;
+            color: #2c5530;
+        }
+        
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .detail-item {
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .status-badge.active {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .status-badge.inactive {
+            background: #f44336;
+            color: white;
+        }
+        
+        .status-badge.pending {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .modal-actions {
+            padding: 1rem;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+        
+        .modal-actions button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Project Management Styles */
+        .project-management {
+            padding: 1rem;
+        }
+        
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .project-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .project-item .project-header {
+            background: #2c5530;
+            color: white;
+            padding: 1rem;
+            margin: 0;
+        }
+        
+        .project-item .project-header h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .project-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .project-status.active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+        
+        .project-status.completed {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196f3;
+        }
+        
+        .project-status.cancelled {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+        
+        .project-body {
+            padding: 1rem;
+        }
+        
+        .project-body p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .project-actions {
+            padding: 1rem;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+        
+        .project-history {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .project-history .project-item {
+            background: white;
+            border: 1px solid #e9ecef;
+        }
+        
+        .project-history .project-header {
+            background: #f8f9fa;
+            color: #333;
+            padding: 0.5rem 1rem;
+        }
+        
+        .project-details {
+            padding: 0.5rem 1rem;
+        }
+        
+        .project-details p {
+            margin: 0.25rem 0;
+            font-size: 0.8rem;
+        }
+        
+        /* Payment Management Styles */
+        .payment-management {
+            padding: 1rem;
+        }
+        
+        .payment-summary {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .payment-summary h3 {
+            margin: 0 0 1rem 0;
+            color: #2c5530;
+        }
+        
+        .payment-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            padding: 0.5rem;
+            background: white;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .payment-actions {
+            margin-bottom: 1rem;
+        }
+        
+        .payment-history h3 {
+            margin: 0 0 1rem 0;
+            color: #2c5530;
+        }
+        
+        .payment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .payment-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .payment-header {
+            background: #2c5530;
+            color: white;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .payment-amount {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .payment-details {
+            padding: 0.75rem 1rem;
+        }
+        
+        .payment-details p {
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -563,6 +988,21 @@
                     Send Message
                 </button>
             </div>
+        </div>
+
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="showTab('staff')">
+                <i class="fas fa-users"></i>
+                Staff Management
+            </button>
+            <button class="tab-btn" onclick="showTab('schedule')">
+                <i class="fas fa-calendar"></i>
+                Schedule
+            </button>
+            <button class="tab-btn" onclick="showTab('contractors')">
+                <i class="fas fa-hard-hat"></i>
+                1099 Contractors
+            </button>
         </div>
 
         <div class="staff-stats">
@@ -742,6 +1182,59 @@
     <div id="loadingOverlay" class="loading-overlay hidden">
         <div class="loading-spinner"></div>
         <p id="loadingMessage">Loading...</p>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="contractorsContent" style="display: none;">
+        <div class="contractors-container">
+            <div class="contractors-header">
+                <h3>1099 Independent Contractors</h3>
+                <div class="contractor-actions-header">
+                    <button class="btn-tax" onclick="generate1099Report()" style="background: #9c27b0; margin-right: 0.5rem;">
+                        <i class="fas fa-file-invoice"></i>
+                        1099 Report
+                    </button>
+                    <button class="btn-add" onclick="addContractor()" style="background: #ff9800;">
+                        <i class="fas fa-plus"></i>
+                        Add Contractor
+                    </button>
+                </div>
+            </div>
+            
+            <div class="contractors-filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="contractorStatus">Status</label>
+                        <select id="contractorStatus" onchange="filterContractors()">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="contractorSpecialty">Specialty</label>
+                        <select id="contractorSpecialty" onchange="filterContractors()">
+                            <option value="">All Specialties</option>
+                            <option value="landscaping">Landscaping</option>
+                            <option value="irrigation">Irrigation</option>
+                            <option value="tree-service">Tree Service</option>
+                            <option value="hardscaping">Hardscaping</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="design">Design</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="contractorSearch">Search</label>
+                        <input type="text" id="contractorSearch" placeholder="Search contractors..." onkeyup="filterContractors()">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contractors-grid" id="contractorsGrid">
+                <!-- Contractors will be populated here -->
+            </div>
+        </div>
     </div>
 
     <!-- Firebase SDK -->
@@ -1577,6 +2070,880 @@
             if (event.target === messageModal) {
                 closeMessageModal();
             }
+        }
+
+        // Contractor data
+        let contractorData = [];
+        let projectData = [];
+
+        // Load contractor data
+        async function loadContractorData() {
+            try {
+                showLoading('Loading contractor data...');
+                
+                // Get contractors from Firebase
+                let contractorSnapshot;
+                try {
+                    const timeoutPromise = new Promise((_, reject) => {
+                        setTimeout(() => reject(new Error('Request timeout')), 10000);
+                    });
+                    
+                    contractorSnapshot = await Promise.race([
+                        db.collection('contractors').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Contractors collection not accessible:', error);
+                    contractorSnapshot = { forEach: () => {} };
+                }
+                
+                contractorData = [];
+                contractorSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    contractorData.push({
+                        id: doc.id,
+                        ...data
+                    });
+                });
+                
+                // Get projects from Firebase
+                let projectSnapshot;
+                try {
+                    projectSnapshot = await Promise.race([
+                        db.collection('contractor_projects').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Contractor projects collection not accessible:', error);
+                    projectSnapshot = { forEach: () => {} };
+                }
+                
+                projectData = [];
+                projectSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    projectData.push({
+                        id: doc.id,
+                        ...data
+                    });
+                });
+                
+                displayContractors();
+                hideLoading();
+                
+            } catch (error) {
+                console.error('Error loading contractor data:', error);
+                hideLoading();
+                showError('Failed to load contractor data');
+            }
+        }
+
+        function displayContractors() {
+            const contractorsGrid = document.getElementById('contractorsGrid');
+            
+            if (contractorData.length === 0) {
+                contractorsGrid.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-hard-hat" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <h3>No contractors found</h3>
+                        <p>Add contractors to get started</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            contractorsGrid.innerHTML = contractorData.map(contractor => {
+                const activeProjects = projectData.filter(project => 
+                    project.contractorId === contractor.id && project.status === 'active'
+                ).length;
+                
+                const totalEarnings = projectData
+                    .filter(project => project.contractorId === contractor.id && project.status === 'completed')
+                    .reduce((sum, project) => sum + (project.paymentAmount || 0), 0);
+                
+                return `
+                    <div class="contractor-item">
+                        <div class="contractor-header">
+                            <h4>${contractor.name}</h4>
+                            <span class="contractor-status ${contractor.status}">${contractor.status}</span>
+                        </div>
+                        <div class="contractor-body">
+                            <p><strong>Specialty:</strong> ${contractor.specialty}</p>
+                            <p><strong>Rate:</strong> $${contractor.hourlyRate}/hr</p>
+                            <p><strong>Phone:</strong> ${contractor.phone}</p>
+                            <p><strong>Email:</strong> ${contractor.email}</p>
+                            <p><strong>Active Projects:</strong> ${activeProjects}</p>
+                            <p><strong>Total Earnings:</strong> $${totalEarnings.toFixed(2)}</p>
+                            <p><strong>Tax ID:</strong> ${contractor.taxId || 'Not provided'}</p>
+                        </div>
+                        <div class="contractor-actions">
+                            <button class="btn-view" onclick="viewContractor('${contractor.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-edit" onclick="editContractor('${contractor.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-project" onclick="manageProjects('${contractor.id}')">
+                                <i class="fas fa-tasks"></i>
+                            </button>
+                            <button class="btn-payment" onclick="managePayments('${contractor.id}')">
+                                <i class="fas fa-dollar-sign"></i>
+                            </button>
+                            <button class="btn-delete" onclick="deleteContractor('${contractor.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterContractors() {
+            const statusFilter = document.getElementById('contractorStatus').value;
+            const specialtyFilter = document.getElementById('contractorSpecialty').value;
+            const searchFilter = document.getElementById('contractorSearch').value.toLowerCase();
+            
+            const filteredContractors = contractorData.filter(contractor => {
+                const matchesStatus = !statusFilter || contractor.status === statusFilter;
+                const matchesSpecialty = !specialtyFilter || contractor.specialty === specialtyFilter;
+                const matchesSearch = !searchFilter || 
+                    contractor.name.toLowerCase().includes(searchFilter) ||
+                    contractor.email.toLowerCase().includes(searchFilter) ||
+                    contractor.phone.includes(searchFilter);
+                
+                return matchesStatus && matchesSpecialty && matchesSearch;
+            });
+            
+            displayFilteredContractors(filteredContractors);
+        }
+
+        function displayFilteredContractors(filteredContractors) {
+            const contractorsGrid = document.getElementById('contractorsGrid');
+            
+            if (filteredContractors.length === 0) {
+                contractorsGrid.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <h3>No contractors match your filters</h3>
+                        <p>Try adjusting your search criteria</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            contractorsGrid.innerHTML = filteredContractors.map(contractor => {
+                const activeProjects = projectData.filter(project => 
+                    project.contractorId === contractor.id && project.status === 'active'
+                ).length;
+                
+                const totalEarnings = projectData
+                    .filter(project => project.contractorId === contractor.id && project.status === 'completed')
+                    .reduce((sum, project) => sum + (project.paymentAmount || 0), 0);
+                
+                return `
+                    <div class="contractor-item">
+                        <div class="contractor-header">
+                            <h4>${contractor.name}</h4>
+                            <span class="contractor-status ${contractor.status}">${contractor.status}</span>
+                        </div>
+                        <div class="contractor-body">
+                            <p><strong>Specialty:</strong> ${contractor.specialty}</p>
+                            <p><strong>Rate:</strong> $${contractor.hourlyRate}/hr</p>
+                            <p><strong>Phone:</strong> ${contractor.phone}</p>
+                            <p><strong>Email:</strong> ${contractor.email}</p>
+                            <p><strong>Active Projects:</strong> ${activeProjects}</p>
+                            <p><strong>Total Earnings:</strong> $${totalEarnings.toFixed(2)}</p>
+                            <p><strong>Tax ID:</strong> ${contractor.taxId || 'Not provided'}</p>
+                        </div>
+                        <div class="contractor-actions">
+                            <button class="btn-view" onclick="viewContractor('${contractor.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-edit" onclick="editContractor('${contractor.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-project" onclick="manageProjects('${contractor.id}')">
+                                <i class="fas fa-tasks"></i>
+                            </button>
+                            <button class="btn-payment" onclick="managePayments('${contractor.id}')">
+                                <i class="fas fa-dollar-sign"></i>
+                            </button>
+                            <button class="btn-delete" onclick="deleteContractor('${contractor.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addContractor() {
+            openContractorModal();
+        }
+
+        function openContractorModal(contractorId = null) {
+            const contractor = contractorId ? contractorData.find(c => c.id === contractorId) : null;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>${contractorId ? 'Edit Contractor' : 'Add New Contractor'}</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <form id="contractorForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contractorName">Full Name</label>
+                                <input type="text" id="contractorName" value="${contractor ? contractor.name : ''}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contractorSpecialty">Specialty</label>
+                                <select id="contractorSpecialty" required>
+                                    <option value="">Select Specialty</option>
+                                    <option value="landscaping" ${contractor && contractor.specialty === 'landscaping' ? 'selected' : ''}>Landscaping</option>
+                                    <option value="irrigation" ${contractor && contractor.specialty === 'irrigation' ? 'selected' : ''}>Irrigation</option>
+                                    <option value="tree-service" ${contractor && contractor.specialty === 'tree-service' ? 'selected' : ''}>Tree Service</option>
+                                    <option value="hardscaping" ${contractor && contractor.specialty === 'hardscaping' ? 'selected' : ''}>Hardscaping</option>
+                                    <option value="maintenance" ${contractor && contractor.specialty === 'maintenance' ? 'selected' : ''}>Maintenance</option>
+                                    <option value="design" ${contractor && contractor.specialty === 'design' ? 'selected' : ''}>Design</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contractorEmail">Email</label>
+                                <input type="email" id="contractorEmail" value="${contractor ? contractor.email : ''}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contractorPhone">Phone</label>
+                                <input type="tel" id="contractorPhone" value="${contractor ? contractor.phone : ''}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contractorHourlyRate">Hourly Rate ($)</label>
+                                <input type="number" id="contractorHourlyRate" value="${contractor ? contractor.hourlyRate : ''}" min="0" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contractorTaxId">Tax ID (SSN/EIN)</label>
+                                <input type="text" id="contractorTaxId" value="${contractor ? contractor.taxId : ''}" placeholder="Required for 1099">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contractorAddress">Address</label>
+                                <textarea id="contractorAddress" rows="3">${contractor ? contractor.address : ''}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="contractorStatus">Status</label>
+                                <select id="contractorStatus" required>
+                                    <option value="active" ${contractor && contractor.status === 'active' ? 'selected' : ''}>Active</option>
+                                    <option value="inactive" ${contractor && contractor.status === 'inactive' ? 'selected' : ''}>Inactive</option>
+                                    <option value="pending" ${contractor && contractor.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contractorNotes">Notes</label>
+                            <textarea id="contractorNotes" rows="3">${contractor ? contractor.notes : ''}</textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="submit" class="btn-save">Save Contractor</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Form submission
+            document.getElementById('contractorForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveContractor(contractorId);
+            });
+        }
+
+        async function saveContractor(contractorId) {
+            try {
+                showLoading('Saving contractor...');
+                
+                const contractorData = {
+                    name: document.getElementById('contractorName').value,
+                    specialty: document.getElementById('contractorSpecialty').value,
+                    email: document.getElementById('contractorEmail').value,
+                    phone: document.getElementById('contractorPhone').value,
+                    hourlyRate: parseFloat(document.getElementById('contractorHourlyRate').value),
+                    taxId: document.getElementById('contractorTaxId').value,
+                    address: document.getElementById('contractorAddress').value,
+                    status: document.getElementById('contractorStatus').value,
+                    notes: document.getElementById('contractorNotes').value,
+                    lastUpdated: new Date()
+                };
+
+                if (contractorId) {
+                    await db.collection('contractors').doc(contractorId).update(contractorData);
+                    showSuccess('Contractor updated successfully');
+                } else {
+                    contractorData.createdAt = new Date();
+                    await db.collection('contractors').add(contractorData);
+                    showSuccess('Contractor added successfully');
+                }
+
+                // Close modal and reload data
+                document.querySelector('.modal').remove();
+                await loadContractorData();
+                hideLoading();
+            } catch (error) {
+                console.error('Error saving contractor:', error);
+                hideLoading();
+                showError('Failed to save contractor');
+            }
+        }
+
+        async function deleteContractor(contractorId) {
+            if (!confirm('Are you sure you want to delete this contractor?')) return;
+
+            try {
+                showLoading('Deleting contractor...');
+                await db.collection('contractors').doc(contractorId).delete();
+                showSuccess('Contractor deleted successfully');
+                await loadContractorData();
+                hideLoading();
+            } catch (error) {
+                console.error('Error deleting contractor:', error);
+                hideLoading();
+                showError('Failed to delete contractor');
+            }
+        }
+
+        function editContractor(contractorId) {
+            openContractorModal(contractorId);
+        }
+
+        function viewContractor(contractorId) {
+            const contractor = contractorData.find(c => c.id === contractorId);
+            if (!contractor) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Contractor Details</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <div class="contractor-details">
+                        <div class="detail-section">
+                            <h3>${contractor.name}</h3>
+                            <span class="status-badge ${contractor.status}">${contractor.status}</span>
+                        </div>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <strong>Specialty:</strong> ${contractor.specialty}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Hourly Rate:</strong> $${contractor.hourlyRate}/hr
+                            </div>
+                            <div class="detail-item">
+                                <strong>Email:</strong> ${contractor.email}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Phone:</strong> ${contractor.phone}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Tax ID:</strong> ${contractor.taxId || 'Not provided'}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Address:</strong> ${contractor.address || 'Not provided'}
+                            </div>
+                        </div>
+                        ${contractor.notes ? `
+                            <div class="detail-section">
+                                <h4>Notes</h4>
+                                <p>${contractor.notes}</p>
+                            </div>
+                        ` : ''}
+                        <div class="detail-section">
+                            <h4>Project History</h4>
+                            <div class="project-history">
+                                ${getContractorProjectHistory(contractor.id)}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-edit" onclick="editContractor('${contractor.id}'); this.closest('.modal').remove();">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn-project" onclick="manageProjects('${contractor.id}'); this.closest('.modal').remove();">
+                            <i class="fas fa-tasks"></i> Manage Projects
+                        </button>
+                        <button class="btn-payment" onclick="managePayments('${contractor.id}'); this.closest('.modal').remove();">
+                            <i class="fas fa-dollar-sign"></i> Manage Payments
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function getContractorProjectHistory(contractorId) {
+            const contractorProjects = projectData.filter(project => project.contractorId === contractorId);
+            
+            if (contractorProjects.length === 0) {
+                return '<p>No projects found</p>';
+            }
+            
+            return contractorProjects.map(project => `
+                <div class="project-item">
+                    <div class="project-header">
+                        <strong>${project.projectName}</strong>
+                        <span class="project-status ${project.status}">${project.status}</span>
+                    </div>
+                    <div class="project-details">
+                        <p><strong>Date:</strong> ${formatDate(project.startDate)} - ${formatDate(project.endDate)}</p>
+                        <p><strong>Payment:</strong> $${project.paymentAmount || 0}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function manageProjects(contractorId) {
+            const contractor = contractorData.find(c => c.id === contractorId);
+            if (!contractor) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Project Management - ${contractor.name}</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <div class="project-management">
+                        <div class="project-header">
+                            <button class="btn-add" onclick="addProject('${contractorId}')" style="background: #4caf50;">
+                                <i class="fas fa-plus"></i> Add Project
+                            </button>
+                        </div>
+                        <div class="project-list" id="projectList">
+                            ${displayContractorProjects(contractorId)}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function displayContractorProjects(contractorId) {
+            const contractorProjects = projectData.filter(project => project.contractorId === contractorId);
+            
+            if (contractorProjects.length === 0) {
+                return '<p>No projects assigned to this contractor</p>';
+            }
+            
+            return contractorProjects.map(project => `
+                <div class="project-item">
+                    <div class="project-header">
+                        <h4>${project.projectName}</h4>
+                        <span class="project-status ${project.status}">${project.status}</span>
+                    </div>
+                    <div class="project-body">
+                        <p><strong>Description:</strong> ${project.description}</p>
+                        <p><strong>Start Date:</strong> ${formatDate(project.startDate)}</p>
+                        <p><strong>End Date:</strong> ${formatDate(project.endDate)}</p>
+                        <p><strong>Payment Amount:</strong> $${project.paymentAmount || 0}</p>
+                        <p><strong>Hours:</strong> ${project.hours || 0}</p>
+                    </div>
+                    <div class="project-actions">
+                        <button class="btn-edit" onclick="editProject('${project.id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-delete" onclick="deleteProject('${project.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addProject(contractorId) {
+            openProjectModal(contractorId);
+        }
+
+        function openProjectModal(contractorId, projectId = null) {
+            const project = projectId ? projectData.find(p => p.id === projectId) : null;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>${projectId ? 'Edit Project' : 'Add New Project'}</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <form id="projectForm">
+                        <div class="form-group">
+                            <label for="projectName">Project Name</label>
+                            <input type="text" id="projectName" value="${project ? project.projectName : ''}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectDescription">Description</label>
+                            <textarea id="projectDescription" rows="3" required>${project ? project.description : ''}</textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="projectStartDate">Start Date</label>
+                                <input type="date" id="projectStartDate" value="${project ? formatDateForInput(project.startDate) : ''}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="projectEndDate">End Date</label>
+                                <input type="date" id="projectEndDate" value="${project ? formatDateForInput(project.endDate) : ''}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="projectHours">Hours</label>
+                                <input type="number" id="projectHours" value="${project ? project.hours : ''}" min="0" step="0.5">
+                            </div>
+                            <div class="form-group">
+                                <label for="projectPayment">Payment Amount ($)</label>
+                                <input type="number" id="projectPayment" value="${project ? project.paymentAmount : ''}" min="0" step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectStatus">Status</label>
+                            <select id="projectStatus" required>
+                                <option value="active" ${project && project.status === 'active' ? 'selected' : ''}>Active</option>
+                                <option value="completed" ${project && project.status === 'completed' ? 'selected' : ''}>Completed</option>
+                                <option value="cancelled" ${project && project.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="submit" class="btn-save">Save Project</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Form submission
+            document.getElementById('projectForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveProject(contractorId, projectId);
+            });
+        }
+
+        async function saveProject(contractorId, projectId) {
+            try {
+                showLoading('Saving project...');
+                
+                const projectData = {
+                    contractorId: contractorId,
+                    projectName: document.getElementById('projectName').value,
+                    description: document.getElementById('projectDescription').value,
+                    startDate: new Date(document.getElementById('projectStartDate').value),
+                    endDate: new Date(document.getElementById('projectEndDate').value),
+                    hours: parseFloat(document.getElementById('projectHours').value) || 0,
+                    paymentAmount: parseFloat(document.getElementById('projectPayment').value) || 0,
+                    status: document.getElementById('projectStatus').value,
+                    lastUpdated: new Date()
+                };
+
+                if (projectId) {
+                    await db.collection('contractor_projects').doc(projectId).update(projectData);
+                    showSuccess('Project updated successfully');
+                } else {
+                    projectData.createdAt = new Date();
+                    await db.collection('contractor_projects').add(projectData);
+                    showSuccess('Project added successfully');
+                }
+
+                // Close modal and reload data
+                document.querySelector('.modal').remove();
+                await loadContractorData();
+                hideLoading();
+            } catch (error) {
+                console.error('Error saving project:', error);
+                hideLoading();
+                showError('Failed to save project');
+            }
+        }
+
+        async function deleteProject(projectId) {
+            if (!confirm('Are you sure you want to delete this project?')) return;
+
+            try {
+                showLoading('Deleting project...');
+                await db.collection('contractor_projects').doc(projectId).delete();
+                showSuccess('Project deleted successfully');
+                await loadContractorData();
+                hideLoading();
+            } catch (error) {
+                console.error('Error deleting project:', error);
+                hideLoading();
+                showError('Failed to delete project');
+            }
+        }
+
+        function editProject(projectId) {
+            const project = projectData.find(p => p.id === projectId);
+            if (project) {
+                openProjectModal(project.contractorId, projectId);
+            }
+        }
+
+        function managePayments(contractorId) {
+            const contractor = contractorData.find(c => c.id === contractorId);
+            if (!contractor) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Payment Management - ${contractor.name}</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <div class="payment-management">
+                        <div class="payment-summary">
+                            <h3>Payment Summary</h3>
+                            <div class="payment-stats">
+                                <div class="stat-item">
+                                    <strong>Total Earned:</strong> $${getContractorTotalEarnings(contractorId)}
+                                </div>
+                                <div class="stat-item">
+                                    <strong>Total Paid:</strong> $${getContractorTotalPaid(contractorId)}
+                                </div>
+                                <div class="stat-item">
+                                    <strong>Outstanding:</strong> $${getContractorOutstanding(contractorId)}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-actions">
+                            <button class="btn-add" onclick="addPayment('${contractorId}')" style="background: #4caf50;">
+                                <i class="fas fa-plus"></i> Record Payment
+                            </button>
+                        </div>
+                        <div class="payment-history">
+                            <h3>Payment History</h3>
+                            <div class="payment-list" id="paymentList">
+                                ${displayPaymentHistory(contractorId)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function getContractorTotalEarnings(contractorId) {
+            return projectData
+                .filter(project => project.contractorId === contractorId && project.status === 'completed')
+                .reduce((sum, project) => sum + (project.paymentAmount || 0), 0)
+                .toFixed(2);
+        }
+
+        function getContractorTotalPaid(contractorId) {
+            // This would come from a payments collection - for now using project payments
+            return getContractorTotalEarnings(contractorId);
+        }
+
+        function getContractorOutstanding(contractorId) {
+            return (getContractorTotalEarnings(contractorId) - getContractorTotalPaid(contractorId)).toFixed(2);
+        }
+
+        function displayPaymentHistory(contractorId) {
+            const contractorProjects = projectData.filter(project => 
+                project.contractorId === contractorId && project.status === 'completed'
+            );
+            
+            if (contractorProjects.length === 0) {
+                return '<p>No payment history found</p>';
+            }
+            
+            return contractorProjects.map(project => `
+                <div class="payment-item">
+                    <div class="payment-header">
+                        <strong>${project.projectName}</strong>
+                        <span class="payment-amount">$${project.paymentAmount || 0}</span>
+                    </div>
+                    <div class="payment-details">
+                        <p><strong>Date:</strong> ${formatDate(project.endDate)}</p>
+                        <p><strong>Hours:</strong> ${project.hours || 0}</p>
+                        <p><strong>Status:</strong> Completed</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addPayment(contractorId) {
+            // Placeholder for payment recording functionality
+            alert('Payment recording feature coming soon...');
+        }
+
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            const selectedContent = document.getElementById(tabName + 'Content');
+            if (selectedContent) {
+                selectedContent.style.display = 'block';
+            }
+            
+            // Add active class to selected tab button
+            const selectedBtn = document.querySelector(`[onclick="showTab('${tabName}')"]`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('active');
+            }
+            
+            // Load specific data based on tab
+            if (tabName === 'schedule') {
+                loadScheduleData();
+            } else if (tabName === 'contractors') {
+                loadContractorData();
+            }
+        }
+
+        function generate1099Report() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>1099 Tax Report Generator</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <div class="tax-report-form">
+                        <div class="form-group">
+                            <label for="taxYear">Tax Year</label>
+                            <select id="taxYear">
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="contractorFilter">Contractor Filter</label>
+                            <select id="contractorFilter">
+                                <option value="all">All Contractors</option>
+                                <option value="active">Active Only</option>
+                                <option value="paid">With Payments</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="minimumAmount">Minimum Amount ($)</label>
+                            <input type="number" id="minimumAmount" value="600" min="0" step="0.01">
+                            <small>IRS requires 1099-NEC for payments over $600</small>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="button" class="btn-generate" onclick="generate1099Data()">Generate Report</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function generate1099Data() {
+            const taxYear = document.getElementById('taxYear').value;
+            const contractorFilter = document.getElementById('contractorFilter').value;
+            const minimumAmount = parseFloat(document.getElementById('minimumAmount').value);
+            
+            // Filter contractors based on criteria
+            let eligibleContractors = contractorData.filter(contractor => {
+                if (contractorFilter === 'active' && contractor.status !== 'active') return false;
+                
+                // Calculate total payments for the tax year
+                const yearProjects = projectData.filter(project => 
+                    project.contractorId === contractor.id && 
+                    project.status === 'completed' &&
+                    new Date(project.endDate).getFullYear().toString() === taxYear
+                );
+                
+                const totalPayments = yearProjects.reduce((sum, project) => sum + (project.paymentAmount || 0), 0);
+                
+                if (contractorFilter === 'paid' && totalPayments === 0) return false;
+                if (totalPayments < minimumAmount) return false;
+                
+                return true;
+            });
+            
+            if (eligibleContractors.length === 0) {
+                showError('No contractors meet the criteria for 1099 reporting');
+                return;
+            }
+            
+            // Generate CSV data
+            const csvData = generate1099CSV(eligibleContractors, taxYear);
+            
+            // Create and download file
+            const blob = new Blob([csvData], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `1099-Report-${taxYear}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            showSuccess(`1099 report generated for ${eligibleContractors.length} contractors`);
+            document.querySelector('.modal').remove();
+        }
+
+        function generate1099CSV(contractors, taxYear) {
+            const headers = [
+                'Contractor Name',
+                'Tax ID (SSN/EIN)',
+                'Address',
+                'Total Payments',
+                'Project Count',
+                'Specialty',
+                'Status'
+            ];
+            
+            const rows = contractors.map(contractor => {
+                const yearProjects = projectData.filter(project => 
+                    project.contractorId === contractor.id && 
+                    project.status === 'completed' &&
+                    new Date(project.endDate).getFullYear().toString() === taxYear
+                );
+                
+                const totalPayments = yearProjects.reduce((sum, project) => sum + (project.paymentAmount || 0), 0);
+                
+                return [
+                    contractor.name,
+                    contractor.taxId || 'Not provided',
+                    contractor.address || 'Not provided',
+                    totalPayments.toFixed(2),
+                    yearProjects.length,
+                    contractor.specialty,
+                    contractor.status
+                ];
+            });
+            
+            return [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
         }
     </script>
 </body>
