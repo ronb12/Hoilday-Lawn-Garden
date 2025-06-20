@@ -1111,6 +1111,44 @@
             margin: 0.25rem 0;
             font-size: 0.9rem;
         }
+
+        .tab-navigation {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tab-btn:hover {
+            color: #4caf50;
+        }
+        
+        .tab-btn.active {
+            color: #4caf50;
+            border-bottom-color: #4caf50;
+        }
+        
+        .tab-content {
+            display: block;
+        }
+        
+        .tab-content[style*="display: none"] {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -1172,59 +1210,147 @@
             </button>
         </div>
 
-        <div class="staff-stats">
-            <div class="stat-card">
-                <div class="stat-number" id="totalStaff">0</div>
-                <div class="stat-label">Total Staff</div>
+        <!-- Tab Content -->
+        <div class="tab-content" id="staffContent">
+            <div class="staff-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalStaff">0</div>
+                    <div class="stat-label">Total Staff</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="activeStaff">0</div>
+                    <div class="stat-label">Active Staff</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="onLeaveStaff">0</div>
+                    <div class="stat-label">On Leave</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="newHires">0</div>
+                    <div class="stat-label">New This Month</div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" id="activeStaff">0</div>
-                <div class="stat-label">Active Staff</div>
+
+            <div class="staff-filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="searchStaff">Search</label>
+                        <input type="text" id="searchStaff" placeholder="Search by name, email, or role...">
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterDepartment">Department</label>
+                        <select id="filterDepartment">
+                            <option value="">All Departments</option>
+                            <option value="landscaping">Landscaping</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="administration">Administration</option>
+                            <option value="sales">Sales</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterStatus">Status</label>
+                        <select id="filterStatus">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="on-leave">On Leave</option>
+                        </select>
+                    </div>
+                    <button class="btn-filter" onclick="applyFilters()">
+                        <i class="fas fa-filter"></i>
+                        Filter
+                    </button>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" id="onLeaveStaff">0</div>
-                <div class="stat-label">On Leave</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="newHires">0</div>
-                <div class="stat-label">New This Month</div>
+
+            <div class="staff-grid" id="staffGrid">
+                <!-- Staff cards will be populated here -->
             </div>
         </div>
 
-        <div class="staff-filters">
-            <div class="filter-row">
-                <div class="filter-group">
-                    <label for="searchStaff">Search</label>
-                    <input type="text" id="searchStaff" placeholder="Search by name, email, or role...">
+        <div class="tab-content" id="scheduleContent" style="display: none;">
+            <div class="schedule-container">
+                <div class="schedule-header">
+                    <h3>Staff Schedule Management</h3>
+                    <button class="btn-add" onclick="addScheduleShift()" style="background: #4caf50;">
+                        <i class="fas fa-plus"></i>
+                        Add Shift
+                    </button>
                 </div>
-                <div class="filter-group">
-                    <label for="filterDepartment">Department</label>
-                    <select id="filterDepartment">
-                        <option value="">All Departments</option>
-                        <option value="landscaping">Landscaping</option>
-                        <option value="maintenance">Maintenance</option>
-                        <option value="administration">Administration</option>
-                        <option value="sales">Sales</option>
-                    </select>
+                
+                <div class="schedule-filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="scheduleDate">Date</label>
+                            <input type="date" id="scheduleDate" value="${new Date().toISOString().split('T')[0]}">
+                        </div>
+                        <div class="filter-group">
+                            <label for="scheduleStaff">Staff Member</label>
+                            <select id="scheduleStaff">
+                                <option value="">All Staff</option>
+                            </select>
+                        </div>
+                        <button class="btn-filter" onclick="loadSchedule()">
+                            <i class="fas fa-search"></i>
+                            View Schedule
+                        </button>
+                    </div>
                 </div>
-                <div class="filter-group">
-                    <label for="filterStatus">Status</label>
-                    <select id="filterStatus">
-                        <option value="">All Status</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                        <option value="on-leave">On Leave</option>
-                    </select>
+                
+                <div class="schedule-grid" id="scheduleGrid">
+                    <!-- Schedule will be populated here -->
                 </div>
-                <button class="btn-filter" onclick="applyFilters()">
-                    <i class="fas fa-filter"></i>
-                    Filter
-                </button>
             </div>
         </div>
 
-        <div class="staff-grid" id="staffGrid">
-            <!-- Staff cards will be populated here -->
+        <div class="tab-content" id="contractorsContent" style="display: none;">
+            <div class="contractors-container">
+                <div class="contractors-header">
+                    <h3>1099 Independent Contractors</h3>
+                    <div class="contractor-actions-header">
+                        <button class="btn-tax" onclick="generate1099Report()" style="background: #9c27b0; margin-right: 0.5rem;">
+                            <i class="fas fa-file-invoice"></i>
+                            1099 Report
+                        </button>
+                        <button class="btn-add" onclick="addContractor()" style="background: #ff9800;">
+                            <i class="fas fa-plus"></i>
+                            Add Contractor
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="contractors-filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="contractorStatus">Status</label>
+                            <select id="contractorStatus" onchange="filterContractors()">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="contractorSpecialty">Specialty</label>
+                            <select id="contractorSpecialty" onchange="filterContractors()">
+                                <option value="">All Specialties</option>
+                                <option value="landscaping">Landscaping</option>
+                                <option value="hardscaping">Hardscaping</option>
+                                <option value="maintenance">Maintenance</option>
+                                <option value="design">Design</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="contractorSearch">Search</label>
+                            <input type="text" id="contractorSearch" placeholder="Search contractors..." onkeyup="filterContractors()">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contractors-grid" id="contractorsGrid">
+                    <!-- Contractors will be populated here -->
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1349,57 +1475,6 @@
     <div id="loadingOverlay" class="loading-overlay hidden">
         <div class="loading-spinner"></div>
         <p id="loadingMessage">Loading...</p>
-    </div>
-
-    <!-- Tab Content -->
-    <div class="tab-content" id="contractorsContent" style="display: none;">
-        <div class="contractors-container">
-            <div class="contractors-header">
-                <h3>1099 Independent Contractors</h3>
-                <div class="contractor-actions-header">
-                    <button class="btn-tax" onclick="generate1099Report()" style="background: #9c27b0; margin-right: 0.5rem;">
-                        <i class="fas fa-file-invoice"></i>
-                        1099 Report
-                    </button>
-                    <button class="btn-add" onclick="addContractor()" style="background: #ff9800;">
-                        <i class="fas fa-plus"></i>
-                        Add Contractor
-                    </button>
-                </div>
-            </div>
-            
-            <div class="contractors-filters">
-                <div class="filter-row">
-                    <div class="filter-group">
-                        <label for="contractorStatus">Status</label>
-                        <select id="contractorStatus" onchange="filterContractors()">
-                            <option value="">All Status</option>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                            <option value="pending">Pending</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="contractorSpecialty">Specialty</label>
-                        <select id="contractorSpecialty" onchange="filterContractors()">
-                            <option value="">All Specialties</option>
-                            <option value="landscaping">Landscaping</option>
-                            <option value="hardscaping">Hardscaping</option>
-                            <option value="maintenance">Maintenance</option>
-                            <option value="design">Design</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="contractorSearch">Search</label>
-                        <input type="text" id="contractorSearch" placeholder="Search contractors..." onkeyup="filterContractors()">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="contractors-grid" id="contractorsGrid">
-                <!-- Contractors will be populated here -->
-            </div>
-        </div>
     </div>
 
     <!-- Firebase SDK -->
@@ -1772,9 +1847,6 @@
                                 <label for="scheduleStaff">Staff Member</label>
                                 <select id="scheduleStaff">
                                     <option value="">All Staff</option>
-                                    ${staffData.filter(staff => staff.status === 'active').map(staff => 
-                                        `<option value="${staff.id}">${staff.name}</option>`
-                                    ).join('')}
                                 </select>
                             </div>
                             <button class="btn-filter" onclick="loadSchedule()">
@@ -2983,9 +3055,19 @@
             
             // Load specific data based on tab
             if (tabName === 'schedule') {
+                // Populate schedule staff dropdown
+                const scheduleStaffSelect = document.getElementById('scheduleStaff');
+                if (scheduleStaffSelect) {
+                    scheduleStaffSelect.innerHTML = '<option value="">All Staff</option>' + 
+                        staffData.filter(staff => staff.status === 'active').map(staff => 
+                            `<option value="${staff.id}">${staff.firstName} ${staff.lastName}</option>`
+                        ).join('');
+                }
                 loadSchedule();
             } else if (tabName === 'contractors') {
                 loadContractorData();
+            } else if (tabName === 'staff') {
+                loadStaff();
             }
         }
 
