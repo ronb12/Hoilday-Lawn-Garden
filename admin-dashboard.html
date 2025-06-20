@@ -193,10 +193,44 @@
             .dashboard-main {
                 padding: 0 0.5rem 2rem 0.5rem;
             }
+            .dashboard-title {
+                font-size: 2rem;
+                text-align: center;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .dashboard-card {
+                padding: 1.5rem 1rem;
+            }
+            .dashboard-card .card-actions {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            .dashboard-card .card-btn {
+                width: 100%;
+                justify-content: center;
+            }
             .dashboard-footer .footer-content {
                 flex-direction: column;
                 gap: 1.5rem;
                 padding: 0 1rem;
+            }
+            .admin-header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .admin-header .logo {
+                flex: 1;
+                min-width: 0;
+            }
+            .admin-header .logo img {
+                height: 40px;
+            }
+            .admin-header .logo span {
+                font-size: 1.1rem;
             }
             .admin-header .admin-nav {
                 display: none;
@@ -208,6 +242,8 @@
                 flex-direction: column;
                 padding: 1rem;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                order: 3;
+                width: 100%;
             }
             
             .admin-header .admin-nav.active {
@@ -216,11 +252,40 @@
             
             .admin-header .hamburger {
                 display: flex;
+                order: 2;
             }
             
             .admin-header .admin-actions {
                 flex-direction: column;
                 gap: 0.5rem;
+                order: 1;
+            }
+            .admin-header .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .dashboard-main {
+                padding: 0 0.25rem 1.5rem 0.25rem;
+            }
+            .dashboard-title {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+            .dashboard-card {
+                padding: 1.25rem 0.75rem;
+            }
+            .admin-header {
+                padding: 0.75rem;
+            }
+            .admin-header .logo span {
+                font-size: 1rem;
+            }
+            .admin-header .btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.85rem;
             }
         }
         

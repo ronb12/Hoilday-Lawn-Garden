@@ -22,7 +22,20 @@ async function checkAdminAccess(user) {
   if (!user) return false;
   try {
     const userDoc = await getDoc(doc(db, 'users', user.uid));
-    return userDoc.exists() && userDoc.data().role === 'admin';
+    if (!userDoc.exists()) {
+      console.log('No user document found for:', user.uid);
+      return false;
+    }
+    
+    const userData = userDoc.data();
+    console.log('User data for admin check:', userData);
+    console.log('isAdmin field:', userData.isAdmin);
+    console.log('role field:', userData.role);
+    
+    // Check for both possible admin fields to handle different user creation scenarios
+    const isAdmin = userData.isAdmin === true || userData.role === 'admin';
+    console.log('Is user admin?', isAdmin);
+    return isAdmin;
   } catch (error) {
     console.error('Error checking admin access:', error);
     return false;
