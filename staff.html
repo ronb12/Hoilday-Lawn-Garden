@@ -6,8 +6,151 @@
     <title>Staff Management - Holliday's Lawn & Garden</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/admin-dashboard.css">
     <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #222;
+        }
+        
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .admin-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .admin-header .logo img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .admin-header .admin-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .admin-header .admin-nav a {
+            color: #2c5530;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+        
+        .admin-header .admin-nav a:hover {
+            color: #4caf50;
+        }
+        
+        .admin-header .admin-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .admin-header .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .admin-header .btn-logout {
+            background: #222;
+            color: #fff;
+        }
+        
+        .admin-header .btn-logout:hover {
+            background: #111;
+        }
+        
+        .admin-header .btn-dashboard {
+            background: #4caf50;
+            color: #fff;
+        }
+        
+        .admin-header .btn-dashboard:hover {
+            background: #388e3c;
+        }
+        
+        /* Mobile menu styles */
+        .admin-header .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+        }
+        
+        .admin-header .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #2c5530;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .admin-header .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-header .admin-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            
+            .admin-header .admin-nav.active {
+                display: flex;
+            }
+            
+            .admin-header .hamburger {
+                display: flex;
+            }
+            
+            .admin-header .admin-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        
         .staff-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -971,6 +1114,30 @@
     </style>
 </head>
 <body>
+    <div class="admin-header">
+        <div class="admin-header .logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <nav class="admin-nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="staff.html">Staff</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="contractors.html">Contractors</a>
+            <a href="projects.html">Projects</a>
+            <a href="payments.html">Payments</a>
+            <a href="reports.html">Reports</a>
+        </nav>
+        <div class="admin-actions">
+            <button class="btn-logout">Logout</button>
+            <button class="btn-dashboard">Dashboard</button>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
     <div class="staff-container">
         <div class="staff-header">
             <h1 class="staff-title">Staff Management</h1>
@@ -1217,8 +1384,6 @@
                         <select id="contractorSpecialty" onchange="filterContractors()">
                             <option value="">All Specialties</option>
                             <option value="landscaping">Landscaping</option>
-                            <option value="irrigation">Irrigation</option>
-                            <option value="tree-service">Tree Service</option>
                             <option value="hardscaping">Hardscaping</option>
                             <option value="maintenance">Maintenance</option>
                             <option value="design">Design</option>
@@ -2303,8 +2468,6 @@
                                 <select id="contractorSpecialty" required>
                                     <option value="">Select Specialty</option>
                                     <option value="landscaping" ${contractor && contractor.specialty === 'landscaping' ? 'selected' : ''}>Landscaping</option>
-                                    <option value="irrigation" ${contractor && contractor.specialty === 'irrigation' ? 'selected' : ''}>Irrigation</option>
-                                    <option value="tree-service" ${contractor && contractor.specialty === 'tree-service' ? 'selected' : ''}>Tree Service</option>
                                     <option value="hardscaping" ${contractor && contractor.specialty === 'hardscaping' ? 'selected' : ''}>Hardscaping</option>
                                     <option value="maintenance" ${contractor && contractor.specialty === 'maintenance' ? 'selected' : ''}>Maintenance</option>
                                     <option value="design" ${contractor && contractor.specialty === 'design' ? 'selected' : ''}>Design</option>
@@ -2945,6 +3108,37 @@
             
             return [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
         }
+
+        // Hamburger menu functionality
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            if (!hamburger.contains(event.target) && !nav.contains(event.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const hamburger = document.querySelector('.hamburger');
+                const nav = document.querySelector('.admin-nav');
+                
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
     </script>
 </body>
 </html>

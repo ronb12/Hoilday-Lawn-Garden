@@ -198,6 +198,60 @@
                 gap: 1.5rem;
                 padding: 0 1rem;
             }
+            .admin-header .admin-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            
+            .admin-header .admin-nav.active {
+                display: flex;
+            }
+            
+            .admin-header .hamburger {
+                display: flex;
+            }
+            
+            .admin-header .admin-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        
+        /* Mobile menu styles */
+        .admin-header .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+        }
+        
+        .admin-header .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #2c5530;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .admin-header .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
         }
     </style>
 </head>
@@ -216,6 +270,11 @@
             <button class="btn btn-refresh" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Refresh</button>
             <button class="btn btn-logout" onclick="window.location.href='admin-login.html'"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
     <main class="dashboard-main">
         <div class="dashboard-title">Welcome, Admin</div>
@@ -358,5 +417,67 @@
     <script src="assets/js/modules/staff.js"></script>
     <script src="assets/js/modules/communication.js"></script>
     <script src="assets/js/modules/admin_dashboard.js"></script>
+
+    <!-- Mobile navigation event listeners -->
+    <script>
+        document.getElementById('mobileAppointmentsBtn').addEventListener('click', function() {
+            window.location.href = 'appointments.html';
+        });
+        
+        document.getElementById('mobileCustomersBtn').addEventListener('click', function() {
+            window.location.href = 'customers.html';
+        });
+        
+        document.getElementById('mobilePaymentsBtn').addEventListener('click', function() {
+            window.location.href = 'payments.html';
+        });
+        
+        document.getElementById('mobileAnalyticsBtn').addEventListener('click', function() {
+            window.location.href = 'analytics.html';
+        });
+        
+        document.getElementById('mobileInventoryBtn').addEventListener('click', function() {
+            window.location.href = 'inventory.html';
+        });
+        
+        document.getElementById('mobileStaffBtn').addEventListener('click', function() {
+            window.location.href = 'staff.html';
+        });
+        
+        document.getElementById('mobileMessagesBtn').addEventListener('click', function() {
+            window.location.href = 'messages.html';
+        });
+
+        // Hamburger menu functionality
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            if (!hamburger.contains(event.target) && !nav.contains(event.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const hamburger = document.querySelector('.hamburger');
+                const nav = document.querySelector('.admin-nav');
+                
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html> 
