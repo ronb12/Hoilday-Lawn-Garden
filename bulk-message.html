@@ -1,1 +1,911 @@
-<!DOCTYPE html><html><head><title>Bulk Message</title></head><body><h1>Bulk Message Page</h1><p>This page is under construction.</p><a href="admin-dashboard.html">Back to Dashboard</a></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Messaging - Holliday's Lawn & Garden</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .message-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .message-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c5530;
+        }
+        .message-form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .message-history-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+        .customer-selection {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .customer-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .customer-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            background: white;
+        }
+        .customer-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        .customer-item:last-child {
+            border-bottom: none;
+        }
+        .customer-item input[type="checkbox"] {
+            margin-right: 0.75rem;
+        }
+        .customer-info {
+            flex: 1;
+        }
+        .customer-name {
+            font-weight: 600;
+            color: #333;
+        }
+        .customer-email {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .select-all-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+        .message-templates {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .template-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .template-btn {
+            background: #6c757d;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .template-btn:hover {
+            background: #5a6268;
+        }
+        .message-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+        .btn-send {
+            background: #4caf50;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .btn-send:hover {
+            background: #45a049;
+        }
+        .btn-send:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .btn-preview {
+            background: #2196F3;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .btn-preview:hover {
+            background: #1976D2;
+        }
+        .message-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .message-table th,
+        .message-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .message-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+        }
+        .status-sent {
+            color: #4caf50;
+            font-weight: 600;
+        }
+        .status-failed {
+            color: #f44336;
+            font-weight: 600;
+        }
+        .status-pending {
+            color: #ff9800;
+            font-weight: 600;
+        }
+        .preview-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .preview-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #000;
+        }
+        .recipient-count {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        /* Mobile menu styles */
+        .admin-header .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+        }
+        
+        .admin-header .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #2c5530;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .admin-header .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .admin-header .logo {
+                flex: 1;
+                min-width: 0;
+            }
+            .admin-header .logo img {
+                height: 40px;
+            }
+            .admin-header .logo span {
+                font-size: 1.1rem;
+            }
+            .admin-header .admin-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                order: 3;
+                width: 100%;
+            }
+            
+            .admin-header .admin-nav.active {
+                display: flex;
+            }
+            
+            .admin-header .hamburger {
+                display: flex;
+                order: 2;
+            }
+            
+            .admin-header .admin-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+                order: 1;
+            }
+            .admin-header .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .message-container {
+                padding: 1rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .customer-filters {
+                grid-template-columns: 1fr;
+            }
+            
+            .message-actions {
+                flex-direction: column;
+            }
+            
+            .preview-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .admin-header {
+                padding: 0.75rem;
+            }
+            .admin-header .logo span {
+                font-size: 1rem;
+            }
+            .admin-header .btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.85rem;
+            }
+            
+            .message-container {
+                padding: 0.5rem;
+            }
+            
+            .message-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-320.png" alt="Logo">
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="customers.html">Customers</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="payments.html">Payments</a>
+            <a href="messages.html">Messages</a>
+            <a href="bulk-message.html">Bulk Message</a>
+        </nav>
+        <div class="admin-actions">
+            <button class="btn btn-secondary" onclick="location.reload()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button class="btn btn-danger" onclick="window.location.href='admin-login.html'">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <div class="message-container">
+        <div class="message-header">
+            <h1 class="message-title">Bulk Messaging</h1>
+        </div>
+
+        <div class="message-form-section">
+            <h2>Send Bulk Message</h2>
+            
+            <div class="customer-selection">
+                <h3>Select Recipients</h3>
+                <div class="customer-filters">
+                    <div class="form-group">
+                        <label for="customerType">Customer Type</label>
+                        <select id="customerType">
+                            <option value="">All Types</option>
+                            <option value="residential">Residential</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="property-management">Property Management</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerStatus">Status</label>
+                        <select id="customerStatus">
+                            <option value="">All Statuses</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="prospect">Prospect</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerSearch">Search</label>
+                        <input type="text" id="customerSearch" placeholder="Search by name or email">
+                    </div>
+                </div>
+                
+                <div class="select-all-section">
+                    <label>
+                        <input type="checkbox" id="selectAll"> Select All
+                    </label>
+                    <span id="selectedCount">0 customers selected</span>
+                </div>
+                
+                <div class="customer-list" id="customerList">
+                    <p>Loading customers...</p>
+                </div>
+            </div>
+
+            <div class="message-templates">
+                <h3>Message Template</h3>
+                <div class="template-buttons">
+                    <button class="template-btn" onclick="loadTemplate('appointment')">Appointment Reminder</button>
+                    <button class="template-btn" onclick="loadTemplate('payment')">Payment Reminder</button>
+                    <button class="template-btn" onclick="loadTemplate('service')">Service Update</button>
+                    <button class="template-btn" onclick="loadTemplate('promotion')">Special Offer</button>
+                    <button class="template-btn" onclick="loadTemplate('maintenance')">Maintenance Notice</button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="messageSubject">Subject *</label>
+                    <input type="text" id="messageSubject" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="messageContent">Message Content *</label>
+                    <textarea id="messageContent" rows="8" required placeholder="Enter your message here..."></textarea>
+                </div>
+            </div>
+
+            <div class="message-actions">
+                <button class="btn-preview" id="previewBtn">
+                    <i class="fas fa-eye"></i>
+                    Preview Message
+                </button>
+                <button class="btn-send" id="sendBtn" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                    Send Message
+                </button>
+            </div>
+        </div>
+
+        <div class="message-history-section">
+            <h2>Message History</h2>
+            <div id="messageHistory">
+                <p>Loading message history...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="preview-modal">
+        <div class="preview-content">
+            <div class="preview-header">
+                <h3>Message Preview</h3>
+                <span class="close" onclick="closePreview()">&times;</span>
+            </div>
+            <div class="recipient-count" id="recipientCount">
+                <!-- Recipient count will be populated here -->
+            </div>
+            <div id="previewContent">
+                <!-- Preview content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc, query, orderBy, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+            authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+            projectId: "holiday-lawn-and-garden",
+            storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+            messagingSenderId: "135322230444",
+            appId: "1:135322230444:web:1a487b25a48aae07368909",
+            measurementId: "G-KD6TBWR4ZT"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // DOM elements
+        const customerType = document.getElementById('customerType');
+        const customerStatus = document.getElementById('customerStatus');
+        const customerSearch = document.getElementById('customerSearch');
+        const selectAll = document.getElementById('selectAll');
+        const selectedCount = document.getElementById('selectedCount');
+        const customerList = document.getElementById('customerList');
+        const messageSubject = document.getElementById('messageSubject');
+        const messageContent = document.getElementById('messageContent');
+        const previewBtn = document.getElementById('previewBtn');
+        const sendBtn = document.getElementById('sendBtn');
+        const messageHistory = document.getElementById('messageHistory');
+        const previewModal = document.getElementById('previewModal');
+        const previewContent = document.getElementById('previewContent');
+        const recipientCount = document.getElementById('recipientCount');
+
+        let allCustomers = [];
+        let filteredCustomers = [];
+
+        // Event listeners
+        customerType.addEventListener('change', filterCustomers);
+        customerStatus.addEventListener('change', filterCustomers);
+        customerSearch.addEventListener('input', filterCustomers);
+        selectAll.addEventListener('change', toggleSelectAll);
+        previewBtn.addEventListener('click', showPreview);
+        sendBtn.addEventListener('click', sendBulkMessage);
+
+        // Message templates
+        const templates = {
+            appointment: {
+                subject: "Appointment Reminder - Holliday's Lawn & Garden",
+                content: `Dear {customerName},
+
+This is a friendly reminder about your upcoming appointment with Holliday's Lawn & Garden.
+
+If you need to reschedule or have any questions, please contact us at (504) 717-1887 or reply to this message.
+
+Thank you for choosing Holliday's Lawn & Garden!
+
+Best regards,
+The Holliday's Team`
+            },
+            payment: {
+                subject: "Payment Reminder - Holliday's Lawn & Garden",
+                content: `Dear {customerName},
+
+This is a reminder that payment is due for your recent service with Holliday's Lawn & Garden.
+
+You can make your payment online at our website or contact us at (504) 717-1887 to arrange payment.
+
+Thank you for your business!
+
+Best regards,
+The Holliday's Team`
+            },
+            service: {
+                subject: "Service Update - Holliday's Lawn & Garden",
+                content: `Dear {customerName},
+
+We wanted to provide you with an update on your recent service with Holliday's Lawn & Garden.
+
+If you have any questions or concerns, please don't hesitate to contact us at (504) 717-1887.
+
+Thank you for choosing Holliday's Lawn & Garden!
+
+Best regards,
+The Holliday's Team`
+            },
+            promotion: {
+                subject: "Special Offer - Holliday's Lawn & Garden",
+                content: `Dear {customerName},
+
+We have a special offer just for you! As a valued customer of Holliday's Lawn & Garden, you're eligible for exclusive discounts on our services.
+
+Contact us at (504) 717-1887 to learn more about this limited-time offer.
+
+Thank you for your continued business!
+
+Best regards,
+The Holliday's Team`
+            },
+            maintenance: {
+                subject: "Maintenance Notice - Holliday's Lawn & Garden",
+                content: `Dear {customerName},
+
+This is a notice about upcoming maintenance work in your area. Holliday's Lawn & Garden will be performing routine maintenance that may affect your property.
+
+If you have any concerns, please contact us at (504) 717-1887.
+
+Thank you for your understanding!
+
+Best regards,
+The Holliday's Team`
+            }
+        };
+
+        // Load message template
+        window.loadTemplate = function(templateName) {
+            const template = templates[templateName];
+            if (template) {
+                messageSubject.value = template.subject;
+                messageContent.value = template.content;
+            }
+        };
+
+        // Filter customers based on criteria
+        function filterCustomers() {
+            const typeFilter = customerType.value;
+            const statusFilter = customerStatus.value;
+            const searchTerm = customerSearch.value.toLowerCase();
+
+            filteredCustomers = allCustomers.filter(customer => {
+                const matchesType = !typeFilter || customer.customerType === typeFilter;
+                const matchesStatus = !statusFilter || customer.status === statusFilter;
+                const matchesSearch = !searchTerm || 
+                    customer.firstName.toLowerCase().includes(searchTerm) ||
+                    customer.lastName.toLowerCase().includes(searchTerm) ||
+                    customer.email.toLowerCase().includes(searchTerm);
+
+                return matchesType && matchesStatus && matchesSearch;
+            });
+
+            displayCustomers();
+        }
+
+        // Display customers in the list
+        function displayCustomers() {
+            if (filteredCustomers.length === 0) {
+                customerList.innerHTML = '<p>No customers found matching your criteria.</p>';
+                return;
+            }
+
+            let html = '';
+            filteredCustomers.forEach(customer => {
+                html += `
+                    <div class="customer-item">
+                        <input type="checkbox" id="customer_${customer.id}" value="${customer.id}" onchange="updateSelectedCount()">
+                        <div class="customer-info">
+                            <div class="customer-name">${customer.firstName} ${customer.lastName}</div>
+                            <div class="customer-email">${customer.email}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            customerList.innerHTML = html;
+            updateSelectedCount();
+        }
+
+        // Toggle select all
+        function toggleSelectAll() {
+            const checkboxes = customerList.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAll.checked;
+            });
+            updateSelectedCount();
+        }
+
+        // Update selected count
+        window.updateSelectedCount = function() {
+            const checkboxes = customerList.querySelectorAll('input[type="checkbox"]:checked');
+            const count = checkboxes.length;
+            selectedCount.textContent = `${count} customer${count !== 1 ? 's' : ''} selected`;
+            sendBtn.disabled = count === 0 || !messageSubject.value || !messageContent.value;
+        };
+
+        // Show preview modal
+        function showPreview() {
+            const selectedCustomers = getSelectedCustomers();
+            if (selectedCustomers.length === 0) {
+                alert('Please select at least one customer.');
+                return;
+            }
+
+            if (!messageSubject.value || !messageContent.value) {
+                alert('Please fill in both subject and message content.');
+                return;
+            }
+
+            recipientCount.innerHTML = `This message will be sent to ${selectedCustomers.length} customer${selectedCustomers.length !== 1 ? 's' : ''}`;
+            
+            const previewText = messageContent.value.replace(/{customerName}/g, '[Customer Name]');
+            previewContent.innerHTML = `
+                <h4>Subject:</h4>
+                <p>${messageSubject.value}</p>
+                <h4>Message:</h4>
+                <pre style="white-space: pre-wrap; background: #f8f9fa; padding: 1rem; border-radius: 4px;">${previewText}</pre>
+            `;
+
+            previewModal.style.display = 'block';
+        }
+
+        // Close preview modal
+        window.closePreview = function() {
+            previewModal.style.display = 'none';
+        };
+
+        // Get selected customers
+        function getSelectedCustomers() {
+            const checkboxes = customerList.querySelectorAll('input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(checkbox => {
+                const customerId = checkbox.value;
+                return allCustomers.find(c => c.id === customerId);
+            }).filter(Boolean);
+        }
+
+        // Send bulk message
+        async function sendBulkMessage() {
+            const selectedCustomers = getSelectedCustomers();
+            if (selectedCustomers.length === 0) {
+                alert('Please select at least one customer.');
+                return;
+            }
+
+            if (!messageSubject.value || !messageContent.value) {
+                alert('Please fill in both subject and message content.');
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to send this message to ${selectedCustomers.length} customer${selectedCustomers.length !== 1 ? 's' : ''}?`)) {
+                return;
+            }
+
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+            try {
+                const messageData = {
+                    subject: messageSubject.value,
+                    content: messageContent.value,
+                    recipients: selectedCustomers.map(c => c.id),
+                    recipientCount: selectedCustomers.length,
+                    sentAt: serverTimestamp(),
+                    status: 'sent'
+                };
+
+                await addDoc(collection(db, "bulkMessages"), messageData);
+
+                // Reset form
+                messageSubject.value = '';
+                messageContent.value = '';
+                selectAll.checked = false;
+                const checkboxes = customerList.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => checkbox.checked = false);
+                updateSelectedCount();
+
+                alert(`Message sent successfully to ${selectedCustomers.length} customer${selectedCustomers.length !== 1 ? 's' : ''}!`);
+                fetchMessageHistory();
+            } catch (error) {
+                console.error("Error sending message:", error);
+                alert('Error sending message. Please try again.');
+            } finally {
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            }
+        }
+
+        // Fetch customers
+        async function fetchCustomers() {
+            try {
+                const q = query(collection(db, "customers"), orderBy("lastName"));
+                const snapshot = await getDocs(q);
+                
+                allCustomers = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                
+                filteredCustomers = [...allCustomers];
+                displayCustomers();
+            } catch (error) {
+                console.error("Error fetching customers:", error);
+                customerList.innerHTML = '<p>Error loading customers.</p>';
+            }
+        }
+
+        // Fetch message history
+        async function fetchMessageHistory() {
+            messageHistory.innerHTML = '<p>Loading message history...</p>';
+            
+            try {
+                const q = query(collection(db, "bulkMessages"), orderBy("sentAt", "desc"));
+                const snapshot = await getDocs(q);
+                
+                if (snapshot.empty) {
+                    messageHistory.innerHTML = '<p>No messages sent yet.</p>';
+                    return;
+                }
+
+                let html = `
+                    <table class="message-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Subject</th>
+                                <th>Recipients</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                snapshot.forEach(doc => {
+                    const message = doc.data();
+                    const date = message.sentAt?.toDate ? message.sentAt.toDate().toLocaleDateString() : 'N/A';
+                    const statusClass = getStatusClass(message.status);
+                    
+                    html += `
+                        <tr>
+                            <td>${date}</td>
+                            <td>${message.subject}</td>
+                            <td>${message.recipientCount}</td>
+                            <td class="${statusClass}">${message.status}</td>
+                        </tr>
+                    `;
+                });
+
+                html += '</tbody></table>';
+                messageHistory.innerHTML = html;
+
+            } catch (error) {
+                console.error("Error fetching message history:", error);
+                messageHistory.innerHTML = '<p>Error loading message history.</p>';
+            }
+        }
+
+        function getStatusClass(status) {
+            switch (status) {
+                case 'sent':
+                    return 'status-sent';
+                case 'failed':
+                    return 'status-failed';
+                case 'pending':
+                    return 'status-pending';
+                default:
+                    return '';
+            }
+        }
+
+        // Hamburger menu functionality
+        window.toggleMenu = function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        };
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            if (!hamburger.contains(event.target) && !nav.contains(event.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const hamburger = document.querySelector('.hamburger');
+                const nav = document.querySelector('.admin-nav');
+                
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target === previewModal) {
+                closePreview();
+            }
+        };
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchCustomers();
+            fetchMessageHistory();
+        });
+    </script>
+</body>
+</html>

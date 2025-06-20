@@ -1,1 +1,616 @@
-<!DOCTYPE html><html><head><title>Add Customer</title></head><body><h1>Add Customer Page</h1><p>This page is under construction.</p><a href="admin-dashboard.html">Back to Dashboard</a></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management - Holliday's Lawn & Garden</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .customer-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .customer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .customer-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c5530;
+        }
+        .btn-add-customer {
+            background: #4caf50;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        .btn-add-customer:hover {
+            background: #45a049;
+        }
+        .customer-form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .customer-list-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+        .btn-save {
+            background: #4caf50;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-cancel {
+            background: #f44336;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-edit {
+            background: #2196F3;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+        .btn-delete {
+            background: #f44336;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .customer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .customer-table th,
+        .customer-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .customer-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+        }
+        .status-active {
+            color: #4caf50;
+            font-weight: 600;
+        }
+        .status-inactive {
+            color: #f44336;
+            font-weight: 600;
+        }
+        .hidden {
+            display: none;
+        }
+        
+        /* Mobile menu styles */
+        .admin-header .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+        }
+        
+        .admin-header .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #2c5530;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .admin-header .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .admin-header .logo {
+                flex: 1;
+                min-width: 0;
+            }
+            .admin-header .logo img {
+                height: 40px;
+            }
+            .admin-header .logo span {
+                font-size: 1.1rem;
+            }
+            .admin-header .admin-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                order: 3;
+                width: 100%;
+            }
+            
+            .admin-header .admin-nav.active {
+                display: flex;
+            }
+            
+            .admin-header .hamburger {
+                display: flex;
+                order: 2;
+            }
+            
+            .admin-header .admin-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+                order: 1;
+            }
+            .admin-header .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .customer-container {
+                padding: 1rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .admin-header {
+                padding: 0.75rem;
+            }
+            .admin-header .logo span {
+                font-size: 1rem;
+            }
+            .admin-header .btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.85rem;
+            }
+            
+            .customer-container {
+                padding: 0.5rem;
+            }
+            
+            .customer-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-320.png" alt="Logo">
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="customers.html">Customers</a>
+            <a href="add-customer.html">Add Customer</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="payments.html">Payments</a>
+        </nav>
+        <div class="admin-actions">
+            <button class="btn btn-secondary" onclick="location.reload()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button class="btn btn-danger" onclick="window.location.href='admin-login.html'">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <div class="customer-container">
+        <div class="customer-header">
+            <h1 class="customer-title">Customer Management</h1>
+            <button class="btn-add-customer" id="showFormBtn">
+                <i class="fas fa-plus"></i>
+                Add New Customer
+            </button>
+        </div>
+
+        <div class="customer-form-section hidden" id="customerFormSection">
+            <h2 id="formTitle">Add New Customer</h2>
+            <form id="customerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name *</label>
+                        <input type="text" id="lastName" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone *</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address *</label>
+                    <textarea id="address" rows="3" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City *</label>
+                        <input type="text" id="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State *</label>
+                        <input type="text" id="state" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="zipCode">ZIP Code *</label>
+                        <input type="text" id="zipCode" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerType">Customer Type *</label>
+                        <select id="customerType" required>
+                            <option value="">Select Type</option>
+                            <option value="residential">Residential</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="property-management">Property Management</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="status">Status *</label>
+                        <select id="status" required>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="prospect">Prospect</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="source">Lead Source</label>
+                        <select id="source">
+                            <option value="">Select Source</option>
+                            <option value="website">Website</option>
+                            <option value="referral">Referral</option>
+                            <option value="social-media">Social Media</option>
+                            <option value="advertising">Advertising</option>
+                            <option value="walk-in">Walk-in</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" rows="4"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn-save">Save Customer</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="customer-list-section">
+            <h2>Current Customers</h2>
+            <div id="customerList">
+                <p>Loading customers...</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+            authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+            projectId: "holiday-lawn-and-garden",
+            storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+            messagingSenderId: "135322230444",
+            appId: "1:135322230444:web:1a487b25a48aae07368909",
+            measurementId: "G-KD6TBWR4ZT"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // DOM elements
+        const showFormBtn = document.getElementById('showFormBtn');
+        const customerFormSection = document.getElementById('customerFormSection');
+        const customerForm = document.getElementById('customerForm');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const formTitle = document.getElementById('formTitle');
+        const customerList = document.getElementById('customerList');
+
+        // Event listeners
+        showFormBtn.addEventListener('click', () => {
+            customerFormSection.classList.remove('hidden');
+            customerForm.reset();
+            delete customerForm.dataset.editingId;
+            formTitle.textContent = 'Add New Customer';
+            showFormBtn.textContent = 'Add New Customer';
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            customerFormSection.classList.add('hidden');
+            customerForm.reset();
+            delete customerForm.dataset.editingId;
+        });
+
+        customerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const editingId = customerForm.dataset.editingId;
+            const customerData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                zipCode: document.getElementById('zipCode').value,
+                customerType: document.getElementById('customerType').value,
+                status: document.getElementById('status').value,
+                source: document.getElementById('source').value,
+                notes: document.getElementById('notes').value,
+                updatedAt: serverTimestamp()
+            };
+
+            try {
+                if (editingId) {
+                    // Update existing customer
+                    const customerRef = doc(db, "customers", editingId);
+                    await updateDoc(customerRef, customerData);
+                } else {
+                    // Add new customer
+                    customerData.createdAt = serverTimestamp();
+                    await addDoc(collection(db, "customers"), customerData);
+                }
+                
+                customerForm.reset();
+                delete customerForm.dataset.editingId;
+                customerFormSection.classList.add('hidden');
+                formTitle.textContent = 'Add New Customer';
+                showFormBtn.textContent = 'Add New Customer';
+                fetchCustomers();
+                
+                alert(editingId ? 'Customer updated successfully!' : 'Customer added successfully!');
+            } catch (error) {
+                console.error("Error saving customer:", error);
+                alert('Error saving customer. Please try again.');
+            }
+        });
+
+        async function fetchCustomers() {
+            customerList.innerHTML = '<p>Loading customers...</p>';
+            
+            try {
+                const q = query(collection(db, "customers"), orderBy("lastName"));
+                const snapshot = await getDocs(q);
+                
+                if (snapshot.empty) {
+                    customerList.innerHTML = '<p>No customers found.</p>';
+                    return;
+                }
+
+                let html = `
+                    <table class="customer-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>City</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                snapshot.forEach(doc => {
+                    const customer = doc.data();
+                    const statusClass = customer.status === 'active' ? 'status-active' : 'status-inactive';
+                    
+                    html += `
+                        <tr>
+                            <td>${customer.firstName} ${customer.lastName}</td>
+                            <td>${customer.email}</td>
+                            <td>${customer.phone}</td>
+                            <td>${customer.customerType}</td>
+                            <td class="${statusClass}">${customer.status}</td>
+                            <td>${customer.city}, ${customer.state}</td>
+                            <td>
+                                <button class="btn-edit" onclick="editCustomer('${doc.id}')">Edit</button>
+                                <button class="btn-delete" onclick="deleteCustomer('${doc.id}')">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                html += '</tbody></table>';
+                customerList.innerHTML = html;
+
+            } catch (error) {
+                console.error("Error fetching customers:", error);
+                customerList.innerHTML = '<p>Error loading customers.</p>';
+            }
+        }
+
+        // Make functions globally available for onclick handlers
+        window.editCustomer = async function(customerId) {
+            try {
+                const customerRef = doc(db, "customers", customerId);
+                const customerDoc = await getDoc(customerRef);
+                
+                if (customerDoc.exists()) {
+                    const customer = customerDoc.data();
+                    
+                    document.getElementById('firstName').value = customer.firstName;
+                    document.getElementById('lastName').value = customer.lastName;
+                    document.getElementById('email').value = customer.email;
+                    document.getElementById('phone').value = customer.phone;
+                    document.getElementById('address').value = customer.address || '';
+                    document.getElementById('city').value = customer.city || '';
+                    document.getElementById('state').value = customer.state || '';
+                    document.getElementById('zipCode').value = customer.zipCode || '';
+                    document.getElementById('customerType').value = customer.customerType || '';
+                    document.getElementById('status').value = customer.status || 'active';
+                    document.getElementById('source').value = customer.source || '';
+                    document.getElementById('notes').value = customer.notes || '';
+                    
+                    customerForm.dataset.editingId = customerId;
+                    formTitle.textContent = 'Edit Customer';
+                    showFormBtn.textContent = 'Add New Customer';
+                    customerFormSection.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error loading customer:", error);
+                alert('Error loading customer details.');
+            }
+        };
+
+        window.deleteCustomer = async function(customerId) {
+            if (confirm('Are you sure you want to delete this customer? This action cannot be undone.')) {
+                try {
+                    await deleteDoc(doc(db, "customers", customerId));
+                    fetchCustomers();
+                    alert('Customer deleted successfully!');
+                } catch (error) {
+                    console.error("Error deleting customer:", error);
+                    alert('Error deleting customer. Please try again.');
+                }
+            }
+        };
+
+        // Hamburger menu functionality
+        window.toggleMenu = function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        };
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            if (!hamburger.contains(event.target) && !nav.contains(event.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const hamburger = document.querySelector('.hamburger');
+                const nav = document.querySelector('.admin-nav');
+                
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchCustomers();
+        });
+    </script>
+</body>
+</html>

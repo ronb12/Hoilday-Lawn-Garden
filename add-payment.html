@@ -1,1 +1,683 @@
-<!DOCTYPE html><html><head><title>Add Payment</title></head><body><h1>Add Payment Page</h1><p>This page is under construction.</p><a href="admin-dashboard.html">Back to Dashboard</a></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Management - Holliday's Lawn & Garden</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .payment-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .payment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .payment-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c5530;
+        }
+        .btn-add-payment {
+            background: #4caf50;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        .btn-add-payment:hover {
+            background: #45a049;
+        }
+        .payment-form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .payment-list-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+        .btn-save {
+            background: #4caf50;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-cancel {
+            background: #f44336;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-edit {
+            background: #2196F3;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+        .btn-delete {
+            background: #f44336;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .payment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .payment-table th,
+        .payment-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .payment-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+        }
+        .status-successful {
+            color: #4caf50;
+            font-weight: 600;
+        }
+        .status-failed {
+            color: #f44336;
+            font-weight: 600;
+        }
+        .status-pending {
+            color: #ff9800;
+            font-weight: 600;
+        }
+        .hidden {
+            display: none;
+        }
+        
+        /* Mobile menu styles */
+        .admin-header .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+        }
+        
+        .admin-header .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #2c5530;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .admin-header .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .admin-header .logo {
+                flex: 1;
+                min-width: 0;
+            }
+            .admin-header .logo img {
+                height: 40px;
+            }
+            .admin-header .logo span {
+                font-size: 1.1rem;
+            }
+            .admin-header .admin-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                order: 3;
+                width: 100%;
+            }
+            
+            .admin-header .admin-nav.active {
+                display: flex;
+            }
+            
+            .admin-header .hamburger {
+                display: flex;
+                order: 2;
+            }
+            
+            .admin-header .admin-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+                order: 1;
+            }
+            .admin-header .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .payment-container {
+                padding: 1rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .admin-header {
+                padding: 0.75rem;
+            }
+            .admin-header .logo span {
+                font-size: 1rem;
+            }
+            .admin-header .btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.85rem;
+            }
+            
+            .payment-container {
+                padding: 0.5rem;
+            }
+            
+            .payment-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-320.png" alt="Logo">
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="customers.html">Customers</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="payments.html">Payments</a>
+            <a href="add-payment.html">Add Payment</a>
+        </nav>
+        <div class="admin-actions">
+            <button class="btn btn-secondary" onclick="location.reload()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button class="btn btn-danger" onclick="window.location.href='admin-login.html'">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <div class="payment-container">
+        <div class="payment-header">
+            <h1 class="payment-title">Payment Management</h1>
+            <button class="btn-add-payment" id="showFormBtn">
+                <i class="fas fa-plus"></i>
+                Add New Payment
+            </button>
+        </div>
+
+        <div class="payment-form-section hidden" id="paymentFormSection">
+            <h2 id="formTitle">Add New Payment</h2>
+            <form id="paymentForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerId">Customer *</label>
+                        <select id="customerId" required>
+                            <option value="">Select Customer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentId">Appointment (Optional)</label>
+                        <select id="appointmentId">
+                            <option value="">Select Appointment</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="amount">Amount *</label>
+                        <input type="number" id="amount" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method *</label>
+                        <select id="paymentMethod" required>
+                            <option value="">Select Method</option>
+                            <option value="cash">Cash</option>
+                            <option value="check">Check</option>
+                            <option value="credit-card">Credit Card</option>
+                            <option value="debit-card">Debit Card</option>
+                            <option value="bank-transfer">Bank Transfer</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="venmo">Venmo</option>
+                            <option value="zelle">Zelle</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="paymentDate">Payment Date *</label>
+                        <input type="date" id="paymentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status *</label>
+                        <select id="status" required>
+                            <option value="successful">Successful</option>
+                            <option value="pending">Pending</option>
+                            <option value="failed">Failed</option>
+                            <option value="refunded">Refunded</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="referenceNumber">Reference Number</label>
+                        <input type="text" id="referenceNumber" placeholder="Check number, transaction ID, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceType">Service Type</label>
+                        <select id="serviceType">
+                            <option value="">Select Service</option>
+                            <option value="lawn-mowing">Lawn Mowing</option>
+                            <option value="landscaping">Landscaping</option>
+                            <option value="tree-trimming">Tree Trimming</option>
+                            <option value="fertilization">Fertilization</option>
+                            <option value="pest-control">Pest Control</option>
+                            <option value="irrigation">Irrigation</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" rows="4" placeholder="Additional payment details..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn-save">Save Payment</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="payment-list-section">
+            <h2>Payment History</h2>
+            <div id="paymentList">
+                <p>Loading payments...</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+            authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+            projectId: "holiday-lawn-and-garden",
+            storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+            messagingSenderId: "135322230444",
+            appId: "1:135322230444:web:1a487b25a48aae07368909",
+            measurementId: "G-KD6TBWR4ZT"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // DOM elements
+        const showFormBtn = document.getElementById('showFormBtn');
+        const paymentFormSection = document.getElementById('paymentFormSection');
+        const paymentForm = document.getElementById('paymentForm');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const formTitle = document.getElementById('formTitle');
+        const paymentList = document.getElementById('paymentList');
+        const customerId = document.getElementById('customerId');
+        const appointmentId = document.getElementById('appointmentId');
+        const paymentDate = document.getElementById('paymentDate');
+
+        // Set default payment date to today
+        paymentDate.value = new Date().toISOString().split('T')[0];
+
+        // Event listeners
+        showFormBtn.addEventListener('click', () => {
+            paymentFormSection.classList.remove('hidden');
+            paymentForm.reset();
+            delete paymentForm.dataset.editingId;
+            formTitle.textContent = 'Add New Payment';
+            showFormBtn.textContent = 'Add New Payment';
+            paymentDate.value = new Date().toISOString().split('T')[0];
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            paymentFormSection.classList.add('hidden');
+            paymentForm.reset();
+            delete paymentForm.dataset.editingId;
+        });
+
+        paymentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const editingId = paymentForm.dataset.editingId;
+            const paymentData = {
+                customerId: document.getElementById('customerId').value,
+                customerName: customerId.options[customerId.selectedIndex].text,
+                appointmentId: document.getElementById('appointmentId').value || null,
+                amount: parseFloat(document.getElementById('amount').value),
+                paymentMethod: document.getElementById('paymentMethod').value,
+                paymentDate: new Date(document.getElementById('paymentDate').value),
+                status: document.getElementById('status').value,
+                referenceNumber: document.getElementById('referenceNumber').value || null,
+                serviceType: document.getElementById('serviceType').value || null,
+                notes: document.getElementById('notes').value || null,
+                updatedAt: serverTimestamp()
+            };
+
+            try {
+                if (editingId) {
+                    // Update existing payment
+                    const paymentRef = doc(db, "payments", editingId);
+                    await updateDoc(paymentRef, paymentData);
+                } else {
+                    // Add new payment
+                    paymentData.createdAt = serverTimestamp();
+                    await addDoc(collection(db, "payments"), paymentData);
+                }
+                
+                paymentForm.reset();
+                delete paymentForm.dataset.editingId;
+                paymentFormSection.classList.add('hidden');
+                formTitle.textContent = 'Add New Payment';
+                showFormBtn.textContent = 'Add New Payment';
+                paymentDate.value = new Date().toISOString().split('T')[0];
+                fetchPayments();
+                
+                alert(editingId ? 'Payment updated successfully!' : 'Payment added successfully!');
+            } catch (error) {
+                console.error("Error saving payment:", error);
+                alert('Error saving payment. Please try again.');
+            }
+        });
+
+        async function fetchCustomers() {
+            try {
+                const q = query(collection(db, "customers"), orderBy("lastName"));
+                const snapshot = await getDocs(q);
+                
+                customerId.innerHTML = '<option value="">Select Customer</option>';
+                snapshot.forEach(doc => {
+                    const customer = doc.data();
+                    const option = document.createElement('option');
+                    option.value = doc.id;
+                    option.textContent = `${customer.firstName} ${customer.lastName} - ${customer.email}`;
+                    customerId.appendChild(option);
+                });
+            } catch (error) {
+                console.error("Error fetching customers:", error);
+            }
+        }
+
+        async function fetchAppointments() {
+            try {
+                const q = query(collection(db, "appointments"), orderBy("date", "desc"));
+                const snapshot = await getDocs(q);
+                
+                appointmentId.innerHTML = '<option value="">Select Appointment</option>';
+                snapshot.forEach(doc => {
+                    const appointment = doc.data();
+                    const date = appointment.date?.toDate ? appointment.date.toDate().toLocaleDateString() : 'N/A';
+                    const option = document.createElement('option');
+                    option.value = doc.id;
+                    option.textContent = `${date} - ${appointment.customerName} - ${appointment.service}`;
+                    appointmentId.appendChild(option);
+                });
+            } catch (error) {
+                console.error("Error fetching appointments:", error);
+            }
+        }
+
+        async function fetchPayments() {
+            paymentList.innerHTML = '<p>Loading payments...</p>';
+            
+            try {
+                const q = query(collection(db, "payments"), orderBy("paymentDate", "desc"));
+                const snapshot = await getDocs(q);
+                
+                if (snapshot.empty) {
+                    paymentList.innerHTML = '<p>No payments found.</p>';
+                    return;
+                }
+
+                let html = `
+                    <table class="payment-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Status</th>
+                                <th>Service</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                snapshot.forEach(doc => {
+                    const payment = doc.data();
+                    const date = payment.paymentDate?.toDate ? payment.paymentDate.toDate().toLocaleDateString() : 'N/A';
+                    const statusClass = getStatusClass(payment.status);
+                    
+                    html += `
+                        <tr>
+                            <td>${date}</td>
+                            <td>${payment.customerName}</td>
+                            <td>$${payment.amount.toFixed(2)}</td>
+                            <td>${payment.paymentMethod}</td>
+                            <td class="${statusClass}">${payment.status}</td>
+                            <td>${payment.serviceType || 'N/A'}</td>
+                            <td>
+                                <button class="btn-edit" onclick="editPayment('${doc.id}')">Edit</button>
+                                <button class="btn-delete" onclick="deletePayment('${doc.id}')">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                html += '</tbody></table>';
+                paymentList.innerHTML = html;
+
+            } catch (error) {
+                console.error("Error fetching payments:", error);
+                paymentList.innerHTML = '<p>Error loading payments.</p>';
+            }
+        }
+
+        function getStatusClass(status) {
+            switch (status) {
+                case 'successful':
+                    return 'status-successful';
+                case 'failed':
+                    return 'status-failed';
+                case 'pending':
+                    return 'status-pending';
+                default:
+                    return '';
+            }
+        }
+
+        // Make functions globally available for onclick handlers
+        window.editPayment = async function(paymentId) {
+            try {
+                const paymentRef = doc(db, "payments", paymentId);
+                const paymentDoc = await getDoc(paymentRef);
+                
+                if (paymentDoc.exists()) {
+                    const payment = paymentDoc.data();
+                    
+                    // Set customer dropdown
+                    customerId.value = payment.customerId;
+                    
+                    // Set appointment dropdown if exists
+                    if (payment.appointmentId) {
+                        appointmentId.value = payment.appointmentId;
+                    }
+                    
+                    document.getElementById('amount').value = payment.amount;
+                    document.getElementById('paymentMethod').value = payment.paymentMethod;
+                    document.getElementById('paymentDate').value = payment.paymentDate?.toDate ? 
+                        payment.paymentDate.toDate().toISOString().split('T')[0] : 
+                        new Date().toISOString().split('T')[0];
+                    document.getElementById('status').value = payment.status;
+                    document.getElementById('referenceNumber').value = payment.referenceNumber || '';
+                    document.getElementById('serviceType').value = payment.serviceType || '';
+                    document.getElementById('notes').value = payment.notes || '';
+                    
+                    paymentForm.dataset.editingId = paymentId;
+                    formTitle.textContent = 'Edit Payment';
+                    showFormBtn.textContent = 'Add New Payment';
+                    paymentFormSection.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error loading payment:", error);
+                alert('Error loading payment details.');
+            }
+        };
+
+        window.deletePayment = async function(paymentId) {
+            if (confirm('Are you sure you want to delete this payment? This action cannot be undone.')) {
+                try {
+                    await deleteDoc(doc(db, "payments", paymentId));
+                    fetchPayments();
+                    alert('Payment deleted successfully!');
+                } catch (error) {
+                    console.error("Error deleting payment:", error);
+                    alert('Error deleting payment. Please try again.');
+                }
+            }
+        };
+
+        // Hamburger menu functionality
+        window.toggleMenu = function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        };
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            if (!hamburger.contains(event.target) && !nav.contains(event.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const hamburger = document.querySelector('.hamburger');
+                const nav = document.querySelector('.admin-nav');
+                
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchCustomers();
+            fetchAppointments();
+            fetchPayments();
+        });
+    </script>
+</body>
+</html>
