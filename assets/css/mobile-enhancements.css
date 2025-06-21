@@ -71,6 +71,10 @@
     input, select, textarea {
         font-size: 16px; /* Prevents zoom on iOS */
         padding: 12px;
+        background-color: #ffffff !important;
+        color: #333 !important;
+        border: 1px solid #ddd;
+        border-radius: 4px;
     }
 
     /* Button adjustments */
@@ -387,6 +391,8 @@
     min-height: var(--touch-target-size);
     border: 1px solid #ddd;
     border-radius: var(--mobile-border-radius);
+    background-color: #ffffff !important;
+    color: #333 !important;
 }
 
 .form-group input:focus,
@@ -395,6 +401,8 @@
     outline: none;
     border-color: #4caf50;
     box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    background-color: #ffffff !important;
+    color: #333 !important;
 }
 
 /* Universal Mobile Tables */
@@ -591,6 +599,8 @@ table th {
     border-radius: var(--mobile-border-radius);
     font-size: 1rem;
     min-height: var(--touch-target-size);
+    background-color: #ffffff !important;
+    color: #333 !important;
 }
 
 /* Universal Mobile Actions */

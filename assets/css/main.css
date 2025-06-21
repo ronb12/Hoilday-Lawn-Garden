@@ -478,6 +478,8 @@ footer a:focus {
   border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 1rem;
+  background-color: var(--white);
+  color: var(--text-color);
   transition: all 0.3s ease;
 }
 
@@ -489,15 +491,21 @@ footer a:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+  background-color: var(--white);
+  color: var(--text-color);
 }
 
 .form-group input:focus {
     outline: none;
   border-color: var(--primary-color);
+  background-color: var(--white);
+  color: var(--text-color);
 }
 
 .form-group input:hover {
   border-color: var(--primary-color-light);
+  background-color: var(--white);
+  color: var(--text-color);
 }
 
 .form-group input::placeholder {
@@ -511,17 +519,26 @@ footer a:focus {
     border-radius: 4px;
     font-size: 1rem;
   background-color: var(--white);
+  color: var(--text-color);
     cursor: pointer;
 }
 
 .form-group select:hover {
   border-color: var(--primary-color-light);
+  background-color: var(--white);
+  color: var(--text-color);
 }
 
 .form-group textarea {
         width: 100%;
   min-height: 100px;
   padding: 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: var(--white);
+  color: var(--text-color);
+  resize: vertical;
 }
 
 /* Card Styles */
