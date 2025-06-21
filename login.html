@@ -581,6 +581,22 @@
           padding: 0.75rem 1rem;
           text-align: center;
         }
+        /* Mobile navigation improvements */
+        .main-header .nav-links {
+          display: none !important;
+        }
+        .main-header .hamburger {
+          display: block !important;
+        }
+        .main-header {
+          padding: 0.75rem 1rem !important;
+        }
+        .main-header .logo {
+          max-width: 150px !important;
+        }
+        .main-header .logo img {
+          max-height: 50px !important;
+        }
       }
       @media (max-width: 480px) {
         .hero {
@@ -605,6 +621,7 @@
         .login-info {
           padding: 1.5rem;
           border-radius: 12px;
+          margin: 0 0.5rem;
         }
         .login-form-container h2 {
           font-size: 1.8rem;
@@ -612,14 +629,28 @@
         .login-form input {
           padding: 0.875rem 1rem;
           font-size: 16px; /* Prevents zoom on iOS */
+          -webkit-appearance: none;
+          border-radius: 8px;
         }
         .btn-primary {
           padding: 1rem 2rem;
           font-size: 1rem;
+          border-radius: 8px;
+          font-weight: 600;
+          min-height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .google-sign-in {
           padding: 0.875rem 1.25rem;
           font-size: 0.95rem;
+          border-radius: 8px;
+          gap: 0.75rem;
+          min-height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .google-sign-in img {
           width: 18px;
@@ -627,48 +658,21 @@
         }
         .login-links {
           margin-top: 1.5rem;
+          flex-direction: column;
+          gap: 0.5rem;
         }
         .login-links a {
           font-size: 0.9rem;
           padding: 0.625rem 0.875rem;
-        }
-        /* Prevent horizontal scrolling */
-        body {
-          overflow-x: hidden;
-        }
-        
-        /* Improve touch targets */
-        .btn-primary,
-        .google-sign-in,
-        .login-links a {
+          text-align: center;
           min-height: 44px;
           display: flex;
           align-items: center;
           justify-content: center;
         }
-        
-        /* Better spacing for mobile */
-        .login-form-container,
-        .login-info {
-          margin: 0 0.5rem;
-        }
-        
-        /* Improve form inputs for mobile */
-        .login-form input {
-          -webkit-appearance: none;
-          border-radius: 8px;
-        }
-        
-        /* Better button styling for mobile */
-        .btn-primary {
-          border-radius: 8px;
-          font-weight: 600;
-        }
-        
-        /* Improve Google button for mobile */
-        .google-sign-in {
-          border-radius: 8px;
-          gap: 0.75rem;
+        /* Prevent horizontal scrolling */
+        body {
+          overflow-x: hidden;
         }
         
         /* Better error/success message display */
@@ -676,6 +680,18 @@
         .success-message {
           margin: 0 0.5rem 1rem 0.5rem;
           border-radius: 8px;
+        }
+        
+        /* Improve form spacing */
+        .form-group {
+          margin-bottom: 1.5rem;
+        }
+        
+        /* Better touch targets for mobile */
+        .btn-primary,
+        .google-sign-in,
+        .login-links a {
+          touch-action: manipulation;
         }
       }
       
@@ -690,12 +706,34 @@
           -webkit-appearance: none;
           border-radius: 8px;
         }
+        
+        /* Fix for iOS Safari viewport issues */
+        .hero {
+          -webkit-transform: translateZ(0);
+        }
       }
       
       /* Android Chrome specific fixes */
       @media screen and (-webkit-min-device-pixel-ratio: 0) {
         .login-form input {
           font-size: 16px;
+        }
+      }
+      
+      /* Landscape mobile orientation */
+      @media (max-width: 768px) and (orientation: landscape) {
+        .hero {
+          min-height: 200px;
+        }
+        .hero-content {
+          padding: 1rem;
+          min-height: 150px;
+        }
+        .hero-content h1 {
+          font-size: 2rem;
+        }
+        .login-section {
+          padding: 1rem 0;
         }
       }
       
@@ -707,211 +745,51 @@
         }
       }
       
-      /* Fix for desktop layout: wide columns */
-      @media screen and (min-width: 1025px) {
-        .login-layout {
-          display: grid !important;
-          grid-template-columns: 1fr 1fr !important;
-          gap: 3rem !important;
-          align-items: start !important;
-          max-width: 1000px !important;
-          margin: 0 auto !important;
-        }
-      }
-      
-      /* Additional Desktop Force - More aggressive approach */
-      @media (min-width: 1025px) {
-        .login-layout {
-          display: grid !important;
-          grid-template-columns: 1fr 1fr !important;
-          gap: 3rem !important;
-          align-items: start !important;
-          max-width: 1000px !important;
-          margin: 0 auto !important;
-        }
-        .login-container {
-          max-width: 1200px !important;
-          margin: 0 auto !important;
-          padding: 0 2rem !important;
-        }
-      }
-      
-      /* Force Desktop Layout with JavaScript */
-      .force-desktop-layout {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 3rem !important;
-        align-items: start !important;
-        max-width: 1000px !important;
-        margin: 0 auto !important;
-      }
-      
-      /* Header Override Styles */
-      .main-header {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        background: #fff !important;
-        padding: 1rem 2rem !important;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
-        z-index: 1000 !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-      }
-      
-      .main-header .logo {
-        flex: 0 0 auto !important;
-        max-width: 200px !important;
-        padding: 0.5rem !important;
-        display: flex !important;
-        align-items: center !important;
-      }
-      
-      .main-header .logo a {
-        display: block !important;
-        width: 100% !important;
-        height: 100% !important;
-      }
-      
-      .main-header .logo picture {
-        display: block !important;
-        width: 100% !important;
-        height: 100% !important;
-      }
-      
-      .main-header .logo img {
-        width: 100% !important;
-        height: auto !important;
-        max-height: 60px !important;
-        object-fit: contain !important;
-        display: block !important;
-      }
-      
-      .main-header nav {
-        display: flex !important;
-        align-items: center !important;
-      }
-      
-      .main-header .nav-links {
-        display: flex !important;
-        gap: 1.5rem !important;
-        align-items: center !important;
-        list-style: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      
-      .main-header .nav-links li {
-        position: relative !important;
-      }
-      
-      .main-header .nav-links a {
-        color: #333 !important;
-        text-decoration: none !important;
-        font-weight: 500 !important;
-        transition: color 0.3s ease !important;
-        padding: 0.5rem 0 !important;
-      }
-      
-      .main-header .nav-links a:hover {
-        color: #4caf50 !important;
-      }
-      
-      .main-header .nav-links .login-buttons {
-        display: flex !important;
-        gap: 1rem !important;
-        margin-left: 1rem !important;
-      }
-      
-      .main-header .nav-links .btn-login {
-        padding: 0.5rem 1rem !important;
-        border-radius: 4px !important;
-        font-weight: 500 !important;
-        transition: all 0.3s ease !important;
-        text-decoration: none !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 0.5rem !important;
-      }
-      
-      .main-header .nav-links .btn-customer {
-        background-color: #4caf50 !important;
-        color: #fff !important;
-      }
-      
-      .main-header .nav-links .btn-customer:hover {
-        background-color: #45a049 !important;
-        color: #fff !important;
-      }
-      
-      .main-header .nav-links .btn-admin {
-        background-color: #222 !important;
-        color: #fff !important;
-      }
-      
-      .main-header .nav-links .btn-admin:hover {
-        background-color: #111 !important;
-        color: #fff !important;
-      }
-      
-      .main-header .hamburger {
-        display: none !important;
-        background: none !important;
-        border: none !important;
-        cursor: pointer !important;
-        padding: 0 !important;
-        width: 30px !important;
-        height: 24px !important;
-        position: relative !important;
-        z-index: 1000 !important;
-      }
-      
-      .main-header .hamburger span {
-        display: block !important;
-        position: absolute !important;
-        height: 3px !important;
-        width: 100% !important;
-        background: #333 !important;
-        border-radius: 3px !important;
-        opacity: 1 !important;
-        left: 0 !important;
-        transform: rotate(0deg) !important;
-        transition: .25s ease-in-out !important;
-      }
-      
-      .main-header .hamburger span:nth-child(1) {
-        top: 0 !important;
-      }
-      
-      .main-header .hamburger span:nth-child(2) {
-        top: 10px !important;
-      }
-      
-      .main-header .hamburger span:nth-child(3) {
-        top: 20px !important;
-      }
-      
-      @media (max-width: 768px) {
-        .main-header .nav-links {
-          display: none !important;
+      /* Additional mobile improvements */
+      @media (max-width: 480px) {
+        /* Ensure Google button is properly sized for mobile */
+        .google-sign-in {
+          width: 100%;
+          box-sizing: border-box;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         
-        .main-header .hamburger {
-          display: block !important;
+        /* Improve form input focus states on mobile */
+        .login-form input:focus {
+          transform: none;
+          box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.15);
         }
         
-        .main-header {
-          padding: 0.75rem 1rem !important;
+        /* Better button states for mobile */
+        .btn-primary:active,
+        .google-sign-in:active {
+          transform: scale(0.98);
         }
         
-        .main-header .logo {
-          max-width: 150px !important;
+        /* Improve social login divider on mobile */
+        .social-login p::before,
+        .social-login p::after {
+          width: 25%;
         }
         
-        .main-header .logo img {
-          max-height: 50px !important;
+        /* Better spacing for mobile forms */
+        .login-form-container {
+          margin-bottom: 1rem;
+        }
+        
+        /* Ensure proper touch targets */
+        .form-group label {
+          margin-bottom: 0.5rem;
+        }
+      }
+      
+      /* Fix for mobile browsers that don't support backdrop-filter */
+      @supports not (backdrop-filter: blur(10px)) {
+        .login-form-container,
+        .login-info {
+          background: rgba(255, 255, 255, 0.95);
         }
       }
     </style>
@@ -1005,14 +883,21 @@
               </form>
               <div class="social-login">
                 <p>or</p>
-                <button id="googleSignIn" class="google-sign-in">
+                <button 
+                  id="googleSignIn" 
+                  class="google-sign-in"
+                  type="button"
+                  aria-label="Sign in with Google"
+                  data-mobile-friendly="true"
+                >
                   <img
                     src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                     alt="Google logo"
                     width="18"
                     height="18"
+                    loading="lazy"
                   />
-                  Sign in with Google
+                  <span>Sign in with Google</span>
                 </button>
               </div>
               <div class="login-links">
@@ -1124,77 +1009,29 @@
     </footer>
     <!-- Modular Firebase Auth and Firestore (no compat) -->
     <script type="module">
-      import {
-        getAuth,
-        GoogleAuthProvider,
-        signInWithPopup,
-        signInWithEmailAndPassword,
-      } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-      import {
-        getFirestore,
-        doc,
-        getDoc,
-        setDoc,
-        serverTimestamp,
-      } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
-      import { app } from './assets/js/firebase-config.js';
+      // Import Firebase modules with correct version
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+      import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+      import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+        authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+        projectId: "holiday-lawn-and-garden",
+        storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+        messagingSenderId: "135322230444",
+        appId: "1:135322230444:web:1a487b25a48aae07368909",
+        measurementId: "G-KD6TBWR4ZT"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const db = getFirestore(app);
 
-      // Initialize page
+      // DOM Content Loaded
       document.addEventListener('DOMContentLoaded', function() {
-        // Force desktop layout if screen is wide enough
-        function checkViewport() {
-          const isDesktop = window.innerWidth >= 1025;
-          const loginLayout = document.querySelector('.login-layout');
-          const navLinks = document.querySelector('.main-header .nav-links');
-          const hamburger = document.querySelector('.main-header .hamburger');
-          
-          if (isDesktop && loginLayout) {
-            loginLayout.style.display = 'grid';
-            loginLayout.style.gridTemplateColumns = '1fr 1fr';
-            loginLayout.style.gap = '3rem';
-            loginLayout.style.alignItems = 'start';
-            loginLayout.style.maxWidth = '1000px';
-            loginLayout.style.margin = '0 auto';
-            loginLayout.classList.add('force-desktop-layout');
-          }
-          
-          if (isDesktop && navLinks) {
-            navLinks.style.display = 'flex';
-          }
-          
-          if (isDesktop && hamburger) {
-            hamburger.style.display = 'none';
-          }
-        }
-        
-        // Check viewport on load and resize
-        checkViewport();
-        window.addEventListener('resize', checkViewport);
-        
-        // Force check after a short delay to ensure DOM is ready
-        setTimeout(checkViewport, 100);
-        setTimeout(checkViewport, 500);
-        
-        // Hide success and error messages on page load
-        const successMessage = document.getElementById('successMessage');
-        const errorContainer = document.getElementById('error-container');
-        if (successMessage) {
-          successMessage.style.display = 'none';
-        }
-        if (errorContainer) {
-          errorContainer.style.display = 'none';
-        }
-        
-        // Clear any existing form data
-        const loginForm = document.getElementById('login-form');
-        if (loginForm) {
-          loginForm.reset();
-        }
-        
-        // Clear messages when user starts typing
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         
@@ -1339,6 +1176,7 @@
       document.getElementById('googleSignIn').addEventListener('click', async function () {
         const googleBtn = this;
         const originalText = googleBtn.innerHTML;
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
         try {
           // Show loading state
@@ -1348,11 +1186,20 @@
           const provider = new GoogleAuthProvider();
           provider.addScope('profile');
           provider.addScope('email');
-          provider.setCustomParameters({ 
-            prompt: 'select_account',
-            // Add mobile-friendly parameters
-            ux_mode: 'popup'
-          });
+          
+          // Mobile-specific parameters
+          if (isMobile) {
+            provider.setCustomParameters({ 
+              prompt: 'select_account',
+              ux_mode: 'popup',
+              access_type: 'offline'
+            });
+          } else {
+            provider.setCustomParameters({ 
+              prompt: 'select_account',
+              ux_mode: 'popup'
+            });
+          }
           
           const result = await signInWithPopup(auth, provider);
           const user = result.user;
@@ -1385,7 +1232,9 @@
               errorMessage = 'An account already exists with the same email address but different sign-in credentials.';
               break;
             case 'auth/popup-blocked':
-              errorMessage = 'The sign-in popup was blocked by the browser. Please allow popups and try again.';
+              errorMessage = isMobile 
+                ? 'The sign-in popup was blocked. Please try again or use email/password login.'
+                : 'The sign-in popup was blocked by the browser. Please allow popups and try again.';
               break;
             case 'auth/popup-closed-by-user':
               errorMessage = 'The sign-in popup was closed before completing the sign-in.';
@@ -1403,10 +1252,18 @@
               errorMessage = 'This domain is not authorized for Google sign-in. Please contact support.';
               break;
             case 'auth/browser-not-supported':
-              errorMessage = 'Your browser does not support Google sign-in. Please try a different browser.';
+              errorMessage = isMobile 
+                ? 'Your mobile browser may not support Google sign-in. Please try email/password login.'
+                : 'Your browser does not support Google sign-in. Please try a different browser.';
               break;
             case 'auth/web-storage-unsupported':
               errorMessage = 'Your browser does not support web storage. Please enable cookies and try again.';
+              break;
+            case 'auth/too-many-requests':
+              errorMessage = 'Too many sign-in attempts. Please try again later.';
+              break;
+            case 'auth/user-disabled':
+              errorMessage = 'This account has been disabled. Please contact support.';
               break;
             default:
               errorMessage = `Sign-in failed: ${error.message}`;
