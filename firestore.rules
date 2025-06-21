@@ -51,6 +51,10 @@ service cloud.firestore {
       allow read, write: if true; // Allow full access for admin dashboard
     }
     
+    match /bulkMessages/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
     match /chats/{document} {
       allow read, write: if true; // Allow full access for admin dashboard
     }
