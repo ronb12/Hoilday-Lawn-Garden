@@ -6,6 +6,7 @@
     <title>Staff Management - Holliday's Lawn & Garden</title>
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <link rel="stylesheet" href="assets/css/mobile-enhancements.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .staff-container {
@@ -32,6 +33,10 @@
             cursor: pointer;
             border: none;
             font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s ease;
         }
         .btn-add-staff:hover {
             background: #45a049;
@@ -146,6 +151,101 @@
         }
         .hidden {
             display: none;
+        }
+        
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            .staff-container {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+            
+            .staff-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .staff-title {
+                font-size: 1.8rem;
+            }
+            
+            .btn-add-staff {
+                width: 100%;
+                justify-content: center;
+                padding: 1rem;
+            }
+            
+            .staff-form-section,
+            .staff-list-section {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .btn-save,
+            .btn-cancel {
+                width: 100%;
+                padding: 1rem;
+            }
+            
+            .staff-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                font-size: 0.9rem;
+            }
+            
+            .staff-table th,
+            .staff-table td {
+                padding: 0.75rem 0.5rem;
+                min-width: 120px;
+            }
+            
+            .btn-edit, .btn-delete {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+                margin-right: 0.25rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .staff-container {
+                padding: 0.5rem;
+            }
+            
+            .staff-title {
+                font-size: 1.6rem;
+            }
+            
+            .staff-form-section,
+            .staff-list-section {
+                padding: 1rem;
+            }
+            
+            .staff-table {
+                font-size: 0.8rem;
+            }
+            
+            .staff-table th,
+            .staff-table td {
+                padding: 0.5rem 0.25rem;
+                min-width: 100px;
+            }
+            
+            .btn-edit, .btn-delete {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
+                margin-right: 0.2rem;
+            }
         }
     </style>
 </head>

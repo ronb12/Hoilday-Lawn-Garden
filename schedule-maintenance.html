@@ -6,6 +6,7 @@
     <title>Schedule Maintenance - Holliday's Lawn & Garden</title>
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <link rel="stylesheet" href="assets/css/mobile-enhancements.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .maintenance-container {
@@ -30,6 +31,15 @@
             padding: 0.75rem 1.5rem;
             border-radius: 5px;
             cursor: pointer;
+            border: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .btn-add-maintenance:hover {
+            background: #45a049;
         }
         .maintenance-calendar {
             background: white;
@@ -43,6 +53,51 @@
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            .maintenance-container {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+            
+            .maintenance-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .maintenance-title {
+                font-size: 1.8rem;
+            }
+            
+            .btn-add-maintenance {
+                width: 100%;
+                justify-content: center;
+                padding: 1rem;
+            }
+            
+            .maintenance-calendar,
+            .maintenance-list {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .maintenance-container {
+                padding: 0.5rem;
+            }
+            
+            .maintenance-title {
+                font-size: 1.6rem;
+            }
+            
+            .maintenance-calendar,
+            .maintenance-list {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
