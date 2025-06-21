@@ -372,7 +372,9 @@
                 </div>
                 <div class="form-group">
                     <label for="service">Service</label>
-                    <input type="text" id="service" required>
+                    <select id="service" required>
+                        <option value="">Select Service</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="appointmentDate">Date</label>
@@ -407,6 +409,7 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
         import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, getDoc, query, where, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+        import { getAllServices } from './assets/js/service-cache.js';
 
         // Firebase configuration
         const firebaseConfig = {
@@ -456,6 +459,22 @@
                 } catch (error) {
                     console.error("Error fetching staff:", error);
                     staffSelect.innerHTML = '<option value="">Could not load staff</option>';
+                }
+            }
+
+            async function fetchServices() {
+                const serviceSelect = document.getElementById('service');
+                serviceSelect.innerHTML = '<option value="">Loading...</option>';
+                try {
+                    const services = getAllServices();
+                    let options = '<option value="">Select Service</option>';
+                    Object.values(services).forEach(service => {
+                        options += `<option value="${service.title}">${service.icon} ${service.title}</option>`;
+                    });
+                    serviceSelect.innerHTML = options;
+                } catch (error) {
+                    console.error("Error fetching services:", error);
+                    serviceSelect.innerHTML = '<option value="">Could not load services</option>';
                 }
             }
 
@@ -574,6 +593,7 @@
 
             fetchCustomers();
             fetchStaff();
+            fetchServices();
             fetchAppointments();
 
             // Add resize listener for responsive layout
