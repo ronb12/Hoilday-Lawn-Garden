@@ -453,6 +453,41 @@
     </style>
 </head>
 <body>
+    
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/images/hollidays-logo.optimized-320.png" alt="Holliday's Lawn & Garden Logo">
+            </a>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="nav-menu">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                <li class="login-buttons">
+                    <a href="login.html" class="btn-login btn-customer">
+                        <i class="fas fa-user"></i>
+                        Customer Login
+                    </a>
+                    <a href="admin-login.html" class="btn-login btn-admin">
+                        <i class="fas fa-lock"></i>
+                        Admin Login
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
     <header class="admin-header">
         <div class="logo">
             <img src="assets/images/hollidays-logo.optimized-320.png" alt="Logo">
@@ -1120,7 +1155,62 @@
             `;
             document.body.appendChild(notification);
             
-            // Auto-remove after 8 seconds
+      
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+          // Auto-remove after 8 seconds
             setTimeout(() => {
                 if (notification.parentElement) {
                     notification.remove();
