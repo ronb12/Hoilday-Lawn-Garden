@@ -9,15 +9,12 @@ const firebaseConfig = {
   measurementId: 'G-KD6TBWR4ZT',
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+// Initialize Firebase (modern modular SDK)
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
-// Initialize Firestore
-const db = firebase.firestore();
-
-// Initialize Auth
-const auth = firebase.auth();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 // Handle form submissions
 document.addEventListener('DOMContentLoaded', function () {
@@ -32,11 +29,11 @@ document.addEventListener('DOMContentLoaded', function () {
         phone: document.getElementById('phone').value,
         service: document.getElementById('service').value,
         message: document.getElementById('message').value,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        timestamp: serverTimestamp(),
       };
 
       try {
-        await db.collection('quotes').add(formData);
+        await addDoc(collection(db, 'quotes'), formData);
         alert('Thank you for your inquiry! We will contact you soon.');
         quoteForm.reset();
       } catch (error) {
@@ -46,3 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+// Export for use in other modules
+export { app, db };

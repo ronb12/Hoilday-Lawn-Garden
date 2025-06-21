@@ -92,23 +92,35 @@
         </div>
     </div>
     
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-    <script src="firebase-init.js"></script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+        import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, getDoc, query, where, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
-    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+            authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+            projectId: "holiday-lawn-and-garden",
+            storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+            messagingSenderId: "135322230444",
+            appId: "1:135322230444:web:1a487b25a48aae07368909",
+            measurementId: "G-KD6TBWR4ZT"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         document.addEventListener('DOMContentLoaded', () => {
-            const db = firebase.firestore();
-
             async function fetchCustomers() {
                 const customerSelect = document.getElementById('customer');
                 customerSelect.innerHTML = '<option value="">Loading...</option>';
                 try {
-                    const snapshot = await db.collection('customers').get();
+                    const snapshot = await getDocs(collection(db, 'customers'));
                     let options = '<option value="">Select Customer</option>';
                     snapshot.forEach(doc => {
                         const customer = doc.data();
-                        options += `<option value="${doc.id}">${customer.name}</option>`;
+                        options += `<option value="${doc.id}">${customer.firstName} ${customer.lastName}</option>`;
                     });
                     customerSelect.innerHTML = options;
                 } catch (error) {
@@ -121,7 +133,8 @@
                 const staffSelect = document.getElementById('assignedTo');
                 staffSelect.innerHTML = '<option value="">Loading...</option>';
                 try {
-                    const snapshot = await db.collection('staff').where('status', '==', 'active').get();
+                    const q = query(collection(db, 'staff'), where('status', '==', 'active'));
+                    const snapshot = await getDocs(q);
                     let options = '<option value="">Select Staff</option>';
                     snapshot.forEach(doc => {
                         const staff = doc.data();
@@ -135,11 +148,11 @@
             }
 
             async function fetchAppointments() {
-                const db = firebase.firestore();
                 const appointmentList = document.getElementById('appointmentList');
                 appointmentList.innerHTML = '<p>Loading...</p>';
                 try {
-                    const snapshot = await db.collection('appointments').orderBy('date').get();
+                    const q = query(collection(db, 'appointments'), orderBy('date'));
+                    const snapshot = await getDocs(q);
                     if (snapshot.empty) {
                         appointmentList.innerHTML = '<p>No upcoming appointments.</p>';
                         return;
@@ -149,8 +162,8 @@
                     const customerCache = {};
 
                     // Pre-fetch all staff and customers
-                    const staffPromise = db.collection('staff').get();
-                    const customerPromise = db.collection('customers').get();
+                    const staffPromise = getDocs(collection(db, 'staff'));
+                    const customerPromise = getDocs(collection(db, 'customers'));
                     const [staffSnapshot, customerSnapshot] = await Promise.all([staffPromise, customerPromise]);
                     staffSnapshot.forEach(doc => staffCache[doc.id] = doc.data());
                     customerSnapshot.forEach(doc => customerCache[doc.id] = doc.data());
@@ -159,12 +172,13 @@
                         const appointment = doc.data();
                         const customer = customerCache[appointment.customerId];
                         const staff = staffCache[appointment.assignedTo];
+                        const date = appointment.date?.toDate ? appointment.date.toDate() : new Date(appointment.date);
                         html += `
                             <tr>
-                                <td>${customer ? customer.name : 'N/A'}</td>
+                                <td>${customer ? `${customer.firstName} ${customer.lastName}` : 'N/A'}</td>
                                 <td>${appointment.service}</td>
-                                <td>${new Date(appointment.date.seconds * 1000).toLocaleString()}</td>
-                                <td>${staff ? staff.firstName + ' ' + staff.lastName : 'N/A'}</td>
+                                <td>${date.toLocaleString()}</td>
+                                <td>${staff ? `${staff.firstName} ${staff.lastName}` : 'N/A'}</td>
                                 <td>
                                     <button class="btn-edit" data-id="${doc.id}">Edit</button>
                                     <button class="btn-delete" data-id="${doc.id}">Delete</button>
@@ -199,10 +213,10 @@
 
                 try {
                     if (editingId) {
-                        await db.collection('appointments').doc(editingId).update(appointmentData);
+                        await updateDoc(doc(db, 'appointments', editingId), appointmentData);
                     } else {
-                        appointmentData.createdAt = new Date();
-                        await db.collection('appointments').add(appointmentData);
+                        appointmentData.createdAt = serverTimestamp();
+                        await addDoc(collection(db, 'appointments'), appointmentData);
                     }
                     appointmentForm.reset();
                     delete appointmentForm.dataset.editingId;
@@ -213,12 +227,11 @@
             });
 
             function addTableButtonListeners() {
-                const db = firebase.firestore();
                 document.querySelectorAll('.btn-delete').forEach(button => {
                     button.addEventListener('click', async (e) => {
                         const docId = e.target.dataset.id;
                         if (confirm('Are you sure you want to delete this appointment?')) {
-                            await db.collection('appointments').doc(docId).delete();
+                            await deleteDoc(doc(db, 'appointments', docId));
                             fetchAppointments();
                         }
                     });
@@ -227,12 +240,13 @@
                 document.querySelectorAll('.btn-edit').forEach(button => {
                     button.addEventListener('click', async (e) => {
                         const docId = e.target.dataset.id;
-                        const doc = await db.collection('appointments').doc(docId).get();
-                        if (doc.exists) {
-                            const appointment = doc.data();
+                        const docRef = doc(db, 'appointments', docId);
+                        const docSnap = await getDoc(docRef);
+                        if (docSnap.exists()) {
+                            const appointment = docSnap.data();
                             document.getElementById('customer').value = appointment.customerId;
                             document.getElementById('service').value = appointment.service;
-                            const date = new Date(appointment.date.seconds * 1000);
+                            const date = appointment.date?.toDate ? appointment.date.toDate() : new Date(appointment.date);
                             document.getElementById('appointmentDate').value = date.toISOString().split('T')[0];
                             document.getElementById('appointmentTime').value = date.toTimeString().split(' ')[0].substring(0,5);
                             document.getElementById('assignedTo').value = appointment.assignedTo;
