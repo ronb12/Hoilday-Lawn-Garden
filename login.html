@@ -32,6 +32,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/main.css" id="main-css" />
+    <link rel="stylesheet" href="assets/css/mobile-enhancements.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -527,16 +528,31 @@
         .login-container {
           max-width: 600px;
         }
+        .hero-content h1 {
+          font-size: 3rem;
+        }
+        .hero-content p {
+          font-size: 1.2rem;
+        }
       }
       @media (max-width: 768px) {
+        .hero {
+          min-height: 300px;
+          margin-top: 60px;
+        }
+        .hero-content {
+          padding: 2rem 1rem;
+          min-height: 250px;
+        }
         .hero-content h1 {
           font-size: 2.5rem;
+          margin-bottom: 1rem;
         }
         .hero-content p {
           font-size: 1.1rem;
         }
         .login-section {
-          padding: 3rem 0;
+          padding: 2rem 0;
         }
         .login-container {
           padding: 0 1rem;
@@ -544,52 +560,162 @@
         .login-form-container,
         .login-info {
           padding: 2rem;
+          border-radius: 16px;
         }
         .login-layout {
           gap: 1.5rem;
         }
+        .google-sign-in {
+          padding: 1rem 1.5rem;
+          font-size: 1rem;
+        }
+        .google-sign-in img {
+          width: 20px;
+          height: 20px;
+        }
+        .login-links {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        .login-links a {
+          padding: 0.75rem 1rem;
+          text-align: center;
+        }
       }
       @media (max-width: 480px) {
+        .hero {
+          min-height: 250px;
+          margin-top: 50px;
+        }
+        .hero-content {
+          padding: 1.5rem 1rem;
+          min-height: 200px;
+        }
         .hero-content h1 {
           font-size: 2rem;
+          margin-bottom: 0.75rem;
+        }
+        .hero-content p {
+          font-size: 1rem;
+        }
+        .login-section {
+          padding: 1.5rem 0;
         }
         .login-form-container,
         .login-info {
           padding: 1.5rem;
+          border-radius: 12px;
+        }
+        .login-form-container h2 {
+          font-size: 1.8rem;
         }
         .login-form input {
           padding: 0.875rem 1rem;
+          font-size: 16px; /* Prevents zoom on iOS */
         }
         .btn-primary {
           padding: 1rem 2rem;
+          font-size: 1rem;
+        }
+        .google-sign-in {
+          padding: 0.875rem 1.25rem;
+          font-size: 0.95rem;
+        }
+        .google-sign-in img {
+          width: 18px;
+          height: 18px;
+        }
+        .login-links {
+          margin-top: 1.5rem;
+        }
+        .login-links a {
+          font-size: 0.9rem;
+          padding: 0.625rem 0.875rem;
+        }
+        /* Prevent horizontal scrolling */
+        body {
+          overflow-x: hidden;
+        }
+        
+        /* Improve touch targets */
+        .btn-primary,
+        .google-sign-in,
+        .login-links a {
+          min-height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        /* Better spacing for mobile */
+        .login-form-container,
+        .login-info {
+          margin: 0 0.5rem;
+        }
+        
+        /* Improve form inputs for mobile */
+        .login-form input {
+          -webkit-appearance: none;
+          border-radius: 8px;
+        }
+        
+        /* Better button styling for mobile */
+        .btn-primary {
+          border-radius: 8px;
+          font-weight: 600;
+        }
+        
+        /* Improve Google button for mobile */
+        .google-sign-in {
+          border-radius: 8px;
+          gap: 0.75rem;
+        }
+        
+        /* Better error/success message display */
+        .error-container,
+        .success-message {
+          margin: 0 0.5rem 1rem 0.5rem;
+          border-radius: 8px;
+        }
+      }
+      
+      /* iOS Safari specific fixes */
+      @supports (-webkit-touch-callout: none) {
+        .login-form input {
+          font-size: 16px !important;
+        }
+        
+        .btn-primary,
+        .google-sign-in {
+          -webkit-appearance: none;
+          border-radius: 8px;
+        }
+      }
+      
+      /* Android Chrome specific fixes */
+      @media screen and (-webkit-min-device-pixel-ratio: 0) {
+        .login-form input {
+          font-size: 16px;
+        }
+      }
+      
+      /* High DPI displays */
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        .google-sign-in img {
+          image-rendering: -webkit-optimize-contrast;
+          image-rendering: crisp-edges;
         }
       }
       
       /* Fix for desktop layout: wide columns */
       @media screen and (min-width: 1025px) {
         .login-layout {
+          display: grid !important;
           grid-template-columns: 1fr 1fr !important;
           gap: 3rem !important;
-          align-items: flex-start !important;
+          align-items: start !important;
           max-width: 1000px !important;
           margin: 0 auto !important;
-        }
-        .login-form-container,
-        .login-info {
-          max-width: none !important;
-          min-width: 350px !important;
-          width: 100% !important;
-          padding: 2.5rem 2rem !important;
-          box-sizing: border-box !important;
-        }
-        .login-section {
-          margin-top: 0 !important;
-        }
-        .login-container {
-          margin: 0 auto !important;
-          display: flex !important;
-          justify-content: center !important;
-          align-items: flex-start !important;
         }
       }
       
@@ -1003,14 +1129,14 @@
         GoogleAuthProvider,
         signInWithPopup,
         signInWithEmailAndPassword,
-      } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+      } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
       import {
         getFirestore,
         doc,
         getDoc,
         setDoc,
         serverTimestamp,
-      } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+      } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
       import { app } from './assets/js/firebase-config.js';
 
       const auth = getAuth(app);
@@ -1211,13 +1337,26 @@
 
       // Handle Google Sign-in (modular)
       document.getElementById('googleSignIn').addEventListener('click', async function () {
-        const provider = new GoogleAuthProvider();
-        provider.addScope('profile');
-        provider.addScope('email');
-        provider.setCustomParameters({ prompt: 'select_account' });
+        const googleBtn = this;
+        const originalText = googleBtn.innerHTML;
+        
         try {
+          // Show loading state
+          googleBtn.disabled = true;
+          googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+          
+          const provider = new GoogleAuthProvider();
+          provider.addScope('profile');
+          provider.addScope('email');
+          provider.setCustomParameters({ 
+            prompt: 'select_account',
+            // Add mobile-friendly parameters
+            ux_mode: 'popup'
+          });
+          
           const result = await signInWithPopup(auth, provider);
           const user = result.user;
+          
           // Check if user exists in Firestore
           const userDoc = await getDoc(doc(db, 'users', user.uid));
           if (!userDoc.exists()) {
@@ -1231,20 +1370,22 @@
               role: 'customer',
             });
           }
+          
           showSuccess();
           setTimeout(() => {
             window.location.href = 'customer-dashboard.html';
           }, 1500);
+          
         } catch (error) {
           console.error('Google sign-in error:', error);
           let errorMessage = 'An error occurred during Google sign-in. Please try again.';
+          
           switch (error.code) {
             case 'auth/account-exists-with-different-credential':
-              errorMessage =
-                'An account already exists with the same email address but different sign-in credentials.';
+              errorMessage = 'An account already exists with the same email address but different sign-in credentials.';
               break;
             case 'auth/popup-blocked':
-              errorMessage = 'The sign-in popup was blocked by the browser. Please try again.';
+              errorMessage = 'The sign-in popup was blocked by the browser. Please allow popups and try again.';
               break;
             case 'auth/popup-closed-by-user':
               errorMessage = 'The sign-in popup was closed before completing the sign-in.';
@@ -1259,11 +1400,23 @@
               errorMessage = 'Google sign-in is not enabled. Please contact support.';
               break;
             case 'auth/unauthorized-domain':
-              errorMessage =
-                'This domain is not authorized for Google sign-in. Please contact support.';
+              errorMessage = 'This domain is not authorized for Google sign-in. Please contact support.';
               break;
+            case 'auth/browser-not-supported':
+              errorMessage = 'Your browser does not support Google sign-in. Please try a different browser.';
+              break;
+            case 'auth/web-storage-unsupported':
+              errorMessage = 'Your browser does not support web storage. Please enable cookies and try again.';
+              break;
+            default:
+              errorMessage = `Sign-in failed: ${error.message}`;
           }
+          
           showError(errorMessage);
+        } finally {
+          // Restore button state
+          googleBtn.disabled = false;
+          googleBtn.innerHTML = originalText;
         }
       });
     </script>
