@@ -263,7 +263,23 @@
         </nav>
     </header>
 
-    <div class="staff-container">
+    <!-- Mobile Admin Header -->
+    <div class="mobile-admin-header">
+        <div class="header-content">
+            <h1 class="page-title">Staff Management</h1>
+            <a href="admin-dashboard.html" class="dashboard-link">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Back to Dashboard Button (Mobile) -->
+    <button class="back-to-dashboard" onclick="window.location.href='admin-dashboard.html'" title="Back to Dashboard">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <div class="staff-container admin-page-content">
         <div class="staff-header">
             <h1 class="staff-title">Staff Management</h1>
             <button class="btn-add-staff" id="showFormBtn">
@@ -365,6 +381,57 @@
         </div>
     </div>
 
+    <div class="mobile-admin-footer">
+        <div class="footer-content">
+            <a href="admin-dashboard.html" class="footer-link">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </a>
+            <a href="staff.html" class="footer-link active">
+                <i class="fas fa-users"></i>
+                Staff
+            </a>
+            <a href="add-appointment.html" class="footer-link">
+                <i class="fas fa-calendar-plus"></i>
+                Appointments
+            </a>
+            <a href="customers.html" class="footer-link">
+                <i class="fas fa-user-friends"></i>
+                Customers
+            </a>
+            <a href="inventory.html" class="footer-link">
+                <i class="fas fa-boxes"></i>
+                Inventory
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Admin Navigation -->
+    <nav class="mobile-admin-nav">
+        <div class="nav-buttons">
+            <a href="admin-dashboard.html" class="nav-btn">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="staff.html" class="nav-btn active">
+                <i class="fas fa-users"></i>
+                <span>Staff</span>
+            </a>
+            <a href="add-appointment.html" class="nav-btn">
+                <i class="fas fa-calendar-plus"></i>
+                <span>Appointments</span>
+            </a>
+            <a href="customers.html" class="nav-btn">
+                <i class="fas fa-user-friends"></i>
+                <span>Customers</span>
+            </a>
+            <a href="inventory.html" class="nav-btn">
+                <i class="fas fa-boxes"></i>
+                <span>Inventory</span>
+            </a>
+        </div>
+    </nav>
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";

@@ -228,6 +228,124 @@
     justify-content: center;
 }
 
+/* Mobile Admin Navigation Enhancements */
+.mobile-admin-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #eee;
+    padding: 0.75rem;
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.mobile-admin-nav .nav-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 0.5rem;
+}
+
+.mobile-admin-nav .nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    border: none;
+    background: none;
+    color: #666;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border-radius: var(--mobile-border-radius);
+    transition: all 0.2s ease;
+    min-height: var(--touch-target-size);
+    min-width: var(--touch-target-size);
+}
+
+.mobile-admin-nav .nav-btn:hover,
+.mobile-admin-nav .nav-btn.active {
+    background: rgba(76, 175, 80, 0.1);
+    color: #4caf50;
+}
+
+.mobile-admin-nav .nav-btn i {
+    font-size: 1.2rem;
+}
+
+/* Back to Dashboard Button */
+.back-to-dashboard {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+
+.back-to-dashboard:hover {
+    background: #45a049;
+    transform: scale(1.1);
+}
+
+/* Mobile Admin Header Enhancements */
+.mobile-admin-header {
+    display: none;
+    position: sticky;
+    top: 0;
+    background: white;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    z-index: 999;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.mobile-admin-header .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mobile-admin-header .page-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c5530;
+    margin: 0;
+}
+
+.mobile-admin-header .dashboard-link {
+    background: #4caf50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--mobile-border-radius);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mobile-admin-header .dashboard-link:hover {
+    background: #45a049;
+}
+
+/* Adjust main content for mobile navigation */
+.admin-page-content {
+    padding-bottom: 80px; /* Space for mobile nav */
+}
+
 /* Universal Mobile Buttons */
 .btn {
     min-height: var(--touch-target-size);
@@ -639,6 +757,36 @@ table th {
     }
 }
 
+/* Mobile Admin Navigation - Show on mobile, hide on desktop */
+@media (max-width: 767px) {
+    .admin-header .admin-nav {
+        display: none;
+    }
+    
+    .mobile-admin-nav {
+        display: block;
+    }
+    
+    .back-to-dashboard {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .mobile-admin-header {
+        display: block;
+    }
+    
+    .admin-page-content {
+        padding-bottom: 80px;
+    }
+    
+    /* Hide desktop admin header on mobile */
+    .admin-header {
+        display: none;
+    }
+}
+
 /* Desktop Styles */
 @media (min-width: 1024px) {
     .container {
@@ -708,6 +856,18 @@ table th {
     
     .stats-grid {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    /* Hide mobile admin navigation on desktop */
+    .mobile-admin-nav,
+    .back-to-dashboard,
+    .mobile-admin-header {
+        display: none;
+    }
+    
+    /* Show desktop admin header on desktop */
+    .admin-header {
+        display: flex;
     }
 }
 

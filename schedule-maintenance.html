@@ -109,12 +109,29 @@
         <nav class="admin-nav">
             <a href="admin-dashboard.html">Dashboard</a>
             <a href="staff.html">Staff</a>
+            <a href="add-appointment.html">Appointments</a>
             <a href="schedule-maintenance.html">Maintenance</a>
             <a href="inventory.html">Inventory</a>
         </nav>
     </header>
 
-    <div class="maintenance-container">
+    <!-- Mobile Admin Header -->
+    <div class="mobile-admin-header">
+        <div class="header-content">
+            <h1 class="page-title">Maintenance</h1>
+            <a href="admin-dashboard.html" class="dashboard-link">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Back to Dashboard Button (Mobile) -->
+    <button class="back-to-dashboard" onclick="window.location.href='admin-dashboard.html'" title="Back to Dashboard">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <div class="maintenance-container admin-page-content">
         <div class="maintenance-header">
             <h1 class="maintenance-title">Schedule Maintenance</h1>
             <button class="btn-add-maintenance">
@@ -392,5 +409,31 @@
             });
         }
     </script>
+    
+    <!-- Mobile Admin Navigation -->
+    <nav class="mobile-admin-nav">
+        <div class="nav-buttons">
+            <a href="admin-dashboard.html" class="nav-btn">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="staff.html" class="nav-btn">
+                <i class="fas fa-users"></i>
+                <span>Staff</span>
+            </a>
+            <a href="add-appointment.html" class="nav-btn">
+                <i class="fas fa-calendar-plus"></i>
+                <span>Appointments</span>
+            </a>
+            <a href="customers.html" class="nav-btn">
+                <i class="fas fa-user-friends"></i>
+                <span>Customers</span>
+            </a>
+            <a href="schedule-maintenance.html" class="nav-btn active">
+                <i class="fas fa-tools"></i>
+                <span>Maintenance</span>
+            </a>
+        </div>
+    </nav>
 </body>
 </html>
