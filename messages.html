@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Communication Center - Holliday's Lawn & Garden</title>
+    <title>Communication Center - Holliday's Lawn &amp; Garden</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/main.css">
@@ -677,7 +675,7 @@
     <header class="main-header">
         <div class="logo">
             <a href="index.html">
-                <img src="assets/images/hollidays-logo.optimized-320.png" alt="Holliday's Lawn & Garden Logo">
+                <img src="assets/images/hollidays-logo.optimized-320.png" alt="Holliday's Lawn &amp; Garden Logo">
             </a>
         </div>
         <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
@@ -728,7 +726,7 @@
                 Dashboard
             </button>
         </div>
-        <div class="hamburger" onclick="toggleMenu()">
+        <div class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
             <span></span>
             <span></span>
             <span></span>
@@ -808,8 +806,8 @@
                     </div>
                 </div>
                 <div class="chat-input">
-                    <input type="text" id="messageInput" placeholder="Type your message..." disabled>
-                    <button class="btn-send" onclick="sendMessage()" disabled>
+                    <input type="text" id="messageInput" placeholder="Type your message..." disabled="">
+                    <button class="btn-send" onclick="sendMessage()" disabled="">
                         <i class="fas fa-paper-plane"></i>
                         Send
                     </button>
@@ -823,22 +821,22 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">New Message</h2>
-                <span class="close" onclick="closeNewMessageModal()">&times;</span>
+                <span class="close" onclick="closeNewMessageModal()">×</span>
             </div>
             <form id="newMessageForm">
                 <div class="form-group">
                     <label for="messageRecipients">Recipients</label>
-                    <select id="messageRecipients" multiple required>
+                    <select id="messageRecipients" multiple="" required="">
                         <!-- Recipients will be populated here -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="messageSubject">Subject</label>
-                    <input type="text" id="messageSubject" required>
+                    <input type="text" id="messageSubject" required="">
                 </div>
                 <div class="form-group">
                     <label for="messageContent">Message</label>
-                    <textarea id="messageContent" rows="6" required></textarea>
+                    <textarea id="messageContent" rows="6" required=""></textarea>
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn-cancel" onclick="closeNewMessageModal()">Cancel</button>
@@ -853,23 +851,23 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Create Notification</h2>
-                <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                <span class="close" onclick="this.closest('.modal').remove()">×</span>
             </div>
             <form id="notificationForm">
                 <div class="form-group">
                     <label for="notificationTitle">Title</label>
-                    <input type="text" id="notificationTitle" required>
+                    <input type="text" id="notificationTitle" required="">
                 </div>
                 
                 <div class="form-group">
                     <label for="notificationMessage">Message</label>
-                    <textarea id="notificationMessage" rows="4" required></textarea>
+                    <textarea id="notificationMessage" rows="4" required=""></textarea>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
                         <label for="notificationType">Type</label>
-                        <select id="notificationType" required>
+                        <select id="notificationType" required="">
                             <option value="info">Information</option>
                             <option value="warning">Warning</option>
                             <option value="success">Success</option>
@@ -889,7 +887,7 @@
                 
                 <div class="form-group">
                     <label for="notificationRecipients">Recipients</label>
-                    <select id="notificationRecipients" multiple>
+                    <select id="notificationRecipients" multiple="">
                         <option value="all-staff">All Staff</option>
                         <option value="all-customers">All Customers</option>
                         <option value="landscaping">Landscaping Team</option>
@@ -1926,7 +1924,7 @@
             const hamburger = document.querySelector('.hamburger');
             const nav = document.querySelector('.admin-nav');
             
-            if (!hamburger.contains(event.target) && !nav.contains(event.target)) {
+            if (!hamburger.contains(event.target) &amp;&amp; !nav.contains(event.target)) {
                 hamburger.classList.remove('active');
                 nav.classList.remove('active');
             }
@@ -1934,7 +1932,7 @@
 
         // Close menu on window resize
         window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
+            if (window.innerWidth &gt; 768) {
                 const hamburger = document.querySelector('.hamburger');
                 const nav = document.querySelector('.admin-nav');
                 
@@ -1942,6 +1940,7 @@
                 nav.classList.remove('active');
             }
         });
-    </script>
-</body>
-</html>
+    
+
+
+</body></html>

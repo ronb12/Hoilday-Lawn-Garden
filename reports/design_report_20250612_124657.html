@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Holliday Lawn & Garden</title>
+<!DOCTYPE html><html><head>
+    <title>Holliday Lawn &amp; Garden</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -19,23 +17,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Professional landscaping and garden services in your area.">
     <meta name="keywords" content="lawn care, garden services, landscaping, design_report_20250612_124657">
-    <meta name="author" content="Holliday Lawn & Garden">
+    <meta name="author" content="Holliday Lawn &amp; Garden">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Holliday Lawn & Garden - Design_report_20250612_124657">
-    <meta property="og:description" content="Professional lawn care and garden services by Holliday Lawn & Garden.">
+    <meta property="og:title" content="Holliday Lawn &amp; Garden - Design_report_20250612_124657">
+    <meta property="og:description" content="Professional lawn care and garden services by Holliday Lawn &amp; Garden.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://hollidaylawngarden.com/design_report_20250612_124657">
     <meta property="og:image" content="https://hollidaylawngarden.com/assets/images/og-image.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Holliday Lawn & Garden - Design_report_20250612_124657">
-    <meta name="twitter:description" content="Professional lawn care and garden services by Holliday Lawn & Garden.">
+    <meta name="twitter:title" content="Holliday Lawn &amp; Garden - Design_report_20250612_124657">
+    <meta name="twitter:description" content="Professional lawn care and garden services by Holliday Lawn &amp; Garden.">
     <meta name="twitter:image" content="https://hollidaylawngarden.com/assets/images/og-image.jpg">
     <link rel="canonical" href="https://hollidaylawngarden.com/design_report_20250612_124657">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <meta charset="utf-8"/>
+    <meta charset="utf-8">
     <title id="head-title">design_report_20250612_124657.html</title>
       <style type="text/css">body {
   font-family: Helvetica, Arial, sans-serif;
@@ -378,16 +376,168 @@ div.media {
 }
         </script>
       
+
+    <style>
+        /* Mobile Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            z-index: 1000;
+            position: relative;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            margin-right: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #2e7d32;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                z-index: 1000;
+                visibility: hidden;
+                opacity: 0;
+                transform: translateY(-100%);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                pointer-events: none;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .nav-links a {
+                font-size: 1.75rem;
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: center;
+                transition: all 0.3s ease;
+                position: relative;
+                color: #333333;
+                font-weight: 600;
+            }
+
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background: #2e7d32;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(-50%);
+            }
+
+            .nav-links a:hover::after,
+            .nav-links a.active::after {
+                width: 60%;
+            }
+
+            .nav-links a:hover {
+                color: #2e7d32;
+                transform: translateY(-2px);
+            }
+
+            body.menu-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Prevent text selection during menu transitions */
+        .nav-links {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Ensure smooth scrolling on iOS */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
 </head>
   <body>
-    <div id="loading-overlay" class="loading-overlay" style="display: none">
+    <header class="main-header">
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav id="nav-menu">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="education.html">Education</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+            <li class="login-buttons">
+                <a href="login.html" class="btn-login btn-customer">
+                    <i class="fas fa-user"></i>
+                    Customer Login
+                </a>
+                <a href="admin-login.html" class="btn-login btn-admin">
+                    <i class="fas fa-lock"></i>
+                    Admin Login
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header><div id="loading-overlay" class="loading-overlay" style="display: none">
       <div class="spinner"></div>
       <p id="loading-message">Loading...</p>
     </div>
     <div id="notification-container" class="notification-container">
       <div id="notification" class="notification" style="display: none;">
         <span class="notification-message"></span>
-        <button class="notification-close button-with-loading button-with-loading" aria-label="Button">&times;</button>
+        <button class="notification-close button-with-loading button-with-loading" aria-label="Button">×</button>
       </div>
     </div>
     <div id="loading-spinner" class="loading-spinner" style="display: none;">
@@ -410,9 +560,9 @@ div.media {
     <template id="template_results-table__body--empty">
       <tbody class="results-table-row">
         <tr id="not-found-message">
-          <td colspan="4">No results found. Check the filters.</th>
-        </tr>
-    </template>
+          <td colspan="4">No results found. Check the filters.
+        </td></tr>
+    </tbody></template>
     <template id="template_results-table__tbody">
       <tbody class="results-table-row">
         <tr class="collapsible">
@@ -422,18 +572,18 @@ div.media {
             <div class="extraHTML"></div>
             <div class="media">
               <div class="media-container">
-                  <div class="media-container__nav--left"><</div>
+                  <div class="media-container__nav--left">&lt;</div>
                   <div class="media-container__viewport">
                     
           <picture>
             <source srcset="" type="image/webp">
-            <img src="" / alt="" aria-label="" loading="lazy">
+            <img src="" alt="" aria-label="" loading="lazy">
           </picture>
-                    <video controls>
+                    <video controls="">
                       <source src="" type="video/mp4">
                     </video>
                   </div>
-                  <div class="media-container__nav--right">></div>
+                  <div class="media-container__nav--right">&gt;</div>
                 </div>
                 <div class="media__name"></div>
                 <div class="media__counter"></div>
@@ -456,25 +606,25 @@ div.media {
         <p class="filter">(Un)check the boxes to filter the results.</p>
         <div class="summary__reload">
           <div class="summary__reload__button hidden" onclick="location.reload()">
-            <div>There are still tests running. <br />Reload this page to get the latest results!</div>
+            <div>There are still tests running. <br>Reload this page to get the latest results!</div>
           </div>
         </div>
         <div class="summary__spacer"></div>
         <div class="controls">
           <div class="filters">
-            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="failed" / aria-label="checkbox checkbox">
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="failed" aria-label="checkbox checkbox">
             <span class="failed">2 Failed,</span>
-            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="passed" / aria-label="checkbox checkbox">
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="passed" aria-label="checkbox checkbox">
             <span class="passed">4 Passed,</span>
-            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="skipped" disabled/ aria-label="checkbox checkbox">
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="skipped" disabled="" aria-label="checkbox checkbox">
             <span class="skipped">0 Skipped,</span>
-            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xfailed" disabled/ aria-label="checkbox checkbox">
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xfailed" disabled="" aria-label="checkbox checkbox">
             <span class="xfailed">0 Expected failures,</span>
-            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xpassed" disabled/ aria-label="checkbox checkbox">
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xpassed" disabled="" aria-label="checkbox checkbox">
             <span class="xpassed">0 Unexpected passes,</span>
-            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="error" disabled/ aria-label="checkbox checkbox">
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="error" disabled="" aria-label="checkbox checkbox">
             <span class="error">0 Errors,</span>
-            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="rerun" disabled/ aria-label="checkbox checkbox">
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="rerun" disabled="" aria-label="checkbox checkbox">
             <span class="rerun">0 Reruns</span>
           </div>
           <div class="collapse">
@@ -497,10 +647,10 @@ div.media {
         </tr>
       </thead>
     </table>
-  </body>
+  
   <footer>
-    <div id="data-container" data-jsonblob="{&#34;environment&#34;: {&#34;Python&#34;: &#34;3.10.17&#34;, &#34;Platform&#34;: &#34;macOS-14.7.6-x86_64-i386-64bit&#34;, &#34;Packages&#34;: {&#34;pytest&#34;: &#34;8.0.2&#34;, &#34;pluggy&#34;: &#34;1.6.0&#34;}, &#34;Plugins&#34;: {&#34;html&#34;: &#34;4.1.1&#34;, &#34;metadata&#34;: &#34;3.1.1&#34;}}, &#34;tests&#34;: {&#34;design_tests.py::DesignTestSuite::test_color_scheme&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;design_tests.py::DesignTestSuite::test_color_scheme&#34;, &#34;duration&#34;: &#34;00:00:07&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;design_tests.py::DesignTestSuite::test_color_scheme&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:07&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;design_tests.py::DesignTestSuite::test_footer_design&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Failed&#34;, &#34;testId&#34;: &#34;design_tests.py::DesignTestSuite::test_footer_design&#34;, &#34;duration&#34;: &#34;00:00:05&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Failed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;design_tests.py::DesignTestSuite::test_footer_design&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:05&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;self = &amp;lt;design_tests.DesignTestSuite testMethod=test_footer_design&amp;gt;\n\n    def test_footer_design(self):\n        &amp;quot;&amp;quot;&amp;quot;Test footer design and content.&amp;quot;&amp;quot;&amp;quot;\n        logger.info(&amp;quot;Testing footer design...&amp;quot;)\n        self.driver.get(self.base_url)\n        try:\n            footer = WebDriverWait(self.driver, 10).until(\n                EC.presence_of_element_located((By.CLASS_NAME, &amp;quot;footer&amp;quot;))\n            )\n            self.assertTrue(footer.is_displayed(), &amp;quot;Footer should be visible&amp;quot;)\n    \n            # Test footer sections\n            sections = footer.find_elements(By.CLASS_NAME, &amp;quot;footer-section&amp;quot;)\n            self.assertGreater(len(sections), 0, &amp;quot;Footer should have sections&amp;quot;)\n    \n            # Test social media links\n            social_links = footer.find_elements(By.CLASS_NAME, &amp;quot;social-link&amp;quot;)\n&amp;gt;           self.assertGreater(len(social_links), 0, &amp;quot;Footer should have social media links&amp;quot;)\nE           AssertionError: 0 not greater than 0 : Footer should have social media links\n\ndesign_tests.py:95: AssertionError\n&#34;}], &#34;design_tests.py::DesignTestSuite::test_hero_section&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;design_tests.py::DesignTestSuite::test_hero_section&#34;, &#34;duration&#34;: &#34;00:01:33&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;design_tests.py::DesignTestSuite::test_hero_section&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:01:33&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;------------------------------ Captured log call -------------------------------\nWARNING  design_tests:design_tests.py:57 No hero section found on /about.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /services.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /contact.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /testimonials.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /gallery.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /faq.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /terms.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /privacy-policy.html - this is acceptable for some pages\n\n&#34;}], &#34;design_tests.py::DesignTestSuite::test_navigation_design&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;design_tests.py::DesignTestSuite::test_navigation_design&#34;, &#34;duration&#34;: &#34;00:00:09&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;design_tests.py::DesignTestSuite::test_navigation_design&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:09&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;design_tests.py::DesignTestSuite::test_responsive_design&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;design_tests.py::DesignTestSuite::test_responsive_design&#34;, &#34;duration&#34;: &#34;00:00:12&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;design_tests.py::DesignTestSuite::test_responsive_design&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:12&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;design_tests.py::DesignTestSuite::test_typography&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Failed&#34;, &#34;testId&#34;: &#34;design_tests.py::DesignTestSuite::test_typography&#34;, &#34;duration&#34;: &#34;00:00:12&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Failed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;design_tests.py::DesignTestSuite::test_typography&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:12&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;self = &amp;lt;design_tests.DesignTestSuite testMethod=test_typography&amp;gt;\n\n    def test_typography(self):\n        &amp;quot;&amp;quot;&amp;quot;Test typography consistency across pages.&amp;quot;&amp;quot;&amp;quot;\n        logger.info(&amp;quot;Testing typography...&amp;quot;)\n        for page in self.pages:\n            with self.subTest(page=page):\n                self.driver.get(f&amp;quot;{self.base_url}{page}&amp;quot;)\n                # Check heading hierarchy\n                headings = self.driver.find_elements(By.TAG_NAME, &amp;quot;h1&amp;quot;)\n                self.assertLessEqual(len(headings), 1, &amp;quot;Page should have at most one h1&amp;quot;)\n    \n                # Check font consistency\n                body_text = self.driver.find_element(By.TAG_NAME, &amp;quot;body&amp;quot;)\n                font_family = body_text.value_of_css_property(&amp;quot;font-family&amp;quot;)\n&amp;gt;               self.assertIn(&amp;quot;Montserrat&amp;quot;, font_family, &amp;quot;Body text should use Montserrat font&amp;quot;)\nE               AssertionError: &amp;#x27;Montserrat&amp;#x27; not found in &amp;#x27;Inter, Arial, sans-serif&amp;#x27; : Body text should use Montserrat font\n\ndesign_tests.py:112: AssertionError\n&#34;}]}, &#34;renderCollapsed&#34;: [&#34;passed&#34;], &#34;initialSort&#34;: &#34;result&#34;, &#34;title&#34;: &#34;design_report_20250612_124657.html&#34;}"></div>
-    <script defer type="module">
+    <div id="data-container" data-jsonblob="{&quot;environment&quot;: {&quot;Python&quot;: &quot;3.10.17&quot;, &quot;Platform&quot;: &quot;macOS-14.7.6-x86_64-i386-64bit&quot;, &quot;Packages&quot;: {&quot;pytest&quot;: &quot;8.0.2&quot;, &quot;pluggy&quot;: &quot;1.6.0&quot;}, &quot;Plugins&quot;: {&quot;html&quot;: &quot;4.1.1&quot;, &quot;metadata&quot;: &quot;3.1.1&quot;}}, &quot;tests&quot;: {&quot;design_tests.py::DesignTestSuite::test_color_scheme&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;design_tests.py::DesignTestSuite::test_color_scheme&quot;, &quot;duration&quot;: &quot;00:00:07&quot;, &quot;resultsTableRow&quot;: [&quot;<td class=\&quot;col-result\&quot;>Passed</td>&quot;, &quot;<td class=\&quot;col-testId\&quot;>design_tests.py::DesignTestSuite::test_color_scheme</td>&quot;, &quot;<td class=\&quot;col-duration\&quot;>00:00:07</td>&quot;, &quot;<td class=\&quot;col-links\&quot;></td>&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;design_tests.py::DesignTestSuite::test_footer_design&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Failed&quot;, &quot;testId&quot;: &quot;design_tests.py::DesignTestSuite::test_footer_design&quot;, &quot;duration&quot;: &quot;00:00:05&quot;, &quot;resultsTableRow&quot;: [&quot;<td class=\&quot;col-result\&quot;>Failed</td>&quot;, &quot;<td class=\&quot;col-testId\&quot;>design_tests.py::DesignTestSuite::test_footer_design</td>&quot;, &quot;<td class=\&quot;col-duration\&quot;>00:00:05</td>&quot;, &quot;<td class=\&quot;col-links\&quot;></td>&quot;], &quot;log&quot;: &quot;self = &amp;lt;design_tests.DesignTestSuite testMethod=test_footer_design&amp;gt;\n\n    def test_footer_design(self):\n        &amp;quot;&amp;quot;&amp;quot;Test footer design and content.&amp;quot;&amp;quot;&amp;quot;\n        logger.info(&amp;quot;Testing footer design...&amp;quot;)\n        self.driver.get(self.base_url)\n        try:\n            footer = WebDriverWait(self.driver, 10).until(\n                EC.presence_of_element_located((By.CLASS_NAME, &amp;quot;footer&amp;quot;))\n            )\n            self.assertTrue(footer.is_displayed(), &amp;quot;Footer should be visible&amp;quot;)\n    \n            # Test footer sections\n            sections = footer.find_elements(By.CLASS_NAME, &amp;quot;footer-section&amp;quot;)\n            self.assertGreater(len(sections), 0, &amp;quot;Footer should have sections&amp;quot;)\n    \n            # Test social media links\n            social_links = footer.find_elements(By.CLASS_NAME, &amp;quot;social-link&amp;quot;)\n&amp;gt;           self.assertGreater(len(social_links), 0, &amp;quot;Footer should have social media links&amp;quot;)\nE           AssertionError: 0 not greater than 0 : Footer should have social media links\n\ndesign_tests.py:95: AssertionError\n&quot;}], &quot;design_tests.py::DesignTestSuite::test_hero_section&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;design_tests.py::DesignTestSuite::test_hero_section&quot;, &quot;duration&quot;: &quot;00:01:33&quot;, &quot;resultsTableRow&quot;: [&quot;<td class=\&quot;col-result\&quot;>Passed</td>&quot;, &quot;<td class=\&quot;col-testId\&quot;>design_tests.py::DesignTestSuite::test_hero_section</td>&quot;, &quot;<td class=\&quot;col-duration\&quot;>00:01:33</td>&quot;, &quot;<td class=\&quot;col-links\&quot;></td>&quot;], &quot;log&quot;: &quot;------------------------------ Captured log call -------------------------------\nWARNING  design_tests:design_tests.py:57 No hero section found on /about.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /services.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /contact.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /testimonials.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /gallery.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /faq.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /terms.html - this is acceptable for some pages\nWARNING  design_tests:design_tests.py:57 No hero section found on /privacy-policy.html - this is acceptable for some pages\n\n&quot;}], &quot;design_tests.py::DesignTestSuite::test_navigation_design&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;design_tests.py::DesignTestSuite::test_navigation_design&quot;, &quot;duration&quot;: &quot;00:00:09&quot;, &quot;resultsTableRow&quot;: [&quot;<td class=\&quot;col-result\&quot;>Passed</td>&quot;, &quot;<td class=\&quot;col-testId\&quot;>design_tests.py::DesignTestSuite::test_navigation_design</td>&quot;, &quot;<td class=\&quot;col-duration\&quot;>00:00:09</td>&quot;, &quot;<td class=\&quot;col-links\&quot;></td>&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;design_tests.py::DesignTestSuite::test_responsive_design&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;design_tests.py::DesignTestSuite::test_responsive_design&quot;, &quot;duration&quot;: &quot;00:00:12&quot;, &quot;resultsTableRow&quot;: [&quot;<td class=\&quot;col-result\&quot;>Passed</td>&quot;, &quot;<td class=\&quot;col-testId\&quot;>design_tests.py::DesignTestSuite::test_responsive_design</td>&quot;, &quot;<td class=\&quot;col-duration\&quot;>00:00:12</td>&quot;, &quot;<td class=\&quot;col-links\&quot;></td>&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;design_tests.py::DesignTestSuite::test_typography&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Failed&quot;, &quot;testId&quot;: &quot;design_tests.py::DesignTestSuite::test_typography&quot;, &quot;duration&quot;: &quot;00:00:12&quot;, &quot;resultsTableRow&quot;: [&quot;<td class=\&quot;col-result\&quot;>Failed</td>&quot;, &quot;<td class=\&quot;col-testId\&quot;>design_tests.py::DesignTestSuite::test_typography</td>&quot;, &quot;<td class=\&quot;col-duration\&quot;>00:00:12</td>&quot;, &quot;<td class=\&quot;col-links\&quot;></td>&quot;], &quot;log&quot;: &quot;self = &amp;lt;design_tests.DesignTestSuite testMethod=test_typography&amp;gt;\n\n    def test_typography(self):\n        &amp;quot;&amp;quot;&amp;quot;Test typography consistency across pages.&amp;quot;&amp;quot;&amp;quot;\n        logger.info(&amp;quot;Testing typography...&amp;quot;)\n        for page in self.pages:\n            with self.subTest(page=page):\n                self.driver.get(f&amp;quot;{self.base_url}{page}&amp;quot;)\n                # Check heading hierarchy\n                headings = self.driver.find_elements(By.TAG_NAME, &amp;quot;h1&amp;quot;)\n                self.assertLessEqual(len(headings), 1, &amp;quot;Page should have at most one h1&amp;quot;)\n    \n                # Check font consistency\n                body_text = self.driver.find_element(By.TAG_NAME, &amp;quot;body&amp;quot;)\n                font_family = body_text.value_of_css_property(&amp;quot;font-family&amp;quot;)\n&amp;gt;               self.assertIn(&amp;quot;Montserrat&amp;quot;, font_family, &amp;quot;Body text should use Montserrat font&amp;quot;)\nE               AssertionError: &amp;#x27;Montserrat&amp;#x27; not found in &amp;#x27;Inter, Arial, sans-serif&amp;#x27; : Body text should use Montserrat font\n\ndesign_tests.py:112: AssertionError\n&quot;}]}, &quot;renderCollapsed&quot;: [&quot;passed&quot;], &quot;initialSort&quot;: &quot;result&quot;, &quot;title&quot;: &quot;design_report_20250612_124657.html&quot;}"></div>
+    <script defer="" type="module">
     import { AccessibilityEnhancer } from '/assets/js/modules/accessibility.js';
     import {  } from '/assets/js/modules/config.js';
     import {  } from '/assets/js/modules/config.min.js';
@@ -1201,4 +1351,65 @@ module.exports = {
 },{}]},{},[4]);
     </script>
   </footer>
-</html>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                    body.style.overflow = !isExpanded ? 'hidden' : '';
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking on links
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            body.style.overflow = '';
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body></html>

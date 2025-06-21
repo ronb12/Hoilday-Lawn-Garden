@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customers - Admin Dashboard</title>
-    <meta name="description" content="Manage customers for Holliday Lawn & Garden">
+    <meta name="description" content="Manage customers for Holliday Lawn &amp; Garden">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/admin-dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -63,7 +61,7 @@
     <header class="main-header">
         <div class="logo">
             <a href="index.html">
-                <img src="assets/images/hollidays-logo.optimized-320.png" alt="Holliday's Lawn & Garden Logo">
+                <img src="assets/images/hollidays-logo.optimized-320.png" alt="Holliday's Lawn &amp; Garden Logo">
             </a>
         </div>
         <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
@@ -230,32 +228,32 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="modalTitle">Add New Customer</h2>
-                <span class="close" onclick="closeModal()">&times;</span>
+                <span class="close" onclick="closeModal()">×</span>
             </div>
             <form id="customerForm" onsubmit="saveCustomer(event)">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="firstName">First Name *</label>
-                        <input type="text" id="firstName" name="firstName" required>
+                        <input type="text" id="firstName" name="firstName" required="">
                     </div>
                     <div class="form-group">
                         <label for="lastName">Last Name *</label>
-                        <input type="text" id="lastName" name="lastName" required>
+                        <input type="text" id="lastName" name="lastName" required="">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="email">Email *</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" required="">
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone *</label>
-                        <input type="tel" id="phone" name="phone" required>
+                        <input type="tel" id="phone" name="phone" required="">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="address">Address *</label>
-                    <textarea id="address" name="address" required></textarea>
+                    <textarea id="address" name="address" required=""></textarea>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
@@ -649,7 +647,7 @@
         });
     </script>
     cation);
-            setTimeout(() => notification.remove(), 3000);
+            setTimeout(() =&gt; notification.remove(), 3000);
         }
         
         // Close modal when clicking outside
@@ -662,7 +660,7 @@
         
         // Load customers when page loads
         document.addEventListener('DOMContentLoaded', loadCustomers);
-    </script>
+    
     
     <!-- Mobile Admin Navigation -->
     <nav class="mobile-admin-nav">
@@ -689,5 +687,6 @@
             </a>
         </div>
     </nav>
-</body>
-</html>
+
+
+</body></html>
