@@ -1,0 +1,354 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Customer Dashboard - Holliday's Lawn &amp; Garden</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your lawn care services, view service history, and handle payments through your customer dashboard.">
+    <meta name="keywords" content="lawn care, customer dashboard, service history, payments, Holliday's Lawn &amp; Garden">
+    <meta name="author" content="Holliday's Lawn &amp; Garden">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hollidayslawnandgarden.com/customer-dashboard">
+    <meta property="og:title" content="Customer Dashboard - Holliday's Lawn &amp; Garden">
+    <meta property="og:description" content="Manage your lawn care services, view service history, and handle payments through your customer dashboard.">
+    <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://hollidayslawnandgarden.com/customer-dashboard">
+    <meta property="twitter:title" content="Customer Dashboard - Holliday's Lawn &amp; Garden">
+    <meta property="twitter:description" content="Manage your lawn care services, view service history, and handle payments through your customer dashboard.">
+    <meta property="twitter:image" content="assets/images/hollidays-logo.optimized-1280.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png?v=1.0.1" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png?v=1.0.1" sizes="16x16">
+    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico?v=1.0.1">
+    <link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.png?v=1.0.1">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon/icon-192.png?v=1.0.1">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/images/favicon/icon-512.png?v=1.0.1">
+    <link rel="manifest" href="manifest.json?v=1.0.1">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/mobile-enhancements.css">
+    <link rel="stylesheet" href="assets/css/main.css?v=1.0.1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/customer-dashboard.css">
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
+
+    <style>
+        /* Mobile Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            z-index: 1000;
+            position: relative;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            margin-right: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #2e7d32;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                z-index: 1000;
+                visibility: hidden;
+                opacity: 0;
+                transform: translateY(-100%);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                pointer-events: none;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .nav-links a {
+                font-size: 1.75rem;
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: center;
+                transition: all 0.3s ease;
+                position: relative;
+                color: #333333;
+                font-weight: 600;
+            }
+
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background: #2e7d32;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(-50%);
+            }
+
+            .nav-links a:hover::after,
+            .nav-links a.active::after {
+                width: 60%;
+            }
+
+            .nav-links a:hover {
+                color: #2e7d32;
+                transform: translateY(-2px);
+            }
+
+            body.menu-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Prevent text selection during menu transitions */
+        .nav-links {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Ensure smooth scrolling on iOS */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Main Header with Mobile Menu -->
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/images/hollidays-logo.optimized-320.png" alt="Holliday's Lawn &amp; Garden Logo">
+            </a>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="nav-menu">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                <li class="login-buttons">
+                    <a href="login.html" class="btn-login btn-customer">
+                        <i class="fas fa-user"></i>
+                        Customer Login
+                    </a>
+                    <a href="admin-login.html" class="btn-login btn-admin">
+                        <i class="fas fa-lock"></i>
+                        Admin Login
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <header class="header">
+            <h1>Customer Dashboard</h1>
+            <div class="header-actions">
+                <button id="refreshDashboard" class="btn btn-secondary">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <button id="logoutButton" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <!-- Profile Section -->
+            <section class="dashboard-section">
+                <h2>My Profile</h2>
+                <div id="userProfile" class="profile-card">
+                    <!-- Profile will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Service History Section -->
+            <section class="dashboard-section">
+                <h2>Service History</h2>
+                <div id="serviceHistory" class="service-list">
+                    <!-- Service history will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Unpaid Invoices Section -->
+            <section class="dashboard-section">
+                <h2>Unpaid Invoices</h2>
+                <div id="unpaidInvoices" class="invoice-list">
+                    <!-- Unpaid invoices will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Appointment Management Section -->
+            <section class="dashboard-section">
+                <h2>Appointments</h2>
+                <div class="section-actions">
+                    <button onclick="viewAppointments()" class="btn btn-primary">
+                        <i class="fas fa-calendar"></i> View All
+                    </button>
+                    <button onclick="scheduleAppointment()" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Schedule New
+                    </button>
+                </div>
+                <div id="upcomingAppointments" class="appointment-list">
+                    <!-- Appointments will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Messages Section -->
+            <section class="dashboard-section">
+                <h2>Messages</h2>
+                <div class="section-actions">
+                    <button onclick="viewMessages()" class="btn btn-primary">
+                        <i class="fas fa-comments"></i> View Messages
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <nav class="nav-menu">
+        <ul>
+            <li><a href="#" onclick="viewProfile()"><i class="fas fa-user"></i> Profile</a></li>
+            <li><a href="#" onclick="viewServiceHistory()"><i class="fas fa-history"></i> History</a></li>
+            <li><a href="#" onclick="viewInvoices()"><i class="fas fa-file-invoice"></i> Invoices</a></li>
+            <li><a href="#" onclick="viewAppointments()"><i class="fas fa-calendar"></i> Appointments</a></li>
+            <li><a href="#" onclick="viewMessages()"><i class="fas fa-comments"></i> Messages</a></li>
+        </ul>
+    </nav>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+        <p id="loadingMessage">Loading...</p>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
+    <!-- Custom Modules -->
+    <script type="module" src="assets/js/modules/customer_dashboard.js"></script>
+    
+    <!-- Mobile menu functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking on links
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+</body></html>

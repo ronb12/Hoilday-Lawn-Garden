@@ -1,0 +1,492 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, collection, query, where, orderBy, getDocs, doc, getDoc, updateDoc, addDoc, setDoc, serverTimestamp, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { showLoading, hideLoading, showNotification, showModal, closeModal, formatDate, formatTime, formatStatus, formatServiceType, handleError } from "../utils.js";
+import { firebaseConfig } from "../firebase-config.js";
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// DOM Elements
+const dashboardStats = document.getElementById("dashboardStats");
+const recentAppointments = document.getElementById("recentAppointments");
+const refreshDashboard = document.getElementById("refreshDashboard");
+const logoutButton = document.getElementById("logoutButton");
+const viewAllCustomersBtn = document.getElementById("viewAllCustomers");
+const addNewCustomer = document.getElementById("addNewCustomer");
+const viewAllPayments = document.getElementById("viewAllPayments");
+const processPayment = document.getElementById("processPayment");
+const loadingOverlay = document.getElementById("loading-overlay");
+const loadingMessage = document.getElementById("loading-message");
+
+// Check if user is logged in and is an admin
+onAuthStateChanged(auth, async (user) => {
+    console.log("Auth state changed:", user ? "User logged in" : "User logged out");
+    
+    if (user) {
+        try {
+            showLoading("Verifying admin access...");
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (!userDoc.exists() || userDoc.data().role !== "admin") {
+                console.error("User is not an admin");
+                await auth.signOut();
+                window.location.href = "login.html";
+                return;
+            }
+
+            console.log("Initializing admin dashboard for user:", user.email);
+            await initializeDashboard(user);
+        } catch (error) {
+            console.error("Error checking admin status:", error);
+            showNotification("Error verifying admin status", "error");
+            await auth.signOut();
+            window.location.href = "admin-login.html";
+        } finally {
+            hideLoading();
+        }
+    } else {
+        window.location.href = "admin-login.html";
+    }
+});
+
+async function initializeDashboard(user) {
+    try {
+        showLoading("Loading dashboard data...");
+        
+        // Set up real-time listeners
+        setupRealtimeListeners();
+
+        // Load dashboard data
+        await Promise.all([
+            loadDashboardStats(),
+            loadRecentAppointments()
+        ]);
+
+        // Set up event listeners
+        setupEventListeners();
+
+        hideLoading();
+    } catch (error) {
+        console.error("Error initializing dashboard:", error);
+        showNotification("Error loading dashboard data", "error");
+        hideLoading();
+    }
+}
+
+function showLoading(message = "Loading...") {
+    if (loadingMessage) {
+        loadingMessage.textContent = message;
+    }
+    if (loadingOverlay) {
+        loadingOverlay.style.display = "flex";
+    }
+}
+
+function hideLoading() {
+    if (loadingOverlay) {
+        loadingOverlay.style.display = "none";
+    }
+}
+
+function setupRealtimeListeners() {
+    try {
+        // Listen for appointment changes
+        const appointmentsQuery = query(
+            collection(db, "appointments"),
+            where("status", "in", ["scheduled", "in-progress"])
+        );
+
+        onSnapshot(appointmentsQuery, (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === "added" || change.type === "modified") {
+                    loadRecentAppointments();
+                    loadDashboardStats();
+                }
+            });
+        });
+
+        // Listen for payment changes
+        const paymentsQuery = query(
+            collection(db, "payments"),
+            where("status", "==", "completed")
+        );
+
+        onSnapshot(paymentsQuery, () => {
+            loadDashboardStats();
+        });
+
+        // Listen for customer changes
+        const customersQuery = collection(db, "users");
+        onSnapshot(customersQuery, () => {
+            loadDashboardStats();
+        });
+    } catch (error) {
+        console.error("Error setting up real-time listeners:", error);
+        showNotification("Error setting up real-time updates", "error");
+    }
+}
+
+async function loadDashboardStats() {
+    try {
+        const stats = await getDashboardStats();
+        if (!dashboardStats) {
+            console.error("Dashboard stats element not found");
+            return;
+        }
+        updateDashboardStats(stats);
+    } catch (error) {
+        console.error("Error loading dashboard stats:", error);
+        showNotification("Error loading statistics", "error");
+    }
+}
+
+async function getDashboardStats() {
+    try {
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+        // Get total customers
+        const customersSnapshot = await getDocs(collection(db, "users"));
+        const totalCustomers = customersSnapshot.size;
+
+        // Get active appointments
+        const activeAppointmentsQuery = query(
+            collection(db, "appointments"),
+            where("status", "in", ["scheduled", "in-progress"])
+        );
+        const activeAppointmentsSnapshot = await getDocs(activeAppointmentsQuery);
+        const activeAppointments = activeAppointmentsSnapshot.size;
+
+        // Get monthly revenue
+        const monthlyPaymentsQuery = query(
+            collection(db, "payments"),
+            where("status", "==", "completed")
+        );
+        const monthlyPaymentsSnapshot = await getDocs(monthlyPaymentsQuery);
+        const monthlyRevenue = monthlyPaymentsSnapshot.docs.reduce((total, doc) => total + (doc.data().amount || 0), 0);
+
+        // Get customer satisfaction
+        const ratingsQuery = query(collection(db, "ratings"));
+        const ratingsSnapshot = await getDocs(ratingsQuery);
+        const ratings = ratingsSnapshot.docs.map(doc => doc.data().rating);
+        const satisfaction = ratings.length > 0 ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1) : 0;
+
+        return {
+            totalCustomers,
+            activeAppointments,
+            monthlyRevenue,
+            satisfaction
+        };
+    } catch (error) {
+        console.error("Error getting dashboard stats:", error);
+        throw error;
+    }
+}
+
+function updateDashboardStats(stats) {
+    if (!dashboardStats) return;
+
+    dashboardStats.innerHTML = `
+        <div class="stat-card">
+            <h3>Total Customers</h3>
+            <p class="stat-value">${stats.totalCustomers}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Active Appointments</h3>
+            <p class="stat-value">${stats.activeAppointments}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Monthly Revenue</h3>
+            <p class="stat-value">$${stats.monthlyRevenue.toFixed(2)}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Customer Satisfaction</h3>
+            <p class="stat-value">${stats.satisfaction}/5.0</p>
+        </div>
+    `;
+}
+
+async function loadRecentAppointments() {
+    try {
+        const appointmentsQuery = query(
+            collection(db, "appointments"),
+            orderBy("date", "desc"),
+            limit(5)
+        );
+
+        const snapshot = await getDocs(appointmentsQuery);
+        const appointments = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        if (!recentAppointments) {
+            console.error("Recent appointments element not found");
+            return;
+        }
+
+        if (appointments.length === 0) {
+            recentAppointments.innerHTML = "<p>No recent appointments</p>";
+            return;
+        }
+
+        recentAppointments.innerHTML = appointments.map(appointment => `
+            <div class="appointment-card">
+                <div class="appointment-header">
+                    <h4>${appointment.serviceType}</h4>
+                    <span class="status ${appointment.status}">${formatStatus(appointment.status)}</span>
+                </div>
+                <div class="appointment-details">
+                    <p><i class="fas fa-calendar"></i> ${formatDate(appointment.date)}</p>
+                    <p><i class="fas fa-clock"></i> ${formatTime(appointment.time)}</p>
+                    <p><i class="fas fa-user"></i> ${appointment.customerName}</p>
+                </div>
+            </div>
+        `).join("");
+    } catch (error) {
+        console.error("Error loading recent appointments:", error);
+        showNotification("Error loading appointments", "error");
+    }
+}
+
+function setupEventListeners() {
+    if (refreshDashboard) {
+        refreshDashboard.addEventListener("click", async () => {
+            showLoading("Refreshing dashboard...");
+            await Promise.all([
+                loadDashboardStats(),
+                loadRecentAppointments()
+            ]);
+            hideLoading();
+            showNotification("Dashboard refreshed", "success");
+        });
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async () => {
+            try {
+                await auth.signOut();
+                window.location.href = "admin-login.html";
+            } catch (error) {
+                console.error("Error signing out:", error);
+                showNotification("Error signing out", "error");
+            }
+        });
+    }
+
+    if (viewAllCustomersBtn) {
+        viewAllCustomersBtn.addEventListener("click", viewAllCustomers);
+    }
+
+    if (addNewCustomer) {
+        addNewCustomer.addEventListener("click", addNewCustomer);
+    }
+
+    if (viewAllPayments) {
+        viewAllPayments.addEventListener("click", viewAllPayments);
+    }
+
+    if (processPayment) {
+        processPayment.addEventListener("click", processNewPayment);
+    }
+}
+
+async function viewAllCustomers() {
+    try {
+        showLoading("Loading customers...");
+        const customersSnapshot = await getDocs(collection(db, "users"));
+        const customers = customersSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        showModal(`
+            <h2>All Customers</h2>
+            <div class="customers-list">
+                ${customers.map(customer => `
+                    <div class="customer-card">
+                        <h3>${customer.name}</h3>
+                        <p><i class="fas fa-envelope"></i> ${customer.email}</p>
+                        <p><i class="fas fa-phone"></i> ${customer.phone || 'N/A'}</p>
+                        <div class="customer-actions">
+                            <button onclick="adminDashboard.viewCustomerDetails('${customer.id}')" class="btn btn-primary">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                            <button onclick="adminDashboard.editCustomer('${customer.id}')" class="btn btn-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </div>
+                    </div>
+                `).join("")}
+            </div>
+        `);
+    } catch (error) {
+        console.error("Error loading customers:", error);
+        showNotification("Error loading customers", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+async function addNewCustomer() {
+    showModal(`
+        <h2>Add New Customer</h2>
+        <form id="addCustomerForm" class="form">
+            <div class="form-group">
+                <label for="customerName">Name</label>
+                <input type="text" id="customerName" required>
+            </div>
+            <div class="form-group">
+                <label for="customerEmail">Email</label>
+                <input type="email" id="customerEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="customerPhone">Phone</label>
+                <input type="tel" id="customerPhone">
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Add Customer</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </form>
+    `);
+
+    const form = document.getElementById("addCustomerForm");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        try {
+            showLoading("Adding customer...");
+            const customerData = {
+                name: document.getElementById("customerName").value,
+                email: document.getElementById("customerEmail").value,
+                phone: document.getElementById("customerPhone").value,
+                role: "customer",
+                createdAt: serverTimestamp()
+            };
+
+            await addDoc(collection(db, "users"), customerData);
+            showNotification("Customer added successfully", "success");
+            closeModal();
+            loadDashboardStats();
+        } catch (error) {
+            console.error("Error adding customer:", error);
+            showNotification("Error adding customer", "error");
+        } finally {
+            hideLoading();
+        }
+    });
+}
+
+async function viewAllPayments() {
+    try {
+        showLoading("Loading payments...");
+        const paymentsSnapshot = await getDocs(collection(db, "payments"));
+        const payments = paymentsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        showModal(`
+            <h2>All Payments</h2>
+            <div class="payments-list">
+                ${payments.map(payment => `
+                    <div class="payment-card">
+                        <h3>$${payment.amount.toFixed(2)}</h3>
+                        <p><i class="fas fa-user"></i> ${payment.customerName}</p>
+                        <p><i class="fas fa-calendar"></i> ${formatDate(payment.date)}</p>
+                        <p><i class="fas fa-info-circle"></i> ${payment.description}</p>
+                        <span class="status ${payment.status}">${payment.status}</span>
+                    </div>
+                `).join("")}
+            </div>
+        `);
+    } catch (error) {
+        console.error("Error loading payments:", error);
+        showNotification("Error loading payments", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+async function processNewPayment() {
+    showModal(`
+        <h2>Process New Payment</h2>
+        <form id="processPaymentForm" class="form">
+            <div class="form-group">
+                <label for="customerSelect">Customer</label>
+                <select id="customerSelect" required>
+                    <option value="">Select a customer...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="paymentAmount">Amount</label>
+                <input type="number" id="paymentAmount" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="paymentDescription">Description</label>
+                <input type="text" id="paymentDescription" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Process Payment</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </form>
+    `);
+
+    // Load customers into select
+    const customerSelect = document.getElementById("customerSelect");
+    const customersSnapshot = await getDocs(collection(db, "users"));
+    customersSnapshot.docs.forEach(doc => {
+        const customer = doc.data();
+        const option = document.createElement("option");
+        option.value = doc.id;
+        option.textContent = customer.name;
+        customerSelect.appendChild(option);
+    });
+
+    const form = document.getElementById("processPaymentForm");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        try {
+            showLoading("Processing payment...");
+            const customerId = document.getElementById("customerSelect").value;
+            const customerDoc = await getDoc(doc(db, "users", customerId));
+            const customer = customerDoc.data();
+
+            const paymentData = {
+                customerId,
+                customerName: customer.name,
+                amount: parseFloat(document.getElementById("paymentAmount").value),
+                description: document.getElementById("paymentDescription").value,
+                status: "completed",
+                date: serverTimestamp()
+            };
+
+            await addDoc(collection(db, "payments"), paymentData);
+            showNotification("Payment processed successfully", "success");
+            closeModal();
+            loadDashboardStats();
+        } catch (error) {
+            console.error("Error processing payment:", error);
+            showNotification("Error processing payment", "error");
+        } finally {
+            hideLoading();
+        }
+    });
+}
+
+// Update window.adminDashboard exports
+window.adminDashboard = {
+    initializeDashboard,
+    loadDashboardStats,
+    loadRecentAppointments,
+    setupEventListeners,
+    viewAllCustomers,
+    addNewCustomer,
+    viewAllPayments,
+    processNewPayment
+};

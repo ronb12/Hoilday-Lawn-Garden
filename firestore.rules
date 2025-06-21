@@ -1,0 +1,100 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Admin dashboard collections
+    match /appointments/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    match /customers/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    match /payments/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    // Staff management
+    match /staff/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    // Contractor management
+    match /contractors/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    match /contractor_projects/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    // Schedule management
+    match /schedule/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    // Inventory management
+    match /equipment/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    match /supplies/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    match /maintenance/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    // Communication and messaging
+    match /messages/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    match /bulkMessages/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    match /chats/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    match /typing/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    match /notifications/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    // Service management
+    match /serviceRequests/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    match /scheduledServices/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    match /services/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    // User management
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Invoices and billing
+    match /invoices/{document} {
+      allow read, write: if true; // Allow full access for admin dashboard
+    }
+    
+    // Default rule for other collections
+    match /{document=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+  }
+} 

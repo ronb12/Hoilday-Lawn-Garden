@@ -1,0 +1,296 @@
+async function manageStaff() {
+    try {
+        showLoading("Loading staff members...");
+        const staffQuery = query(
+            collection(db, "staff"),
+            orderBy("name")
+        );
+        const snapshot = await getDocs(staffQuery);
+        const staff = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        showModal(`
+            <h2>Manage Staff</h2>
+            <div class="staff-list">
+                ${staff.map(member => `
+                    <div class="staff-card">
+                        <div class="staff-info">
+                            <h3>${member.name}</h3>
+                            <p><i class="fas fa-envelope"></i> ${member.email}</p>
+                            <p><i class="fas fa-phone"></i> ${member.phone || "N/A"}</p>
+                            <p><i class="fas fa-tools"></i> ${member.specialties.join(", ")}</p>
+                            <p><i class="fas fa-clock"></i> ${member.availability.join(", ")}</p>
+                        </div>
+                        <div class="staff-actions">
+                            <button onclick="adminDashboard.editStaff('${member.id}')" class="btn btn-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button onclick="adminDashboard.viewStaffSchedule('${member.id}')" class="btn btn-primary">
+                                <i class="fas fa-calendar"></i> Schedule
+                            </button>
+                            <button onclick="adminDashboard.viewStaffPerformance('${member.id}')" class="btn btn-info">
+                                <i class="fas fa-chart-line"></i> Performance
+                            </button>
+                        </div>
+                    </div>
+                `).join("")}
+                <button onclick="adminDashboard.addStaff()" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add New Staff Member
+                </button>
+            </div>
+        `);
+    } catch (error) {
+        console.error("Error loading staff:", error);
+        showNotification("Error loading staff members", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+async function addStaff() {
+    showModal(`
+        <h2>Add New Staff Member</h2>
+        <form id="addStaffForm" class="form">
+            <div class="form-group">
+                <label for="staffName">Name</label>
+                <input type="text" id="staffName" required>
+            </div>
+            <div class="form-group">
+                <label for="staffEmail">Email</label>
+                <input type="email" id="staffEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="staffPhone">Phone</label>
+                <input type="tel" id="staffPhone" required>
+            </div>
+            <div class="form-group">
+                <label for="staffSpecialties">Specialties</label>
+                <select id="staffSpecialties" multiple required>
+                    <option value="lawn-mowing">Lawn Mowing</option>
+                    <option value="hedge-trimming">Hedge Trimming</option>
+                    <option value="garden-maintenance">Garden Maintenance</option>
+                    <option value="irrigation">Irrigation</option>
+                    <option value="landscaping">Landscaping</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Availability</label>
+                <div class="availability-grid">
+                    ${["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(day => `
+                        <div class="day-availability">
+                            <label>${day}</label>
+                            <input type="time" id="${day.toLowerCase()}-start" placeholder="Start">
+                            <input type="time" id="${day.toLowerCase()}-end" placeholder="End">
+                        </div>
+                    `).join("")}
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Add Staff Member</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </form>
+    `);
+
+    const form = document.getElementById("addStaffForm");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        try {
+            showLoading("Adding staff member...");
+            const availability = {};
+            ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"].forEach(day => {
+                const start = document.getElementById(`${day}-start`).value;
+                const end = document.getElementById(`${day}-end`).value;
+                if (start && end) {
+                    availability[day] = { start, end };
+                }
+            });
+
+            const staffData = {
+                name: document.getElementById("staffName").value,
+                email: document.getElementById("staffEmail").value,
+                phone: document.getElementById("staffPhone").value,
+                specialties: Array.from(document.getElementById("staffSpecialties").selectedOptions).map(option => option.value),
+                availability: Object.entries(availability).map(([day, times]) => `${day}: ${times.start}-${times.end}`),
+                createdAt: serverTimestamp()
+            };
+
+            await addDoc(collection(db, "staff"), staffData);
+            showNotification("Staff member added successfully", "success");
+            closeModal();
+            manageStaff();
+        } catch (error) {
+            console.error("Error adding staff member:", error);
+            showNotification("Error adding staff member", "error");
+        } finally {
+            hideLoading();
+        }
+    });
+}
+
+async function viewStaffSchedule(staffId) {
+    try {
+        showLoading("Loading staff schedule...");
+        const [staffDoc, appointmentsSnapshot] = await Promise.all([
+            getDoc(doc(db, "staff", staffId)),
+            getDocs(query(
+                collection(db, "appointments"),
+                where("staffId", "==", staffId),
+                where("date", ">=", new Date())
+            ))
+        ]);
+
+        if (!staffDoc.exists()) {
+            throw new Error("Staff member not found");
+        }
+
+        const staff = staffDoc.data();
+        const appointments = appointmentsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        showModal(`
+            <h2>${staff.name}'s Schedule</h2>
+            <div class="schedule-calendar">
+                <div class="calendar-header">
+                    <button onclick="adminDashboard.previousWeek()" class="btn btn-secondary">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h3 id="currentWeek">Loading...</h3>
+                    <button onclick="adminDashboard.nextWeek()" class="btn btn-secondary">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="calendar-grid">
+                    ${generateCalendarGrid(appointments)}
+                </div>
+            </div>
+            <div class="schedule-actions">
+                <button onclick="adminDashboard.assignJob('${staffId}')" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Assign New Job
+                </button>
+            </div>
+        `);
+
+        updateCalendarHeader();
+    } catch (error) {
+        console.error("Error loading staff schedule:", error);
+        showNotification("Error loading staff schedule", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+function generateCalendarGrid(appointments) {
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const hours = Array.from({ length: 12 }, (_, i) => i + 8); // 8 AM to 7 PM
+
+    return `
+        <div class="calendar-days">
+            ${days.map(day => `<div class="calendar-day">${day}</div>`).join("")}
+        </div>
+        <div class="calendar-slots">
+            ${hours.map(hour => `
+                <div class="time-slot">
+                    <div class="time-label">${hour}:00</div>
+                    ${days.map(day => {
+                        const dayAppointments = appointments.filter(apt => 
+                            new Date(apt.date).getDay() === days.indexOf(day) &&
+                            new Date(apt.time).getHours() === hour
+                        );
+                        return `
+                            <div class="day-slot">
+                                ${dayAppointments.map(apt => `
+                                    <div class="appointment-slot" onclick="adminDashboard.viewAppointmentDetails('${apt.id}')">
+                                        <span class="customer-name">${apt.customerName}</span>
+                                        <span class="service-type">${formatServiceType(apt.serviceType)}</span>
+                                    </div>
+                                `).join("")}
+                            </div>
+                        `;
+                    }).join("")}
+                </div>
+            `).join("")}
+        </div>
+    `;
+}
+
+async function viewStaffPerformance(staffId) {
+    try {
+        showLoading("Loading staff performance...");
+        const [staffDoc, appointmentsSnapshot, ratingsSnapshot] = await Promise.all([
+            getDoc(doc(db, "staff", staffId)),
+            getDocs(query(
+                collection(db, "appointments"),
+                where("staffId", "==", staffId)
+            )),
+            getDocs(query(
+                collection(db, "ratings"),
+                where("staffId", "==", staffId)
+            ))
+        ]);
+
+        if (!staffDoc.exists()) {
+            throw new Error("Staff member not found");
+        }
+
+        const staff = staffDoc.data();
+        const appointments = appointmentsSnapshot.docs.map(doc => doc.data());
+        const ratings = ratingsSnapshot.docs.map(doc => doc.data());
+
+        const totalJobs = appointments.length;
+        const completedJobs = appointments.filter(apt => apt.status === "completed").length;
+        const averageRating = ratings.length > 0 
+            ? (ratings.reduce((sum, rating) => sum + rating.rating, 0) / ratings.length).toFixed(1)
+            : "N/A";
+
+        showModal(`
+            <h2>${staff.name}'s Performance</h2>
+            <div class="performance-stats">
+                <div class="stat-card">
+                    <h3>Total Jobs</h3>
+                    <p class="stat-value">${totalJobs}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Completion Rate</h3>
+                    <p class="stat-value">${((completedJobs / totalJobs) * 100).toFixed(1)}%</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Average Rating</h3>
+                    <p class="stat-value">${averageRating}/5.0</p>
+                </div>
+            </div>
+            <div class="performance-details">
+                <h3>Recent Jobs</h3>
+                <div class="jobs-list">
+                    ${appointments.slice(0, 5).map(apt => `
+                        <div class="job-card">
+                            <h4>${formatServiceType(apt.serviceType)}</h4>
+                            <p><i class="fas fa-user"></i> ${apt.customerName}</p>
+                            <p><i class="fas fa-calendar"></i> ${formatDate(apt.date)}</p>
+                            <p><i class="fas fa-clock"></i> ${formatTime(apt.time)}</p>
+                            <span class="status ${apt.status}">${formatStatus(apt.status)}</span>
+                        </div>
+                    `).join("")}
+                </div>
+            </div>
+        `);
+    } catch (error) {
+        console.error("Error loading staff performance:", error);
+        showNotification("Error loading staff performance", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+// Add to window.adminDashboard export
+window.adminDashboard = {
+    // ... existing exports ...
+    manageStaff,
+    addStaff,
+    viewStaffSchedule,
+    viewStaffPerformance
+};
