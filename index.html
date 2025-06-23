@@ -235,7 +235,6 @@
         position: relative;
         background: none;
         border: none;
-        -webkit-tap-highlight-color: transparent;
         margin-left: 1rem;
     }
 
@@ -467,12 +466,12 @@
             gap: 0.5rem;
         }
         .nav-links {
-            display: none;
+            display: none !important;
             position: absolute;
             top: 100%;
             left: 0;
             right: 0;
-            background: var(--primary-green);
+            background: var(--primary-green, #2e7d32);
             padding: 1rem;
             flex-direction: column;
             align-items: center;
@@ -480,7 +479,7 @@
             z-index: 1000;
         }
         .nav-links.active {
-            display: flex;
+            display: flex !important;
         }
         .login-buttons {
             flex-direction: column;
@@ -489,7 +488,7 @@
         }
 
         .hamburger { 
-            display: block;
+            display: block !important;
         }
 
         .hero-content h1 {
@@ -643,36 +642,6 @@
     form input[type="submit"],
     form input[type="button"] {
         border-radius: 8px !important;
-    }
-
-    @media (max-width: 768px) {
-        .hamburger { 
-            display: block;
-        }
-        
-        .nav-links {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--primary-green, #2e7d32);
-            padding: 1rem;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-        
-        .nav-links.active {
-            display: flex;
-        }
-        
-        .login-buttons {
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-left: 0;
-        }
     }
 </style>
 </head>
@@ -879,10 +848,6 @@
  <script type="module" src="assets/js/firebase-config.js"></script>
  <script type="module" src="assets/js/main.js"></script>
  <script>
-// Bulletproof Hamburger Menu Script
-// Ensures the hamburger menu works and does not clear or overwrite the header
-// Place this after all other scripts
-
 document.addEventListener('DOMContentLoaded', function() {
   var hamburger = document.querySelector('.hamburger');
   var navLinks = document.querySelector('.nav-links');
