@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Professional lawn care and landscaping services including lawn maintenance, landscaping, garden care, and commercial services. Get a free quote today!" name="description"/>
+<meta content="lawn care, landscaping, garden services, commercial landscaping, lawn maintenance" name="keywords"/>
+<meta content="Karl Holliday" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="Our Services - Holliday's Lawn &amp; Garden" property="og:title"/>
+<meta content="Professional lawn care and landscaping services including lawn maintenance, landscaping, garden care, and commercial services." property="og:description"/>
+<meta content="https://hollidaylawngarden.com/assets/images/hollidays-logo.png" property="og:image"/>
+<meta content="https://hollidaylawngarden.com/services.html" property="og:url"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="https://hollidaylawngarden.com/services.html" rel="canonical"/>
+<title>Our Services - Holliday's Lawn &amp; Garden</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="assets/css/services.css" rel="stylesheet"/>
+<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
+<link href="assets/images/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="assets/images/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="assets/images/favicon/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="manifest.json" rel="manifest"/>
+<script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Holliday's Lawn & Garden Services",
+        "description": "Professional lawn care and landscaping services including lawn maintenance, landscaping, garden care, commercial services, and pressure washing.",
+        "provider": {
+          "@type": "Organization",
+          "name": "Holliday's Lawn & Garden",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://hollidaylawngarden.com/assets/images/hollidays-logo.png"
+          }
+        },
+        "serviceType": ["Lawn Maintenance", "Landscaping", "Garden Care", "Commercial Services", "Pressure Washing"],
+        "areaServed": "Local Community",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Lawn Care Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Lawn Maintenance",
+                "description": "Keep your lawn looking its best with our comprehensive maintenance services."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Landscaping",
+                "description": "Transform your outdoor space with our professional landscaping services."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Garden Care",
+                "description": "Expert care for your garden to ensure healthy, beautiful plants year-round."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Commercial Services",
+                "description": "Professional landscaping and maintenance solutions for businesses and commercial properties."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Pressure Washing",
+                "description": "Restore the beauty of your property with our professional pressure washing services."
+              }
+            }
+          ]
+        }
+      }
+    </script>
+<style>
+      .hero { position: relative !important; display: flex !important; align-items: center !important; justify-content: center !important; min-height: 350px !important; }
+      .hero img { position: absolute !important; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; filter: brightness(0.6); }
+      .hero-content { position: relative !important; z-index: 2 !important; color: #fff !important; text-align: center !important; width: 100%; max-width: 700px; margin: 0 auto; opacity: 1 !important; transform: none !important; }
+      
+      /* Modern Service Cards */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      
+      .service-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #e0e0e0;
+      }
+      
+      .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      }
+      
+      .service-icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+      }
+      
+      .service-emoji {
+        font-size: 2rem;
+        line-height: 1;
+      }
+      
+      .service-card h3 {
+        color: #333;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+      
+      .service-card p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+      
+      .service-features {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 2rem;
+      }
+      
+      .service-features li {
+        padding: 0.5rem 0;
+        color: #555;
+        position: relative;
+        padding-left: 1.5rem;
+      }
+      
+      .service-features li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #4caf50;
+        font-weight: bold;
+      }
+      
+      .btn-primary {
+        background: #4caf50;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background 0.3s ease;
+        border: none;
+        font-weight: 500;
+      }
+      
+      .btn-primary:hover {
+        background: #45a049;
+        transform: translateY(-1px);
+      }
+      
+      @media (max-width: 900px) {
+        .main-header .nav-links {
+          margin-top: 0 !important;
+          padding-top: 0.5em !important;
+        }
+      }
+    </style>
+<style>
+        /* Mobile Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            z-index: 1000;
+            position: relative;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            margin-right: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #2e7d32;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                z-index: 1000;
+                visibility: hidden;
+                opacity: 0;
+                transform: translateY(-100%);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                pointer-events: none;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .nav-links a {
+                font-size: 1.75rem;
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: center;
+                transition: all 0.3s ease;
+                position: relative;
+                color: #333333;
+                font-weight: 600;
+            }
+
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background: #2e7d32;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(-50%);
+            }
+
+            .nav-links a:hover::after,
+            .nav-links a.active::after {
+                width: 60%;
+            }
+
+            .nav-links a:hover {
+                color: #2e7d32;
+                transform: translateY(-2px);
+            }
+
+            body.menu-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Prevent text selection during menu transitions */
+        .nav-links {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Ensure smooth scrolling on iOS */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+<!-- Fix for fixed header spacing -->
+<style>
+      body {
+        padding-top: 100px; /* Increased padding to account for fixed header height */
+        margin: 0;
+      }
+      
+      @media (max-width: 768px) {
+        body {
+          padding-top: 80px; /* Smaller padding for mobile */
+        }
+      }
+    </style>
+<style>
+      /* Header alignment fix */
+      .main-header {
+        background: #fff !important;
+        min-height: 70px !important;
+      }
+      .nav-links a {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        color: #333 !important;
+        font-weight: 500 !important;
+      }
+      .nav-links li {
+        display: flex;
+        align-items: center;
+      }
+    </style>
+<style>
+            /* Button font fixes */
+            button, .btn, .cta-button, .submit-button {
+                font-family: "Montserrat", "Inter", system-ui, sans-serif !important;
+            }
+            
+            /* Responsive navigation fixes */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    background: var(--color-primary, #4caf50);
+                    padding: 1rem;
+                    flex-direction: column;
+                    align-items: center;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+                
+                .nav-links.active {
+                    display: flex;
+                }
+                
+                .hamburger {
+                    display: block;
+                }
+            }
+            
+            /* Footer fixes */
+            .footer {
+                background: var(--color-primary, #4caf50);
+                color: white;
+                padding: 2rem 0;
+                margin-top: 3rem;
+            }
+            
+            .footer-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 1rem;
+            }
+            
+            .footer-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .footer-section h3 {
+                margin-bottom: 1rem;
+                font-family: "Montserrat", sans-serif;
+            }
+            
+            .footer-section ul {
+                list-style: none;
+                padding: 0;
+            }
+            
+            .footer-section ul li {
+                margin-bottom: 0.5rem;
+            }
+            
+            .footer-section ul li a {
+                color: white;
+                text-decoration: none;
+            }
+            
+            .footer-section ul li a:hover {
+                text-decoration: underline;
+            }
+            
+            .footer-bottom {
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+                padding-top: 1rem;
+                text-align: center;
+            }
+            </style>
+</head>
+<body>
+<header class="main-header"><a aria-label="Link" class="logo link-with-loading link-with-loading" href="index.html"><picture><source srcset="assets/images/hollidays-logo.webp" type="image/webp"/><img alt="Holliday's Lawn &amp; Garden Logo" loading="lazy" src="assets/images/hollidays-logo.webp"/></picture></a><nav aria-label="Main navigation" id="nav-menu"><ul class="nav-links"><li><a aria-label="Link" class="link-with-loading link-with-loading" href="index.html">Home</a></li><li><a aria-label="Link" class="link-with-loading link-with-loading" href="about.html">Ab</a></li></ul></nav></header>
+<main>
+<section class="hero">
+<div class="hero-overlay"></div>
+<img alt="Beautiful garden landscaping" loading="eager" src="assets/images/hero-garden-landscaping.jpg"/>
+<div class="hero-content">
+<h1>Our Professional Services</h1>
+<p>
+            Transform your outdoor space with our expert lawn care and landscaping services. We offer
+            comprehensive solutions to keep your property looking its best year-round.
+          </p>
+</div>
+</section>
+<section class="services" id="services">
+<div class="container">
+<h2 class="section-title">Our Services</h2>
+<div class="services-grid" id="services-container">
+<!-- Services will be loaded dynamically from cache -->
+</div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+<div class="footer-section">
+<h3>Contact Us</h3>
+<ul>
+<li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
+<li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="about.html">About Us</a></li>
+<li><a href="services.html">Services</a></li>
+<li><a href="education.html">Education</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Customer Portal</h3>
+<ul>
+<li><a href="login.html">Login</a></li>
+<li><a href="register.html">Register</a></li>
+<li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+<li><a href="customer-dashboard.html">Dashboard</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Legal</h3>
+<ul>
+<li><a href="privacy-policy.html">Privacy Policy</a></li>
+<li><a href="terms.html">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="copyright">
+<p>© 2024 Holliday's Lawn &amp; Garden. All rights reserved.</p>
+</div>
+</div>
+</div>
+</footer>
+<!-- Scripts -->
+<script src="assets/js/firebase-config.js" type="module"></script>
+<script src="assets/js/main.js" type="module"></script>
+<!-- Test script to load services directly -->
+<script>
+      // Test if we can load services directly
+      setTimeout(() => {
+        const servicesGrid = document.querySelector('.services-grid');
+        if (servicesGrid && servicesGrid.children.length === 0) {
+          // Load test services directly
+          const testServices = {
+            'lawn-maintenance': {
+              title: 'Lawn Maintenance',
+              icon: '🌱',
+              description: 'Keep your lawn looking its best with our comprehensive maintenance services.',
+              features: ['Regular mowing and edging', 'Lawn fertilization', 'Weed control', 'Leaf removal', 'Seasonal clean-up']
+            },
+            'landscaping': {
+              title: 'Landscaping',
+              icon: '🏡',
+              description: 'Transform your outdoor space with our professional landscaping services.',
+              features: ['Custom landscape design', 'Garden installation', 'Hardscaping', 'Mulching', 'Plant selection and installation']
+            },
+            'garden-care': {
+              title: 'Garden Care',
+              icon: '🌸',
+              description: 'Expert care for your garden to ensure healthy, beautiful plants year-round.',
+              features: ['Garden maintenance', 'Plant care and pruning', 'Flower bed maintenance', 'Seasonal planting', 'Garden clean-up']
+            },
+            'commercial': {
+              title: 'Commercial Services',
+              icon: '🏢',
+              description: 'Professional landscaping and maintenance solutions for businesses and commercial properties.',
+              features: ['Commercial property maintenance', 'Business landscape design', 'Regular maintenance schedules', 'Seasonal commercial services', 'Property enhancement']
+            },
+            'pressure-washing': {
+              title: 'Pressure Washing',
+              icon: '🚿',
+              description: 'Restore the beauty of your property with our professional pressure washing services.',
+              features: ['House washing', 'Driveway and sidewalk cleaning', 'Deck and patio cleaning', 'Fence cleaning', 'Commercial building cleaning']
+            }
+          };
+          
+          // Render test services
+          servicesGrid.innerHTML = Object.values(testServices).map(service => `
+            <div class="service-card">
+              <div class="service-icon">
+                <span class="service-emoji">${service.icon}</span>
+              </div>
+              <h3>${service.title}</h3>
+              <p>${service.description}</p>
+              <div class="service-features">
+                <ul>
+                  ${service.features.map(feature => `<li>${feature}</li>`).join('')}
+                </ul>
+              </div>
+              <a href="contact.html" class="btn btn-primary">Get Quote</a>
+            </div>
+          `).join('');
+          
+          }
+      }, 500);
+    </script>
+<!-- Mobile Menu Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger && nav && navLinks) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                    body.style.overflow = !isExpanded ? 'hidden' : '';
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking on links
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            body.style.overflow = '';
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+<!-- Update Copyright Year -->
+<script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1045 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Reports - Holliday's Lawn &amp; Garden</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <link rel="stylesheet" href="assets/css/mobile-enhancements.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .report-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .report-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c5530;
+        }
+        .report-controls {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .report-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .filter-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        .filter-group select,
+        .filter-group input {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+        .report-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-generate {
+            background: #4caf50;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .btn-generate:hover {
+            background: #45a049;
+        }
+        .btn-export {
+            background: #2196F3;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .btn-export:hover {
+            background: #1976D2;
+        }
+        .btn-export:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .report-results {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .report-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .summary-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .summary-card h3 {
+            color: #2c5530;
+            margin-bottom: 0.5rem;
+        }
+        .summary-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4caf50;
+        }
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .report-table th,
+        .report-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .report-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+        }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+        .no-data {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* Mobile menu styles */
+        .admin-header .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+        }
+        
+        .admin-header .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #2c5530;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .admin-header .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .admin-header .logo {
+                flex: 1;
+                min-width: 0;
+            }
+            .admin-header .logo img {
+                height: 40px;
+            }
+            .admin-header .logo span {
+                font-size: 1.1rem;
+            }
+            .admin-header .admin-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                order: 3;
+                width: 100%;
+            }
+            
+            .admin-header .admin-nav.active {
+                display: flex;
+            }
+            
+            .admin-header .hamburger {
+                display: flex;
+                order: 2;
+            }
+            
+            .admin-header .admin-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+                order: 1;
+            }
+            .admin-header .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .report-container {
+                padding: 1rem;
+            }
+            
+            .report-filters {
+                grid-template-columns: 1fr;
+            }
+            
+            .report-actions {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .admin-header {
+                padding: 0.75rem;
+            }
+            .admin-header .logo span {
+                font-size: 1rem;
+            }
+            .admin-header .btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.85rem;
+            }
+            
+            .report-container {
+                padding: 0.5rem;
+            }
+            
+            .report-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+
+    <style>
+        /* Mobile Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            z-index: 1000;
+            position: relative;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            margin-right: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #2e7d32;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                z-index: 1000;
+                visibility: hidden;
+                opacity: 0;
+                transform: translateY(-100%);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                pointer-events: none;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .nav-links a {
+                font-size: 1.75rem;
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: center;
+                transition: all 0.3s ease;
+                position: relative;
+                color: #333333;
+                font-weight: 600;
+            }
+
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background: #2e7d32;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(-50%);
+            }
+
+            .nav-links a:hover::after,
+            .nav-links a.active::after {
+                width: 60%;
+            }
+
+            .nav-links a:hover {
+                color: #2e7d32;
+                transform: translateY(-2px);
+            }
+
+            body.menu-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Prevent text selection during menu transitions */
+        .nav-links {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Ensure smooth scrolling on iOS */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-320.png" alt="Logo">
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="customers.html">Customers</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="payments.html">Payments</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="generate-report.html">Reports</a>
+        </nav>
+        <div class="admin-actions">
+            <button class="btn btn-secondary" onclick="location.reload()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button class="btn btn-danger" onclick="window.location.href='admin-login.html'">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav id="nav-menu">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="education.html">Education</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+            <li class="login-buttons">
+                <a href="login.html" class="btn-login btn-customer">
+                    <i class="fas fa-user"></i>
+                    Customer Login
+                </a>
+                <a href="admin-login.html" class="btn-login btn-admin">
+                    <i class="fas fa-lock"></i>
+                    Admin Login
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+    <div class="report-container">
+        <div class="report-header">
+            <h1 class="report-title">Generate Reports</h1>
+        </div>
+
+        <div class="report-controls">
+            <div class="report-filters">
+                <div class="filter-group">
+                    <label for="reportType">Report Type</label>
+                    <select id="reportType">
+                        <option value="appointments">Appointments Report</option>
+                        <option value="customers">Customer Report</option>
+                        <option value="payments">Payment Report</option>
+                        <option value="revenue">Revenue Report</option>
+                        <option value="services">Services Report</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="dateFrom">Date From</label>
+                    <input type="date" id="dateFrom">
+                </div>
+                <div class="filter-group">
+                    <label for="dateTo">Date To</label>
+                    <input type="date" id="dateTo">
+                </div>
+                <div class="filter-group">
+                    <label for="status">Status</label>
+                    <select id="status">
+                        <option value="">All Statuses</option>
+                        <option value="active">Active</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+            </div>
+            <div class="report-actions">
+                <button class="btn-generate" id="generateBtn">
+                    <i class="fas fa-chart-bar"></i>
+                    Generate Report
+                </button>
+                <button class="btn-export" id="exportBtn" disabled="">
+                    <i class="fas fa-download"></i>
+                    Export to CSV
+                </button>
+            </div>
+        </div>
+
+        <div class="report-results" id="reportResults" style="display: none;">
+            <h2 id="reportTitle">Report Results</h2>
+            <div class="report-summary" id="reportSummary">
+                <!-- Summary cards will be populated here -->
+            </div>
+            <div id="reportData">
+                <!-- Report data will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, where, orderBy, startAt, endAt, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+            authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+            projectId: "holiday-lawn-and-garden",
+            storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+            messagingSenderId: "135322230444",
+            appId: "1:135322230444:web:1a487b25a48aae07368909",
+            measurementId: "G-KD6TBWR4ZT"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // DOM elements
+        const reportType = document.getElementById('reportType');
+        const dateFrom = document.getElementById('dateFrom');
+        const dateTo = document.getElementById('dateTo');
+        const status = document.getElementById('status');
+        const generateBtn = document.getElementById('generateBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const reportResults = document.getElementById('reportResults');
+        const reportTitle = document.getElementById('reportTitle');
+        const reportSummary = document.getElementById('reportSummary');
+        const reportData = document.getElementById('reportData');
+
+        // Set default dates (last 30 days)
+        const today = new Date();
+        const thirtyDaysAgo = new Date(today.getTime() - (30 * 24 * 60 * 60 * 1000));
+        dateFrom.value = thirtyDaysAgo.toISOString().split('T')[0];
+        dateTo.value = today.toISOString().split('T')[0];
+
+        // Event listeners
+        generateBtn.addEventListener('click', generateReport);
+        exportBtn.addEventListener('click', exportToCSV);
+
+        async function generateReport() {
+            const type = reportType.value;
+            const fromDate = dateFrom.value;
+            const toDate = dateTo.value;
+            const statusFilter = status.value;
+
+            if (!fromDate || !toDate) {
+                alert('Please select both start and end dates.');
+                return;
+            }
+
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+            reportResults.style.display = 'none';
+
+            try {
+                let data;
+                switch (type) {
+                    case 'appointments':
+                        data = await generateAppointmentsReport(fromDate, toDate, statusFilter);
+                        break;
+                    case 'customers':
+                        data = await generateCustomersReport(fromDate, toDate, statusFilter);
+                        break;
+                    case 'payments':
+                        data = await generatePaymentsReport(fromDate, toDate, statusFilter);
+                        break;
+                    case 'revenue':
+                        data = await generateRevenueReport(fromDate, toDate);
+                        break;
+                    case 'services':
+                        data = await generateServicesReport(fromDate, toDate);
+                        break;
+                    default:
+                        throw new Error('Invalid report type');
+                }
+
+                displayReport(type, data);
+                exportBtn.disabled = false;
+            } catch (error) {
+                console.error('Error generating report:', error);
+                alert('Error generating report. Please try again.');
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = '<i class="fas fa-chart-bar"></i> Generate Report';
+            }
+        }
+
+        async function generateAppointmentsReport(fromDate, toDate, statusFilter) {
+            const startDate = new Date(fromDate);
+            const endDate = new Date(toDate);
+            endDate.setHours(23, 59, 59, 999);
+
+            let q = query(
+                collection(db, "appointments"),
+                where("date", ">=", startDate),
+                where("date", "<=", endDate),
+                orderBy("date")
+            );
+
+            if (statusFilter) {
+                q = query(q, where("status", "==", statusFilter));
+            }
+
+            const snapshot = await getDocs(q);
+            const appointments = [];
+            let totalAppointments = 0;
+            let completedAppointments = 0;
+            let cancelledAppointments = 0;
+            let pendingAppointments = 0;
+
+            snapshot.forEach(doc => {
+                const appointment = { id: doc.id, ...doc.data() };
+                appointments.push(appointment);
+                totalAppointments++;
+                
+                switch (appointment.status) {
+                    case 'completed':
+                        completedAppointments++;
+                        break;
+                    case 'cancelled':
+                        cancelledAppointments++;
+                        break;
+                    case 'pending':
+                        pendingAppointments++;
+                        break;
+                }
+            });
+
+            return {
+                data: appointments,
+                summary: {
+                    total: totalAppointments,
+                    completed: completedAppointments,
+                    cancelled: cancelledAppointments,
+                    pending: pendingAppointments
+                }
+            };
+        }
+
+        async function generateCustomersReport(fromDate, toDate, statusFilter) {
+            let q = query(collection(db, "customers"), orderBy("createdAt"));
+
+            if (statusFilter) {
+                q = query(q, where("status", "==", statusFilter));
+            }
+
+            const snapshot = await getDocs(q);
+            const customers = [];
+            let totalCustomers = 0;
+            let activeCustomers = 0;
+            let inactiveCustomers = 0;
+            let prospectCustomers = 0;
+
+            snapshot.forEach(doc => {
+                const customer = { id: doc.id, ...doc.data() };
+                const customerDate = customer.createdAt?.toDate() || new Date();
+                const startDate = new Date(fromDate);
+                const endDate = new Date(toDate);
+                endDate.setHours(23, 59, 59, 999);
+
+                if (customerDate >= startDate && customerDate <= endDate) {
+                    customers.push(customer);
+                    totalCustomers++;
+                    
+                    switch (customer.status) {
+                        case 'active':
+                            activeCustomers++;
+                            break;
+                        case 'inactive':
+                            inactiveCustomers++;
+                            break;
+                        case 'prospect':
+                            prospectCustomers++;
+                            break;
+                    }
+                }
+            });
+
+            return {
+                data: customers,
+                summary: {
+                    total: totalCustomers,
+                    active: activeCustomers,
+                    inactive: inactiveCustomers,
+                    prospect: prospectCustomers
+                }
+            };
+        }
+
+        async function generatePaymentsReport(fromDate, toDate, statusFilter) {
+            const startDate = new Date(fromDate);
+            const endDate = new Date(toDate);
+            endDate.setHours(23, 59, 59, 999);
+
+            let q = query(
+                collection(db, "payments"),
+                where("date", ">=", startDate),
+                where("date", "<=", endDate),
+                orderBy("date")
+            );
+
+            if (statusFilter) {
+                q = query(q, where("status", "==", statusFilter));
+            }
+
+            const snapshot = await getDocs(q);
+            const payments = [];
+            let totalPayments = 0;
+            let totalAmount = 0;
+            let successfulPayments = 0;
+            let failedPayments = 0;
+
+            snapshot.forEach(doc => {
+                const payment = { id: doc.id, ...doc.data() };
+                payments.push(payment);
+                totalPayments++;
+                totalAmount += parseFloat(payment.amount || 0);
+                
+                if (payment.status === 'successful') {
+                    successfulPayments++;
+                } else if (payment.status === 'failed') {
+                    failedPayments++;
+                }
+            });
+
+            return {
+                data: payments,
+                summary: {
+                    total: totalPayments,
+                    amount: totalAmount.toFixed(2),
+                    successful: successfulPayments,
+                    failed: failedPayments
+                }
+            };
+        }
+
+        async function generateRevenueReport(fromDate, toDate) {
+            const startDate = new Date(fromDate);
+            const endDate = new Date(toDate);
+            endDate.setHours(23, 59, 59, 999);
+
+            const q = query(
+                collection(db, "payments"),
+                where("date", ">=", startDate),
+                where("date", "<=", endDate),
+                where("status", "==", "successful"),
+                orderBy("date")
+            );
+
+            const snapshot = await getDocs(q);
+            const payments = [];
+            let totalRevenue = 0;
+            let monthlyRevenue = {};
+
+            snapshot.forEach(doc => {
+                const payment = { id: doc.id, ...doc.data() };
+                payments.push(payment);
+                const amount = parseFloat(payment.amount || 0);
+                totalRevenue += amount;
+                
+                const month = payment.date.toDate().toISOString().substring(0, 7);
+                monthlyRevenue[month] = (monthlyRevenue[month] || 0) + amount;
+            });
+
+            return {
+                data: payments,
+                summary: {
+                    total: totalRevenue.toFixed(2),
+                    monthly: monthlyRevenue
+                }
+            };
+        }
+
+        async function generateServicesReport(fromDate, toDate) {
+            const startDate = new Date(fromDate);
+            const endDate = new Date(toDate);
+            endDate.setHours(23, 59, 59, 999);
+
+            const q = query(
+                collection(db, "appointments"),
+                where("date", ">=", startDate),
+                where("date", "<=", endDate),
+                orderBy("date")
+            );
+
+            const snapshot = await getDocs(q);
+            const appointments = [];
+            let serviceCounts = {};
+            let totalServices = 0;
+
+            snapshot.forEach(doc => {
+                const appointment = { id: doc.id, ...doc.data() };
+                appointments.push(appointment);
+                
+                const service = appointment.service || 'Unknown';
+                serviceCounts[service] = (serviceCounts[service] || 0) + 1;
+                totalServices++;
+            });
+
+            return {
+                data: appointments,
+                summary: {
+                    total: totalServices,
+                    services: serviceCounts
+                }
+            };
+        }
+
+        function displayReport(type, reportData) {
+            const titles = {
+                appointments: 'Appointments Report',
+                customers: 'Customer Report',
+                payments: 'Payment Report',
+                revenue: 'Revenue Report',
+                services: 'Services Report'
+            };
+
+            reportTitle.textContent = titles[type];
+            
+            // Display summary
+            let summaryHTML = '';
+            Object.entries(reportData.summary).forEach(([key, value]) => {
+                if (key !== 'monthly' && key !== 'services') {
+                    summaryHTML += `
+                        <div class="summary-card">
+                            <h3>${key.charAt(0).toUpperCase() + key.slice(1)}</h3>
+                            <div class="number">${value}</div>
+                        </div>
+                    `;
+                }
+            });
+            reportSummary.innerHTML = summaryHTML;
+
+            // Display data table
+            let tableHTML = '';
+            if (reportData.data.length === 0) {
+                tableHTML = '<div class="no-data">No data found for the selected criteria.</div>';
+            } else {
+                tableHTML = generateTableHTML(type, reportData.data);
+            }
+            reportData.innerHTML = tableHTML;
+
+            reportResults.style.display = 'block';
+        }
+
+        function generateTableHTML(type, data) {
+            let headers = '';
+            let rows = '';
+
+            switch (type) {
+                case 'appointments':
+                    headers = '<th>Date</th><th>Customer</th><th>Service</th><th>Status</th><th>Amount</th>';
+                    data.forEach(item => {
+                        const date = item.date?.toDate ? item.date.toDate().toLocaleDateString() : 'N/A';
+                        rows += `
+                            <tr>
+                                <td>${date}</td>
+                                <td>${item.customerName || 'N/A'}</td>
+                                <td>${item.service || 'N/A'}</td>
+                                <td>${item.status || 'N/A'}</td>
+                                <td>$${item.amount || '0.00'}</td>
+                            </tr>
+                        `;
+                    });
+                    break;
+                case 'customers':
+                    headers = '<th>Name</th><th>Email</th><th>Phone</th><th>Type</th><th>Status</th><th>Created</th>';
+                    data.forEach(item => {
+                        const date = item.createdAt?.toDate ? item.createdAt.toDate().toLocaleDateString() : 'N/A';
+                        rows += `
+                            <tr>
+                                <td>${item.firstName} ${item.lastName}</td>
+                                <td>${item.email}</td>
+                                <td>${item.phone}</td>
+                                <td>${item.customerType || 'N/A'}</td>
+                                <td>${item.status || 'N/A'}</td>
+                                <td>${date}</td>
+                            </tr>
+                        `;
+                    });
+                    break;
+                case 'payments':
+                    headers = '<th>Date</th><th>Customer</th><th>Amount</th><th>Method</th><th>Status</th>';
+                    data.forEach(item => {
+                        const date = item.date?.toDate ? item.date.toDate().toLocaleDateString() : 'N/A';
+                        rows += `
+                            <tr>
+                                <td>${date}</td>
+                                <td>${item.customerName || 'N/A'}</td>
+                                <td>$${item.amount || '0.00'}</td>
+                                <td>${item.paymentMethod || 'N/A'}</td>
+                                <td>${item.status || 'N/A'}</td>
+                            </tr>
+                        `;
+                    });
+                    break;
+                case 'revenue':
+                    headers = '<th>Date</th><th>Customer</th><th>Service</th><th>Amount</th>';
+                    data.forEach(item => {
+                        const date = item.date?.toDate ? item.date.toDate().toLocaleDateString() : 'N/A';
+                        rows += `
+                            <tr>
+                                <td>${date}</td>
+                                <td>${item.customerName || 'N/A'}</td>
+                                <td>${item.service || 'N/A'}</td>
+                                <td>$${item.amount || '0.00'}</td>
+                            </tr>
+                        `;
+                    });
+                    break;
+                case 'services':
+                    headers = '<th>Date</th><th>Customer</th><th>Service</th><th>Status</th>';
+                    data.forEach(item => {
+                        const date = item.date?.toDate ? item.date.toDate().toLocaleDateString() : 'N/A';
+                        rows += `
+                            <tr>
+                                <td>${date}</td>
+                                <td>${item.customerName || 'N/A'}</td>
+                                <td>${item.service || 'N/A'}</td>
+                                <td>${item.status || 'N/A'}</td>
+                            </tr>
+                        `;
+                    });
+                    break;
+            }
+
+            return `
+                <table class="report-table">
+                    <thead>
+                        <tr>${headers}</tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+        }
+
+        function exportToCSV() {
+            const type = reportType.value;
+            const fromDate = dateFrom.value;
+            const toDate = dateTo.value;
+            
+            // This would need to be implemented with the actual data
+            alert('CSV export functionality will be implemented soon.');
+        }
+
+        // Hamburger menu functionality
+        window.toggleMenu = function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        };
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            if (!hamburger.contains(event.target) && !nav.contains(event.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const hamburger = document.querySelector('.hamburger');
+                const nav = document.querySelector('.admin-nav');
+                
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+    </script>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                    body.style.overflow = !isExpanded ? 'hidden' : '';
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking on links
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            body.style.overflow = '';
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body></html>

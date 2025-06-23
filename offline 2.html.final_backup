@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en">
+<head>
+</head>
+<body><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Holliday Lawn &amp; Garden</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+        .offline-container {
+            max-width: 600px;
+            padding: 40px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .retry-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .retry-button:hover {
+            background-color: #45a049;
+        }
+    
+@media (max-width: 600px) { body { font-size: 16px; } }
+</style>
+
+    <style>
+        /* Mobile Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            z-index: 1000;
+            position: relative;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            margin-right: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #2e7d32;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-
+</body>
+</html>

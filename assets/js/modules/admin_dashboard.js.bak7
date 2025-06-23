@@ -1,0 +1,294 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, collection, query, where, orderBy, getDocs, doc, getDoc, updateDoc, addDoc, setDoc, serverTimestamp, onSnapshot, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { showLoading, hideLoading, showNotification, showModal, closeModal, formatDate, formatTime, formatStatus, formatServiceType, handleError } from "../utils.js";
+import { firebaseConfig } from "../firebase-config.js";
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// DOM Elements
+const dashboardStats = document.getElementById("dashboardStats");
+const recentAppointments = document.getElementById("recentAppointments");
+const refreshDashboard = document.getElementById("refreshDashboard");
+const logoutButton = document.getElementById("logoutButton");
+const viewAllCustomersBtn = document.getElementById("viewAllCustomers");
+const addNewCustomer = document.getElementById("addNewCustomer");
+const viewAllPayments = document.getElementById("viewAllPayments");
+const processPayment = document.getElementById("processPayment");
+const loadingOverlay = document.getElementById("loading-overlay");
+const loadingMessage = document.getElementById("loading-message");
+
+// Check if user is logged in and is an admin
+onAuthStateChanged(auth, async (user) => {
+    console.log("Auth state changed:", user ? "User logged in" : "User logged out");
+    
+    if (user) {
+        try {
+            showLoading("Verifying admin access...");
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (!userDoc.exists() || userDoc.data().role !== "admin") {
+                console.error("User is not an admin");
+                await auth.signOut();
+                window.location.href = "login.html";
+                return;
+            }
+
+            console.log("Initializing admin dashboard for user:", user.email);
+            await initializeDashboard(user);
+        } catch (error) {
+            console.error("Error checking admin status:", error);
+            showNotification("Error verifying admin status", "error");
+            await auth.signOut();
+            window.location.href = "admin-login.html";
+        } finally {
+            hideLoading();
+        }
+    } else {
+        window.location.href = "admin-login.html";
+    }
+});
+
+async function initializeDashboard(user) {
+    try {
+        showLoading("Loading dashboard data...");
+        
+        // Set up real-time listeners
+        setupRealtimeListeners();
+
+        // Load dashboard data
+        await Promise.all([
+            loadDashboardStats(),
+            loadRecentAppointments()
+        ]);
+
+        // Set up event listeners
+        setupEventListeners();
+
+        hideLoading();
+    } catch (error) {
+        console.error("Error initializing dashboard:", error);
+        showNotification("Error loading dashboard data", "error");
+        hideLoading();
+    }
+}
+
+// Service Type Management
+async function manageServiceTypes() {
+    try {
+        showLoading("Loading service types...");
+        const serviceTypesQuery = query(collection(db, "serviceTypes"));
+        const snapshot = await getDocs(serviceTypesQuery);
+        const serviceTypes = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        showModal(`
+            <h2>Manage Service Types</h2>
+            <div class="service-types-list">
+                ${serviceTypes.map(type => `
+                    <div class="service-type-card">
+                        <h3>${type.name}</h3>
+                        <p>$${type.price.toFixed(2)}</p>
+                        <p>${type.description}</p>
+                        <div class="service-type-actions">
+                            <button onclick="adminDashboard.editServiceType('${type.id}')" class="btn btn-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button onclick="adminDashboard.deleteServiceType('${type.id}')" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                `).join("")}
+                <button onclick="adminDashboard.addServiceType()" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add New Service Type
+                </button>
+            </div>
+        `);
+    } catch (error) {
+        console.error("Error loading service types:", error);
+        showNotification("Error loading service types", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+// Customer Activity Log
+async function viewCustomerActivity(customerId) {
+    try {
+        showLoading("Loading customer activity...");
+        const [appointments, payments, services] = await Promise.all([
+            getDocs(query(collection(db, "appointments"), where("customerId", "==", customerId))),
+            getDocs(query(collection(db, "payments"), where("customerId", "==", customerId))),
+            getDocs(query(collection(db, "services"), where("customerId", "==", customerId)))
+        ]);
+
+        const activity = [
+            ...appointments.docs.map(doc => ({ type: "appointment", ...doc.data(), id: doc.id })),
+            ...payments.docs.map(doc => ({ type: "payment", ...doc.data(), id: doc.id })),
+            ...services.docs.map(doc => ({ type: "service", ...doc.data(), id: doc.id }))
+        ].sort((a, b) => b.date - a.date);
+
+        showModal(`
+            <h2>Customer Activity Log</h2>
+            <div class="activity-timeline">
+                ${activity.map(item => `
+                    <div class="activity-item ${item.type}">
+                        <div class="activity-icon">
+                            <i class="fas fa-${item.type === 'appointment' ? 'calendar' : item.type === 'payment' ? 'money-bill' : 'tools'}"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>${item.type === 'appointment' ? 'Appointment' : item.type === 'payment' ? 'Payment' : 'Service'}</h4>
+                            <p>${item.type === 'appointment' ? formatServiceType(item.serviceType) : 
+                                item.type === 'payment' ? `$${item.amount.toFixed(2)}` : 
+                                formatServiceType(item.type)}</p>
+                            <p class="activity-date">${formatDate(item.date)}</p>
+                        </div>
+                    </div>
+                `).join("")}
+            </div>
+        `);
+    } catch (error) {
+        console.error("Error loading customer activity:", error);
+        showNotification("Error loading customer activity", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+// Payment Reports and Analytics
+async function generatePaymentReport() {
+    try {
+        showLoading("Generating payment report...");
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+        const paymentsQuery = query(
+            collection(db, "payments"),
+            where("date", ">=", startOfMonth),
+            where("date", "<=", endOfMonth)
+        );
+
+        const snapshot = await getDocs(paymentsQuery);
+        const payments = snapshot.docs.map(doc => doc.data());
+
+        const totalRevenue = payments.reduce((sum, payment) => sum + payment.amount, 0);
+        const paymentCount = payments.length;
+        const averagePayment = totalRevenue / paymentCount;
+
+        showModal(`
+            <h2>Payment Report - ${formatDate(startOfMonth)} to ${formatDate(endOfMonth)}</h2>
+            <div class="payment-report">
+                <div class="report-stat">
+                    <h3>Total Revenue</h3>
+                    <p>$${totalRevenue.toFixed(2)}</p>
+                </div>
+                <div class="report-stat">
+                    <h3>Number of Payments</h3>
+                    <p>${paymentCount}</p>
+                </div>
+                <div class="report-stat">
+                    <h3>Average Payment</h3>
+                    <p>$${averagePayment.toFixed(2)}</p>
+                </div>
+                <div class="payment-list">
+                    <h3>Payment Details</h3>
+                    ${payments.map(payment => `
+                        <div class="payment-item">
+                            <p><strong>${payment.customerName}</strong></p>
+                            <p>$${payment.amount.toFixed(2)}</p>
+                            <p>${formatDate(payment.date)}</p>
+                        </div>
+                    `).join("")}
+                </div>
+            </div>
+        `);
+    } catch (error) {
+        console.error("Error generating payment report:", error);
+        showNotification("Error generating payment report", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+// Refund Handling
+async function processRefund(paymentId) {
+    try {
+        showLoading("Processing refund...");
+        const paymentDoc = await getDoc(doc(db, "payments", paymentId));
+        if (!paymentDoc.exists()) {
+            throw new Error("Payment not found");
+        }
+
+        const payment = paymentDoc.data();
+        showModal(`
+            <h2>Process Refund</h2>
+            <form id="refundForm" class="form">
+                <div class="form-group">
+                    <label>Original Payment</label>
+                    <p>$${payment.amount.toFixed(2)} - ${payment.customerName}</p>
+                </div>
+                <div class="form-group">
+                    <label for="refundAmount">Refund Amount</label>
+                    <input type="number" id="refundAmount" step="0.01" max="${payment.amount}" required>
+                </div>
+                <div class="form-group">
+                    <label for="refundReason">Reason for Refund</label>
+                    <textarea id="refundReason" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Process Refund</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        `);
+
+        const form = document.getElementById("refundForm");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            try {
+                const refundData = {
+                    originalPaymentId: paymentId,
+                    amount: parseFloat(document.getElementById("refundAmount").value),
+                    reason: document.getElementById("refundReason").value,
+                    status: "completed",
+                    date: serverTimestamp()
+                };
+
+                await addDoc(collection(db, "refunds"), refundData);
+                showNotification("Refund processed successfully", "success");
+                closeModal();
+                loadDashboardStats();
+            } catch (error) {
+                console.error("Error processing refund:", error);
+                showNotification("Error processing refund", "error");
+            }
+        });
+    } catch (error) {
+        console.error("Error processing refund:", error);
+        showNotification("Error processing refund", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+// Update window.adminDashboard exports
+window.adminDashboard = {
+    initializeDashboard,
+    loadDashboardStats,
+    loadRecentAppointments,
+    setupEventListeners,
+    viewAllCustomers,
+    addNewCustomer,
+    viewAllPayments,
+    processNewPayment,
+    manageServiceTypes,
+    viewCustomerActivity,
+    generatePaymentReport,
+    processRefund
+};

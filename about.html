@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Learn about Holliday's Lawn &amp; Garden - your trusted partner in lawn care and landscaping since 2010. Meet our team and discover our commitment to excellence." name="description"/>
+<meta content="lawn care, landscaping, garden services, about us, team, Karl Holliday" name="keywords"/>
+<meta content="Karl Holliday" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="About Us - Holliday's Lawn &amp; Garden" property="og:title"/>
+<meta content="Learn about Holliday's Lawn &amp; Garden - your trusted partner in lawn care and landscaping since 2010." property="og:description"/>
+<meta content="https://hollidaylawngarden.com/assets/images/hollidays-logo.png" property="og:image"/>
+<meta content="https://hollidaylawngarden.com/about.html" property="og:url"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="https://hollidaylawngarden.com/about.html" rel="canonical"/>
+<title>About Us - Holliday's Lawn &amp; Garden</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="assets/css/components/about.css" rel="stylesheet"/>
+<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
+<link href="assets/images/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="assets/images/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="assets/images/favicon/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="manifest.json" rel="manifest"/>
+<style>
+      /* Header alignment fix */
+      .main-header {
+        background: #fff !important;
+        min-height: 70px !important;
+      }
+      .nav-links a {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        color: #333 !important;
+        font-weight: 500 !important;
+      }
+      .nav-links li {
+        display: flex;
+        align-items: center;
+      }
+    </style>
+<style>
+      body {
+        padding-top: 100px; /* Increased padding to account for fixed header height */
+        margin: 0;
+      }
+      
+      @media (max-width: 768px) {
+        body {
+          padding-top: 80px; /* Smaller padding for mobile */
+        }
+      }
+    </style>
+<style>
+      .hero { 
+        position: relative !important; 
+        display: flex !important; 
+        align-items: center !important; 
+        justify-content: center !important; 
+        min-height: 400px !important;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)) !important;
+      }
+      .hero img { 
+        position: absolute !important; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+        z-index: 1; 
+        filter: brightness(0.7); 
+      }
+      .hero-content { 
+        position: relative !important; 
+        z-index: 2 !important; 
+        color: #fff !important; 
+        text-align: center !important; 
+        width: 100%; 
+        max-width: 800px; 
+        margin: 0 auto; 
+        padding: 2rem !important;
+      }
+      .hero-content h1 {
+        font-size: 3.5rem !important;
+        margin-bottom: 1rem !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+      }
+      .hero-content p {
+        font-size: 1.5rem !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+      }
+      .about-section {
+        padding: 5rem 0 !important;
+        background-color: #f8f9fa !important;
+      }
+      .about-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 4rem !important;
+        align-items: center !important;
+      }
+      .about-content {
+        padding: 2rem !important;
+      }
+      .about-content h2 {
+        color: #2e7d32 !important;
+        font-size: 2.5rem !important;
+        margin-bottom: 1.5rem !important;
+      }
+      .about-content h3 {
+        color: #1565c0 !important;
+        font-size: 1.8rem !important;
+        margin: 2rem 0 1rem !important;
+      }
+      .about-content p {
+        font-size: 1.1rem !important;
+        line-height: 1.8 !important;
+        color: #333 !important;
+        margin-bottom: 1.5rem !important;
+      }
+      .feature-list {
+        list-style: none !important;
+        padding: 0 !important;
+        margin: 2rem 0 !important;
+      }
+      .feature-list li {
+        display: flex !important;
+        align-items: center !important;
+        margin-bottom: 1rem !important;
+        font-size: 1.1rem !important;
+      }
+      .feature-list i {
+        color: #2e7d32 !important;
+        margin-right: 1rem !important;
+        font-size: 1.2rem !important;
+      }
+      .about-image {
+        position: relative !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+      }
+      .about-image img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        transition: transform 0.3s ease !important;
+      }
+      .about-image:hover img {
+        transform: scale(1.05) !important;
+      }
+      .cta-section {
+        background: linear-gradient(135deg, #2e7d32 0%, #1565c0 100%) !important;
+        color: white !important;
+        padding: 4rem 0 !important;
+        text-align: center !important;
+      }
+      .cta-section h2 {
+        font-size: 2.5rem !important;
+        margin-bottom: 1rem !important;
+      }
+      .cta-section p {
+        font-size: 1.2rem !important;
+        margin-bottom: 2rem !important;
+        opacity: 0.9 !important;
+      }
+      .cta-buttons {
+        display: flex !important;
+        gap: 1rem !important;
+        justify-content: center !important;
+      }
+      .cta-buttons .btn {
+        padding: 1rem 2rem !important;
+        font-size: 1.1rem !important;
+        border-radius: 50px !important;
+        transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+      }
+      .cta-buttons .btn:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+      }
+      @media (max-width: 900px) {
+        .about-grid {
+          grid-template-columns: 1fr !important;
+          gap: 2rem !important;
+        }
+        .hero-content h1 {
+          font-size: 2.5rem !important;
+        }
+        .hero-content p {
+          font-size: 1.2rem !important;
+        }
+        .cta-buttons {
+          flex-direction: column !important;
+          align-items: center !important;
+        }
+      }
+    </style>
+<style>
+        /* Mobile Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            z-index: 1000;
+            position: relative;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            margin-right: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #2e7d32;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                z-index: 1000;
+                visibility: hidden;
+                opacity: 0;
+                transform: translateY(-100%);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                pointer-events: none;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .nav-links a {
+                font-size: 1.75rem;
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: center;
+                transition: all 0.3s ease;
+                position: relative;
+                color: #333333;
+                font-weight: 600;
+            }
+
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background: #2e7d32;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(-50%);
+            }
+
+            .nav-links a:hover::after,
+            .nav-links a.active::after {
+                width: 60%;
+            }
+
+            .nav-links a:hover {
+                color: #2e7d32;
+                transform: translateY(-2px);
+            }
+
+            body.menu-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Prevent text selection during menu transitions */
+        .nav-links {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Ensure smooth scrolling on iOS */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+<style>
+            /* Button font fixes */
+            button, .btn, .cta-button, .submit-button {
+                font-family: "Montserrat", "Inter", system-ui, sans-serif !important;
+            }
+            
+            /* Responsive navigation fixes */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    background: var(--color-primary, #4caf50);
+                    padding: 1rem;
+                    flex-direction: column;
+                    align-items: center;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+                
+                .nav-links.active {
+                    display: flex;
+                }
+                
+                .hamburger {
+                    display: block;
+                }
+            }
+            
+            /* Footer fixes */
+            .footer {
+                background: var(--color-primary, #4caf50);
+                color: white;
+                padding: 2rem 0;
+                margin-top: 3rem;
+            }
+            
+            .footer-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 1rem;
+            }
+            
+            .footer-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .footer-section h3 {
+                margin-bottom: 1rem;
+                font-family: "Montserrat", sans-serif;
+            }
+            
+            .footer-section ul {
+                list-style: none;
+                padding: 0;
+            }
+            
+            .footer-section ul li {
+                margin-bottom: 0.5rem;
+            }
+            
+            .footer-section ul li a {
+                color: white;
+                text-decoration: none;
+            }
+            
+            .footer-section ul li a:hover {
+                text-decoration: underline;
+            }
+            
+            .footer-bottom {
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+                padding-top: 1rem;
+                text-align: center;
+            }
+            </style>
+</head>
+<body>
+<header class="main-header"><a aria-label="Link" class="logo link-with-loading link-with-loading" href="index.html"><picture><source srcset="assets/images/hollidays-logo.webp" type="image/webp"/><img alt="Holliday's Lawn &amp; Garden Logo" loading="lazy" src="assets/images/hollidays-logo.webp"/></picture></a><nav aria-label="Main navigation" id="nav-menu"><ul class="nav-links"><li><a aria-label="Link" class="link-with-loading link-with-loading" href="index.html">Home</a></li><li><a aria-label="Link" class="link-with-loading link-with-loading" href="about.html">Ab</a></li></ul></nav></header>
+<main>
+<section class="hero">
+<img alt="Beautiful garden landscaping" loading="eager" src="assets/images/hero-garden-landscaping.jpg"/>
+<div class="hero-content">
+<h1>About Us</h1>
+<p>Your trusted partner in lawn care and landscaping since 2010</p>
+</div>
+</section>
+<section class="about-section">
+<div class="container">
+<div class="about-grid">
+<div class="about-content">
+<h2>Our Story</h2>
+<p>
+                Founded by Karl Holliday in 2010, Holliday's Lawn &amp; Garden has been serving the
+                community with dedication and expertise. What started as a small family business has
+                grown into a trusted name in lawn care and landscaping services.
+              </p>
+<h3>Our Mission</h3>
+<p>
+                We are committed to providing exceptional lawn care and landscaping services that
+                enhance the beauty and value of your property. Our goal is to exceed your expectations
+                with every project we undertake.
+              </p>
+<h3>Why Choose Us</h3>
+<ul class="feature-list">
+<li>
+<i class="fas fa-check-circle"></i>
+<span>Experienced team of professionals</span>
+</li>
+<li>
+<i class="fas fa-check-circle"></i>
+<span>Quality equipment and materials</span>
+</li>
+<li>
+<i class="fas fa-check-circle"></i>
+<span>Eco-friendly practices</span>
+</li>
+<li>
+<i class="fas fa-check-circle"></i>
+<span>Competitive pricing</span>
+</li>
+<li>
+<i class="fas fa-check-circle"></i>
+<span>Satisfaction guaranteed</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="cta-section">
+<div class="container">
+<h2>Ready to Transform Your Outdoor Space?</h2>
+<p>Contact us today for a free consultation and quote.</p>
+<div class="cta-buttons">
+<a class="btn btn-primary" href="contact.html">Get a Free Quote</a>
+<a class="btn btn-secondary" href="services.html">View Our Services</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+<div class="footer-section">
+<h3>Contact Us</h3>
+<ul>
+<li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
+<li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="about.html">About Us</a></li>
+<li><a href="services.html">Services</a></li>
+<li><a href="education.html">Education</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Customer Portal</h3>
+<ul>
+<li><a href="login.html">Login</a></li>
+<li><a href="register.html">Register</a></li>
+<li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+<li><a href="customer-dashboard.html">Dashboard</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Legal</h3>
+<ul>
+<li><a href="privacy-policy.html">Privacy Policy</a></li>
+<li><a href="terms.html">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="copyright">
+<p>© 2024 Holliday's Lawn &amp; Garden. All rights reserved.</p>
+</div>
+</div>
+</div>
+</footer>
+<script src="assets/js/firebase-config.js" type="module"></script>
+<script src="assets/js/main.js" type="module"></script>
+<script>
+      // Set current year
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                    body.style.overflow = !isExpanded ? 'hidden' : '';
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking on links
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            body.style.overflow = '';
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body></html>

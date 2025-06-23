@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Create your account to manage your lawn care services with Holliday's Lawn &amp; Garden." name="description"/>
+<meta content="lawn care, garden services, landscaping, create account, sign up" name="keywords"/>
+<meta content="Holliday's Lawn &amp; Garden" name="author"/>
+<meta content="index, follow" name="robots"/>
+<!-- Open Graph / Facebook -->
+<meta content="website" property="og:type"/>
+<meta content="https://hollidayslawnandgarden.com/create-account" property="og:url"/>
+<meta content="Create Account - Holliday's Lawn &amp; Garden" property="og:title"/>
+<meta content="Create your account to manage your lawn care services with Holliday's Lawn &amp; Garden." property="og:description"/>
+<meta content="assets/images/hollidays-logo.optimized-1280.png" property="og:image"/>
+<!-- Twitter -->
+<meta content="summary_large_image" property="twitter:card"/>
+<meta content="https://hollidayslawnandgarden.com/create-account" property="twitter:url"/>
+<meta content="Create Account - Holliday's Lawn &amp; Garden" property="twitter:title"/>
+<meta content="Create your account to manage your lawn care services with Holliday's Lawn &amp; Garden." property="twitter:description"/>
+<meta content="assets/images/hollidays-logo.optimized-1280.png" property="twitter:image"/>
+<!-- Favicon -->
+<link href="assets/images/favicon.png" rel="icon" type="image/png"/>
+<link href="assets/images/apple-touch-icon.png" rel="apple-touch-icon"/>
+<!-- Content Security Policy -->
+<meta content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/ https://apis.google.com/ https://www.googletagmanager.com/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/; font-src 'self' https://fonts.gstatic.com/; img-src 'self' data: https:; connect-src 'self' https://*.googleapis.com/ https://*.firebaseio.com/ https://*.cloudfunctions.net/; frame-src 'self' https://www.google.com/ https://accounts.google.com/;" http-equiv="Content-Security-Policy"/>
+<title>Create Account - Holliday's Lawn &amp; Garden</title>
+<!-- Stylesheets -->
+<link href="assets/styles/components/footer.css" rel="stylesheet"/>
+<link href="assets/styles/main.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        /* Mobile Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            z-index: 1000;
+            position: relative;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            margin-right: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #2e7d32;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                z-index: 1000;
+                visibility: hidden;
+                opacity: 0;
+                transform: translateY(-100%);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                pointer-events: none;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .nav-links a {
+                font-size: 1.75rem;
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: center;
+                transition: all 0.3s ease;
+                position: relative;
+                color: #333333;
+                font-weight: 600;
+            }
+
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background: #2e7d32;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(-50%);
+            }
+
+            .nav-links a:hover::after,
+            .nav-links a.active::after {
+                width: 60%;
+            }
+
+            .nav-links a:hover {
+                color: #2e7d32;
+                transform: translateY(-2px);
+            }
+
+            body.menu-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Prevent text selection during menu transitions */
+        .nav-links {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Ensure smooth scrolling on iOS */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Fix for fixed header spacing */
+        body {
+            padding-top: 80px; /* Account for fixed header height */
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding-top: 60px; /* Smaller padding for mobile */
+            }
+        }
+    </style>
+<style>
+            /* Button font fixes */
+            button, .btn, .cta-button, .submit-button {
+                font-family: "Montserrat", "Inter", system-ui, sans-serif !important;
+            }
+            
+            /* Responsive navigation fixes */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    background: var(--color-primary, #4caf50);
+                    padding: 1rem;
+                    flex-direction: column;
+                    align-items: center;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+                
+                .nav-links.active {
+                    display: flex;
+                }
+                
+                .hamburger {
+                    display: block;
+                }
+            }
+            
+            /* Footer fixes */
+            .footer {
+                background: var(--color-primary, #4caf50);
+                color: white;
+                padding: 2rem 0;
+                margin-top: 3rem;
+            }
+            
+            .footer-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 1rem;
+            }
+            
+            .footer-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .footer-section h3 {
+                margin-bottom: 1rem;
+                font-family: "Montserrat", sans-serif;
+            }
+            
+            .footer-section ul {
+                list-style: none;
+                padding: 0;
+            }
+            
+            .footer-section ul li {
+                margin-bottom: 0.5rem;
+            }
+            
+            .footer-section ul li a {
+                color: white;
+                text-decoration: none;
+            }
+            
+            .footer-section ul li a:hover {
+                text-decoration: underline;
+            }
+            
+            .footer-bottom {
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+                padding-top: 1rem;
+                text-align: center;
+            }
+            </style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loading-overlay" style="display: none;">
+<div class="spinner"></div>
+<p id="loading-message">Loading...</p>
+</div>
+<!-- Notification Container -->
+<div class="notification-container" id="notification-container">
+<div class="notification" id="notification" style="display: none;">
+<span class="notification-message"></span>
+<button aria-label="Close notification" class="notification-close" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>×</button>
+</div>
+</div>
+<!-- Header -->
+<header class="main-header"><a aria-label="Link" class="logo link-with-loading link-with-loading" href="index.html"><picture><source srcset="assets/images/hollidays-logo.webp" type="image/webp"/><img alt="Holliday's Lawn &amp; Garden Logo" loading="lazy" src="assets/images/hollidays-logo.webp"/></picture></a><nav aria-label="Main navigation" id="nav-menu"><ul class="nav-links"><li><a aria-label="Link" class="link-with-loading link-with-loading" href="index.html">Home</a></li><li><a aria-label="Link" class="link-with-loading link-with-loading" href="about.html">Ab</a></li></ul></nav></header>
+<!-- Main Content -->
+<main class="container" id="main-content">
+<section class="hero">
+<div class="hero-content">
+<h1>Create Your Account</h1>
+<p>Join Holliday's Lawn &amp; Garden to manage your services</p>
+</div>
+</section>
+<section class="auth-section">
+<div class="container">
+<div class="card">
+<h2>Create Your Account</h2>
+<div class="auth-container">
+<form aria-label="Create account form" class="auth-form" id="createAccountForm">
+<div class="form-group">
+<label for="firstName">First Name</label>
+<input aria-label="First name" id="firstName" minlength="2" name="firstName" pattern="[A-Za-z\s-]+" required="" title="Please enter a valid first name (letters, spaces, and hyphens only)" type="text"/>
+</div>
+<div class="form-group">
+<label for="lastName">Last Name</label>
+<input aria-label="Last name" id="lastName" minlength="2" name="lastName" pattern="[A-Za-z\s-]+" required="" title="Please enter a valid last name (letters, spaces, and hyphens only)" type="text"/>
+</div>
+<div class="form-group">
+<label for="email">Email</label>
+<input aria-label="Email address" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required="" title="Please enter a valid email address" type="email"/>
+</div>
+<div class="form-group">
+<label for="phone">Phone Number</label>
+<input aria-label="Phone number" id="phone" name="phone" pattern="[0-9]{10}" required="" title="Please enter a valid 10-digit phone number" type="tel"/>
+</div>
+<div class="form-group">
+<label for="password">Password</label>
+<div class="password-input">
+<input aria-label="Password" id="password" minlength="8" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required="" title="Password must be at least 8 characters long and include uppercase, lowercase, and numbers" type="password"/>
+<button aria-label="Toggle password visibility" class="toggle-password" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;' type="button">
+<i class="fas fa-eye"></i>
+</button>
+</div>
+<div class="password-strength">
+<div class="strength-bar">
+<div class="strength-level"></div>
+</div>
+<span class="strength-text"></span>
+<p class="strength-feedback"></p>
+</div>
+</div>
+<div class="form-group">
+<label for="confirmPassword">Confirm Password</label>
+<div class="password-input">
+<input aria-label="Confirm password" id="confirmPassword" name="confirmPassword" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="toggle-password" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;' type="button">
+<i class="fas fa-eye"></i>
+</button>
+</div>
+</div>
+<div class="form-group checkbox-container">
+<input id="terms" name="terms" required="" type="checkbox"/>
+<label for="terms">
+                    I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and
+                    <a href="privacy.html" target="_blank">Privacy Policy</a>
+</label>
+</div>
+<div class="error-container" id="error-container" style="display: none;">
+<div class="error-message">
+<i class="fas fa-exclamation-circle"></i>
+<span></span>
+</div>
+</div>
+<button class="cta-button" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;' type="submit">
+<i class="fas fa-user-plus"></i>
+                  Create Account
+                </button>
+</form>
+<div class="social-auth">
+<p>Or sign up with:</p>
+<button aria-label="Sign up with Google" class="social-button google" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>
+<i class="fab fa-google"></i>
+                  Google
+                </button>
+</div>
+<p class="auth-switch">
+                Already have an account? <a href="login.html">Login here</a>
+</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+<div class="footer-section">
+<h3>Contact Us</h3>
+<ul>
+<li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
+<li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="about.html">About Us</a></li>
+<li><a href="services.html">Services</a></li>
+<li><a href="education.html">Education</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Customer Portal</h3>
+<ul>
+<li><a href="login.html">Login</a></li>
+<li><a href="register.html">Register</a></li>
+<li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+<li><a href="customer-dashboard.html">Dashboard</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Legal</h3>
+<ul>
+<li><a href="privacy-policy.html">Privacy Policy</a></li>
+<li><a href="terms.html">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="copyright">
+<p>© 2024 Holliday's Lawn &amp; Garden. All rights reserved.</p>
+</div>
+</div>
+</div>
+</footer>
+<!-- Scripts -->
+<script src="assets/js/firebase-config.js" type="module"></script>
+<script defer="" src="assets/js/main.min.js" type="module"></script>
+<script>
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                    body.style.overflow = !isExpanded ? 'hidden' : '';
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking on links
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            body.style.overflow = '';
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body></html>

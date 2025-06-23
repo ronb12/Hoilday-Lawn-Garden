@@ -1,0 +1,78 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, collection, query, where, orderBy, getDocs, doc, getDoc, updateDoc, addDoc, setDoc, serverTimestamp, onSnapshot, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { showLoading, hideLoading, showNotification, showModal, closeModal, formatDate, formatTime, formatStatus, formatServiceType, handleError } from "../utils.js";
+import { firebaseConfig } from "../firebase-config.js";
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// DOM Elements
+const dashboardStats = document.getElementById("dashboardStats");
+const recentAppointments = document.getElementById("recentAppointments");
+const refreshDashboard = document.getElementById("refreshDashboard");
+const logoutButton = document.getElementById("logoutButton");
+const viewAllCustomersBtn = document.getElementById("viewAllCustomers");
+const addNewCustomer = document.getElementById("addNewCustomer");
+const viewAllPayments = document.getElementById("viewAllPayments");
+const processPayment = document.getElementById("processPayment");
+const loadingOverlay = document.getElementById("loading-overlay");
+const loadingMessage = document.getElementById("loading-message");
+
+// Check if user is logged in and is an admin
+onAuthStateChanged(auth, async (user) => {
+    console.log("Auth state changed:", user ? "User logged in" : "User logged out");
+    
+    if (user) {
+        try {
+            showLoading("Verifying admin access...");
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (!userDoc.exists() || userDoc.data().role !== "admin") {
+                console.error("User is not an admin");
+                await auth.signOut();
+                window.location.href = "login.html";
+                return;
+            }
+
+            console.log("Initializing admin dashboard for user:", user.email);
+            await initializeDashboard(user);
+        } catch (error) {
+            console.error("Error checking admin status:", error);
+            showNotification("Error verifying admin status", "error");
+            await auth.signOut();
+            window.location.href = "admin-login.html";
+        } finally {
+            hideLoading();
+        }
+    } else {
+        window.location.href = "admin-login.html";
+    }
+});
+
+async function initializeDashboard(user) {
+    try {
+        showLoading("Loading dashboard data...");
+        
+        // Set up real-time listeners
+        setupRealtimeListeners();
+
+        // Load dashboard data
+        await Promise.all([
+            loadDashboardStats(),
+            loadRecentAppointments()
+        ]);
+
+        // Set up event listeners
+        setupEventListeners();
+
+        hideLoading();
+    } catch (error) {
+        console.error("Error initializing dashboard:", error);
+        showNotification("Error loading dashboard data", "error");
+        hideLoading();
+    }
+}
+
+// ... rest of the code ...

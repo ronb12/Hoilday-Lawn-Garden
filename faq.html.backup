@@ -1,0 +1,857 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Frequently Asked Questions - Holliday's Lawn &amp; Garden</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/main.css?v=2024-01-15">
+    <link rel="icon" type="image/png" href="/assets/images/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/assets/images/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="/assets/images/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        body {
+            padding-top: 100px;
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: #f7f7f7;
+            color: #222;
+        }
+        .hero {
+            position: relative;
+            width: 100vw;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #222;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+        .hero img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.6);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+            padding: 2rem;
+            max-width: 800px;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .hero-content p {
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .faq-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+        }
+        .faq-section h2 {
+            color: #2c5530;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid #4caf50;
+            padding-bottom: 0.5rem;
+        }
+        .faq-item {
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .faq-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-left: 4px solid #4caf50;
+            margin-bottom: 0.5rem;
+        }
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+        .faq-question h3 {
+            color: #2c5530;
+            margin: 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .faq-question .icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        .faq-question.active .icon {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            display: none;
+            line-height: 1.6;
+            color: #555;
+        }
+        .faq-answer.active {
+            display: block;
+        }
+        .contact-section {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .contact-section h2 {
+            color: white;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+        }
+        .contact-item i {
+            font-size: 1.2rem;
+            width: 20px;
+        }
+        .btn {
+            background: white;
+            color: #4caf50;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            margin: 0.5rem;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            body {
+                padding-top: 80px;
+            }
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .faq-section {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 900px) {
+            .main-header .nav-links {
+                margin-top: 0 !important;
+                padding-top: 0.5em !important;
+            }
+        }
+    </style>
+
+    <style>
+        /* Mobile Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            z-index: 1000;
+            position: relative;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            margin-right: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #2e7d32;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                z-index: 1000;
+                visibility: hidden;
+                opacity: 0;
+                transform: translateY(-100%);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                pointer-events: none;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .nav-links a {
+                font-size: 1.75rem;
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: center;
+                transition: all 0.3s ease;
+                position: relative;
+                color: #333333;
+                font-weight: 600;
+            }
+
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background: #2e7d32;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(-50%);
+            }
+
+            .nav-links a:hover::after,
+            .nav-links a.active::after {
+                width: 60%;
+            }
+
+            .nav-links a:hover {
+                color: #2e7d32;
+                transform: translateY(-2px);
+            }
+
+            body.menu-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Prevent text selection during menu transitions */
+        .nav-links {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Ensure smooth scrolling on iOS */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+
+    <style>
+        /* Header alignment fix */
+        .main-header {
+            background: #fff !important;
+            min-height: 70px !important;
+        }
+        .nav-links a {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            color: #333 !important;
+            font-weight: 500 !important;
+        }
+        .nav-links li {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="/index.html">
+                <picture>
+                    <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+                    <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+                </picture>
+            </a>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="nav-menu">
+            <ul class="nav-links">
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                <li class="login-buttons">
+                    <a href="login.html" class="btn-login btn-customer">
+                        <i class="fas fa-user"></i>
+                        Customer Login
+                    </a>
+                    <a href="admin-login.html" class="btn-login btn-admin">
+                        <i class="fas fa-lock"></i>
+                        Admin Login
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    
+    
+    
+</header>
+
+    <div class="hero">
+        <picture>
+            <source srcset="assets/images/hero-garden-landscaping-1280-1280.webp" type="image/webp">
+            <img src="/assets/images/hero-garden-landscaping-1280-1280.jpg" alt="Beautiful garden landscaping" loading="lazy">
+        </picture>
+        <div class="hero-content">
+            <h1>Frequently Asked Questions</h1>
+            <p>Find answers to common questions about our lawn care and landscaping services. Can't find what you're looking for? Contact us directly!</p>
+        </div>
+    </div>
+
+    <main>
+        <div class="faq-container">
+            <!-- General Questions -->
+            <div class="faq-section">
+                <h2>🌱 General Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>📍 What areas do you serve?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We provide comprehensive lawn care and landscaping services throughout New Orleans and the surrounding areas including Metairie, Kenner, Gretna, and nearby communities. Contact us to confirm service availability in your specific neighborhood.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>📅 How often should I schedule lawn maintenance?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We recommend weekly or bi-weekly maintenance for optimal lawn health. However, we can customize a schedule based on your specific needs, property size, and grass type. During peak growing seasons (spring and fall), more frequent maintenance may be beneficial.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>📋 Do you provide free estimates?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer free, no-obligation estimates for all our services. Our team will visit your property to assess your needs and provide a detailed quote. Contact us to schedule a consultation at your convenience.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>📜 Are you licensed and insured?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we are fully licensed and insured for all our services. We carry comprehensive liability insurance and workers' compensation coverage. We can provide proof of insurance upon request for your peace of mind.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services & Scheduling -->
+            <div class="faq-section">
+                <h2>🛠️ Services &amp; Scheduling</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🌤️ Do you offer seasonal services?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we provide comprehensive seasonal services including spring cleanup, summer maintenance, fall preparation, and winter protection. Our seasonal programs are designed to keep your lawn healthy year-round and prepare it for the changing weather conditions.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🚨 Do you offer emergency services?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we provide emergency services for storm damage cleanup, urgent lawn maintenance, and smaller landscaping emergencies. However, we do not cut down or remove large trees. For large tree removal, we recommend contacting a specialized tree service company.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>⏰ What is your cancellation policy?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We require 24-hour notice for service cancellations. Please contact us as soon as possible if you need to reschedule. This helps us manage our schedule efficiently and accommodate other customers who may need our services.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🌳 What types of trees and shrubs do you work with?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We work with all types of trees and shrubs commonly found in Louisiana landscapes, including live oaks, magnolias, crepe myrtles, azaleas, and many others. Our team has extensive experience with local plant species and their specific care requirements.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment & Billing -->
+            <div class="faq-section">
+                <h2>💳 Payment &amp; Billing</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>💳 What payment methods do you accept?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept all major credit cards (Visa, MasterCard, American Express, Discover), cash, and online payments through our secure payment system. We also offer convenient payment plans for larger projects.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>📊 Do you offer payment plans?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept payment in full upon completion of services. We accept all major credit cards (Visa, MasterCard, American Express, Discover), cash, and online payments through our secure payment system for your convenience.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🧾 How do I pay my bill online?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can easily pay your bill online through our secure customer portal. Simply visit our "Pay Your Bill" page, enter your account information, and complete your payment using any major credit card or bank account.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maintenance & Care -->
+            <div class="faq-section">
+                <h2>🌿 Maintenance &amp; Care</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🌱 What grass types do you specialize in?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We specialize in warm-season grasses common to Louisiana, including St. Augustine, Bermuda, Zoysia, and Centipede grass. Each type has specific care requirements, and we tailor our maintenance programs accordingly.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>💧 Do you provide irrigation services?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We ensure your lawn is being properly watered as part of our lawn care services. We can assess your lawn's watering needs and provide recommendations for optimal watering practices, but we do not install, maintain, or repair irrigation systems.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🌺 Do you handle garden maintenance?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! We provide comprehensive garden maintenance including planting, pruning, fertilizing, pest control, and seasonal cleanup. Our team can help you maintain beautiful flower beds, vegetable gardens, and ornamental plants.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>
+                            <span>🦗 Do you offer pest control services?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer integrated pest management services for common lawn and garden pests. We use environmentally responsible methods to control insects, weeds, and diseases while protecting beneficial organisms.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="contact-section">
+                <h2>📞 Still Have Questions?</h2>
+                <p>Can't find the answer you're looking for? We're here to help!</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(504) 717-1887</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>7holliday@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-user"></i>
+                        <span>Karl Holliday</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <a href="/contact.html" class="btn">Contact Us</a>
+                    <a href="services.html" class="btn">View Services</a>
+                    <a href="pay-your-bill.html" class="btn">Pay Your Bill</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="footer-contact">
+                        <span class="footer-owner">Karl Holliday</span>
+                        <a href="tel:+15047171887">
+                            <i class="fas fa-phone"></i>
+                            <span>(504) 717-1887</span>
+                        </a>
+                        <a href="mailto:7holliday@gmail.com">
+                            <i class="fas fa-envelope"></i>
+                            <span>7holliday@gmail.com</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Portal</h3>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                        <li><a href="customer-dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© <span id="current-year"></span> Holliday's Lawn &amp; Garden. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // FAQ Accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('.icon');
+                
+                // Close all other answers
+                document.querySelectorAll('.faq-answer').forEach(ans => {
+                    if (ans !== answer) {
+                        ans.classList.remove('active');
+                        ans.previousElementSibling.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current answer
+                answer.classList.toggle('active');
+                question.classList.toggle('active');
+            });
+        });
+        
+        // Cache clearing
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for (let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+        }
+        
+        if (window.caches) {
+            caches.keys().then(function(names) {
+                for (let name of names) {
+                    caches.delete(name);
+                }
+            });
+        }
+    </script>
+    <script>
+      // Direct hamburger menu functionality to ensure it works on mobile
+      document.addEventListener("DOMContentLoaded", function() {
+          const hamburger = document.querySelector(".hamburger");
+          const nav = document.querySelector("nav");
+          const navLinks = document.querySelector(".nav-links");
+          const body = document.body;
+
+          if (hamburger) {
+              hamburger.setAttribute("aria-expanded", "false");
+              hamburger.setAttribute("aria-controls", "nav-menu");
+              nav.setAttribute("id", "nav-menu");
+
+              hamburger.addEventListener("click", function() {
+                  const isExpanded = hamburger.getAttribute("aria-expanded") === "true";
+                  hamburger.classList.toggle("active");
+                  nav.classList.toggle("active");
+                  navLinks.classList.toggle("active");
+                  body.classList.toggle("menu-open");
+                  hamburger.setAttribute("aria-expanded", !isExpanded);
+                  body.style.overflow = !isExpanded ? "hidden" : "";
+              });
+
+              document.addEventListener("click", function(event) {
+                  const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                  if (!isClickInside && nav.classList.contains("active")) {
+                      hamburger.classList.remove("active");
+                      nav.classList.remove("active");
+                      navLinks.classList.remove("active");
+                      body.classList.remove("menu-open");
+                      body.style.overflow = "";
+                      hamburger.setAttribute("aria-expanded", "false");
+                  }
+              });
+
+              document.addEventListener("keydown", function(event) {
+                  if (event.key === "Escape" && nav.classList.contains("active")) {
+                      hamburger.classList.remove("active");
+                      nav.classList.remove("active");
+                      navLinks.classList.remove("active");
+                      body.classList.remove("menu-open");
+                      body.style.overflow = "";
+                      hamburger.setAttribute("aria-expanded", "false");
+                  }
+              });
+
+              let resizeTimer;
+              window.addEventListener("resize", function() {
+                  clearTimeout(resizeTimer);
+                  resizeTimer = setTimeout(function() {
+                      if (window.innerWidth > 768 && nav.classList.contains("active")) {
+                          hamburger.classList.remove("active");
+                          nav.classList.remove("active");
+                          navLinks.classList.remove("active");
+                          body.classList.remove("menu-open");
+                          body.style.overflow = "";
+                          hamburger.setAttribute("aria-expanded", "false");
+                      }
+                  }, 250);
+              });
+
+              const navItems = navLinks.querySelectorAll("a");
+              navItems.forEach(link => {
+                  link.addEventListener("click", function() {
+                      if (nav.classList.contains("active")) {
+                          hamburger.classList.remove("active");
+                          nav.classList.remove("active");
+                          navLinks.classList.remove("active");
+                          body.classList.remove("menu-open");
+                          body.style.overflow = "";
+                          hamburger.setAttribute("aria-expanded", "false");
+                      }
+                  });
+              });
+          }
+      });
+    </script>
+
+ 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                    body.style.overflow = !isExpanded ? 'hidden' : '';
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking on links
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            body.style.overflow = '';
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body></html>

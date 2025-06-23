@@ -1,0 +1,207 @@
+// Add to DOM Elements section
+const viewMessagesBtn = document.getElementById("viewMessages");
+
+// Add to setupEventListeners function
+if (viewMessagesBtn) {
+    viewMessagesBtn.addEventListener("click", viewMessages);
+}
+
+async function viewMessages() {
+    try {
+        showLoading("Loading messages...");
+        const messagesQuery = query(
+            collection(db, "messages"),
+            orderBy("timestamp", "desc"),
+            limit(50)
+        );
+
+        const snapshot = await getDocs(messagesQuery);
+        const messages = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // Group messages by customer
+        const messagesByCustomer = messages.reduce((acc, message) => {
+            if (!acc[message.customerId]) {
+                acc[message.customerId] = {
+                    customerName: message.customerName,
+                    messages: []
+                };
+            }
+            acc[message.customerId].messages.push(message);
+            return acc;
+        }, {});
+
+        showModal(`
+            <h2>Customer Messages</h2>
+            <div class="messages-container">
+                <div class="messages-sidebar">
+                    <div class="messages-search">
+                        <input type="text" id="messageSearch" placeholder="Search customers...">
+                    </div>
+                    <div class="customers-list">
+                        ${Object.entries(messagesByCustomer).map(([customerId, data]) => `
+                            <div class="customer-message-item" onclick="adminDashboard.selectCustomer('${customerId}')">
+                                <h4>${data.customerName}</h4>
+                                <p class="last-message">${data.messages[0].content.substring(0, 50)}...</p>
+                                <span class="message-time">${formatDate(data.messages[0].timestamp)}</span>
+                            </div>
+                        `).join("")}
+                    </div>
+                </div>
+                <div class="messages-main">
+                    <div id="messageThread" class="message-thread">
+                        <div class="no-conversation">
+                            <i class="fas fa-comments"></i>
+                            <p>Select a customer to view messages</p>
+                        </div>
+                    </div>
+                    <div class="message-input">
+                        <textarea id="messageInput" placeholder="Type your message..."></textarea>
+                        <button onclick="adminDashboard.sendMessage()" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `);
+
+        // Set up real-time listener for new messages
+        const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === "added") {
+                    const message = { id: change.doc.id, ...change.doc.data() };
+                    updateMessageThread(message);
+                }
+            });
+        });
+
+        // Store unsubscribe function for cleanup
+        window.currentMessageListener = unsubscribe;
+
+    } catch (error) {
+        console.error("Error loading messages:", error);
+        showNotification("Error loading messages", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+async function selectCustomer(customerId) {
+    try {
+        showLoading("Loading conversation...");
+        const messagesQuery = query(
+            collection(db, "messages"),
+            where("customerId", "==", customerId),
+            orderBy("timestamp", "asc")
+        );
+
+        const snapshot = await getDocs(messagesQuery);
+        const messages = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        const messageThread = document.getElementById("messageThread");
+        if (!messageThread) return;
+
+        messageThread.innerHTML = messages.map(message => `
+            <div class="message ${message.senderId === auth.currentUser.uid ? 'sent' : 'received'}">
+                <div class="message-content">
+                    <p>${message.content}</p>
+                    <span class="message-time">${formatDate(message.timestamp)}</span>
+                </div>
+            </div>
+        `).join("");
+
+        // Scroll to bottom
+        messageThread.scrollTop = messageThread.scrollHeight;
+
+        // Store current customer ID
+        window.currentCustomerId = customerId;
+
+    } catch (error) {
+        console.error("Error loading conversation:", error);
+        showNotification("Error loading conversation", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+async function sendMessage() {
+    try {
+        const messageInput = document.getElementById("messageInput");
+        const content = messageInput.value.trim();
+        
+        if (!content || !window.currentCustomerId) {
+            showNotification("Please select a customer and enter a message", "error");
+            return;
+        }
+
+        showLoading("Sending message...");
+
+        // Get customer details
+        const customerDoc = await getDoc(doc(db, "users", window.currentCustomerId));
+        if (!customerDoc.exists()) {
+            throw new Error("Customer not found");
+        }
+
+        const customer = customerDoc.data();
+
+        const messageData = {
+            content,
+            customerId: window.currentCustomerId,
+            customerName: customer.name,
+            senderId: auth.currentUser.uid,
+            senderName: "Admin",
+            timestamp: serverTimestamp(),
+            status: "unread"
+        };
+
+        await addDoc(collection(db, "messages"), messageData);
+
+        // Clear input
+        messageInput.value = "";
+
+        // Send notification to customer
+        await addDoc(collection(db, "notifications"), {
+            userId: window.currentCustomerId,
+            type: "message",
+            content: "You have a new message from the admin",
+            timestamp: serverTimestamp(),
+            read: false
+        });
+
+    } catch (error) {
+        console.error("Error sending message:", error);
+        showNotification("Error sending message", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+function updateMessageThread(message) {
+    const messageThread = document.getElementById("messageThread");
+    if (!messageThread || message.customerId !== window.currentCustomerId) return;
+
+    const messageElement = document.createElement("div");
+    messageElement.className = `message ${message.senderId === auth.currentUser.uid ? 'sent' : 'received'}`;
+    messageElement.innerHTML = `
+        <div class="message-content">
+            <p>${message.content}</p>
+            <span class="message-time">${formatDate(message.timestamp)}</span>
+        </div>
+    `;
+
+    messageThread.appendChild(messageElement);
+    messageThread.scrollTop = messageThread.scrollHeight;
+}
+
+// Add to window.adminDashboard export
+window.adminDashboard = {
+    // ... existing exports ...
+    viewMessages,
+    selectCustomer,
+    sendMessage
+};

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Holliday's Lawn &amp; Garden - Professional Landscaping Services</title>
+    <meta name="description" content="Professional lawn care and landscaping services in Louisiana. Expert landscape design, maintenance, and eco-friendly solutions for your home or business.">
+    <meta name="keywords" content="lawn care, landscaping, garden services, landscape design, lawn maintenance, Louisiana, professional landscaping">
+    <meta name="author" content="Holliday's Lawn &amp; Garden">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/">
+    <meta property="og:title" content="Holliday's Lawn &amp; Garden - Professional Landscaping Services">
+    <meta property="og:description" content="Professional lawn care and landscaping services in Louisiana. Expert landscape design, maintenance, and eco-friendly solutions.">
+    <meta property="og:image" content="https://ronb12.github.io/Holliday-Lawn-Garden/assets/images/hero-garden-landscaping.jpg">
+    <meta property="og:site_name" content="Holliday's Lawn &amp; Garden">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/">
+    <meta property="twitter:title" content="Holliday's Lawn &amp; Garden - Professional Landscaping Services">
+    <meta property="twitter:description" content="Professional lawn care and landscaping services in Louisiana. Expert landscape design, maintenance, and eco-friendly solutions.">
+    <meta property="twitter:image" content="https://ronb12.github.io/Holliday-Lawn-Garden/assets/images/hero-garden-landscaping.jpg">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/hero.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/mobile-enhancements.css">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="mask-icon" href="assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2e7d32">
+    <meta name="theme-color" content="#2e7d32">
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://firebase.googleapis.com https://analytics.google.com https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://stats.g.doubleclick.net;">
+    
+    <!-- Fix for fixed header spacing -->
+    <style>
+      body {
+        padding-top: 100px; /* Increased padding to account for fixed header height */
+        margin: 0;
+      }
+      
+      @media (max-width: 768px) {
+        body {
+          padding-top: 80px; /* Smaller padding for mobile */
+        }
+      }
+    </style>
+    <style>
+      /* Header alignment fix */
+      .main-header {
+        background: #fff !important;
+        min-height: 70px !important;
+      }
+      .nav-links a {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        color: #333 !important;
+        font-weight: 500 !important;
+      }
+      .nav-links li {
+        display: flex;
+        align-items: center;
+      }
+    </style>
+</head>
+  <body>
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading" role="status" aria-label="Loading page content">
+        <div class="spinner" aria-hidden="true"></div>
+    </div>
+    
+    <!-- Error Message -->
+    <div id="error" class="error-message" role="alert" aria-live="polite"></div>
+    
+    <!-- Header -->
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <picture>
+                    <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+                    <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+                </picture>
+            </a>
+        </div>
+        <nav id="nav-menu">
+            <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                <li class="login-buttons">
+                    <a href="login.html" class="btn-login btn-customer">
+                        <i class="fas fa-user"></i>
+                        Customer Login
+                    </a>
+                    <a href="admin-login.html" class="btn-login btn-admin">
+                        <i class="fas fa-lock"></i>
+                        Admin Login
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main role="main">
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-overlay" aria-hidden="true"></div>
+            <img src="assets/images/hero-garden-landscaping.jpg" alt="Beautiful professional garden landscaping with lush green plants and flowers" loading="eager" width="1920" height="1080">
+        <div class="hero-content">
+                <h1 id="hero-title">Welcome to Holliday's Lawn & Garden</h1>
+          <p>Professional lawn care and landscaping services for your home or business</p>
+          <div class="cta-buttons">
+                    <a href="contact.html" class="cta-button primary" aria-label="Get a free quote for landscaping services">Get a Free Quote</a>
+                    <a href="services.html" class="cta-button secondary" aria-label="View our landscaping services">View Our Services</a>
+          </div>
+        </div>
+      </section>
+
+        <!-- Why Choose Us Section -->
+        <section class="why-choose-us" aria-labelledby="why-choose-title">
+        <div class="container">
+                <h2 id="why-choose-title">Why Choose Us</h2>
+          <div class="features-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">
+                <i class="fas fa-seedling"></i>
+              </div>
+              <h3>Expert Landscaping</h3>
+              <p>Professional landscape design and installation with years of experience</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">
+                <i class="fas fa-tools"></i>
+              </div>
+              <h3>Complete Maintenance</h3>
+              <p>Comprehensive lawn care, pruning, and seasonal maintenance services</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">
+                <i class="fas fa-leaf"></i>
+              </div>
+              <h3>Eco-Friendly Solutions</h3>
+              <p>Sustainable practices and organic products for a healthier landscape</p>
+                    </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo" aria-label="Site footer">
+      <div class="footer-content">
+        <div class="footer-main">
+          <div class="footer-section footer-contact">
+            <h3>Contact Us</h3>
+            <span class="footer-owner">Karl Holliday</span>
+                    <a href="tel:+15047171887" aria-label="Call us at (504) 717-1887">
+              <i class="fas fa-phone" aria-hidden="true"></i>
+              <span>(504) 717-1887</span>
+            </a>
+                    <a href="mailto:7holliday@gmail.com" aria-label="Email us at 7holliday@gmail.com">
+              <i class="fas fa-envelope" aria-hidden="true"></i>
+              <span>7holliday@gmail.com</span>
+            </a>
+          </div>
+          <div class="footer-section footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="services.html">Services</a></li>
+              <li><a href="education.html">Education</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-section footer-portal">
+            <h3>Customer Portal</h3>
+            <ul>
+              <li><a href="login.html">Login</a></li>
+              <li><a href="register.html">Register</a></li>
+              <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+              <li><a href="customer-dashboard.html">Dashboard</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Legal</h3>
+            <div class="footer-links">
+              <a href="privacy.html">Privacy Policy</a>
+              <a href="terms.html">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+                    © <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+      // Hide loading spinner when page is loaded
+      window.addEventListener('load', () => {
+        const loading = document.getElementById('loading');
+        if (loading) {
+          loading.style.display = 'none';
+        }
+      });
+    </script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed:', error);
+                    });
+      });
+        }
+    </script>
+  
+    <!-- Main Scripts -->
+    <script src="assets/js/hero.js" defer></script>
+    <script type="module" src="assets/js/firebase-config.js"></script>
+    <script type="module" src="assets/js/main.js"></script>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger && nav && navLinks) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                    body.style.overflow = !isExpanded ? 'hidden' : '';
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking on links
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            body.style.overflow = '';
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+    
+    <!-- Update Copyright Year -->
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

@@ -1,0 +1,3451 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Management - Holliday's Lawn &amp; Garden</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #222;
+        }
+        
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .admin-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: 200px;
+            padding: 0.5rem;
+        }
+        
+        .admin-header .logo img {
+            width: 100%;
+            height: auto;
+            max-height: 60px;
+            object-fit: contain;
+            display: block;
+        }
+        
+        .admin-header .admin-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .admin-header .admin-nav a {
+            color: #2c5530;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+        
+        .admin-header .admin-nav a:hover {
+            color: #4caf50;
+        }
+        
+        .admin-header .admin-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .admin-header .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .admin-header .btn-logout {
+            background: #222;
+            color: #fff;
+        }
+        
+        .admin-header .btn-logout:hover {
+            background: #111;
+        }
+        
+        .admin-header .btn-dashboard {
+            background: #4caf50;
+            color: #fff;
+        }
+        
+        .admin-header .btn-dashboard:hover {
+            background: #388e3c;
+        }
+        
+        /* Mobile menu styles */
+        .admin-header .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+        }
+        
+        .admin-header .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #2c5530;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .admin-header .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-header .admin-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            
+            .admin-header .admin-nav.active {
+                display: flex;
+            }
+            
+            .admin-header .hamburger {
+                display: flex;
+            }
+            
+            .admin-header .admin-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        
+        .staff-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .staff-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .staff-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c5530;
+            margin: 0;
+        }
+        
+        .staff-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-add {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.2s;
+        }
+        
+        .btn-add:hover {
+            background: #45a049;
+        }
+        
+        .staff-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4caf50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .staff-filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: end;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            min-width: 150px;
+        }
+        
+        .filter-group label {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+        
+        .filter-group input,
+        .filter-group select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-filter {
+            background: #2c5530;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        
+        .btn-filter:hover {
+            background: #4caf50;
+        }
+        
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .staff-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        
+        .staff-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .staff-card-header {
+            background: #2c5530;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .staff-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .staff-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: #4caf50;
+        }
+        
+        .status-inactive {
+            background: #f44336;
+        }
+        
+        .status-on-leave {
+            background: #ff9800;
+        }
+        
+        .staff-card-body {
+            padding: 1rem;
+        }
+        
+        .staff-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .info-value {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .staff-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-edit, .btn-delete, .btn-schedule, .btn-message {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .btn-edit {
+            background: #2196f3;
+            color: white;
+        }
+        
+        .btn-edit:hover {
+            background: #1976d2;
+        }
+        
+        .btn-delete {
+            background: #f44336;
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background: #d32f2f;
+        }
+        
+        .btn-schedule {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .btn-schedule:hover {
+            background: #f57c00;
+        }
+        
+        .btn-message {
+            background: #9c27b0;
+            color: white;
+        }
+        
+        .btn-message:hover {
+            background: #7b1fa2;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c5530;
+            margin: 0;
+        }
+        
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+        
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-save {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-cancel:hover {
+            background: #5a6268;
+        }
+        
+        .btn-save:hover {
+            background: #45a049;
+        }
+        
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: white;
+        }
+        
+        .loading-overlay.hidden {
+            display: none;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4caf50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .staff-container {
+                padding: 1rem;
+            }
+            
+            .staff-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .staff-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .staff-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Schedule Management Styles */
+        .schedule-container {
+            padding: 1rem;
+        }
+        
+        .schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .schedule-header h3 {
+            margin: 0;
+            color: #2c5530;
+        }
+        
+        .schedule-filters {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .schedule-item {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+        
+        .schedule-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .schedule-item-header {
+            background: #2c5530;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .schedule-item-header h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .shift-time {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .schedule-item-body {
+            padding: 1rem;
+        }
+        
+        .schedule-item-body p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .schedule-item-actions {
+            padding: 1rem;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+        
+        .schedule-item-actions button {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        
+        .schedule-item-actions .btn-edit {
+            background: #2196f3;
+            color: white;
+        }
+        
+        .schedule-item-actions .btn-edit:hover {
+            background: #1976d2;
+        }
+        
+        .schedule-item-actions .btn-delete {
+            background: #f44336;
+            color: white;
+        }
+        
+        .schedule-item-actions .btn-delete:hover {
+            background: #d32f2f;
+        }
+
+        /* Contractor Management Styles */
+        .contractors-container {
+            padding: 1rem;
+        }
+        
+        .contractors-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contractors-header h3 {
+            margin: 0;
+            color: #2c5530;
+        }
+        
+        .contractor-actions-header {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .btn-tax {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: white;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-tax:hover {
+            background: #7b1fa2 !important;
+        }
+        
+        .contractors-filters {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contractors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1rem;
+        }
+        
+        .contractor-item {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+        
+        .contractor-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .contractor-header {
+            background: #ff9800;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .contractor-header h4 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        
+        .contractor-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .contractor-status.active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+        
+        .contractor-status.inactive {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+        
+        .contractor-status.pending {
+            background: rgba(255, 152, 0, 0.2);
+            color: #ff9800;
+        }
+        
+        .contractor-body {
+            padding: 1rem;
+        }
+        
+        .contractor-body p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .contractor-actions {
+            padding: 1rem;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+        
+        .contractor-actions button {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        
+        .contractor-actions .btn-view {
+            background: #2196f3;
+            color: white;
+        }
+        
+        .contractor-actions .btn-view:hover {
+            background: #1976d2;
+        }
+        
+        .contractor-actions .btn-edit {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .contractor-actions .btn-edit:hover {
+            background: #f57c00;
+        }
+        
+        .contractor-actions .btn-project {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .contractor-actions .btn-project:hover {
+            background: #388e3c;
+        }
+        
+        .contractor-actions .btn-payment {
+            background: #9c27b0;
+            color: white;
+        }
+        
+        .contractor-actions .btn-payment:hover {
+            background: #7b1fa2;
+        }
+        
+        .contractor-actions .btn-delete {
+            background: #f44336;
+            color: white;
+        }
+        
+        .contractor-actions .btn-delete:hover {
+            background: #d32f2f;
+        }
+        
+        /* Contractor Details Modal */
+        .contractor-details {
+            padding: 1rem;
+        }
+        
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .detail-section h3 {
+            margin: 0 0 0.5rem 0;
+            color: #2c5530;
+        }
+        
+        .detail-section h4 {
+            margin: 0 0 0.5rem 0;
+            color: #2c5530;
+        }
+        
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .detail-item {
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .status-badge.active {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .status-badge.inactive {
+            background: #f44336;
+            color: white;
+        }
+        
+        .status-badge.pending {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .modal-actions {
+            padding: 1rem;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+        
+        .modal-actions button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Project Management Styles */
+        .project-management {
+            padding: 1rem;
+        }
+        
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .project-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .project-item .project-header {
+            background: #2c5530;
+            color: white;
+            padding: 1rem;
+            margin: 0;
+        }
+        
+        .project-item .project-header h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .project-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .project-status.active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+        
+        .project-status.completed {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196f3;
+        }
+        
+        .project-status.cancelled {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+        
+        .project-body {
+            padding: 1rem;
+        }
+        
+        .project-body p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .project-actions {
+            padding: 1rem;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+        
+        .project-history {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .project-history .project-item {
+            background: white;
+            border: 1px solid #e9ecef;
+        }
+        
+        .project-history .project-header {
+            background: #f8f9fa;
+            color: #333;
+            padding: 0.5rem 1rem;
+        }
+        
+        .project-details {
+            padding: 0.5rem 1rem;
+        }
+        
+        .project-details p {
+            margin: 0.25rem 0;
+            font-size: 0.8rem;
+        }
+        
+        /* Payment Management Styles */
+        .payment-management {
+            padding: 1rem;
+        }
+        
+        .payment-summary {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .payment-summary h3 {
+            margin: 0 0 1rem 0;
+            color: #2c5530;
+        }
+        
+        .payment-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            padding: 0.5rem;
+            background: white;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .payment-actions {
+            margin-bottom: 1rem;
+        }
+        
+        .payment-history h3 {
+            margin: 0 0 1rem 0;
+            color: #2c5530;
+        }
+        
+        .payment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .payment-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .payment-header {
+            background: #2c5530;
+            color: white;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .payment-amount {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .payment-details {
+            padding: 0.75rem 1rem;
+        }
+        
+        .payment-details p {
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .tab-navigation {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tab-btn:hover {
+            color: #4caf50;
+        }
+        
+        .tab-btn.active {
+            color: #4caf50;
+            border-bottom-color: #4caf50;
+        }
+        
+        .tab-content {
+            display: block;
+        }
+        
+        .tab-content[style*="display: none"] {
+            display: none !important;
+        }
+    </style>
+
+    <style>
+        /* Mobile Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            z-index: 1000;
+            position: relative;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            margin-right: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #2e7d32;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                z-index: 1000;
+                visibility: hidden;
+                opacity: 0;
+                transform: translateY(-100%);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                pointer-events: none;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .nav-links a {
+                font-size: 1.75rem;
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: center;
+                transition: all 0.3s ease;
+                position: relative;
+                color: #333333;
+                font-weight: 600;
+            }
+
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background: #2e7d32;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(-50%);
+            }
+
+            .nav-links a:hover::after,
+            .nav-links a.active::after {
+                width: 60%;
+            }
+
+            .nav-links a:hover {
+                color: #2e7d32;
+                transform: translateY(-2px);
+            }
+
+            body.menu-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Prevent text selection during menu transitions */
+        .nav-links {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Ensure smooth scrolling on iOS */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav id="nav-menu">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="education.html">Education</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+            <li class="login-buttons">
+                <a href="login.html" class="btn-login btn-customer">
+                    <i class="fas fa-user"></i>
+                    Customer Login
+                </a>
+                <a href="admin-login.html" class="btn-login btn-admin">
+                    <i class="fas fa-lock"></i>
+                    Admin Login
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header><div class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-320.png" alt="Logo">
+        </div>
+        <nav class="admin-nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="staff.html">Staff</a>
+            <a data-broken-link="schedule.html">Schedule</a>
+            <a data-broken-link="contractors.html">Contractors</a>
+            <a data-broken-link="projects.html">Projects</a>
+            <a href="payments.html">Payments</a>
+            <a data-broken-link="reports.html">Reports</a>
+        </nav>
+        <div class="admin-actions">
+            <button class="btn-logout">Logout</button>
+            <button class="btn-dashboard">Dashboard</button>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="staff-container">
+        <div class="staff-header">
+            <h1 class="staff-title">Staff Management</h1>
+            <div class="staff-actions">
+                <button class="btn-add" onclick="openAddModal()">
+                    <i class="fas fa-plus"></i>
+                    Add Employee
+                </button>
+                <button class="btn-add" onclick="openScheduleModal()" style="background: #ff9800;">
+                    <i class="fas fa-calendar"></i>
+                    Schedule
+                </button>
+                <button class="btn-add" onclick="openMessageModal()" style="background: #9c27b0;">
+                    <i class="fas fa-envelope"></i>
+                    Send Message
+                </button>
+            </div>
+        </div>
+
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="showTab('staff')">
+                <i class="fas fa-users"></i>
+                Staff Management
+            </button>
+            <button class="tab-btn" onclick="showTab('schedule')">
+                <i class="fas fa-calendar"></i>
+                Schedule
+            </button>
+            <button class="tab-btn" onclick="showTab('contractors')">
+                <i class="fas fa-hard-hat"></i>
+                1099 Contractors
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="staffContent">
+            <div class="staff-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalStaff">0</div>
+                    <div class="stat-label">Total Staff</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="activeStaff">0</div>
+                    <div class="stat-label">Active Staff</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="onLeaveStaff">0</div>
+                    <div class="stat-label">On Leave</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="newHires">0</div>
+                    <div class="stat-label">New This Month</div>
+                </div>
+            </div>
+
+            <div class="staff-filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="searchStaff">Search</label>
+                        <input type="text" id="searchStaff" placeholder="Search by name, email, or role...">
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterDepartment">Department</label>
+                        <select id="filterDepartment">
+                            <option value="">All Departments</option>
+                            <option value="landscaping">Landscaping</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="administration">Administration</option>
+                            <option value="sales">Sales</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterStatus">Status</label>
+                        <select id="filterStatus">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="on-leave">On Leave</option>
+                        </select>
+                    </div>
+                    <button class="btn-filter" onclick="applyFilters()">
+                        <i class="fas fa-filter"></i>
+                        Filter
+                    </button>
+                </div>
+            </div>
+
+            <div class="staff-grid" id="staffGrid">
+                <!-- Staff cards will be populated here -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="scheduleContent" style="display: none;">
+            <div class="schedule-container">
+                <div class="schedule-header">
+                    <h2>Staff Schedule Management</h2>
+                    <button class="btn-add" onclick="addScheduleShift()" style="background: #4caf50;">
+                        <i class="fas fa-plus"></i>
+                        Add Shift
+                    </button>
+                </div>
+                
+                <div class="schedule-filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="scheduleDate">Date</label>
+                            <input type="date" id="scheduleDate">
+                        </div>
+                        <div class="filter-group">
+                            <label for="scheduleStaff">Staff Member</label>
+                            <select id="scheduleStaff">
+                                <option value="">All Staff</option>
+                            </select>
+                        </div>
+                        <button class="btn-filter" onclick="loadSchedule()">
+                            <i class="fas fa-search"></i>
+                            View Schedule
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="schedule-grid" id="scheduleGrid">
+                    <!-- Schedule will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="contractorsContent" style="display: none;">
+            <div class="contractors-container">
+                <div class="contractors-header">
+                    <h3>1099 Independent Contractors</h3>
+                    <div class="contractor-actions-header">
+                        <button class="btn-tax" onclick="generate1099Report()" style="background: #9c27b0; margin-right: 0.5rem;">
+                            <i class="fas fa-file-invoice"></i>
+                            1099 Report
+                        </button>
+                        <button class="btn-add" onclick="addContractor()" style="background: #ff9800;">
+                            <i class="fas fa-plus"></i>
+                            Add Contractor
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="contractors-filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="contractorStatus">Status</label>
+                            <select id="contractorStatus" onchange="filterContractors()">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="contractorSpecialty">Specialty</label>
+                            <select id="contractorSpecialty" onchange="filterContractors()">
+                                <option value="">All Specialties</option>
+                                <option value="landscaping">Landscaping</option>
+                                <option value="hardscaping">Hardscaping</option>
+                                <option value="maintenance">Maintenance</option>
+                                <option value="design">Design</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="contractorSearch">Search</label>
+                            <input type="text" id="contractorSearch" placeholder="Search contractors..." onkeyup="filterContractors()">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contractors-grid" id="contractorsGrid">
+                    <!-- Contractors will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Staff Modal -->
+    <div id="staffModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Employee</h2>
+                <span class="close" onclick="closeModal()">×</span>
+            </div>
+            <form id="staffForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" required="">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" required="">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select id="department" required="">
+                            <option value="">Select Department</option>
+                            <option value="landscaping">Landscaping</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="administration">Administration</option>
+                            <option value="sales">Sales</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="position">Position</label>
+                        <input type="text" id="position" required="">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hireDate">Hire Date</label>
+                        <input type="date" id="hireDate" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" required="">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="on-leave">On Leave</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-save">Save Employee</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Staff Schedule</h2>
+                <span class="close" onclick="closeScheduleModal()">×</span>
+            </div>
+            <div id="scheduleContent">
+                <!-- Schedule content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Send Message to Staff</h2>
+                <span class="close" onclick="closeMessageModal()">×</span>
+            </div>
+            <form id="messageForm">
+                <div class="form-group">
+                    <label for="messageRecipients">Recipients</label>
+                    <select id="messageRecipients" multiple="" required="">
+                        <!-- Recipients will be populated here -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="messageSubject">Subject</label>
+                    <input type="text" id="messageSubject" required="">
+                </div>
+                <div class="form-group">
+                    <label for="messageContent">Message</label>
+                    <textarea id="messageContent" rows="6" required=""></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeMessageModal()">Cancel</button>
+                    <button type="submit" class="btn-save">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+        <p id="loadingMessage">Loading...</p>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+            authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+            projectId: "holiday-lawn-and-garden",
+            storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+            messagingSenderId: "135322230444",
+            appId: "1:135322230444:web:1a487b25a48aae07368909",
+            measurementId: "G-KD6TBWR4ZT"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        let currentEditId = null;
+        let staffData = [];
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date for schedule tab
+            const scheduleDateInput = document.getElementById('scheduleDate');
+            if (scheduleDateInput) {
+                scheduleDateInput.value = new Date().toISOString().split('T')[0];
+            }
+            
+            // Set a maximum loading time of 15 seconds
+            const maxLoadingTime = setTimeout(() => {
+                console.warn('Maximum loading time reached, forcing page to load');
+                forceHideLoading();
+                displayStaff([]);
+                updateStats([]);
+                showError('Page loaded with limited functionality. Some features may not work properly.');
+            }, 15000);
+
+            // Set a shorter timeout for immediate fallback
+            const quickFallback = setTimeout(() => {
+                console.warn('Quick fallback: Loading page without Firebase');
+                forceHideLoading();
+                displayStaff([]);
+                updateStats([]);
+                showError('Loading with limited functionality. Firebase connection may be slow.');
+            }, 5000);
+
+            // Try to initialize Firebase and load data
+            try {
+                loadStaff().finally(() => {
+                    clearTimeout(maxLoadingTime);
+                    clearTimeout(quickFallback);
+                });
+            } catch (error) {
+                console.error('Error during initialization:', error);
+                clearTimeout(maxLoadingTime);
+                clearTimeout(quickFallback);
+                forceHideLoading();
+                displayStaff([]);
+                updateStats([]);
+                showError('Failed to initialize. Please refresh the page.');
+            }
+            
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Search functionality
+            document.getElementById('searchStaff').addEventListener('input', function() {
+                applyFilters();
+            });
+
+            // Form submission
+            document.getElementById('staffForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveStaff();
+            });
+
+            document.getElementById('messageForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                sendMessage();
+            });
+        }
+
+        async function loadStaff() {
+            try {
+                showLoading('Loading staff data...');
+                
+                // Check if Firebase is properly initialized
+                if (!firebase || !firebase.firestore) {
+                    throw new Error('Firebase not initialized');
+                }
+
+                // Add timeout to prevent infinite loading
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Request timeout')), 10000);
+                });
+
+                // Try to load staff data
+                let staffSnapshot;
+                try {
+                    staffSnapshot = await Promise.race([
+                        db.collection('staff').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Staff collection not accessible:', error);
+                    staffSnapshot = { forEach: () => {} };
+                }
+
+                staffData = [];
+                
+                staffSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    staffData.push({
+                        id: doc.id,
+                        firstName: data.firstName || '',
+                        lastName: data.lastName || '',
+                        email: data.email || '',
+                        phone: data.phone || '',
+                        department: data.department || '',
+                        position: data.position || '',
+                        hireDate: data.hireDate || new Date(),
+                        status: data.status || 'active',
+                        address: data.address || '',
+                        notes: data.notes || '',
+                        lastUpdated: data.lastUpdated || new Date(),
+                        ...data
+                    });
+                });
+
+                displayStaff(staffData);
+                updateStats(staffData);
+                hideLoading();
+                
+                if (staffData.length === 0) {
+                    }
+                
+            } catch (error) {
+                console.error('Error loading staff:', error);
+                hideLoading();
+                showError('Failed to load staff data. Please try refreshing the page.');
+                displayStaff([]);
+                updateStats([]);
+            }
+        }
+
+        function displayStaff(data) {
+            const grid = document.getElementById('staffGrid');
+            
+            if (data.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #666;">
+                        <i class="fas fa-users" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>No staff members found</h3>
+                        <p>Add your first employee to get started</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = data.map(staff => `
+                <div class="staff-card">
+                    <div class="staff-card-header">
+                        <h3 class="staff-name">${staff.firstName} ${staff.lastName}</h3>
+                        <span class="staff-status status-${staff.status}">${capitalizeFirst(staff.status)}</span>
+                    </div>
+                    <div class="staff-card-body">
+                        <div class="staff-info">
+                            <div class="info-item">
+                                <span class="info-label">Position</span>
+                                <span class="info-value">${staff.position}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Department</span>
+                                <span class="info-value">${capitalizeFirst(staff.department)}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Email</span>
+                                <span class="info-value">${staff.email}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Phone</span>
+                                <span class="info-value">${staff.phone}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Hire Date</span>
+                                <span class="info-value">${formatDate(staff.hireDate)}</span>
+                            </div>
+                        </div>
+                        <div class="staff-actions">
+                            <button class="btn-edit" onclick="editStaff('${staff.id}')">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                            <button class="btn-schedule" onclick="viewSchedule('${staff.id}')">
+                                <i class="fas fa-calendar"></i>
+                                Schedule
+                            </button>
+                            <button class="btn-message" onclick="messageStaff('${staff.id}')">
+                                <i class="fas fa-envelope"></i>
+                                Message
+                            </button>
+                            <button class="btn-delete" onclick="deleteStaff('${staff.id}')">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats(data) {
+            const stats = {
+                total: data.length,
+                active: data.filter(staff => staff.status === 'active').length,
+                onLeave: data.filter(staff => staff.status === 'on-leave').length,
+                newHires: data.filter(staff => {
+                    const hireDate = new Date(staff.hireDate);
+                    const now = new Date();
+                    const monthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+                    return hireDate >= monthAgo;
+                }).length
+            };
+
+            document.getElementById('totalStaff').textContent = stats.total;
+            document.getElementById('activeStaff').textContent = stats.active;
+            document.getElementById('onLeaveStaff').textContent = stats.onLeave;
+            document.getElementById('newHires').textContent = stats.newHires;
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchStaff').value.toLowerCase();
+            const departmentFilter = document.getElementById('filterDepartment').value;
+            const statusFilter = document.getElementById('filterStatus').value;
+
+            const filteredData = staffData.filter(staff => {
+                const matchesSearch = !searchTerm || 
+                    `${staff.firstName} ${staff.lastName}`.toLowerCase().includes(searchTerm) ||
+                    staff.email.toLowerCase().includes(searchTerm) ||
+                    staff.position.toLowerCase().includes(searchTerm);
+                
+                const matchesDepartment = !departmentFilter || staff.department === departmentFilter;
+                const matchesStatus = !statusFilter || staff.status === statusFilter;
+
+                return matchesSearch && matchesDepartment && matchesStatus;
+            });
+
+            displayStaff(filteredData);
+        }
+
+        function openAddModal() {
+            currentEditId = null;
+            document.getElementById('modalTitle').textContent = 'Add New Employee';
+            document.getElementById('staffForm').reset();
+            document.getElementById('staffModal').style.display = 'block';
+        }
+
+        function editStaff(id) {
+            const staff = staffData.find(staff => staff.id === id);
+            if (!staff) return;
+
+            currentEditId = id;
+            document.getElementById('modalTitle').textContent = 'Edit Employee';
+            
+            // Populate form
+            document.getElementById('firstName').value = staff.firstName;
+            document.getElementById('lastName').value = staff.lastName;
+            document.getElementById('email').value = staff.email;
+            document.getElementById('phone').value = staff.phone;
+            document.getElementById('department').value = staff.department;
+            document.getElementById('position').value = staff.position;
+            document.getElementById('hireDate').value = formatDateForInput(staff.hireDate);
+            document.getElementById('status').value = staff.status;
+            document.getElementById('address').value = staff.address || '';
+            document.getElementById('notes').value = staff.notes || '';
+            
+            document.getElementById('staffModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('staffModal').style.display = 'none';
+            currentEditId = null;
+        }
+
+        async function saveStaff() {
+            try {
+                showLoading('Saving employee...');
+                
+                const staffData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    department: document.getElementById('department').value,
+                    position: document.getElementById('position').value,
+                    hireDate: new Date(document.getElementById('hireDate').value),
+                    status: document.getElementById('status').value,
+                    address: document.getElementById('address').value,
+                    notes: document.getElementById('notes').value,
+                    lastUpdated: new Date()
+                };
+
+                if (currentEditId) {
+                    await db.collection('staff').doc(currentEditId).update(staffData);
+                    showSuccess('Employee updated successfully');
+                } else {
+                    await db.collection('staff').add(staffData);
+                    showSuccess('Employee added successfully');
+                }
+
+                closeModal();
+                await loadStaff();
+                hideLoading();
+            } catch (error) {
+                console.error('Error saving employee:', error);
+                hideLoading();
+                showError('Failed to save employee');
+            }
+        }
+
+        async function deleteStaff(id) {
+            if (!confirm('Are you sure you want to delete this employee?')) return;
+
+            try {
+                showLoading('Deleting employee...');
+                await db.collection('staff').doc(id).delete();
+                showSuccess('Employee deleted successfully');
+                await loadStaff();
+                hideLoading();
+            } catch (error) {
+                console.error('Error deleting employee:', error);
+                hideLoading();
+                showError('Failed to delete employee');
+            }
+        }
+
+        function openScheduleModal() {
+            document.getElementById('scheduleModal').style.display = 'block';
+            loadScheduleData();
+        }
+
+        function closeScheduleModal() {
+            document.getElementById('scheduleModal').style.display = 'none';
+        }
+
+        function loadScheduleData() {
+            const scheduleContent = document.getElementById('scheduleContent');
+            scheduleContent.innerHTML = `
+                <div class="schedule-container">
+                    <div class="schedule-header">
+                        <h3>Staff Schedule Management</h3>
+                        <button class="btn-add" onclick="addScheduleShift()" style="background: #4caf50;">
+                            <i class="fas fa-plus"></i>
+                            Add Shift
+                        </button>
+                    </div>
+                    
+                    <div class="schedule-filters">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="scheduleDate">Date</label>
+                                <input type="date" id="scheduleDate">
+                            </div>
+                            <div class="filter-group">
+                                <label for="scheduleStaff">Staff Member</label>
+                                <select id="scheduleStaff">
+                                    <option value="">All Staff</option>
+                                </select>
+                            </div>
+                            <button class="btn-filter" onclick="loadSchedule()">
+                                <i class="fas fa-search"></i>
+                                View Schedule
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-grid" id="scheduleGrid">
+                        <!-- Schedule will be populated here -->
+                    </div>
+                </div>
+            `;
+            
+            // Set default date to today after HTML is created
+            const scheduleDateInput = document.getElementById('scheduleDate');
+            if (scheduleDateInput) {
+                scheduleDateInput.value = new Date().toISOString().split('T')[0];
+            }
+            
+            loadSchedule();
+        }
+
+        async function loadSchedule() {
+            const scheduleGrid = document.getElementById('scheduleGrid');
+            const selectedDate = document.getElementById('scheduleDate').value;
+            const selectedStaff = document.getElementById('scheduleStaff').value;
+            
+            try {
+                showLoading('Loading schedule...');
+                
+                // Define timeout promise at function level
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Request timeout')), 10000);
+                });
+                
+                // Get schedule data from Firebase
+                let scheduleSnapshot;
+                try {
+                    scheduleSnapshot = await Promise.race([
+                        db.collection('schedule').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Schedule collection not accessible:', error);
+                    scheduleSnapshot = { forEach: () => {} };
+                }
+                
+                const scheduleData = [];
+                scheduleSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    scheduleData.push({
+                        id: doc.id,
+                        ...data
+                    });
+                });
+                
+                // Filter schedule data
+                const filteredSchedule = scheduleData.filter(shift => {
+                    const shiftDate = new Date(shift.date).toISOString().split('T')[0];
+                    const matchesDate = !selectedDate || shiftDate === selectedDate;
+                    const matchesStaff = !selectedStaff || shift.staffId === selectedStaff;
+                    return matchesDate && matchesStaff;
+                });
+                
+                displaySchedule(filteredSchedule);
+                hideLoading();
+                
+            } catch (error) {
+                console.error('Error loading schedule:', error);
+                hideLoading();
+                showError('Failed to load schedule');
+            }
+        }
+
+        function displaySchedule(scheduleData) {
+            const scheduleGrid = document.getElementById('scheduleGrid');
+            
+            if (scheduleData.length === 0) {
+                scheduleGrid.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-calendar" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <h3>No shifts scheduled</h3>
+                        <p>Add shifts to create the schedule</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            scheduleGrid.innerHTML = scheduleData.map(shift => {
+                const staffMember = staffData.find(staff => staff.id === shift.staffId);
+                const staffName = staffMember ? staffMember.name : 'Unknown Staff';
+                
+                return `
+                    <div class="schedule-item">
+                        <div class="schedule-item-header">
+                            <h4>${staffName}</h4>
+                            <span class="shift-time">${shift.startTime} - ${shift.endTime}</span>
+                        </div>
+                        <div class="schedule-item-body">
+                            <p><strong>Date:</strong> ${formatDate(shift.date)}</p>
+                            <p><strong>Role:</strong> ${shift.role || 'General'}</p>
+                            <p><strong>Location:</strong> ${shift.location || 'Main Office'}</p>
+                            ${shift.notes ? `<p><strong>Notes:</strong> ${shift.notes}</p>` : ''}
+                        </div>
+                        <div class="schedule-item-actions">
+                            <button class="btn-edit" onclick="editScheduleShift('${shift.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-delete" onclick="deleteScheduleShift('${shift.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addScheduleShift() {
+            openScheduleShiftModal();
+        }
+
+        function openScheduleShiftModal(shiftId = null) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>${shiftId ? 'Edit Shift' : 'Add New Shift'}</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <form id="scheduleShiftForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="shiftStaff">Staff Member</label>
+                                <select id="shiftStaff" required>
+                                    <option value="">Select Staff Member</option>
+                                    ${staffData.filter(staff => staff.status === 'active').map(staff => 
+                                        `<option value="${staff.id}">${staff.name}</option>`
+                                    ).join('')}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="shiftDate">Date</label>
+                                <input type="date" id="shiftDate" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="shiftStartTime">Start Time</label>
+                                <input type="time" id="shiftStartTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="shiftEndTime">End Time</label>
+                                <input type="time" id="shiftEndTime" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="shiftRole">Role</label>
+                                <input type="text" id="shiftRole" placeholder="e.g., Landscaping, Maintenance">
+                            </div>
+                            <div class="form-group">
+                                <label for="shiftLocation">Location</label>
+                                <input type="text" id="shiftLocation" placeholder="e.g., Main Office, Site A">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shiftNotes">Notes</label>
+                            <textarea id="shiftNotes" rows="3" placeholder="Additional notes..."></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="submit" class="btn-save">Save Shift</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Set default date to today
+            document.getElementById('shiftDate').value = new Date().toISOString().split('T')[0];
+            
+            // Form submission
+            document.getElementById('scheduleShiftForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveScheduleShift(shiftId);
+            });
+        }
+
+        async function saveScheduleShift(shiftId) {
+            try {
+                showLoading('Saving shift...');
+                
+                const shiftData = {
+                    staffId: document.getElementById('shiftStaff').value,
+                    date: new Date(document.getElementById('shiftDate').value),
+                    startTime: document.getElementById('shiftStartTime').value,
+                    endTime: document.getElementById('shiftEndTime').value,
+                    role: document.getElementById('shiftRole').value,
+                    location: document.getElementById('shiftLocation').value,
+                    notes: document.getElementById('shiftNotes').value,
+                    lastUpdated: new Date()
+                };
+
+                if (shiftId) {
+                    await db.collection('schedule').doc(shiftId).update(shiftData);
+                    showSuccess('Shift updated successfully');
+                } else {
+                    await db.collection('schedule').add(shiftData);
+                    showSuccess('Shift added successfully');
+                }
+
+                // Close modal and reload schedule
+                document.querySelector('.modal').remove();
+                loadSchedule();
+                hideLoading();
+            } catch (error) {
+                console.error('Error saving shift:', error);
+                hideLoading();
+                showError('Failed to save shift');
+            }
+        }
+
+        async function deleteScheduleShift(shiftId) {
+            if (!confirm('Are you sure you want to delete this shift?')) return;
+
+            try {
+                showLoading('Deleting shift...');
+                await db.collection('schedule').doc(shiftId).delete();
+                showSuccess('Shift deleted successfully');
+                loadSchedule();
+                hideLoading();
+            } catch (error) {
+                console.error('Error deleting shift:', error);
+                hideLoading();
+                showError('Failed to delete shift');
+            }
+        }
+
+        function editScheduleShift(shiftId) {
+            // Load shift data and open modal
+            db.collection('schedule').doc(shiftId).get().then(doc => {
+                if (doc.exists) {
+                    const shiftData = doc.data();
+                    openScheduleShiftModal(shiftId);
+                    
+                    // Populate form with existing data
+                    setTimeout(() => {
+                        document.getElementById('shiftStaff').value = shiftData.staffId;
+                        document.getElementById('shiftDate').value = formatDateForInput(shiftData.date);
+                        document.getElementById('shiftStartTime').value = shiftData.startTime;
+                        document.getElementById('shiftEndTime').value = shiftData.endTime;
+                        document.getElementById('shiftRole').value = shiftData.role || '';
+                        document.getElementById('shiftLocation').value = shiftData.location || '';
+                        document.getElementById('shiftNotes').value = shiftData.notes || '';
+                    }, 100);
+                }
+            });
+        }
+
+        function openMessageModal() {
+            document.getElementById('messageModal').style.display = 'block';
+            populateRecipients();
+        }
+
+        function closeMessageModal() {
+            document.getElementById('messageModal').style.display = 'none';
+        }
+
+        function populateRecipients() {
+            const recipientsSelect = document.getElementById('messageRecipients');
+            recipientsSelect.innerHTML = staffData
+                .filter(staff => staff.status === 'active')
+                .map(staff => `<option value="${staff.id}">${staff.firstName} ${staff.lastName} - ${staff.position}</option>`)
+                .join('');
+        }
+
+        async function sendMessage() {
+            try {
+                showLoading('Sending message...');
+                
+                const messageData = {
+                    recipients: Array.from(document.getElementById('messageRecipients').selectedOptions).map(option => option.value),
+                    subject: document.getElementById('messageSubject').value,
+                    content: document.getElementById('messageContent').value,
+                    sentBy: 'admin',
+                    sentAt: new Date(),
+                    status: 'sent'
+                };
+
+                await db.collection('messages').add(messageData);
+                showSuccess('Message sent successfully');
+                closeMessageModal();
+                hideLoading();
+            } catch (error) {
+                console.error('Error sending message:', error);
+                hideLoading();
+                showError('Failed to send message');
+            }
+        }
+
+        function viewSchedule(id) {
+            const staff = staffData.find(staff => staff.id === id);
+            if (!staff) return;
+            
+            // Open schedule modal and filter for this staff member
+            openScheduleModal();
+            
+            // Set the staff filter to this specific staff member
+            setTimeout(() => {
+                const staffSelect = document.getElementById('scheduleStaff');
+                if (staffSelect) {
+                    staffSelect.value = id;
+                    loadSchedule();
+                }
+            }, 100);
+        }
+
+        function messageStaff(id) {
+            const staff = staffData.find(staff => staff.id === id);
+            if (!staff) return;
+            
+            // Open message modal and pre-select this staff member
+            openMessageModal();
+            
+            // Set the recipient to this specific staff member
+            setTimeout(() => {
+                const recipientsSelect = document.getElementById('messageRecipients');
+                if (recipientsSelect) {
+                    // Clear previous selections
+                    Array.from(recipientsSelect.options).forEach(option => {
+                        option.selected = false;
+                    });
+                    
+                    // Select this staff member
+                    const staffOption = Array.from(recipientsSelect.options).find(option => 
+                        option.value === id
+                    );
+                    if (staffOption) {
+                        staffOption.selected = true;
+                    }
+                }
+            }, 100);
+        }
+
+        // Utility functions
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function formatDate(date) {
+            if (!date) return 'N/A';
+            const d = new Date(date);
+            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+
+        function formatDateForInput(date) {
+            if (!date) return '';
+            const d = new Date(date);
+            return d.toISOString().split('T')[0];
+        }
+
+        function showLoading(message) {
+            document.getElementById('loadingMessage').textContent = message;
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                overlay.style.display = 'none';
+            }
+        }
+
+        function forceHideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                overlay.style.display = 'none';
+                overlay.style.visibility = 'hidden';
+            }
+        }
+
+        function showSuccess(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification success';
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">&times;</button>
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4caf50;
+                color: white;
+                padding: 1rem;
+                border-radius: 5px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                max-width: 300px;
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        function showError(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification error';
+            notification.innerHTML = `
+                <i class="fas fa-exclamation-circle"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">&times;</button>
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #f44336;
+                color: white;
+                padding: 1rem;
+                border-radius: 5px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                max-width: 300px;
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 8000);
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const staffModal = document.getElementById('staffModal');
+            const scheduleModal = document.getElementById('scheduleModal');
+            const messageModal = document.getElementById('messageModal');
+            
+            if (event.target === staffModal) {
+                closeModal();
+            }
+            if (event.target === scheduleModal) {
+                closeScheduleModal();
+            }
+            if (event.target === messageModal) {
+                closeMessageModal();
+            }
+        }
+
+        // Contractor data
+        let contractorData = [];
+        let projectData = [];
+
+        // Load contractor data
+        async function loadContractorData() {
+            try {
+                showLoading('Loading contractor data...');
+                
+                // Define timeout promise at function level
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Request timeout')), 10000);
+                });
+                
+                // Get contractors from Firebase
+                let contractorSnapshot;
+                try {
+                    contractorSnapshot = await Promise.race([
+                        db.collection('contractors').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Contractors collection not accessible:', error);
+                    contractorSnapshot = { forEach: () => {} };
+                }
+                
+                contractorData = [];
+                contractorSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    contractorData.push({
+                        id: doc.id,
+                        ...data
+                    });
+                });
+                
+                // Get projects from Firebase
+                let projectSnapshot;
+                try {
+                    projectSnapshot = await Promise.race([
+                        db.collection('contractor_projects').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Contractor projects collection not accessible:', error);
+                    projectSnapshot = { forEach: () => {} };
+                }
+                
+                projectData = [];
+                projectSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    projectData.push({
+                        id: doc.id,
+                        ...data
+                    });
+                });
+                
+                displayContractors();
+                hideLoading();
+                
+            } catch (error) {
+                console.error('Error loading contractor data:', error);
+                hideLoading();
+                showError('Failed to load contractor data');
+            }
+        }
+
+        function displayContractors() {
+            const contractorsGrid = document.getElementById('contractorsGrid');
+            
+            if (contractorData.length === 0) {
+                contractorsGrid.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-hard-hat" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <h3>No contractors found</h3>
+                        <p>Add contractors to get started</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            contractorsGrid.innerHTML = contractorData.map(contractor => {
+                const activeProjects = projectData.filter(project => 
+                    project.contractorId === contractor.id && project.status === 'active'
+                ).length;
+                
+                const totalEarnings = projectData
+                    .filter(project => project.contractorId === contractor.id && project.status === 'completed')
+                    .reduce((sum, project) => sum + (project.paymentAmount || 0), 0);
+                
+                return `
+                    <div class="contractor-item">
+                        <div class="contractor-header">
+                            <h4>${contractor.name}</h4>
+                            <span class="contractor-status ${contractor.status}">${contractor.status}</span>
+                        </div>
+                        <div class="contractor-body">
+                            <p><strong>Specialty:</strong> ${contractor.specialty}</p>
+                            <p><strong>Rate:</strong> $${contractor.hourlyRate}/hr</p>
+                            <p><strong>Phone:</strong> ${contractor.phone}</p>
+                            <p><strong>Email:</strong> ${contractor.email}</p>
+                            <p><strong>Active Projects:</strong> ${activeProjects}</p>
+                            <p><strong>Total Earnings:</strong> $${totalEarnings.toFixed(2)}</p>
+                            <p><strong>Tax ID:</strong> ${contractor.taxId || 'Not provided'}</p>
+                        </div>
+                        <div class="contractor-actions">
+                            <button class="btn-view" onclick="viewContractor('${contractor.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-edit" onclick="editContractor('${contractor.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-project" onclick="manageProjects('${contractor.id}')">
+                                <i class="fas fa-tasks"></i>
+                            </button>
+                            <button class="btn-payment" onclick="managePayments('${contractor.id}')">
+                                <i class="fas fa-dollar-sign"></i>
+                            </button>
+                            <button class="btn-delete" onclick="deleteContractor('${contractor.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterContractors() {
+            const statusFilter = document.getElementById('contractorStatus').value;
+            const specialtyFilter = document.getElementById('contractorSpecialty').value;
+            const searchFilter = document.getElementById('contractorSearch').value.toLowerCase();
+            
+            const filteredContractors = contractorData.filter(contractor => {
+                const matchesStatus = !statusFilter || contractor.status === statusFilter;
+                const matchesSpecialty = !specialtyFilter || contractor.specialty === specialtyFilter;
+                const matchesSearch = !searchFilter || 
+                    contractor.name.toLowerCase().includes(searchFilter) ||
+                    contractor.email.toLowerCase().includes(searchFilter) ||
+                    contractor.phone.includes(searchFilter);
+                
+                return matchesStatus && matchesSpecialty && matchesSearch;
+            });
+            
+            displayFilteredContractors(filteredContractors);
+        }
+
+        function displayFilteredContractors(filteredContractors) {
+            const contractorsGrid = document.getElementById('contractorsGrid');
+            
+            if (filteredContractors.length === 0) {
+                contractorsGrid.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <h3>No contractors match your filters</h3>
+                        <p>Try adjusting your search criteria</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            contractorsGrid.innerHTML = filteredContractors.map(contractor => {
+                const activeProjects = projectData.filter(project => 
+                    project.contractorId === contractor.id && project.status === 'active'
+                ).length;
+                
+                const totalEarnings = projectData
+                    .filter(project => project.contractorId === contractor.id && project.status === 'completed')
+                    .reduce((sum, project) => sum + (project.paymentAmount || 0), 0);
+                
+                return `
+                    <div class="contractor-item">
+                        <div class="contractor-header">
+                            <h4>${contractor.name}</h4>
+                            <span class="contractor-status ${contractor.status}">${contractor.status}</span>
+                        </div>
+                        <div class="contractor-body">
+                            <p><strong>Specialty:</strong> ${contractor.specialty}</p>
+                            <p><strong>Rate:</strong> $${contractor.hourlyRate}/hr</p>
+                            <p><strong>Phone:</strong> ${contractor.phone}</p>
+                            <p><strong>Email:</strong> ${contractor.email}</p>
+                            <p><strong>Active Projects:</strong> ${activeProjects}</p>
+                            <p><strong>Total Earnings:</strong> $${totalEarnings.toFixed(2)}</p>
+                            <p><strong>Tax ID:</strong> ${contractor.taxId || 'Not provided'}</p>
+                        </div>
+                        <div class="contractor-actions">
+                            <button class="btn-view" onclick="viewContractor('${contractor.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-edit" onclick="editContractor('${contractor.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-project" onclick="manageProjects('${contractor.id}')">
+                                <i class="fas fa-tasks"></i>
+                            </button>
+                            <button class="btn-payment" onclick="managePayments('${contractor.id}')">
+                                <i class="fas fa-dollar-sign"></i>
+                            </button>
+                            <button class="btn-delete" onclick="deleteContractor('${contractor.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addContractor() {
+            openContractorModal();
+        }
+
+        function openContractorModal(contractorId = null) {
+            const contractor = contractorId ? contractorData.find(c => c.id === contractorId) : null;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>${contractorId ? 'Edit Contractor' : 'Add New Contractor'}</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <form id="contractorForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contractorName">Full Name</label>
+                                <input type="text" id="contractorName" value="${contractor ? contractor.name : ''}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contractorSpecialty">Specialty</label>
+                                <select id="contractorSpecialty" required>
+                                    <option value="">Select Specialty</option>
+                                    <option value="landscaping" ${contractor && contractor.specialty === 'landscaping' ? 'selected' : ''}>Landscaping</option>
+                                    <option value="hardscaping" ${contractor && contractor.specialty === 'hardscaping' ? 'selected' : ''}>Hardscaping</option>
+                                    <option value="maintenance" ${contractor && contractor.specialty === 'maintenance' ? 'selected' : ''}>Maintenance</option>
+                                    <option value="design" ${contractor && contractor.specialty === 'design' ? 'selected' : ''}>Design</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contractorEmail">Email</label>
+                                <input type="email" id="contractorEmail" value="${contractor ? contractor.email : ''}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contractorPhone">Phone</label>
+                                <input type="tel" id="contractorPhone" value="${contractor ? contractor.phone : ''}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contractorHourlyRate">Hourly Rate ($)</label>
+                                <input type="number" id="contractorHourlyRate" value="${contractor ? contractor.hourlyRate : ''}" min="0" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contractorTaxId">Tax ID (SSN/EIN)</label>
+                                <input type="text" id="contractorTaxId" value="${contractor ? contractor.taxId : ''}" placeholder="Required for 1099">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contractorAddress">Address</label>
+                                <textarea id="contractorAddress" rows="3">${contractor ? contractor.address : ''}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="contractorStatus">Status</label>
+                                <select id="contractorStatus" required>
+                                    <option value="active" ${contractor && contractor.status === 'active' ? 'selected' : ''}>Active</option>
+                                    <option value="inactive" ${contractor && contractor.status === 'inactive' ? 'selected' : ''}>Inactive</option>
+                                    <option value="pending" ${contractor && contractor.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contractorNotes">Notes</label>
+                            <textarea id="contractorNotes" rows="3">${contractor ? contractor.notes : ''}</textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="submit" class="btn-save">Save Contractor</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Form submission
+            document.getElementById('contractorForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveContractor(contractorId);
+            });
+        }
+
+        async function saveContractor(contractorId) {
+            try {
+                showLoading('Saving contractor...');
+                
+                const contractorData = {
+                    name: document.getElementById('contractorName').value,
+                    specialty: document.getElementById('contractorSpecialty').value,
+                    email: document.getElementById('contractorEmail').value,
+                    phone: document.getElementById('contractorPhone').value,
+                    hourlyRate: parseFloat(document.getElementById('contractorHourlyRate').value),
+                    taxId: document.getElementById('contractorTaxId').value,
+                    address: document.getElementById('contractorAddress').value,
+                    status: document.getElementById('contractorStatus').value,
+                    notes: document.getElementById('contractorNotes').value,
+                    lastUpdated: new Date()
+                };
+
+                if (contractorId) {
+                    await db.collection('contractors').doc(contractorId).update(contractorData);
+                    showSuccess('Contractor updated successfully');
+                } else {
+                    contractorData.createdAt = new Date();
+                    await db.collection('contractors').add(contractorData);
+                    showSuccess('Contractor added successfully');
+                }
+
+                // Close modal and reload data
+                document.querySelector('.modal').remove();
+                await loadContractorData();
+                hideLoading();
+            } catch (error) {
+                console.error('Error saving contractor:', error);
+                hideLoading();
+                showError('Failed to save contractor');
+            }
+        }
+
+        async function deleteContractor(contractorId) {
+            if (!confirm('Are you sure you want to delete this contractor?')) return;
+
+            try {
+                showLoading('Deleting contractor...');
+                await db.collection('contractors').doc(contractorId).delete();
+                showSuccess('Contractor deleted successfully');
+                await loadContractorData();
+                hideLoading();
+            } catch (error) {
+                console.error('Error deleting contractor:', error);
+                hideLoading();
+                showError('Failed to delete contractor');
+            }
+        }
+
+        function editContractor(contractorId) {
+            openContractorModal(contractorId);
+        }
+
+        function viewContractor(contractorId) {
+            const contractor = contractorData.find(c => c.id === contractorId);
+            if (!contractor) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Contractor Details</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <div class="contractor-details">
+                        <div class="detail-section">
+                            <h3>${contractor.name}</h3>
+                            <span class="status-badge ${contractor.status}">${contractor.status}</span>
+                        </div>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <strong>Specialty:</strong> ${contractor.specialty}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Hourly Rate:</strong> $${contractor.hourlyRate}/hr
+                            </div>
+                            <div class="detail-item">
+                                <strong>Email:</strong> ${contractor.email}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Phone:</strong> ${contractor.phone}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Tax ID:</strong> ${contractor.taxId || 'Not provided'}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Address:</strong> ${contractor.address || 'Not provided'}
+                            </div>
+                        </div>
+                        ${contractor.notes ? `
+                            <div class="detail-section">
+                                <h4>Notes</h4>
+                                <p>${contractor.notes}</p>
+                            </div>
+                        ` : ''}
+                        <div class="detail-section">
+                            <h4>Project History</h4>
+                            <div class="project-history">
+                                ${getContractorProjectHistory(contractor.id)}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-edit" onclick="editContractor('${contractor.id}'); this.closest('.modal').remove();">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn-project" onclick="manageProjects('${contractor.id}'); this.closest('.modal').remove();">
+                            <i class="fas fa-tasks"></i> Manage Projects
+                        </button>
+                        <button class="btn-payment" onclick="managePayments('${contractor.id}'); this.closest('.modal').remove();">
+                            <i class="fas fa-dollar-sign"></i> Manage Payments
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function getContractorProjectHistory(contractorId) {
+            const contractorProjects = projectData.filter(project => project.contractorId === contractorId);
+            
+            if (contractorProjects.length === 0) {
+                return '<p>No projects found</p>';
+            }
+            
+            return contractorProjects.map(project => `
+                <div class="project-item">
+                    <div class="project-header">
+                        <strong>${project.projectName}</strong>
+                        <span class="project-status ${project.status}">${project.status}</span>
+                    </div>
+                    <div class="project-details">
+                        <p><strong>Date:</strong> ${formatDate(project.startDate)} - ${formatDate(project.endDate)}</p>
+                        <p><strong>Payment:</strong> $${project.paymentAmount || 0}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function manageProjects(contractorId) {
+            const contractor = contractorData.find(c => c.id === contractorId);
+            if (!contractor) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Project Management - ${contractor.name}</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <div class="project-management">
+                        <div class="project-header">
+                            <button class="btn-add" onclick="addProject('${contractorId}')" style="background: #4caf50;">
+                                <i class="fas fa-plus"></i> Add Project
+                            </button>
+                        </div>
+                        <div class="project-list" id="projectList">
+                            ${displayContractorProjects(contractorId)}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function displayContractorProjects(contractorId) {
+            const contractorProjects = projectData.filter(project => project.contractorId === contractorId);
+            
+            if (contractorProjects.length === 0) {
+                return '<p>No projects assigned to this contractor</p>';
+            }
+            
+            return contractorProjects.map(project => `
+                <div class="project-item">
+                    <div class="project-header">
+                        <h4>${project.projectName}</h4>
+                        <span class="project-status ${project.status}">${project.status}</span>
+                    </div>
+                    <div class="project-body">
+                        <p><strong>Description:</strong> ${project.description}</p>
+                        <p><strong>Start Date:</strong> ${formatDate(project.startDate)}</p>
+                        <p><strong>End Date:</strong> ${formatDate(project.endDate)}</p>
+                        <p><strong>Payment Amount:</strong> $${project.paymentAmount || 0}</p>
+                        <p><strong>Hours:</strong> ${project.hours || 0}</p>
+                    </div>
+                    <div class="project-actions">
+                        <button class="btn-edit" onclick="editProject('${project.id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-delete" onclick="deleteProject('${project.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addProject(contractorId) {
+            openProjectModal(contractorId);
+        }
+
+        function openProjectModal(contractorId, projectId = null) {
+            const project = projectId ? projectData.find(p => p.id === projectId) : null;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>${projectId ? 'Edit Project' : 'Add New Project'}</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <form id="projectForm">
+                        <div class="form-group">
+                            <label for="projectName">Project Name</label>
+                            <input type="text" id="projectName" value="${project ? project.projectName : ''}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectDescription">Description</label>
+                            <textarea id="projectDescription" rows="3" required>${project ? project.description : ''}</textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="projectStartDate">Start Date</label>
+                                <input type="date" id="projectStartDate" value="${project ? formatDateForInput(project.startDate) : ''}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="projectEndDate">End Date</label>
+                                <input type="date" id="projectEndDate" value="${project ? formatDateForInput(project.endDate) : ''}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="projectHours">Hours</label>
+                                <input type="number" id="projectHours" value="${project ? project.hours : ''}" min="0" step="0.5">
+                            </div>
+                            <div class="form-group">
+                                <label for="projectPayment">Payment Amount ($)</label>
+                                <input type="number" id="projectPayment" value="${project ? project.paymentAmount : ''}" min="0" step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectStatus">Status</label>
+                            <select id="projectStatus" required>
+                                <option value="active" ${project && project.status === 'active' ? 'selected' : ''}>Active</option>
+                                <option value="completed" ${project && project.status === 'completed' ? 'selected' : ''}>Completed</option>
+                                <option value="cancelled" ${project && project.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="submit" class="btn-save">Save Project</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Form submission
+            document.getElementById('projectForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveProject(contractorId, projectId);
+            });
+        }
+
+        async function saveProject(contractorId, projectId) {
+            try {
+                showLoading('Saving project...');
+                
+                const projectData = {
+                    contractorId: contractorId,
+                    projectName: document.getElementById('projectName').value,
+                    description: document.getElementById('projectDescription').value,
+                    startDate: new Date(document.getElementById('projectStartDate').value),
+                    endDate: new Date(document.getElementById('projectEndDate').value),
+                    hours: parseFloat(document.getElementById('projectHours').value) || 0,
+                    paymentAmount: parseFloat(document.getElementById('projectPayment').value) || 0,
+                    status: document.getElementById('projectStatus').value,
+                    lastUpdated: new Date()
+                };
+
+                if (projectId) {
+                    await db.collection('contractor_projects').doc(projectId).update(projectData);
+                    showSuccess('Project updated successfully');
+                } else {
+                    projectData.createdAt = new Date();
+                    await db.collection('contractor_projects').add(projectData);
+                    showSuccess('Project added successfully');
+                }
+
+                // Close modal and reload data
+                document.querySelector('.modal').remove();
+                await loadContractorData();
+                hideLoading();
+            } catch (error) {
+                console.error('Error saving project:', error);
+                hideLoading();
+                showError('Failed to save project');
+            }
+        }
+
+        async function deleteProject(projectId) {
+            if (!confirm('Are you sure you want to delete this project?')) return;
+
+            try {
+                showLoading('Deleting project...');
+                await db.collection('contractor_projects').doc(projectId).delete();
+                showSuccess('Project deleted successfully');
+                await loadContractorData();
+                hideLoading();
+            } catch (error) {
+                console.error('Error deleting project:', error);
+                hideLoading();
+                showError('Failed to delete project');
+            }
+        }
+
+        function editProject(projectId) {
+            const project = projectData.find(p => p.id === projectId);
+            if (project) {
+                openProjectModal(project.contractorId, projectId);
+            }
+        }
+
+        function managePayments(contractorId) {
+            const contractor = contractorData.find(c => c.id === contractorId);
+            if (!contractor) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Payment Management - ${contractor.name}</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <div class="payment-management">
+                        <div class="payment-summary">
+                            <h3>Payment Summary</h3>
+                            <div class="payment-stats">
+                                <div class="stat-item">
+                                    <strong>Total Earned:</strong> $${getContractorTotalEarnings(contractorId)}
+                                </div>
+                                <div class="stat-item">
+                                    <strong>Total Paid:</strong> $${getContractorTotalPaid(contractorId)}
+                                </div>
+                                <div class="stat-item">
+                                    <strong>Outstanding:</strong> $${getContractorOutstanding(contractorId)}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-actions">
+                            <button class="btn-add" onclick="addPayment('${contractorId}')" style="background: #4caf50;">
+                                <i class="fas fa-plus"></i> Record Payment
+                            </button>
+                        </div>
+                        <div class="payment-history">
+                            <h3>Payment History</h3>
+                            <div class="payment-list" id="paymentList">
+                                ${displayPaymentHistory(contractorId)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function getContractorTotalEarnings(contractorId) {
+            return projectData
+                .filter(project => project.contractorId === contractorId && project.status === 'completed')
+                .reduce((sum, project) => sum + (project.paymentAmount || 0), 0)
+                .toFixed(2);
+        }
+
+        function getContractorTotalPaid(contractorId) {
+            // This would come from a payments collection - for now using project payments
+            return getContractorTotalEarnings(contractorId);
+        }
+
+        function getContractorOutstanding(contractorId) {
+            return (getContractorTotalEarnings(contractorId) - getContractorTotalPaid(contractorId)).toFixed(2);
+        }
+
+        function displayPaymentHistory(contractorId) {
+            const contractorProjects = projectData.filter(project => 
+                project.contractorId === contractorId && project.status === 'completed'
+            );
+            
+            if (contractorProjects.length === 0) {
+                return '<p>No payment history found</p>';
+            }
+            
+            return contractorProjects.map(project => `
+                <div class="payment-item">
+                    <div class="payment-header">
+                        <strong>${project.projectName}</strong>
+                        <span class="payment-amount">$${project.paymentAmount || 0}</span>
+                    </div>
+                    <div class="payment-details">
+                        <p><strong>Date:</strong> ${formatDate(project.endDate)}</p>
+                        <p><strong>Hours:</strong> ${project.hours || 0}</p>
+                        <p><strong>Status:</strong> Completed</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addPayment(contractorId) {
+            // Placeholder for payment recording functionality
+            alert('Payment recording feature coming soon...');
+        }
+
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            const selectedContent = document.getElementById(tabName + 'Content');
+            if (selectedContent) {
+                selectedContent.style.display = 'block';
+            }
+            
+            // Add active class to selected tab button
+            const selectedBtn = document.querySelector(`[onclick="showTab('${tabName}')"]`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('active');
+            }
+            
+            // Load specific data based on tab
+            if (tabName === 'schedule') {
+                // Populate schedule staff dropdown
+                const scheduleStaffSelect = document.getElementById('scheduleStaff');
+                if (scheduleStaffSelect) {
+                    scheduleStaffSelect.innerHTML = '<option value="">All Staff</option>' + 
+                        staffData.filter(staff => staff.status === 'active').map(staff => 
+                            `<option value="${staff.id}">${staff.firstName} ${staff.lastName}</option>`
+                        ).join('');
+                }
+                loadSchedule();
+            } else if (tabName === 'contractors') {
+                loadContractorData();
+            } else if (tabName === 'staff') {
+                loadStaff();
+            }
+        }
+
+        function generate1099Report() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>1099 Tax Report Generator</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <div class="tax-report-form">
+                        <div class="form-group">
+                            <label for="taxYear">Tax Year</label>
+                            <select id="taxYear">
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="contractorFilter">Contractor Filter</label>
+                            <select id="contractorFilter">
+                                <option value="all">All Contractors</option>
+                                <option value="active">Active Only</option>
+                                <option value="paid">With Payments</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="minimumAmount">Minimum Amount ($)</label>
+                            <input type="number" id="minimumAmount" value="600" min="0" step="0.01">
+                            <small>IRS requires 1099-NEC for payments over $600</small>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="button" class="btn-generate" onclick="generate1099Data()">Generate Report</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function generate1099Data() {
+            const taxYear = document.getElementById('taxYear').value;
+            const contractorFilter = document.getElementById('contractorFilter').value;
+            const minimumAmount = parseFloat(document.getElementById('minimumAmount').value);
+            
+            // Filter contractors based on criteria
+            let eligibleContractors = contractorData.filter(contractor => {
+                if (contractorFilter === 'active' && contractor.status !== 'active') return false;
+                
+                // Calculate total payments for the tax year
+                const yearProjects = projectData.filter(project => 
+                    project.contractorId === contractor.id && 
+                    project.status === 'completed' &&
+                    new Date(project.endDate).getFullYear().toString() === taxYear
+                );
+                
+                const totalPayments = yearProjects.reduce((sum, project) => sum + (project.paymentAmount || 0), 0);
+                
+                if (contractorFilter === 'paid' && totalPayments === 0) return false;
+                if (totalPayments < minimumAmount) return false;
+                
+                return true;
+            });
+            
+            if (eligibleContractors.length === 0) {
+                showError('No contractors meet the criteria for 1099 reporting');
+                return;
+            }
+            
+            // Generate CSV data
+            const csvData = generate1099CSV(eligibleContractors, taxYear);
+            
+            // Create and download file
+            const blob = new Blob([csvData], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `1099-Report-${taxYear}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            showSuccess(`1099 report generated for ${eligibleContractors.length} contractors`);
+            document.querySelector('.modal').remove();
+        }
+
+        function generate1099CSV(contractors, taxYear) {
+            const headers = [
+                'Contractor Name',
+                'Tax ID (SSN/EIN)',
+                'Address',
+                'Total Payments',
+                'Project Count',
+                'Specialty',
+                'Status'
+            ];
+            
+            const rows = contractors.map(contractor => {
+                const yearProjects = projectData.filter(project => 
+                    project.contractorId === contractor.id && 
+                    project.status === 'completed' &&
+                    new Date(project.endDate).getFullYear().toString() === taxYear
+                );
+                
+                const totalPayments = yearProjects.reduce((sum, project) => sum + (project.paymentAmount || 0), 0);
+                
+                return [
+                    contractor.name,
+                    contractor.taxId || 'Not provided',
+                    contractor.address || 'Not provided',
+                    totalPayments.toFixed(2),
+                    yearProjects.length,
+                    contractor.specialty,
+                    contractor.status
+                ];
+            });
+            
+            return [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+        }
+
+        // Hamburger menu functionality
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            if (!hamburger.contains(event.target) && !nav.contains(event.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const hamburger = document.querySelector('.hamburger');
+                const nav = document.querySelector('.admin-nav');
+                
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                    body.style.overflow = !isExpanded ? 'hidden' : '';
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking on links
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            body.style.overflow = '';
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body></html>

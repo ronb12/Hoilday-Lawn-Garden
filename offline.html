@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Offline - Holliday's Lawn &amp; Garden</title>
+<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .offline-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .offline-icon {
+            font-size: 4rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .offline-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            }
+
+        .offline-message {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+        
+        .offline-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+                justify-content: center;
+        }
+        
+        .btn-retry {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            }
+
+        .btn-retry:hover {
+            background: var(--primary-color-dark);
+            transform: translateY(-2px);
+            }
+
+        .btn-home {
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .btn-home:hover {
+            background: var(--secondary-color-dark);
+            transform: translateY(-2px);
+            }
+
+        @media (max-width: 480px) {
+            .offline-title {
+                font-size: 1.5rem;
+            }
+
+            .offline-message {
+                font-size: 1rem;
+            }
+
+            .offline-actions {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .btn-retry,
+            .btn-home {
+                width: 100%;
+                text-align: center;
+        }
+        }
+    </style>
+<style>
+            /* Button font fixes */
+            button, .btn, .cta-button, .submit-button {
+                font-family: "Montserrat", "Inter", system-ui, sans-serif !important;
+            }
+            
+            /* Responsive navigation fixes */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    background: var(--color-primary, #4caf50);
+                    padding: 1rem;
+                    flex-direction: column;
+                    align-items: center;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+                
+                .nav-links.active {
+                    display: flex;
+                }
+                
+                .hamburger {
+                    display: block;
+                }
+            }
+            
+            /* Footer fixes */
+            .footer {
+                background: var(--color-primary, #4caf50);
+                color: white;
+                padding: 2rem 0;
+                margin-top: 3rem;
+            }
+            
+            .footer-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 1rem;
+            }
+            
+            .footer-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .footer-section h3 {
+                margin-bottom: 1rem;
+                font-family: "Montserrat", sans-serif;
+            }
+            
+            .footer-section ul {
+                list-style: none;
+                padding: 0;
+            }
+            
+            .footer-section ul li {
+                margin-bottom: 0.5rem;
+            }
+            
+            .footer-section ul li a {
+                color: white;
+                text-decoration: none;
+            }
+            
+            .footer-section ul li a:hover {
+                text-decoration: underline;
+            }
+            
+            .footer-bottom {
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+                padding-top: 1rem;
+                text-align: center;
+            }
+            </style>
+</head>
+<body>
+<!-- Header with Mobile Menu -->
+<header class="main-header"><a aria-label="Link" class="logo link-with-loading link-with-loading" href="index.html"><picture><source srcset="assets/images/hollidays-logo.webp" type="image/webp"/><img alt="Holliday's Lawn &amp; Garden Logo" loading="lazy" src="assets/images/hollidays-logo.webp"/></picture></a><nav aria-label="Main navigation" id="nav-menu"><ul class="nav-links"><li><a aria-label="Link" class="link-with-loading link-with-loading" href="index.html">Home</a></li><li><a aria-label="Link" class="link-with-loading link-with-loading" href="about.html">Ab</a></li></ul></nav></header>
+<div class="offline-container">
+<div class="offline-icon">
+<i class="fas fa-wifi-slash"></i>
+</div>
+<h1 class="offline-title">You're Offline</h1>
+<p class="offline-message">
+            It looks like you've lost your internet connection. Don't worry! 
+            Some parts of our website are available offline. Try refreshing 
+            the page or check your connection.
+        </p>
+<div class="offline-actions">
+<button class="btn-retry" onclick="window.location.reload()" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>
+<i class="fas fa-redo"></i> Try Again
+            </button>
+<a class="btn-home" href="/">
+<i class="fas fa-home"></i> Go Home
+            </a>
+</div>
+</div>
+<!-- Mobile Menu Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger && nav && navLinks) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                    body.style.overflow = !isExpanded ? 'hidden' : '';
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking on links
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            body.style.overflow = '';
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+        
+        // Check for connection status
+        window.addEventListener('online', function() {
+            window.location.reload();
+        });
+        
+        // Update UI when connection changes
+        window.addEventListener('offline', function() {
+            });
+    </script>
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+<div class="footer-section">
+<h3>Contact Us</h3>
+<ul>
+<li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
+<li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="about.html">About Us</a></li>
+<li><a href="services.html">Services</a></li>
+<li><a href="education.html">Education</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Customer Portal</h3>
+<ul>
+<li><a href="login.html">Login</a></li>
+<li><a href="register.html">Register</a></li>
+<li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+<li><a href="customer-dashboard.html">Dashboard</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Legal</h3>
+<ul>
+<li><a href="privacy-policy.html">Privacy Policy</a></li>
+<li><a href="terms.html">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="copyright">
+<p>© 2024 Holliday's Lawn &amp; Garden. All rights reserved.</p>
+</div>
+</div>
+</div>
+</footer>
+</body>
+</html>

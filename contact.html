@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact Us - Holliday's Lawn &amp; Garden</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="assets/css/components/contact.css" rel="stylesheet"/>
+<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
+<link href="assets/images/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="assets/images/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="assets/images/favicon/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="manifest.json" rel="manifest"/>
+<!-- Fix for fixed header spacing -->
+<style>
+      body {
+        padding-top: 100px; /* Increased padding to account for fixed header height */
+        margin: 0;
+      }
+      
+      @media (max-width: 768px) {
+        body {
+          padding-top: 80px; /* Smaller padding for mobile */
+        }
+      }
+    </style>
+<style>
+      .contact-section { padding: 4rem 0; background: #f8f9fa; }
+      .contact-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+      .contact-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
+      .contact-form-container { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+      .contact-form-container h2 { color: #2c5530; margin-bottom: 1rem; font-size: 2rem; }
+      .form-intro { color: #666; margin-bottom: 2rem; font-size: 1.1rem; }
+      .contact-form .form-group { margin-bottom: 1.5rem; }
+      .contact-form label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333; }
+      .contact-form input, .contact-form select, .contact-form textarea { 
+        width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; 
+      }
+      .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { 
+        outline: none; border-color: #2c5530; box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1); 
+      }
+      .contact-form textarea { resize: vertical; min-height: 120px; }
+      .btn-primary { background: #2c5530; color: white; padding: 1rem 2rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s; }
+      .btn-primary:hover { background: #1e3a21; }
+      .contact-info { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+      .contact-info h3 { color: #2c5530; margin-bottom: 1.5rem; font-size: 1.5rem; }
+      .contact-item { display: flex; align-items: center; margin-bottom: 1rem; padding: 0.75rem; background: #f8f9fa; border-radius: 8px; }
+      .contact-item i { color: #2c5530; margin-right: 0.75rem; font-size: 1.2rem; width: 20px; }
+      .contact-item a { color: #333; text-decoration: none; }
+      .contact-item a:hover { color: #2c5530; }
+      .hours-item { display: flex; justify-content: space-between; margin-bottom: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid #e1e5e9; }
+      .hours-item:last-child { border-bottom: none; }
+      .days { font-weight: 600; color: #333; }
+      .time { color: #666; }
+      @media (max-width: 900px) {
+        .main-header .nav-links { margin-top: 0 !important; padding-top: 0.5em !important; }
+        .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+        .contact-form-container, .contact-info { padding: 1.5rem; }
+      }
+    </style>
+<style>
+        /* Mobile Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            z-index: 1000;
+            position: relative;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            margin-right: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #2e7d32;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                z-index: 1000;
+                visibility: hidden;
+                opacity: 0;
+                transform: translateY(-100%);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                pointer-events: none;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .nav-links a {
+                font-size: 1.75rem;
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: center;
+                transition: all 0.3s ease;
+                position: relative;
+                color: #333333;
+                font-weight: 600;
+            }
+
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background: #2e7d32;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(-50%);
+            }
+
+            .nav-links a:hover::after,
+            .nav-links a.active::after {
+                width: 60%;
+            }
+
+            .nav-links a:hover {
+                color: #2e7d32;
+                transform: translateY(-2px);
+            }
+
+            body.menu-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Prevent text selection during menu transitions */
+        .nav-links {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Ensure smooth scrolling on iOS */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+<style>
+      /* Header alignment fix */
+      .main-header {
+        background: #fff !important;
+        min-height: 70px !important;
+      }
+      .nav-links a {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        color: #333 !important;
+        font-weight: 500 !important;
+      }
+      .nav-links li {
+        display: flex;
+        align-items: center;
+      }
+    </style>
+<style>
+            /* Button font fixes */
+            button, .btn, .cta-button, .submit-button {
+                font-family: "Montserrat", "Inter", system-ui, sans-serif !important;
+            }
+            
+            /* Responsive navigation fixes */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    background: var(--color-primary, #4caf50);
+                    padding: 1rem;
+                    flex-direction: column;
+                    align-items: center;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+                
+                .nav-links.active {
+                    display: flex;
+                }
+                
+                .hamburger {
+                    display: block;
+                }
+            }
+            
+            /* Footer fixes */
+            .footer {
+                background: var(--color-primary, #4caf50);
+                color: white;
+                padding: 2rem 0;
+                margin-top: 3rem;
+            }
+            
+            .footer-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 1rem;
+            }
+            
+            .footer-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .footer-section h3 {
+                margin-bottom: 1rem;
+                font-family: "Montserrat", sans-serif;
+            }
+            
+            .footer-section ul {
+                list-style: none;
+                padding: 0;
+            }
+            
+            .footer-section ul li {
+                margin-bottom: 0.5rem;
+            }
+            
+            .footer-section ul li a {
+                color: white;
+                text-decoration: none;
+            }
+            
+            .footer-section ul li a:hover {
+                text-decoration: underline;
+            }
+            
+            .footer-bottom {
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+                padding-top: 1rem;
+                text-align: center;
+            }
+            </style>
+</head>
+<body>
+<header class="main-header"><a aria-label="Link" class="logo link-with-loading link-with-loading" href="index.html"><picture><source srcset="assets/images/hollidays-logo.webp" type="image/webp"/><img alt="Holliday's Lawn &amp; Garden Logo" loading="lazy" src="assets/images/hollidays-logo.webp"/></picture></a><nav aria-label="Main navigation" id="nav-menu"><ul class="nav-links"><li><a aria-label="Link" class="link-with-loading link-with-loading" href="index.html">Home</a></li><li><a aria-label="Link" class="link-with-loading link-with-loading" href="about.html">Ab</a></li></ul></nav></header>
+<section class="hero">
+<img alt="Beautiful garden landscaping" loading="eager" src="assets/images/hero-garden-landscaping.jpg"/>
+<div class="hero-content">
+<h1>Get In Touch</h1>
+<p>
+          Ready to transform your outdoor space? Contact us today for a free consultation and quote.
+        </p>
+</div>
+</section>
+<section class="contact-section">
+<div class="contact-container">
+<div class="contact-layout">
+<div class="contact-form-container">
+<h2>Send Us a Message</h2>
+<p class="form-intro">
+              Fill out the form below and we'll get back to you within 24 hours to discuss your landscaping needs.
+            </p>
+<form action="#" class="contact-form" id="contactForm" method="POST">
+<div class="form-group">
+<label for="name">Full Name *</label>
+<input id="name" name="name" placeholder="Enter your full name" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="email">Email Address *</label>
+<input id="email" name="email" placeholder="Enter your email address" required="" type="email"/>
+</div>
+<div class="form-group">
+<label for="phone">Phone Number *</label>
+<input id="phone" name="phone" placeholder="Enter your phone number" required="" type="tel"/>
+</div>
+<div class="form-group">
+<label for="service">Service Interested In *</label>
+<select id="service" name="service" required="">
+<option value="">Select a service</option>
+<option value="lawn-care">Lawn Care &amp; Maintenance</option>
+<option value="landscaping">Landscaping &amp; Design</option>
+<option value="pressure-washing">Pressure Washing</option>
+<option value="commercial">Commercial Services</option>
+<option value="consultation">Free Consultation</option>
+<option value="other">Other</option>
+</select>
+</div>
+<div class="form-group">
+<label for="message">Project Details *</label>
+<textarea id="message" name="message" placeholder="Tell us about your project, property size, timeline, and any specific requirements..." required="" rows="6"></textarea>
+</div>
+<button class="btn btn-primary btn-block" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;' type="submit">
+<i class="fas fa-paper-plane"></i> Send Message
+              </button>
+</form>
+</div>
+<div class="contact-info">
+<h3>Contact Information</h3>
+<div class="contact-item">
+<i class="fas fa-user"></i>
+<span>Karl Holliday</span>
+</div>
+<div class="contact-item">
+<i class="fas fa-phone"></i>
+<a href="tel:+15047171887">(504) 717-1887</a>
+</div>
+<div class="contact-item">
+<i class="fas fa-envelope"></i>
+<a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
+</div>
+<div class="contact-item">
+<i class="fas fa-map-marker-alt"></i>
+<span>Serving New Orleans Area</span>
+</div>
+<h3 style="margin-top: 2rem;">Service Hours</h3>
+<div class="hours-item">
+<span class="days">Monday - Thursday</span>
+<span class="time">7:00 AM - 6:00 PM</span>
+</div>
+<div class="hours-item">
+<span class="days">Saturday</span>
+<span class="time">8:00 AM - 4:00 PM</span>
+</div>
+<div class="hours-item">
+<span class="days">Friday</span>
+<span class="time">Closed</span>
+</div>
+<div class="hours-item">
+<span class="days">Sunday</span>
+<span class="time">Closed</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+<div class="footer-section">
+<h3>Contact Us</h3>
+<ul>
+<li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
+<li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="about.html">About Us</a></li>
+<li><a href="services.html">Services</a></li>
+<li><a href="education.html">Education</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Customer Portal</h3>
+<ul>
+<li><a href="login.html">Login</a></li>
+<li><a href="register.html">Register</a></li>
+<li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+<li><a href="customer-dashboard.html">Dashboard</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Legal</h3>
+<ul>
+<li><a href="privacy-policy.html">Privacy Policy</a></li>
+<li><a href="terms.html">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="copyright">
+<p>© 2024 Holliday's Lawn &amp; Garden. All rights reserved.</p>
+</div>
+</div>
+</div>
+</footer>
+<script src="assets/js/firebase-config.js" type="module"></script>
+<script src="assets/js/main.js" type="module"></script>
+<script defer="" src="assets/js/main.min.js" type="module"></script>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                    body.style.overflow = !isExpanded ? 'hidden' : '';
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        body.style.overflow = '';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking on links
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            body.style.overflow = '';
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body></html>

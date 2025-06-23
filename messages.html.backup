@@ -1,0 +1,1946 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication Center - Holliday's Lawn &amp; Garden</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #222;
+        }
+        
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .admin-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .admin-header .logo img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .admin-header .admin-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .admin-header .admin-nav a {
+            color: #2c5530;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+        
+        .admin-header .admin-nav a:hover {
+            color: #4caf50;
+        }
+        
+        .admin-header .admin-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .admin-header .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 100px;
+            justify-content: center;
+            text-decoration: none;
+        }
+        
+        .admin-header .btn-logout {
+            background: #222;
+            color: #fff;
+        }
+        
+        .admin-header .btn-logout:hover {
+            background: #111;
+        }
+        
+        .admin-header .btn-dashboard {
+            background: #4caf50;
+            color: #fff;
+        }
+        
+        .admin-header .btn-dashboard:hover {
+            background: #388e3c;
+        }
+        
+        /* Mobile menu styles */
+        .admin-header .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+        }
+        
+        .admin-header .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #2c5530;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .admin-header .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-header .admin-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            
+            .admin-header .admin-nav.active {
+                display: flex;
+            }
+            
+            .admin-header .hamburger {
+                display: flex;
+            }
+            
+            .admin-header .admin-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        
+        .communication-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .communication-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .communication-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c5530;
+            margin: 0;
+        }
+        
+        .communication-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: #45a049;
+        }
+        
+        .btn-secondary {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.2s;
+        }
+        
+        .btn-secondary:hover {
+            background: #1976d2;
+        }
+        
+        .communication-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4caf50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .communication-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            height: 600px;
+        }
+        
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .sidebar-header {
+            background: #2c5530;
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+        }
+        
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .sidebar-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .sidebar-tab.active {
+            border-bottom-color: #4caf50;
+            background: #f8f9fa;
+        }
+        
+        .sidebar-content {
+            padding: 1rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .contact-item.active {
+            background: #e8f5e8;
+            border-left: 3px solid #4caf50;
+        }
+        
+        .contact-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #4caf50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-name {
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .contact-role {
+            font-size: 0.8rem;
+            color: #666;
+            margin: 0;
+        }
+        
+        .main-content {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-title {
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .chat-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-icon {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        
+        .btn-icon:hover {
+            background: #e9ecef;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .message.sent {
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #4caf50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        
+        .message-content {
+            max-width: 70%;
+        }
+        
+        .message-bubble {
+            background: #f8f9fa;
+            padding: 0.75rem;
+            border-radius: 15px;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .message.sent .message-bubble {
+            background: #4caf50;
+            color: white;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+        
+        .message.sent .message-time {
+            text-align: right;
+        }
+        
+        .chat-input {
+            padding: 1rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        .chat-input input:focus {
+            border-color: #4caf50;
+        }
+        
+        .btn-send {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-send:hover {
+            background: #45a049;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c5530;
+            margin: 0;
+        }
+        
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+        
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-save {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-cancel:hover {
+            background: #5a6268;
+        }
+        
+        .btn-save:hover {
+            background: #45a049;
+        }
+        
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: white;
+        }
+        
+        .loading-overlay.hidden {
+            display: none;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4caf50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .communication-container {
+                padding: 1rem;
+            }
+            
+            .communication-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .communication-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .sidebar {
+                order: 2;
+            }
+            
+            .main-content {
+                order: 1;
+            }
+        }
+        
+        /* Notification toast styles */
+        .notification-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2c5530;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .notification-content i {
+            color: #4caf50;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/images/hollidays-logo.optimized-320.png" alt="Holliday's Lawn &amp; Garden Logo">
+            </a>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="nav-menu">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                <li class="login-buttons">
+                    <a href="login.html" class="btn-login btn-customer">
+                        <i class="fas fa-user"></i>
+                        Customer Login
+                    </a>
+                    <a href="admin-login.html" class="btn-login btn-admin">
+                        <i class="fas fa-lock"></i>
+                        Admin Login
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-320.png" alt="Logo">
+        </div>
+        <div class="admin-nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="messages.html">Messages</a>
+            <a href="notifications.html">Notifications</a>
+            <a href="reports.html">Reports</a>
+        </div>
+        <div class="admin-actions">
+            <button class="btn btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+            <button class="btn btn-dashboard">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </button>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="communication-container">
+        <div class="communication-header">
+            <h1 class="communication-title">Communication Center</h1>
+            <div class="communication-actions">
+                <button class="btn-primary" onclick="openNewMessageModal()">
+                    <i class="fas fa-plus"></i>
+                    New Message
+                </button>
+                <button class="btn-secondary" onclick="openNotificationModal()">
+                    <i class="fas fa-bell"></i>
+                    Send Notification
+                </button>
+                <button class="btn-secondary" onclick="openBulkMessageModal()">
+                    <i class="fas fa-broadcast-tower"></i>
+                    Bulk Message
+                </button>
+            </div>
+        </div>
+
+        <div class="communication-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalMessages">0</div>
+                <div class="stat-label">Total Messages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="unreadMessages">0</div>
+                <div class="stat-label">Unread</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="sentToday">0</div>
+                <div class="stat-label">Sent Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="activeChats">0</div>
+                <div class="stat-label">Active Chats</div>
+            </div>
+        </div>
+
+        <div class="communication-layout">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <i class="fas fa-users"></i>
+                    Contacts
+                </div>
+                <div class="sidebar-tabs">
+                    <div class="sidebar-tab active" onclick="switchTab('staff')">Staff</div>
+                    <div class="sidebar-tab" onclick="switchTab('customers')">Customers</div>
+                </div>
+                <div class="sidebar-content" id="contactsList">
+                    <!-- Contacts will be populated here -->
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="chat-header">
+                    <h3 class="chat-title" id="chatTitle">Select a contact to start chatting</h3>
+                    <div class="chat-actions">
+                        <button class="btn-icon" onclick="clearChat()">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="btn-icon" onclick="exportChat()">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div style="text-align: center; color: #666; padding: 2rem;">
+                        <i class="fas fa-comments" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>No conversation selected</h3>
+                        <p>Choose a contact from the sidebar to start messaging</p>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="messageInput" placeholder="Type your message..." disabled="">
+                    <button class="btn-send" onclick="sendMessage()" disabled="">
+                        <i class="fas fa-paper-plane"></i>
+                        Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Message Modal -->
+    <div id="newMessageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">New Message</h2>
+                <span class="close" onclick="closeNewMessageModal()">×</span>
+            </div>
+            <form id="newMessageForm">
+                <div class="form-group">
+                    <label for="messageRecipients">Recipients</label>
+                    <select id="messageRecipients" multiple="" required="">
+                        <!-- Recipients will be populated here -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="messageSubject">Subject</label>
+                    <input type="text" id="messageSubject" required="">
+                </div>
+                <div class="form-group">
+                    <label for="messageContent">Message</label>
+                    <textarea id="messageContent" rows="6" required=""></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeNewMessageModal()">Cancel</button>
+                    <button type="submit" class="btn-save">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Create Notification</h2>
+                <span class="close" onclick="this.closest('.modal').remove()">×</span>
+            </div>
+            <form id="notificationForm">
+                <div class="form-group">
+                    <label for="notificationTitle">Title</label>
+                    <input type="text" id="notificationTitle" required="">
+                </div>
+                
+                <div class="form-group">
+                    <label for="notificationMessage">Message</label>
+                    <textarea id="notificationMessage" rows="4" required=""></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="notificationType">Type</label>
+                        <select id="notificationType" required="">
+                            <option value="info">Information</option>
+                            <option value="warning">Warning</option>
+                            <option value="success">Success</option>
+                            <option value="error">Error</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="notificationPriority">Priority</label>
+                        <select id="notificationPriority">
+                            <option value="low">Low</option>
+                            <option value="normal">Normal</option>
+                            <option value="high">High</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notificationRecipients">Recipients</label>
+                    <select id="notificationRecipients" multiple="">
+                        <option value="all-staff">All Staff</option>
+                        <option value="all-customers">All Customers</option>
+                        <option value="landscaping">Landscaping Team</option>
+                        <option value="maintenance">Maintenance Team</option>
+                        <option value="administration">Administration</option>
+                        <option value="sales">Sales Team</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="notificationExpiry">Expiry Date (Optional)</label>
+                        <input type="datetime-local" id="notificationExpiry">
+                    </div>
+                    <div class="form-group">
+                        <label for="notificationAction">Action Required</label>
+                        <select id="notificationAction">
+                            <option value="none">None</option>
+                            <option value="acknowledge">Acknowledge</option>
+                            <option value="respond">Respond</option>
+                            <option value="complete">Complete Task</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+                    <button type="submit" class="btn-save">Create Notification</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+        <p id="loadingMessage">Loading...</p>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+            authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+            projectId: "holiday-lawn-and-garden",
+            storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+            messagingSenderId: "135322230444",
+            appId: "1:135322230444:web:1a487b25a48aae07368909",
+            measurementId: "G-KD6TBWR4ZT"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        let currentTab = 'staff';
+        let currentContact = null;
+        let staffData = [];
+        let customerData = [];
+        let messageData = [];
+
+        // Real-time messaging functionality
+        let realTimeListener = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                showLoading('Loading communication data...');
+                await loadCommunicationData();
+                hideLoading();
+                
+                // Start real-time messaging
+                startRealTimeMessaging();
+                
+                // Set up auto-refresh every 30 seconds
+                setInterval(async () => {
+                    await loadCommunicationData();
+                }, 30000);
+                
+                // Set up event listeners
+                setupEventListeners();
+                
+            } catch (error) {
+                console.error('Error initializing page:', error);
+                hideLoading();
+                showError('Failed to load communication data');
+            }
+        });
+
+        function setupEventListeners() {
+            // Set up modal close events
+            window.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.remove();
+                    }
+                });
+            });
+        }
+
+        async function loadCommunicationData() {
+            try {
+                showLoading('Loading communication data...');
+                
+                // Check if Firebase is properly initialized
+                if (!firebase || !firebase.firestore) {
+                    throw new Error('Firebase not initialized');
+                }
+
+                // Add timeout to prevent infinite loading
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Request timeout')), 10000);
+                });
+
+                // Load staff data
+                let staffSnapshot;
+                try {
+                    staffSnapshot = await Promise.race([
+                        db.collection('staff').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Staff collection not accessible:', error);
+                    staffSnapshot = { forEach: () => {} };
+                }
+
+                // Load customer data
+                let customerSnapshot;
+                try {
+                    customerSnapshot = await Promise.race([
+                        db.collection('customers').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Customers collection not accessible:', error);
+                    customerSnapshot = { forEach: () => {} };
+                }
+
+                // Load message data
+                let messageSnapshot;
+                try {
+                    messageSnapshot = await Promise.race([
+                        db.collection('messages').get(),
+                        timeoutPromise
+                    ]);
+                } catch (error) {
+                    console.warn('Messages collection not accessible:', error);
+                    messageSnapshot = { forEach: () => {} };
+                }
+
+                staffData = [];
+                customerData = [];
+                messageData = [];
+                
+                staffSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    staffData.push({
+                        id: doc.id,
+                        name: `${data.firstName || ''} ${data.lastName || ''}`.trim(),
+                        email: data.email || '',
+                        role: data.position || '',
+                        type: 'staff',
+                        status: data.status || 'active',
+                        ...data
+                    });
+                });
+
+                customerSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    customerData.push({
+                        id: doc.id,
+                        name: data.name || 'Unknown Customer',
+                        email: data.email || '',
+                        role: 'Customer',
+                        type: 'customer',
+                        status: 'active',
+                        ...data
+                    });
+                });
+
+                messageSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    messageData.push({
+                        id: doc.id,
+                        ...data
+                    });
+                });
+
+                loadContacts();
+                updateStats(messageData);
+                hideLoading();
+                
+            } catch (error) {
+                console.error('Error loading communication data:', error);
+                hideLoading();
+                showError('Failed to load communication data. Please try refreshing the page.');
+                loadContacts();
+                updateStats([]);
+            }
+        }
+
+        function loadContacts() {
+            const contactsList = document.getElementById('contactsList');
+            const contacts = currentTab === 'staff' ? staffData : customerData;
+            
+            if (contacts.length === 0) {
+                contactsList.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-users" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <p>No ${currentTab} found</p>
+                    </div>
+                `;
+                return;
+            }
+
+            contactsList.innerHTML = contacts
+                .filter(contact => contact.status === 'active')
+                .map(contact => `
+                    <div class="contact-item" onclick="selectContact('${contact.id}')">
+                        <div class="contact-avatar">
+                            ${contact.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div class="contact-info">
+                            <p class="contact-name">${contact.name}</p>
+                            <p class="contact-role">${contact.role}</p>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Update active tab
+            document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Load contacts for selected tab
+            loadContacts();
+            
+            // Clear current chat
+            currentContact = null;
+            document.getElementById('chatTitle').textContent = 'Select a contact to start chatting';
+            document.getElementById('chatMessages').innerHTML = `
+                <div style="text-align: center; color: #666; padding: 2rem;">
+                    <i class="fas fa-comments" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <h3>No conversation selected</h3>
+                    <p>Choose a contact from the sidebar to start messaging</p>
+                </div>
+            `;
+            document.getElementById('messageInput').disabled = true;
+            document.querySelector('.btn-send').disabled = true;
+        }
+
+        function selectContact(contactId) {
+            // Remove active class from all contacts
+            document.querySelectorAll('.contact-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to selected contact
+            event.currentTarget.classList.add('active');
+            
+            const contacts = currentTab === 'staff' ? staffData : customerData;
+            currentContact = contacts.find(contact => contact.id === contactId);
+            
+            if (currentContact) {
+                document.getElementById('chatTitle').textContent = currentContact.name;
+                document.getElementById('messageInput').disabled = false;
+                document.querySelector('.btn-send').disabled = false;
+                loadChatHistory(contactId);
+            }
+        }
+
+        function loadChatHistory(contactId) {
+            const chatMessages = document.getElementById('chatMessages');
+            
+            // Filter messages for this contact
+            const contactMessages = messageData.filter(msg => 
+                msg.recipients && msg.recipients.includes(contactId)
+            );
+            
+            if (contactMessages.length === 0) {
+                chatMessages.innerHTML = `
+                    <div style="text-align: center; color: #666; padding: 2rem;">
+                        <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <h3>No messages yet</h3>
+                        <p>Start a conversation with ${currentContact.name}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            chatMessages.innerHTML = contactMessages.map(message => `
+                <div class="message ${message.sentBy === 'admin' ? 'sent' : 'received'}">
+                    <div class="message-avatar">
+                        ${message.sentBy === 'admin' ? 'A' : currentContact.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            ${message.content}
+                        </div>
+                        <div class="message-time">
+                            ${formatDate(message.sentAt)}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            if (!currentContact) return;
+            
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            
+            if (!message) return;
+            
+            // Add message to UI immediately
+            const chatMessages = document.getElementById('chatMessages');
+            const messageElement = `
+                <div class="message sent">
+                    <div class="message-avatar">A</div>
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            ${message}
+                        </div>
+                        <div class="message-time">
+                            ${formatDate(new Date())}
+                        </div>
+                    </div>
+                </div>
+            `;
+            chatMessages.insertAdjacentHTML('beforeend', messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Clear input
+            messageInput.value = '';
+            
+            // Save to Firebase
+            saveMessageToFirebase(message);
+        }
+
+        async function saveMessageToFirebase(content) {
+            try {
+                const messageData = {
+                    recipients: [currentContact.id],
+                    content: content,
+                    sentBy: 'admin',
+                    sentAt: new Date(),
+                    status: 'sent'
+                };
+
+                await db.collection('messages').add(messageData);
+            } catch (error) {
+                console.error('Error saving message:', error);
+                showError('Failed to save message');
+            }
+        }
+
+        function updateStats(data) {
+            const stats = {
+                total: data.length,
+                unread: data.filter(msg => msg.status === 'unread').length,
+                sentToday: data.filter(msg => {
+                    const today = new Date();
+                    const messageDate = new Date(msg.sentAt);
+                    return messageDate.toDateString() === today.toDateString() && msg.sentBy === 'admin';
+                }).length,
+                activeChats: new Set(data.map(msg => msg.recipients).flat()).size
+            };
+
+            document.getElementById('totalMessages').textContent = stats.total;
+            document.getElementById('unreadMessages').textContent = stats.unread;
+            document.getElementById('sentToday').textContent = stats.sentToday;
+            document.getElementById('activeChats').textContent = stats.activeChats;
+        }
+
+        // Modal functions
+        function openNewMessageModal() {
+            document.getElementById('newMessageModal').style.display = 'block';
+            populateRecipients();
+        }
+
+        function closeNewMessageModal() {
+            document.getElementById('newMessageModal').style.display = 'none';
+        }
+
+        function openNotificationModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Create Notification</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <form id="notificationForm">
+                        <div class="form-group">
+                            <label for="notificationTitle">Title</label>
+                            <input type="text" id="notificationTitle" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notificationMessage">Message</label>
+                            <textarea id="notificationMessage" rows="4" required></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="notificationType">Type</label>
+                                <select id="notificationType" required>
+                                    <option value="info">Information</option>
+                                    <option value="warning">Warning</option>
+                                    <option value="success">Success</option>
+                                    <option value="error">Error</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notificationPriority">Priority</label>
+                                <select id="notificationPriority">
+                                    <option value="low">Low</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="high">High</option>
+                                    <option value="urgent">Urgent</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notificationRecipients">Recipients</label>
+                            <select id="notificationRecipients" multiple>
+                                <option value="all-staff">All Staff</option>
+                                <option value="all-customers">All Customers</option>
+                                <option value="landscaping">Landscaping Team</option>
+                                <option value="maintenance">Maintenance Team</option>
+                                <option value="administration">Administration</option>
+                                <option value="sales">Sales Team</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="notificationExpiry">Expiry Date (Optional)</label>
+                                <input type="datetime-local" id="notificationExpiry">
+                            </div>
+                            <div class="form-group">
+                                <label for="notificationAction">Action Required</label>
+                                <select id="notificationAction">
+                                    <option value="none">None</option>
+                                    <option value="acknowledge">Acknowledge</option>
+                                    <option value="respond">Respond</option>
+                                    <option value="complete">Complete Task</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="submit" class="btn-save">Create Notification</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Form submission
+            document.getElementById('notificationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                createNotification();
+            });
+        }
+
+        async function createNotification() {
+            try {
+                showLoading('Creating notification...');
+                
+                const notificationData = {
+                    title: document.getElementById('notificationTitle').value,
+                    message: document.getElementById('notificationMessage').value,
+                    type: document.getElementById('notificationType').value,
+                    priority: document.getElementById('notificationPriority').value,
+                    recipients: Array.from(document.getElementById('notificationRecipients').selectedOptions).map(option => option.value),
+                    actionRequired: document.getElementById('notificationAction').value,
+                    createdBy: 'admin',
+                    createdAt: new Date(),
+                    status: 'active',
+                    acknowledgedBy: []
+                };
+                
+                const expiryDate = document.getElementById('notificationExpiry').value;
+                if (expiryDate) {
+                    notificationData.expiryDate = new Date(expiryDate);
+                }
+
+                await db.collection('notifications').add(notificationData);
+                showSuccess('Notification created successfully');
+                document.querySelector('.modal').remove();
+                hideLoading();
+                
+                // Refresh notification data
+                await loadCommunicationData();
+                
+            } catch (error) {
+                console.error('Error creating notification:', error);
+                hideLoading();
+                showError('Failed to create notification');
+            }
+        }
+
+        async function acknowledgeNotification(notificationId) {
+            try {
+                await db.collection('notifications').doc(notificationId).update({
+                    acknowledgedBy: firebase.firestore.FieldValue.arrayUnion('admin'),
+                    lastAcknowledged: new Date()
+                });
+                showSuccess('Notification acknowledged');
+                await loadCommunicationData();
+            } catch (error) {
+                console.error('Error acknowledging notification:', error);
+                showError('Failed to acknowledge notification');
+            }
+        }
+
+        async function deleteNotification(notificationId) {
+            if (!confirm('Are you sure you want to delete this notification?')) return;
+            
+            try {
+                showLoading('Deleting notification...');
+                await db.collection('notifications').doc(notificationId).delete();
+                showSuccess('Notification deleted successfully');
+                await loadCommunicationData();
+                hideLoading();
+            } catch (error) {
+                console.error('Error deleting notification:', error);
+                hideLoading();
+                showError('Failed to delete notification');
+            }
+        }
+
+        function openBulkMessageModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Bulk Message</h2>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <form id="bulkMessageForm">
+                        <div class="form-group">
+                            <label for="bulkMessageType">Message Type</label>
+                            <select id="bulkMessageType" required>
+                                <option value="">Select Type</option>
+                                <option value="all-staff">All Staff</option>
+                                <option value="all-customers">All Customers</option>
+                                <option value="department">By Department</option>
+                                <option value="custom">Custom Selection</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" id="departmentSelection" style="display: none;">
+                            <label for="bulkMessageDepartment">Department</label>
+                            <select id="bulkMessageDepartment">
+                                <option value="">Select Department</option>
+                                <option value="landscaping">Landscaping</option>
+                                <option value="maintenance">Maintenance</option>
+                                <option value="administration">Administration</option>
+                                <option value="sales">Sales</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" id="customSelection" style="display: none;">
+                            <label for="bulkMessageRecipients">Select Recipients</label>
+                            <select id="bulkMessageRecipients" multiple>
+                                ${[...staffData, ...customerData].filter(contact => contact.status === 'active').map(contact => 
+                                    `<option value="${contact.id}">${contact.name} - ${contact.role}</option>`
+                                ).join('')}
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bulkMessageSubject">Subject</label>
+                            <input type="text" id="bulkMessageSubject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bulkMessageContent">Message</label>
+                            <textarea id="bulkMessageContent" rows="6" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bulkMessagePriority">Priority</label>
+                            <select id="bulkMessagePriority">
+                                <option value="normal">Normal</option>
+                                <option value="high">High</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="submit" class="btn-save">Send Bulk Message</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Handle message type changes
+            document.getElementById('bulkMessageType').addEventListener('change', function() {
+                const departmentSelection = document.getElementById('departmentSelection');
+                const customSelection = document.getElementById('customSelection');
+                
+                departmentSelection.style.display = 'none';
+                customSelection.style.display = 'none';
+                
+                if (this.value === 'department') {
+                    departmentSelection.style.display = 'block';
+                } else if (this.value === 'custom') {
+                    customSelection.style.display = 'block';
+                }
+            });
+            
+            // Form submission
+            document.getElementById('bulkMessageForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                sendBulkMessage();
+            });
+        }
+
+        async function sendBulkMessage() {
+            try {
+                showLoading('Sending bulk message...');
+                
+                const messageType = document.getElementById('bulkMessageType').value;
+                const subject = document.getElementById('bulkMessageSubject').value;
+                const content = document.getElementById('bulkMessageContent').value;
+                const priority = document.getElementById('bulkMessagePriority').value;
+                
+                let recipients = [];
+                
+                // Determine recipients based on message type
+                switch (messageType) {
+                    case 'all-staff':
+                        recipients = staffData.filter(staff => staff.status === 'active').map(staff => staff.id);
+                        break;
+                    case 'all-customers':
+                        recipients = customerData.filter(customer => customer.status === 'active').map(customer => customer.id);
+                        break;
+                    case 'department':
+                        const department = document.getElementById('bulkMessageDepartment').value;
+                        recipients = staffData.filter(staff => 
+                            staff.status === 'active' && staff.department === department
+                        ).map(staff => staff.id);
+                        break;
+                    case 'custom':
+                        recipients = Array.from(document.getElementById('bulkMessageRecipients').selectedOptions).map(option => option.value);
+                        break;
+                }
+                
+                if (recipients.length === 0) {
+                    showError('No recipients selected');
+                    hideLoading();
+                    return;
+                }
+                
+                const messageData = {
+                    recipients: recipients,
+                    subject: subject,
+                    content: content,
+                    priority: priority,
+                    messageType: 'bulk',
+                    sentBy: 'admin',
+                    sentAt: new Date(),
+                    status: 'sent'
+                };
+
+                await db.collection('messages').add(messageData);
+                showSuccess(`Bulk message sent to ${recipients.length} recipients successfully`);
+                document.querySelector('.modal').remove();
+                hideLoading();
+                
+                // Refresh message data
+                await loadCommunicationData();
+                
+            } catch (error) {
+                console.error('Error sending bulk message:', error);
+                hideLoading();
+                showError('Failed to send bulk message');
+            }
+        }
+
+        async function sendNewMessage() {
+            try {
+                showLoading('Sending message...');
+                
+                const messageData = {
+                    recipients: Array.from(document.getElementById('messageRecipients').selectedOptions).map(option => option.value),
+                    subject: document.getElementById('messageSubject').value,
+                    content: document.getElementById('messageContent').value,
+                    sentBy: 'admin',
+                    sentAt: new Date(),
+                    status: 'sent'
+                };
+
+                await db.collection('messages').add(messageData);
+                showSuccess('Message sent successfully');
+                closeNewMessageModal();
+                hideLoading();
+            } catch (error) {
+                console.error('Error sending message:', error);
+                hideLoading();
+                showError('Failed to send message');
+            }
+        }
+
+        function clearChat() {
+            if (!currentContact) return;
+            
+            if (confirm('Are you sure you want to clear this chat history?')) {
+                document.getElementById('chatMessages').innerHTML = `
+                    <div style="text-align: center; color: #666; padding: 2rem;">
+                        <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <h3>Chat cleared</h3>
+                        <p>Start a new conversation with ${currentContact.name}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function exportChat() {
+            if (!currentContact) return;
+            
+            // Get chat history for current contact
+            const contactMessages = messageData.filter(msg => 
+                msg.recipients && msg.recipients.includes(currentContact.id)
+            );
+            
+            if (contactMessages.length === 0) {
+                showError('No messages to export');
+                return;
+            }
+            
+            // Create CSV content
+            const csvContent = generateChatCSV(contactMessages, currentContact);
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `chat-${currentContact.name.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            showSuccess('Chat exported successfully');
+        }
+
+        function generateChatCSV(messages, contact) {
+            const headers = ['Date', 'Time', 'Sender', 'Message', 'Status'];
+            const rows = messages.map(message => [
+                formatDate(message.sentAt).split(' ')[0],
+                formatDate(message.sentAt).split(' ')[1],
+                message.sentBy === 'admin' ? 'Admin' : contact.name,
+                message.content,
+                message.status || 'sent'
+            ]);
+            
+            return [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+        }
+
+        function populateRecipients() {
+            const recipientsSelect = document.getElementById('messageRecipients');
+            const allContacts = [...staffData, ...customerData].filter(contact => contact.status === 'active');
+            
+            recipientsSelect.innerHTML = allContacts
+                .map(contact => `<option value="${contact.id}">${contact.name} - ${contact.role}</option>`)
+                .join('');
+        }
+
+        // Utility functions
+        function formatDate(date) {
+            if (!date) return '';
+            const d = date.toDate ? date.toDate() : new Date(date);
+            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+
+        function showLoading(message) {
+            document.getElementById('loadingMessage').textContent = message;
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                overlay.style.display = 'none';
+            }
+        }
+
+        function forceHideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                overlay.style.display = 'none';
+                overlay.style.visibility = 'hidden';
+            }
+        }
+
+        function showSuccess(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification success';
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">&times;</button>
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4caf50;
+                color: white;
+                padding: 1rem;
+                border-radius: 5px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                max-width: 300px;
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        function showError(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification error';
+            notification.innerHTML = `
+                <i class="fas fa-exclamation-circle"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">&times;</button>
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #f44336;
+                color: white;
+                padding: 1rem;
+                border-radius: 5px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                max-width: 300px;
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 8000);
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const newMessageModal = document.getElementById('newMessageModal');
+            const notificationModal = document.getElementById('notificationModal');
+            
+            if (event.target === newMessageModal) {
+                closeNewMessageModal();
+            }
+            if (event.target === notificationModal) {
+                this.closest('.modal').remove();
+            }
+        }
+
+        // Real-time messaging functionality
+        function startRealTimeMessaging() {
+            if (realTimeListener) {
+                realTimeListener();
+            }
+            
+            realTimeListener = db.collection('messages')
+                .orderBy('sentAt', 'desc')
+                .limit(50)
+                .onSnapshot(snapshot => {
+                    snapshot.docChanges().forEach(change => {
+                        if (change.type === 'added') {
+                            const newMessage = { id: change.doc.id, ...change.doc.data() };
+                            handleNewMessage(newMessage);
+                        }
+                    });
+                }, error => {
+                    console.error('Real-time messaging error:', error);
+                });
+        }
+
+        function handleNewMessage(message) {
+            // Add new message to the messageData array
+            messageData.unshift(message);
+            
+            // Update UI if we're currently viewing messages
+            if (currentView === 'messages') {
+                displayMessages();
+            }
+            
+            // Show notification for new messages
+            if (message.sentBy !== 'admin') {
+                showNotification(`New message from ${getContactName(message.sentBy)}`);
+            }
+        }
+
+        function getContactName(contactId) {
+            const staff = staffData.find(s => s.id === contactId);
+            const customer = customerData.find(c => c.id === contactId);
+            return staff ? staff.name : customer ? customer.name : 'Unknown';
+        }
+
+        function showNotification(message) {
+            // Create a simple notification
+            const notification = document.createElement('div');
+            notification.className = 'notification-toast';
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas fa-bell"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+     
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('#nav-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                document.addEventListener('click', function(event) {
+                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+                    if (!isClickInside && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && nav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                const navItems = navLinks.querySelectorAll('a');
+                navItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (nav.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            nav.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+           }, 5000);
+        }
+
+        function stopRealTimeMessaging() {
+            if (realTimeListener) {
+                realTimeListener();
+                realTimeListener = null;
+            }
+        }
+
+        // Hamburger menu functionality
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.admin-nav');
+            
+            if (!hamburger.contains(event.target) &amp;&amp; !nav.contains(event.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth &gt; 768) {
+                const hamburger = document.querySelector('.hamburger');
+                const nav = document.querySelector('.admin-nav');
+                
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+    
+
+
+</body></html>

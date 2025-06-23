@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Dashboard - Holliday's Lawn &amp; Garden</title>
+<meta content="Admin dashboard for Holliday Lawn &amp; Garden management system" name="description"/>
+<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
+<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="assets/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="site.webmanifest" rel="manifest"/>
+<meta content="#2e7d32" name="theme-color"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #222;
+        }
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            padding: 1.5rem 2rem 1.5rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .admin-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .admin-header .logo img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+        }
+        .admin-header .admin-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .admin-header .admin-nav a {
+            color: #2c5530;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+        .admin-header .admin-nav a:hover {
+            color: #4caf50;
+        }
+        .admin-header .admin-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        .admin-header .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .admin-header .btn-logout {
+            background: #222;
+            color: #fff;
+        }
+        .admin-header .btn-logout:hover {
+            background: #111;
+        }
+        .admin-header .btn-refresh {
+            background: #4caf50;
+            color: #fff;
+        }
+        .admin-header .btn-refresh:hover {
+            background: #388e3c;
+        }
+        .dashboard-main {
+            max-width: 1200px;
+            margin: 2.5rem auto 0 auto;
+            padding: 0 2rem 2rem 2rem;
+        }
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 2rem;
+        }
+        .dashboard-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(44,85,48,0.07);
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.2rem;
+            transition: box-shadow 0.2s, transform 0.2s;
+            border: 1px solid #e0e0e0;
+        }
+        .dashboard-card:hover {
+            box-shadow: 0 8px 32px rgba(44,85,48,0.13);
+            transform: translateY(-4px) scale(1.02);
+        }
+        .dashboard-card .card-icon {
+            font-size: 2.2rem;
+            color: #4caf50;
+            margin-bottom: 0.5rem;
+        }
+        .dashboard-card .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 0.5rem;
+        }
+        .dashboard-card .card-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .dashboard-card .card-btn {
+            background: #2c5530;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .dashboard-card .card-btn:hover {
+            background: #4caf50;
+            color: #fff;
+        }
+        .dashboard-footer {
+            background: #222;
+            color: #fff;
+            padding: 2rem 0 1rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        .dashboard-footer .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+        .dashboard-footer .footer-section {
+            flex: 1 1 200px;
+            min-width: 180px;
+            text-align: left;
+        }
+        .dashboard-footer h3 {
+            color: #4caf50;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        .dashboard-footer a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .dashboard-footer a:hover {
+            color: #4caf50;
+        }
+        @media (max-width: 700px) {
+            .dashboard-main {
+                padding: 0 0.5rem 2rem 0.5rem;
+            }
+            .dashboard-title {
+                font-size: 2rem;
+                text-align: center;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .dashboard-card {
+                padding: 1.5rem 1rem;
+            }
+            .dashboard-card .card-actions {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            .dashboard-card .card-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .dashboard-footer .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 0 1rem;
+            }
+            .admin-header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .admin-header .logo {
+                flex: 1;
+                min-width: 0;
+            }
+            .admin-header .logo img {
+                height: 40px;
+            }
+            .admin-header .logo span {
+                font-size: 1.1rem;
+            }
+            .admin-header .admin-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                order: 3;
+                width: 100%;
+            }
+            
+            .admin-header .admin-nav.active {
+                display: flex;
+            }
+            
+            .admin-header .hamburger {
+                display: flex;
+                order: 2;
+            }
+            
+            .admin-header .admin-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+                order: 1;
+            }
+            .admin-header .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .dashboard-main {
+                padding: 0 0.25rem 1.5rem 0.25rem;
+            }
+            .dashboard-title {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+            .dashboard-card {
+                padding: 1.25rem 0.75rem;
+            }
+            .admin-header {
+                padding: 0.75rem;
+            }
+            .admin-header .logo span {
+                font-size: 1rem;
+            }
+            .admin-header .btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.85rem;
+            }
+        }
+        
+        /* Mobile menu styles */
+        .admin-header .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+        }
+        
+        .admin-header .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #2c5530;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .admin-header .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .admin-header .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+    </style>
+<style>
+        /* Mobile Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            z-index: 1000;
+            position: relative;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            margin-right: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #2e7d32;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                z-index: 1000;
+                visibility: hidden;
+                opacity: 0;
+                transform: translateY(-100%);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                pointer-events: none;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .nav-links a {
+                font-size: 1.75rem;
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: center;
+                transition: all 0.3s ease;
+                position: relative;
+                color: #333333;
+                font-weight: 600;
+            }
+
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background: #2e7d32;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(-50%);
+            }
+
+            .nav-links a:hover::after,
+            .nav-links a.active::after {
+                width: 60%;
+            }
+
+            .nav-links a:hover {
+                color: #2e7d32;
+                transform: translateY(-2px);
+            }
+
+            body.menu-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Prevent text selection during menu transitions */
+        .nav-links {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Ensure smooth scrolling on iOS */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+<style>
+            /* Button font fixes */
+            button, .btn, .cta-button, .submit-button {
+                font-family: "Montserrat", "Inter", system-ui, sans-serif !important;
+            }
+            
+            /* Responsive navigation fixes */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    background: var(--color-primary, #4caf50);
+                    padding: 1rem;
+                    flex-direction: column;
+                    align-items: center;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+                
+                .nav-links.active {
+                    display: flex;
+                }
+                
+                .hamburger {
+                    display: block;
+                }
+            }
+            
+            /* Footer fixes */
+            .footer {
+                background: var(--color-primary, #4caf50);
+                color: white;
+                padding: 2rem 0;
+                margin-top: 3rem;
+            }
+            
+            .footer-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 1rem;
+            }
+            
+            .footer-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .footer-section h3 {
+                margin-bottom: 1rem;
+                font-family: "Montserrat", sans-serif;
+            }
+            
+            .footer-section ul {
+                list-style: none;
+                padding: 0;
+            }
+            
+            .footer-section ul li {
+                margin-bottom: 0.5rem;
+            }
+            
+            .footer-section ul li a {
+                color: white;
+                text-decoration: none;
+            }
+            
+            .footer-section ul li a:hover {
+                text-decoration: underline;
+            }
+            
+            .footer-bottom {
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+                padding-top: 1rem;
+                text-align: center;
+            }
+            </style>
+</head>
+<body>
+<header class="main-header"><a aria-label="Link" class="logo link-with-loading link-with-loading" href="index.html"><picture><source srcset="assets/images/hollidays-logo.webp" type="image/webp"/><img alt="Holliday's Lawn &amp; Garden Logo" loading="lazy" src="assets/images/hollidays-logo.webp"/></picture></a><nav aria-label="Main navigation" id="nav-menu"><ul class="nav-links"><li><a aria-label="Link" class="link-with-loading link-with-loading" href="index.html">Home</a></li><li><a aria-label="Link" class="link-with-loading link-with-loading" href="about.html">Ab</a></li></ul></nav></header>
+<main class="dashboard-main">
+<div class="dashboard-title">Welcome, Admin</div>
+<div class="dashboard-grid">
+<div class="dashboard-card">
+<div class="card-icon"><i class="fas fa-calendar-check"></i></div>
+<div class="card-title">Appointments</div>
+<div class="card-actions">
+<button class="card-btn" onclick="window.location.href='appointments.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>View All</button>
+<button class="card-btn" onclick="window.location.href='add-appointment.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>Add New</button>
+</div>
+</div>
+<div class="dashboard-card">
+<div class="card-icon"><i class="fas fa-users"></i></div>
+<div class="card-title">Customers</div>
+<div class="card-actions">
+<button class="card-btn" onclick="window.location.href='customers.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>View All</button>
+<button class="card-btn" onclick="window.location.href='add-customer.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>Add New</button>
+</div>
+</div>
+<div class="dashboard-card">
+<div class="card-icon"><i class="fas fa-credit-card"></i></div>
+<div class="card-title">Payments</div>
+<div class="card-actions">
+<button class="card-btn" onclick="window.location.href='payments.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>View All</button>
+<button class="card-btn" onclick="window.location.href='add-payment.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>New Payment</button>
+</div>
+</div>
+<div class="dashboard-card">
+<div class="card-icon"><i class="fas fa-chart-line"></i></div>
+<div class="card-title">Analytics</div>
+<div class="card-actions">
+<button class="card-btn" onclick="window.location.href='analytics.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>View Analytics</button>
+<button class="card-btn" onclick="window.location.href='generate-report.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>Generate Report</button>
+</div>
+</div>
+<div class="dashboard-card">
+<div class="card-icon"><i class="fas fa-boxes"></i></div>
+<div class="card-title">Inventory</div>
+<div class="card-actions">
+<button class="card-btn" onclick="window.location.href='inventory.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>Manage Inventory</button>
+<button class="card-btn" onclick="window.location.href='schedule-maintenance.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>Schedule Maintenance</button>
+</div>
+</div>
+<div class="dashboard-card">
+<div class="card-icon"><i class="fas fa-user-tie"></i></div>
+<div class="card-title">Staff</div>
+<div class="card-actions">
+<button class="card-btn" onclick="window.location.href='staff.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>View Staff</button>
+<button class="card-btn" onclick="window.location.href='add-staff.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>Add Staff</button>
+</div>
+</div>
+<div class="dashboard-card">
+<div class="card-icon"><i class="fas fa-envelope"></i></div>
+<div class="card-title">Communication</div>
+<div class="card-actions">
+<button class="card-btn" onclick="window.location.href='messages.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>View Messages</button>
+<button class="card-btn" onclick="window.location.href='bulk-message.html'" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>Send Bulk Message</button>
+</div>
+</div>
+</div>
+</main>
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+<div class="footer-section">
+<h3>Contact Us</h3>
+<ul>
+<li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
+<li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="about.html">About Us</a></li>
+<li><a href="services.html">Services</a></li>
+<li><a href="education.html">Education</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Customer Portal</h3>
+<ul>
+<li><a href="login.html">Login</a></li>
+<li><a href="register.html">Register</a></li>
+<li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+<li><a href="customer-dashboard.html">Dashboard</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Legal</h3>
+<ul>
+<li><a href="privacy-policy.html">Privacy Policy</a></li>
+<li><a href="terms.html">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="copyright">
+<p>© 2024 Holliday's Lawn &amp; Garden. All rights reserved.</p>
+</div>
+</div>
+</div>
+</footer>
+<!-- Mobile Navigation Menu -->
+<nav class="nav-menu">
+<ul>
+<li><a href="#" id="mobileAppointmentsBtn"><i class="fas fa-calendar"></i> Appointments</a></li>
+<li><a href="#" id="mobileCustomersBtn">&lt;i clas</a></li></ul></nav></body></html>
