@@ -547,14 +547,90 @@
     }
 
     @media (min-width: 769px) {
+        .main-header {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 0 2.5rem !important;
+            min-height: 70px !important;
+            height: 80px !important;
+        }
+        .header-row {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            flex: 0 0 auto !important;
+            min-width: 0 !important;
+            margin-right: 2rem !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            background: none !important;
+        }
+        .logo {
+            display: flex !important;
+            align-items: center !important;
+            margin-right: 2.5rem !important;
+        }
+        .logo img {
+            height: 54px !important;
+            width: auto !important;
+            margin: 0 !important;
+        }
+        #nav-menu {
+            display: flex !important;
+            align-items: center !important;
+            flex: 1 1 auto !important;
+            justify-content: center !important;
+            background: none !important;
+            position: static !important;
+            min-width: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+        }
+        .nav-links {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 1.5rem !important;
+            position: static !important;
+            background: none !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            width: auto !important;
+            top: auto !important;
+            left: auto !important;
+            right: auto !important;
+            margin: 0 !important;
+        }
+        .nav-links li {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .nav-links a {
+            color: var(--text-dark) !important;
+            padding: 0.5rem 1rem !important;
+            font-size: 1.08rem !important;
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            background: none !important;
+            border-radius: 4px !important;
+            transition: background 0.2s, color 0.2s !important;
+            display: block !important;
+        }
+        .nav-links a:hover {
+            color: var(--primary-green) !important;
+            background: #f2f2f2 !important;
+        }
         .nav-links .login-buttons {
             display: none !important;
         }
         #nav-menu .login-buttons {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            margin-left: 2rem;
+            display: flex !important;
+            gap: 1rem !important;
+            align-items: center !important;
+            margin-left: 2rem !important;
         }
         .hamburger { display: none !important; }
     }
@@ -889,6 +965,10 @@
  <script type="module" src="assets/js/firebase-config.js"></script>
  <script type="module" src="assets/js/main.js"></script>
  <script>
+// Single, robust hamburger menu script
+// Ensures the hamburger menu works and does not clear or overwrite the header
+// Place this after all other scripts
+
 document.addEventListener('DOMContentLoaded', function() {
   var hamburger = document.querySelector('.hamburger');
   var navLinks = document.querySelector('.nav-links');
@@ -898,7 +978,6 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
   hamburger.addEventListener('click', function() {
-    console.log('Hamburger clicked');
     var expanded = hamburger.getAttribute('aria-expanded') === 'true';
     hamburger.classList.toggle('active');
     navLinks.classList.toggle('active');
@@ -921,6 +1000,99 @@ document.addEventListener('DOMContentLoaded', function() {
  var yearSpan = document.getElementById('current-year');
  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
  </script>
+ <script src="test-hamburger-menu.js"></script>
+ 
+ <!-- Critical CSS Override for Desktop Navigation -->
+ <style>
+ /* Force navigation to show in desktop view */
+ @media (min-width: 769px) {
+     .main-header {
+         flex-direction: row !important;
+         align-items: center !important;
+         justify-content: space-between !important;
+         padding: 0 2.5rem !important;
+         min-height: 70px !important;
+         height: 80px !important;
+     }
+     .header-row {
+         display: flex !important;
+         flex-direction: row !important;
+         align-items: center !important;
+         flex: 0 0 auto !important;
+         min-width: 0 !important;
+         margin-right: 2rem !important;
+         padding: 0 !important;
+         box-shadow: none !important;
+         background: none !important;
+     }
+     .logo {
+         display: flex !important;
+         align-items: center !important;
+         margin-right: 2.5rem !important;
+     }
+     .logo img {
+         height: 54px !important;
+         width: auto !important;
+         margin: 0 !important;
+     }
+     #nav-menu {
+         display: flex !important;
+         align-items: center !important;
+         flex: 1 1 auto !important;
+         justify-content: center !important;
+         background: none !important;
+         position: static !important;
+         min-width: 0 !important;
+         padding: 0 !important;
+         box-shadow: none !important;
+     }
+     .nav-links {
+         display: flex !important;
+         flex-direction: row !important;
+         align-items: center !important;
+         justify-content: center !important;
+         gap: 1.5rem !important;
+         position: static !important;
+         background: none !important;
+         padding: 0 !important;
+         box-shadow: none !important;
+         width: auto !important;
+         top: auto !important;
+         left: auto !important;
+         right: auto !important;
+         margin: 0 !important;
+     }
+     .nav-links li {
+         margin: 0 !important;
+         padding: 0 !important;
+     }
+     .nav-links a {
+         color: var(--text-dark) !important;
+         padding: 0.5rem 1rem !important;
+         font-size: 1.08rem !important;
+         font-weight: 500 !important;
+         text-decoration: none !important;
+         background: none !important;
+         border-radius: 4px !important;
+         transition: background 0.2s, color 0.2s !important;
+         display: block !important;
+     }
+     .nav-links a:hover {
+         color: var(--primary-green) !important;
+         background: #f2f2f2 !important;
+     }
+     .nav-links .login-buttons {
+         display: none !important;
+     }
+     #nav-menu .login-buttons {
+         display: flex !important;
+         gap: 1rem !important;
+         align-items: center !important;
+         margin-left: 2rem !important;
+     }
+     .hamburger { display: none !important; }
+ }
+ </style>
 </body>
 </html>
 
