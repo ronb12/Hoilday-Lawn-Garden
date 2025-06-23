@@ -14,29 +14,29 @@ const mainPages = [
     'schedule-maintenance.html', 'bulk-message.html', 'sitemap.html'
 ];
 
-function removeDuplicates(filePath) {
+function removeEmptyStyles(filePath) {
     try {
         let content = fs.readFileSync(filePath, 'utf8');
         let updated = false;
         
-        // Remove duplicate "Hero Section" comments
-        const duplicateHeroRegex = /<!-- Hero Section -->\s*\n\s*<!-- Hero Section -->/gi;
-        if (content.match(duplicateHeroRegex)) {
-            content = content.replace(duplicateHeroRegex, '<!-- Hero Section -->');
+        // Remove empty style tags
+        const emptyStyleRegex = /<style>\s*<\/style>/gi;
+        if (content.match(emptyStyleRegex)) {
+            content = content.replace(emptyStyleRegex, '');
             updated = true;
         }
         
-        // Remove any extra blank lines
-        const extraBlankLines = /\n\s*\n\s*\n/g;
-        if (content.match(extraBlankLines)) {
-            content = content.replace(extraBlankLines, '\n\n');
+        // Remove style tags with only whitespace
+        const whitespaceStyleRegex = /<style>\s*{\s*}\s*<\/style>/gi;
+        if (content.match(whitespaceStyleRegex)) {
+            content = content.replace(whitespaceStyleRegex, '');
             updated = true;
         }
         
-        // Ensure proper spacing between header and hero
-        const headerHeroSpacing = /<\/header>\s*\n\s*\n\s*<!-- Hero Section -->/gi;
-        if (content.match(headerHeroSpacing)) {
-            content = content.replace(headerHeroSpacing, '</header>\n\n<!-- Hero Section -->');
+        // Remove multiple consecutive empty lines
+        const multipleEmptyLines = /\n\s*\n\s*\n/g;
+        if (content.match(multipleEmptyLines)) {
+            content = content.replace(multipleEmptyLines, '\n\n');
             updated = true;
         }
         
@@ -45,7 +45,7 @@ function removeDuplicates(filePath) {
             console.log(`✅ Cleaned: ${filePath}`);
             return true;
         } else {
-            console.log(`⏭️  No duplicates found: ${filePath}`);
+            console.log(`⏭️  No empty styles found: ${filePath}`);
             return false;
         }
         
@@ -56,7 +56,7 @@ function removeDuplicates(filePath) {
 }
 
 // Main execution
-console.log('🧹 Starting final duplicate cleanup...\n');
+console.log('🧹 Starting final empty style cleanup...\n');
 
 let cleanedCount = 0;
 let totalCount = 0;
@@ -64,7 +64,7 @@ let totalCount = 0;
 mainPages.forEach(page => {
     if (fs.existsSync(page)) {
         totalCount++;
-        if (removeDuplicates(page)) {
+        if (removeEmptyStyles(page)) {
             cleanedCount++;
         }
     } else {
@@ -78,8 +78,8 @@ console.log(`   Pages cleaned: ${cleanedCount}`);
 console.log(`   Pages unchanged: ${totalCount - cleanedCount}`);
 
 if (cleanedCount > 0) {
-    console.log('\n🎉 Final duplicate cleanup complete!');
-    console.log('All headers are now perfectly clean with no duplicates.');
+    console.log('\n🎉 Final empty style cleanup complete!');
+    console.log('All pages now have clean CSS without empty style tags.');
 } else {
-    console.log('\n✨ All headers are already perfectly clean!');
+    console.log('\n✨ All pages already have clean CSS!');
 } 

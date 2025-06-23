@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// Main pages to update (excluding utility/payment pages)
+// Main pages to update
 const mainPages = [
     'index.html', 'about.html', 'services.html', 'education.html', 'faq.html', 
     'contact.html', 'gallery.html', 'testimonials.html', 'privacy.html', 'terms.html',
@@ -21,21 +21,47 @@ function finalCleanup(filePath) {
         
         // Remove duplicate "Hero Section" comments
         const duplicateHeroRegex = /<!-- Hero Section -->\s*\n\s*<!-- Hero Section -->/gi;
-        content = content.replace(duplicateHeroRegex, '<!-- Hero Section -->');
+        if (content.match(duplicateHeroRegex)) {
+            content = content.replace(duplicateHeroRegex, '<!-- Hero Section -->');
+            updated = true;
+        }
         
-        // Remove any extra blank lines
-        const extraBlankLines = /\n\s*\n\s*\n/g;
-        content = content.replace(extraBlankLines, '\n\n');
+        // Remove empty style tags
+        const emptyStyleRegex = /<style>\s*<\/style>/gi;
+        if (content.match(emptyStyleRegex)) {
+            content = content.replace(emptyStyleRegex, '');
+            updated = true;
+        }
+        
+        // Remove style tags with only whitespace
+        const whitespaceStyleRegex = /<style>\s*{\s*}\s*<\/style>/gi;
+        if (content.match(whitespaceStyleRegex)) {
+            content = content.replace(whitespaceStyleRegex, '');
+            updated = true;
+        }
+        
+        // Remove duplicate main tags
+        const duplicateMainRegex = /<main role="main">\s*\n\s*<!-- Hero Section -->\s*\n\s*<main role="main">/gi;
+        if (content.match(duplicateMainRegex)) {
+            content = content.replace(duplicateMainRegex, '<main role="main">\n<!-- Hero Section -->');
+            updated = true;
+        }
+        
+        // Remove multiple consecutive empty lines
+        const multipleEmptyLines = /\n\s*\n\s*\n/g;
+        if (content.match(multipleEmptyLines)) {
+            content = content.replace(multipleEmptyLines, '\n\n');
+            updated = true;
+        }
         
         // Ensure proper spacing between header and hero
-        const headerHeroSpacing = /<\/header>\s*\n\s*\n\s*<!-- Hero Section -->/gi;
-        content = content.replace(headerHeroSpacing, '</header>\n\n<!-- Hero Section -->');
+        const headerHeroSpacing = /<\/header>\s*\n\s*\n\s*<!-- Main Content -->/gi;
+        if (content.match(headerHeroSpacing)) {
+            content = content.replace(headerHeroSpacing, '</header>\n\n<!-- Main Content -->');
+            updated = true;
+        }
         
-        // Remove any remaining extra spaces
-        const multipleSpaces = /[ ]{2,}/g;
-        content = content.replace(multipleSpaces, ' ');
-        
-        if (content !== fs.readFileSync(filePath, 'utf8')) {
+        if (updated) {
             fs.writeFileSync(filePath, content, 'utf8');
             console.log(`✅ Cleaned: ${filePath}`);
             return true;
@@ -74,7 +100,7 @@ console.log(`   Pages unchanged: ${totalCount - cleanedCount}`);
 
 if (cleanedCount > 0) {
     console.log('\n🎉 Final header cleanup complete!');
-    console.log('All headers are now perfectly clean with no duplicates or extra spacing.');
+    console.log('All headers are now perfectly clean and consistent.');
 } else {
     console.log('\n✨ All headers are already perfectly clean!');
 } 
