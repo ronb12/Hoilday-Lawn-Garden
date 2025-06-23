@@ -505,6 +505,99 @@
             gap: 1.5rem;
         }
     }
+
+    /* Loading Spinner Styles */
+    .loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.3s ease;
+    }
+
+    .loading.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid var(--primary-green);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Error Message Styles */
+    .error-message {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #f44336;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-medium);
+        z-index: 10000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+    }
+
+    .error-message.show {
+        transform: translateX(0);
+    }
+
+    /* Hero Overlay */
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+
+    /* Footer Contact Styles */
+    .footer-contact {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .footer-contact span {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-contact a {
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .footer-contact a:hover {
+        text-decoration: underline;
+    }
+
+    .footer-contact i {
+        width: 16px;
+        text-align: center;
+    }
  </style>
 </head>
 
@@ -599,7 +692,7 @@
  <!-- Footer -->
  <footer class="footer" role="contentinfo">
  <div class="footer-content">
- <div class="footer-main footer-grid">
+ <div class="footer-grid">
  <div class="footer-section">
  <h3>Contact Us</h3>
  <div class="footer-contact">
