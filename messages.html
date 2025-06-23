@@ -9,1966 +9,1966 @@
 <link href="assets/css/main.css" rel="stylesheet"/>
 <link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
 <style>
-        body { padding-top: 100px; margin: 0; }
-        
-        .admin-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #fff;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .admin-header .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .admin-header .logo img {
-            height: 48px;
-            width: auto;
-            object-fit: contain;
-        }
-        
-        .admin-header .admin-nav {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-        
-        .admin-header .admin-nav a {
-            color: #2c5530;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: color 0.2s;
-        }
-        
-        .admin-header .admin-nav a:hover {
-            color: #4caf50;
-        }
-        
-        .admin-header .admin-actions {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .admin-header .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            border: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            min-width: 100px;
-            justify-content: center;
-            text-decoration: none;
-        }
-        
-        .admin-header .btn-logout {
-            background: #222;
-            color: #fff;
-        }
-        
-        .admin-header .btn-logout:hover {
-            background: #111;
-        }
-        
-        .admin-header .btn-dashboard {
-            background: #4caf50;
-            color: #fff;
-        }
-        
-        .admin-header .btn-dashboard:hover {
-            background: #388e3c;
-        }
-        
-        /* Mobile menu styles */
-        .admin-header .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 0.5rem;
-            background: none;
-            border: none;
-        }
-        
-        .admin-header .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #2c5530;
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-        
-        .admin-header .hamburger.active span:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-        
-        .admin-header .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .admin-header .hamburger.active span:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-        
-        @media (max-width: 768px) {
-            .admin-header .admin-nav {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: #fff;
-                flex-direction: column;
-                padding: 1rem;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            }
-            
-            .admin-header .admin-nav.active {
-                display: flex;
-            }
-            
-            .admin-header .hamburger {
-                display: flex;
-            }
-            
-            .admin-header .admin-actions {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-        }
-        
-        .communication-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        .communication-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .communication-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #2c5530;
-            margin: 0;
-        }
-        
-        .communication-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .btn-primary {
-            background: #4caf50;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: background 0.2s;
-        }
-        
-        .btn-primary:hover {
-            background: #45a049;
-        }
-        
-        .btn-secondary {
-            background: #2196f3;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: background 0.2s;
-        }
-        
-        .btn-secondary:hover {
-            background: #1976d2;
-        }
-        
-        .communication-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #4caf50;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            color: #666;
-            font-weight: 600;
-        }
-        
-        .communication-layout {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 2rem;
-            height: 600px;
-        }
-        
-        .sidebar {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .sidebar-header {
-            background: #2c5530;
-            color: white;
-            padding: 1rem;
-            font-weight: 600;
-        }
-        
-        .sidebar-tabs {
-            display: flex;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .sidebar-tab {
-            flex: 1;
-            padding: 1rem;
-            text-align: center;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-        }
-        
-        .sidebar-tab.active {
-            border-bottom-color: #4caf50;
-            background: #f8f9fa;
-        }
-        
-        .sidebar-content {
-            padding: 1rem;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.2s;
-            margin-bottom: 0.5rem;
-        }
-        
-        .contact-item:hover {
-            background: #f8f9fa;
-        }
-        
-        .contact-item.active {
-            background: #e8f5e8;
-            border-left: 3px solid #4caf50;
-        }
-        
-        .contact-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #4caf50;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-        }
-        
-        .contact-info {
-            flex: 1;
-        }
-        
-        .contact-name {
-            font-weight: 600;
-            color: #333;
-            margin: 0;
-        }
-        
-        .contact-role {
-            font-size: 0.8rem;
-            color: #666;
-            margin: 0;
-        }
-        
-        .main-content {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .chat-header {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .chat-title {
-            font-weight: 600;
-            color: #333;
-            margin: 0;
-        }
-        
-        .chat-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .btn-icon {
-            background: none;
-            border: none;
-            padding: 0.5rem;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background 0.2s;
-        }
-        
-        .btn-icon:hover {
-            background: #e9ecef;
-        }
-        
-        .chat-messages {
-            flex: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            max-height: 400px;
-        }
-        
-        .message {
-            margin-bottom: 1rem;
-            display: flex;
-            gap: 0.75rem;
-        }
-        
-        .message.sent {
-            flex-direction: row-reverse;
-        }
-        
-        .message-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: #4caf50;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.8rem;
-        }
-        
-        .message-content {
-            max-width: 70%;
-        }
-        
-        .message-bubble {
-            background: #f8f9fa;
-            padding: 0.75rem;
-            border-radius: 15px;
-            border-bottom-left-radius: 5px;
-        }
-        
-        .message.sent .message-bubble {
-            background: #4caf50;
-            color: white;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 5px;
-        }
-        
-        .message-time {
-            font-size: 0.7rem;
-            color: #666;
-            margin-top: 0.25rem;
-        }
-        
-        .message.sent .message-time {
-            text-align: right;
-        }
-        
-        .chat-input {
-            padding: 1rem;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 0.75rem;
-        }
-        
-        .chat-input input {
-            flex: 1;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            outline: none;
-        }
-        
-        .chat-input input:focus {
-            border-color: #4caf50;
-        }
-        
-        .btn-send {
-            background: #4caf50;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        
-        .btn-send:hover {
-            background: #45a049;
-        }
-        
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #2c5530;
-            margin: 0;
-        }
-        
-        .close {
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .close:hover {
-            color: #000;
-        }
-        
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #333;
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-        
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-            margin-top: 1.5rem;
-        }
-        
-        .btn-cancel {
-            background: #6c757d;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        
-        .btn-save {
-            background: #4caf50;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        
-        .btn-cancel:hover {
-            background: #5a6268;
-        }
-        
-        .btn-save:hover {
-            background: #45a049;
-        }
-        
-        /* Loading overlay */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            color: white;
-        }
-        
-        .loading-overlay.hidden {
-            display: none;
-        }
-        
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #4caf50;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .communication-container {
-                padding: 1rem;
-            }
-            
-            .communication-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .communication-layout {
-                grid-template-columns: 1fr;
-                height: auto;
-            }
-            
-            .sidebar {
-                order: 2;
-            }
-            
-            .main-content {
-                order: 1;
-            }
-        }
-        
-        /* Notification toast styles */
-        .notification-toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #2c5530;
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 10000;
-            animation: slideIn 0.3s ease-out;
-        }
-        
-        .notification-content {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .notification-content i {
-            color: #4caf50;
-        }
-        
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-    </style>
+ body { padding-top: 100px; margin: 0; }
+ 
+ .admin-header {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ background: #fff;
+ padding: 1.5rem 2rem;
+ box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+ position: sticky;
+ top: 0;
+ z-index: 100;
+ }
+ 
+ .admin-header .logo {
+ display: flex;
+ align-items: center;
+ gap: 1rem;
+ }
+ 
+ .admin-header .logo img {
+ height: 48px;
+ width: auto;
+ object-fit: contain;
+ }
+ 
+ .admin-header .admin-nav {
+ display: flex;
+ gap: 2rem;
+ align-items: center;
+ }
+ 
+ .admin-header .admin-nav a {
+ color: #2c5530;
+ text-decoration: none;
+ font-weight: 600;
+ font-size: 1rem;
+ transition: color 0.2s;
+ }
+ 
+ .admin-header .admin-nav a:hover {
+ color: #4caf50;
+ }
+ 
+ .admin-header .admin-actions {
+ display: flex;
+ gap: 1rem;
+ }
+ 
+ .admin-header .btn {
+ padding: 0.75rem 1.5rem;
+ border-radius: 6px;
+ border: none;
+ font-weight: 600;
+ font-size: 0.9rem;
+ cursor: pointer;
+ transition: background 0.2s, color 0.2s;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ min-width: 100px;
+ justify-content: center;
+ text-decoration: none;
+ }
+ 
+ .admin-header .btn-logout {
+ background: #222;
+ color: #fff;
+ }
+ 
+ .admin-header .btn-logout:hover {
+ background: #111;
+ }
+ 
+ .admin-header .btn-dashboard {
+ background: #4caf50;
+ color: #fff;
+ }
+ 
+ .admin-header .btn-dashboard:hover {
+ background: #388e3c;
+ }
+ 
+ /* Mobile menu styles */
+ .admin-header .hamburger {
+ display: none;
+ flex-direction: column;
+ cursor: pointer;
+ padding: 0.5rem;
+ background: none;
+ border: none;
+ }
+ 
+ .admin-header .hamburger span {
+ width: 25px;
+ height: 3px;
+ background: #2c5530;
+ margin: 3px 0;
+ transition: 0.3s;
+ }
+ 
+ .admin-header .hamburger.active span:nth-child(1) {
+ transform: rotate(-45deg) translate(-5px, 6px);
+ }
+ 
+ .admin-header .hamburger.active span:nth-child(2) {
+ opacity: 0;
+ }
+ 
+ .admin-header .hamburger.active span:nth-child(3) {
+ transform: rotate(45deg) translate(-5px, -6px);
+ }
+ 
+ @media (max-width: 768px) {
+ .admin-header .admin-nav {
+ display: none;
+ position: absolute;
+ top: 100%;
+ left: 0;
+ right: 0;
+ background: #fff;
+ flex-direction: column;
+ padding: 1rem;
+ box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+ }
+ 
+ .admin-header .admin-nav.active {
+ display: flex;
+ }
+ 
+ .admin-header .hamburger {
+ display: flex;
+ }
+ 
+ .admin-header .admin-actions {
+ flex-direction: column;
+ gap: 0.5rem;
+ }
+ }
+ 
+ .communication-container {
+ max-width: 1400px;
+ margin: 0 auto;
+ padding: 2rem;
+ }
+ 
+ .communication-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 2rem;
+ flex-wrap: wrap;
+ gap: 1rem;
+ }
+ 
+ .communication-title {
+ font-size: 2rem;
+ font-weight: 700;
+ color: #2c5530;
+ margin: 0;
+ }
+ 
+ .communication-actions {
+ display: flex;
+ gap: 1rem;
+ flex-wrap: wrap;
+ }
+ 
+ .btn-primary {
+ background: #4caf50;
+ color: white;
+ border: none;
+ padding: 0.75rem 1.5rem;
+ border-radius: 5px;
+ cursor: pointer;
+ font-weight: 600;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ transition: background 0.2s;
+ }
+ 
+ .btn-primary:hover {
+ background: #45a049;
+ }
+ 
+ .btn-secondary {
+ background: #2196f3;
+ color: white;
+ border: none;
+ padding: 0.75rem 1.5rem;
+ border-radius: 5px;
+ cursor: pointer;
+ font-weight: 600;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ transition: background 0.2s;
+ }
+ 
+ .btn-secondary:hover {
+ background: #1976d2;
+ }
+ 
+ .communication-stats {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ gap: 1rem;
+ margin-bottom: 2rem;
+ }
+ 
+ .stat-card {
+ background: white;
+ padding: 1.5rem;
+ border-radius: 8px;
+ box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+ text-align: center;
+ }
+ 
+ .stat-number {
+ font-size: 2rem;
+ font-weight: 700;
+ color: #4caf50;
+ margin-bottom: 0.5rem;
+ }
+ 
+ .stat-label {
+ color: #666;
+ font-weight: 600;
+ }
+ 
+ .communication-layout {
+ display: grid;
+ grid-template-columns: 300px 1fr;
+ gap: 2rem;
+ height: 600px;
+ }
+ 
+ .sidebar {
+ background: white;
+ border-radius: 8px;
+ box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+ overflow: hidden;
+ }
+ 
+ .sidebar-header {
+ background: #2c5530;
+ color: white;
+ padding: 1rem;
+ font-weight: 600;
+ }
+ 
+ .sidebar-tabs {
+ display: flex;
+ border-bottom: 1px solid #eee;
+ }
+ 
+ .sidebar-tab {
+ flex: 1;
+ padding: 1rem;
+ text-align: center;
+ cursor: pointer;
+ border-bottom: 2px solid transparent;
+ transition: all 0.2s;
+ }
+ 
+ .sidebar-tab.active {
+ border-bottom-color: #4caf50;
+ background: #f8f9fa;
+ }
+ 
+ .sidebar-content {
+ padding: 1rem;
+ max-height: 500px;
+ overflow-y: auto;
+ }
+ 
+ .contact-item {
+ display: flex;
+ align-items: center;
+ gap: 0.75rem;
+ padding: 0.75rem;
+ border-radius: 5px;
+ cursor: pointer;
+ transition: background 0.2s;
+ margin-bottom: 0.5rem;
+ }
+ 
+ .contact-item:hover {
+ background: #f8f9fa;
+ }
+ 
+ .contact-item.active {
+ background: #e8f5e8;
+ border-left: 3px solid #4caf50;
+ }
+ 
+ .contact-avatar {
+ width: 40px;
+ height: 40px;
+ border-radius: 50%;
+ background: #4caf50;
+ color: white;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-weight: 600;
+ }
+ 
+ .contact-info {
+ flex: 1;
+ }
+ 
+ .contact-name {
+ font-weight: 600;
+ color: #333;
+ margin: 0;
+ }
+ 
+ .contact-role {
+ font-size: 0.8rem;
+ color: #666;
+ margin: 0;
+ }
+ 
+ .main-content {
+ background: white;
+ border-radius: 8px;
+ box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+ display: flex;
+ flex-direction: column;
+ }
+ 
+ .chat-header {
+ background: #f8f9fa;
+ padding: 1rem;
+ border-bottom: 1px solid #eee;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ }
+ 
+ .chat-title {
+ font-weight: 600;
+ color: #333;
+ margin: 0;
+ }
+ 
+ .chat-actions {
+ display: flex;
+ gap: 0.5rem;
+ }
+ 
+ .btn-icon {
+ background: none;
+ border: none;
+ padding: 0.5rem;
+ cursor: pointer;
+ border-radius: 4px;
+ transition: background 0.2s;
+ }
+ 
+ .btn-icon:hover {
+ background: #e9ecef;
+ }
+ 
+ .chat-messages {
+ flex: 1;
+ padding: 1rem;
+ overflow-y: auto;
+ max-height: 400px;
+ }
+ 
+ .message {
+ margin-bottom: 1rem;
+ display: flex;
+ gap: 0.75rem;
+ }
+ 
+ .message.sent {
+ flex-direction: row-reverse;
+ }
+ 
+ .message-avatar {
+ width: 35px;
+ height: 35px;
+ border-radius: 50%;
+ background: #4caf50;
+ color: white;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-weight: 600;
+ font-size: 0.8rem;
+ }
+ 
+ .message-content {
+ max-width: 70%;
+ }
+ 
+ .message-bubble {
+ background: #f8f9fa;
+ padding: 0.75rem;
+ border-radius: 15px;
+ border-bottom-left-radius: 5px;
+ }
+ 
+ .message.sent .message-bubble {
+ background: #4caf50;
+ color: white;
+ border-bottom-left-radius: 15px;
+ border-bottom-right-radius: 5px;
+ }
+ 
+ .message-time {
+ font-size: 0.7rem;
+ color: #666;
+ margin-top: 0.25rem;
+ }
+ 
+ .message.sent .message-time {
+ text-align: right;
+ }
+ 
+ .chat-input {
+ padding: 1rem;
+ border-top: 1px solid #eee;
+ display: flex;
+ gap: 0.75rem;
+ }
+ 
+ .chat-input input {
+ flex: 1;
+ padding: 0.75rem;
+ border: 1px solid #ddd;
+ border-radius: 20px;
+ outline: none;
+ }
+ 
+ .chat-input input:focus {
+ border-color: #4caf50;
+ }
+ 
+ .btn-send {
+ background: #4caf50;
+ color: white;
+ border: none;
+ padding: 0.75rem 1.5rem;
+ border-radius: 20px;
+ cursor: pointer;
+ font-weight: 600;
+ }
+ 
+ .btn-send:hover {
+ background: #45a049;
+ }
+ 
+ /* Modal styles */
+ .modal {
+ display: none;
+ position: fixed;
+ z-index: 1000;
+ left: 0;
+ top: 0;
+ width: 100%;
+ height: 100%;
+ background-color: rgba(0,0,0,0.5);
+ }
+ 
+ .modal-content {
+ background-color: white;
+ margin: 5% auto;
+ padding: 2rem;
+ border-radius: 8px;
+ width: 90%;
+ max-width: 600px;
+ max-height: 80vh;
+ overflow-y: auto;
+ }
+ 
+ .modal-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 1.5rem;
+ }
+ 
+ .modal-title {
+ font-size: 1.5rem;
+ font-weight: 600;
+ color: #2c5530;
+ margin: 0;
+ }
+ 
+ .close {
+ color: #aaa;
+ font-size: 28px;
+ font-weight: bold;
+ cursor: pointer;
+ }
+ 
+ .close:hover {
+ color: #000;
+ }
+ 
+ .form-group {
+ margin-bottom: 1rem;
+ }
+ 
+ .form-group label {
+ display: block;
+ margin-bottom: 0.5rem;
+ font-weight: 600;
+ color: #333;
+ }
+ 
+ .form-group input,
+ .form-group select,
+ .form-group textarea {
+ width: 100%;
+ padding: 0.75rem;
+ border: 1px solid #ddd;
+ border-radius: 4px;
+ font-size: 1rem;
+ box-sizing: border-box;
+ }
+ 
+ .form-actions {
+ display: flex;
+ gap: 1rem;
+ justify-content: flex-end;
+ margin-top: 1.5rem;
+ }
+ 
+ .btn-cancel {
+ background: #6c757d;
+ color: white;
+ border: none;
+ padding: 0.75rem 1.5rem;
+ border-radius: 4px;
+ cursor: pointer;
+ font-weight: 600;
+ }
+ 
+ .btn-save {
+ background: #4caf50;
+ color: white;
+ border: none;
+ padding: 0.75rem 1.5rem;
+ border-radius: 4px;
+ cursor: pointer;
+ font-weight: 600;
+ }
+ 
+ .btn-cancel:hover {
+ background: #5a6268;
+ }
+ 
+ .btn-save:hover {
+ background: #45a049;
+ }
+ 
+ /* Loading overlay */
+ .loading-overlay {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background: rgba(0, 0, 0, 0.7);
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ z-index: 10000;
+ color: white;
+ }
+ 
+ .loading-overlay.hidden {
+ display: none;
+ }
+ 
+ .loading-spinner {
+ width: 50px;
+ height: 50px;
+ border: 5px solid #f3f3f3;
+ border-top: 5px solid #4caf50;
+ border-radius: 50%;
+ animation: spin 1s linear infinite;
+ margin-bottom: 1rem;
+ }
+ 
+ @keyframes spin {
+ 0% { transform: rotate(0deg); }
+ 100% { transform: rotate(360deg); }
+ }
+ 
+ /* Responsive design */
+ @media (max-width: 768px) {
+ .communication-container {
+ padding: 1rem;
+ }
+ 
+ .communication-header {
+ flex-direction: column;
+ align-items: stretch;
+ }
+ 
+ .communication-layout {
+ grid-template-columns: 1fr;
+ height: auto;
+ }
+ 
+ .sidebar {
+ order: 2;
+ }
+ 
+ .main-content {
+ order: 1;
+ }
+ }
+ 
+ /* Notification toast styles */
+ .notification-toast {
+ position: fixed;
+ top: 20px;
+ right: 20px;
+ background: #2c5530;
+ color: white;
+ padding: 1rem;
+ border-radius: 8px;
+ box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+ z-index: 10000;
+ animation: slideIn 0.3s ease-out;
+ }
+ 
+ .notification-content {
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ }
+ 
+ .notification-content i {
+ color: #4caf50;
+ }
+ 
+ @keyframes slideIn {
+ from {
+ transform: translateX(100%);
+ opacity: 0;
+ }
+ to {
+ transform: translateX(0);
+ opacity: 1;
+ }
+ }
+ </style>
 <style>
-            /* Button font fixes */
-            button, .btn, .cta-button, .submit-button {
-                font-family: "Montserrat", "Inter", system-ui, sans-serif !important;
-            }
-            
-            /* Responsive navigation fixes */
-            @media (max-width: 768px) {
-                .nav-links {
-                    display: none;
-                    position: absolute;
-                    top: 100%;
-                    left: 0;
-                    right: 0;
-                    background: var(--color-primary, #4caf50);
-                    padding: 1rem;
-                    flex-direction: column;
-                    align-items: center;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                }
-                
-                .nav-links.active {
-                    display: flex;
-                }
-                
-                .hamburger {
-                    display: block;
-                }
-            }
-            
-            /* Footer fixes */
-            .footer {
-                background: var(--color-primary, #4caf50);
-                color: white;
-                padding: 2rem 0;
-                margin-top: 3rem;
-            }
-            
-            .footer-content {
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 0 1rem;
-            }
-            
-            .footer-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 2rem;
-                margin-bottom: 2rem;
-            }
-            
-            .footer-section h3 {
-                margin-bottom: 1rem;
-                font-family: "Montserrat", sans-serif;
-            }
-            
-            .footer-section ul {
-                list-style: none;
-                padding: 0;
-            }
-            
-            .footer-section ul li {
-                margin-bottom: 0.5rem;
-            }
-            
-            .footer-section ul li a {
-                color: white;
-                text-decoration: none;
-            }
-            
-            .footer-section ul li a:hover {
-                text-decoration: underline;
-            }
-            
-            .footer-bottom {
-                border-top: 1px solid rgba(255, 255, 255, 0.2);
-                padding-top: 1rem;
-                text-align: center;
-            }
-            
-    .main-header { 
-      background: #fff !important; 
-      min-height: 70px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 0 2rem !important;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-    }
-    .logo {
-      display: flex !important;
-      align-items: center !important;
-    }
-    .logo img {
-      height: 50px !important;
-      width: auto !important;
-    }
-    .nav-links { 
-      display: flex !important;
-      align-items: center !important;
-      list-style: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      gap: 2rem !important;
-    }
-    .nav-links a { 
-      padding-top: 0 !important; 
-      padding-bottom: 0 !important; 
-      color: #333 !important; 
-      font-weight: 500 !important;
-      text-decoration: none !important;
-      transition: color 0.3s ease !important;
-    }
-    .nav-links a:hover {
-      color: #2e7d32 !important;
-    }
-    .nav-links li { 
-      display: flex; 
-      align-items: center; 
-    }
-    .login-buttons {
-      display: flex !important;
-      gap: 1rem !important;
-      align-items: center !important;
-    }
-    .btn-login {
-      padding: 0.5rem 1rem !important;
-      border-radius: 4px !important;
-      text-decoration: none !important;
-      font-weight: 500 !important;
-      transition: all 0.3s ease !important;
-    }
-    .btn-customer {
-      background: #2e7d32 !important;
-      color: white !important;
-    }
-    .btn-admin {
-      background: #1565c0 !important;
-      color: white !important;
-    }
-    .btn-login:hover {
-      transform: translateY(-2px) !important;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-    }
-    .hamburger {
-      display: none !important;
-    }
-    @media (max-width: 768px) {
-      .main-header {
-        padding: 0 1rem !important;
-      }
-      .nav-links { 
-        display: none !important; 
-        position: absolute !important; 
-        top: 100% !important; 
-        left: 0 !important; 
-        right: 0 !important; 
-        background: var(--color-primary, #4caf50) !important; 
-        padding: 1rem !important; 
-        flex-direction: column !important; 
-        align-items: center !important; 
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-        z-index: 1000 !important;
-      }
-      .nav-links.active { 
-        display: flex !important; 
-      }
-      .hamburger { 
-        display: block !important; 
-      }
-      .login-buttons {
-        flex-direction: column !important;
-        gap: 0.5rem !important;
-      }
-    }
-  
-    /* Professional Lawn Care Business Responsive Design */
-    :root {
-      --primary-green: #2e7d32;
-      --light-green: #4caf50;
-      --dark-green: #1b5e20;
-      --accent-green: #8bc34a;
-      --text-dark: #333;
-      --text-light: #666;
-      --white: #ffffff;
-      --background-light: #f8f9fa;
-      --border-color: #e0e0e0;
-      --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
-      --shadow-medium: 0 4px 8px rgba(0,0,0,0.15);
-      --border-radius: 8px;
-      --transition: all 0.3s ease;
-    }
-
-    /* Universal Mobile-First Responsive Design */
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      line-height: 1.6;
-      color: var(--text-dark);
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
-
-    /* Container System */
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    @media (min-width: 768px) {
-      .container {
-        padding: 0 2rem;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .container {
-        padding: 0 3rem;
-      }
-    }
-
-    /* Professional Header Responsive Design */
-    .main-header {
-      background: var(--white) !important;
-      box-shadow: var(--shadow-light) !important;
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      z-index: 1000 !important;
-      padding: 0.75rem 1rem !important;
-    }
-
-    @media (min-width: 768px) {
-      .main-header {
-        padding: 1rem 2rem !important;
-      }
-    }
-
-    /* Professional Hero Section */
-    .hero {
-      min-height: 60vh !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      text-align: center !important;
-      color: var(--white) !important;
-      position: relative !important;
-      margin-top: 70px !important;
-    }
-
-    .hero img {
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover !important;
-      z-index: 1 !important;
-    }
-
-    .hero::before {
-      content: '' !important;
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      background: rgba(0, 0, 0, 0.5) !important;
-      z-index: 2 !important;
-    }
-
-    .hero-content {
-      position: relative !important;
-      z-index: 3 !important;
-      max-width: 800px !important;
-      padding: 2rem 1rem !important;
-    }
-
-    .hero h1 {
-      font-size: 2.5rem !important;
-      font-weight: 700 !important;
-      margin-bottom: 1rem !important;
-      line-height: 1.2 !important;
-    }
-
-    .hero p {
-      font-size: 1.1rem !important;
-      margin-bottom: 2rem !important;
-      opacity: 0.9 !important;
-    }
-
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2rem !important;
-      }
-      .hero p {
-        font-size: 1rem !important;
-      }
-    }
-
-    /* Professional Section Styling */
-    .section {
-      padding: 4rem 0 !important;
-    }
-
-    .section-title {
-      font-size: 2.5rem !important;
-      font-weight: 700 !important;
-      text-align: center !important;
-      margin-bottom: 3rem !important;
-      color: var(--text-dark) !important;
-    }
-
-    @media (max-width: 768px) {
-      .section-title {
-        font-size: 2rem !important;
-        margin-bottom: 2rem !important;
-      }
-    }
-
-    /* Professional Card Grid System */
-    .grid {
-      display: grid !important;
-      gap: 2rem !important;
-    }
-
-    .grid-2 {
-      grid-template-columns: 1fr !important;
-    }
-
-    .grid-3 {
-      grid-template-columns: 1fr !important;
-    }
-
-    .grid-4 {
-      grid-template-columns: 1fr !important;
-    }
-
-    @media (min-width: 768px) {
-      .grid-2 {
-        grid-template-columns: repeat(2, 1fr) !important;
-      }
-      .grid-3 {
-        grid-template-columns: repeat(2, 1fr) !important;
-      }
-      .grid-4 {
-        grid-template-columns: repeat(2, 1fr) !important;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .grid-3 {
-        grid-template-columns: repeat(3, 1fr) !important;
-      }
-      .grid-4 {
-        grid-template-columns: repeat(4, 1fr) !important;
-      }
-    }
-
-    /* Professional Card Design */
-    .card {
-      background: var(--white) !important;
-      border-radius: var(--border-radius) !important;
-      box-shadow: var(--shadow-light) !important;
-      padding: 2rem !important;
-      transition: var(--transition) !important;
-      border: 1px solid var(--border-color) !important;
-    }
-
-    .card:hover {
-      box-shadow: var(--shadow-medium) !important;
-      transform: translateY(-2px) !important;
-    }
-
-    /* Professional Button Design */
-    .btn {
-      display: inline-block !important;
-      padding: 0.75rem 1.5rem !important;
-      border-radius: var(--border-radius) !important;
-      text-decoration: none !important;
-      font-weight: 600 !important;
-      text-align: center !important;
-      transition: var(--transition) !important;
-      border: none !important;
-      cursor: pointer !important;
-      font-size: 1rem !important;
-    }
-
-    .btn-primary {
-      background: var(--primary-green) !important;
-      color: var(--white) !important;
-    }
-
-    .btn-primary:hover {
-      background: var(--dark-green) !important;
-      transform: translateY(-1px) !important;
-    }
-
-    .btn-secondary {
-      background: transparent !important;
-      color: var(--primary-green) !important;
-      border: 2px solid var(--primary-green) !important;
-    }
-
-    .btn-secondary:hover {
-      background: var(--primary-green) !important;
-      color: var(--white) !important;
-    }
-
-    /* Professional Form Design */
-    .form-group {
-      margin-bottom: 1.5rem !important;
-    }
-
-    .form-group label {
-      display: block !important;
-      margin-bottom: 0.5rem !important;
-      font-weight: 600 !important;
-      color: var(--text-dark) !important;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100% !important;
-      padding: 0.75rem !important;
-      border: 1px solid var(--border-color) !important;
-      border-radius: var(--border-radius) !important;
-      font-size: 1rem !important;
-      transition: var(--transition) !important;
-      background: var(--white) !important;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none !important;
-      border-color: var(--primary-green) !important;
-      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1) !important;
-    }
-
-    /* Professional Footer */
-    .footer {
-      background: var(--primary-green) !important;
-      color: var(--white) !important;
-      padding: 3rem 0 1rem !important;
-      margin-top: 4rem !important;
-    }
-
-    .footer-content {
-      max-width: 1200px !important;
-      margin: 0 auto !important;
-      padding: 0 1rem !important;
-    }
-
-    .footer-grid {
-      display: grid !important;
-      grid-template-columns: 1fr !important;
-      gap: 2rem !important;
-      margin-bottom: 2rem !important;
-    }
-
-    @media (min-width: 768px) {
-      .footer-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .footer-grid {
-        grid-template-columns: repeat(4, 1fr) !important;
-      }
-    }
-
-    .footer-section h3 {
-      margin-bottom: 1rem !important;
-      font-weight: 600 !important;
-    }
-
-    .footer-section ul {
-      list-style: none !important;
-      padding: 0 !important;
-    }
-
-    .footer-section ul li {
-      margin-bottom: 0.5rem !important;
-    }
-
-    .footer-section ul li a {
-      color: var(--white) !important;
-      text-decoration: none !important;
-      opacity: 0.9 !important;
-      transition: var(--transition) !important;
-    }
-
-    .footer-section ul li a:hover {
-      opacity: 1 !important;
-      text-decoration: underline !important;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
-      padding-top: 1rem !important;
-      text-align: center !important;
-    }
-
-    /* Professional Service Cards */
-    .service-card {
-      background: var(--white) !important;
-      border-radius: var(--border-radius) !important;
-      padding: 2rem !important;
-      box-shadow: var(--shadow-light) !important;
-      transition: var(--transition) !important;
-      border: 1px solid var(--border-color) !important;
-      text-align: center !important;
-    }
-
-    .service-card:hover {
-      box-shadow: var(--shadow-medium) !important;
-      transform: translateY(-5px) !important;
-    }
-
-    .service-icon {
-      width: 80px !important;
-      height: 80px !important;
-      margin: 0 auto 1.5rem !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      background: var(--background-light) !important;
-      border-radius: 50% !important;
-    }
-
-    .service-emoji {
-      font-size: 2.5rem !important;
-    }
-
-    .service-card h3 {
-      font-size: 1.5rem !important;
-      font-weight: 600 !important;
-      margin-bottom: 1rem !important;
-      color: var(--text-dark) !important;
-    }
-
-    .service-card p {
-      color: var(--text-light) !important;
-      margin-bottom: 1.5rem !important;
-      line-height: 1.6 !important;
-    }
-
-    /* Professional Contact Form */
-    .contact-section {
-      padding: 4rem 0 !important;
-      background: var(--background-light) !important;
-    }
-
-    .contact-layout {
-      display: grid !important;
-      grid-template-columns: 1fr !important;
-      gap: 3rem !important;
-    }
-
-    @media (min-width: 1024px) {
-      .contact-layout {
-        grid-template-columns: 2fr 1fr !important;
-      }
-    }
-
-    .contact-form-container {
-      background: var(--white) !important;
-      padding: 2rem !important;
-      border-radius: var(--border-radius) !important;
-      box-shadow: var(--shadow-light) !important;
-    }
-
-    .contact-info {
-      background: var(--white) !important;
-      padding: 2rem !important;
-      border-radius: var(--border-radius) !important;
-      box-shadow: var(--shadow-light) !important;
-    }
-
-    .contact-item {
-      display: flex !important;
-      align-items: center !important;
-      margin-bottom: 1rem !important;
-      padding: 1rem !important;
-      background: var(--background-light) !important;
-      border-radius: var(--border-radius) !important;
-    }
-
-    .contact-item i {
-      margin-right: 1rem !important;
-      color: var(--primary-green) !important;
-      font-size: 1.2rem !important;
-    }
-
-    /* Professional Testimonials */
-    .testimonial-card {
-      background: var(--white) !important;
-      padding: 2rem !important;
-      border-radius: var(--border-radius) !important;
-      box-shadow: var(--shadow-light) !important;
-      border-left: 4px solid var(--primary-green) !important;
-    }
-
-    .testimonial-content {
-      font-style: italic !important;
-      margin-bottom: 1rem !important;
-      color: var(--text-dark) !important;
-    }
-
-    .testimonial-author {
-      font-weight: 600 !important;
-      color: var(--primary-green) !important;
-    }
-
-    /* Professional About Section */
-    .about-content {
-      display: grid !important;
-      grid-template-columns: 1fr !important;
-      gap: 3rem !important;
-      align-items: center !important;
-    }
-
-    @media (min-width: 1024px) {
-      .about-content {
-        grid-template-columns: 1fr 1fr !important;
-      }
-    }
-
-    .about-text h2 {
-      font-size: 2.5rem !important;
-      font-weight: 700 !important;
-      margin-bottom: 1.5rem !important;
-      color: var(--text-dark) !important;
-    }
-
-    .about-text p {
-      font-size: 1.1rem !important;
-      line-height: 1.8 !important;
-      color: var(--text-light) !important;
-      margin-bottom: 1.5rem !important;
-    }
-
-    .about-image img {
-      width: 100% !important;
-      height: auto !important;
-      border-radius: var(--border-radius) !important;
-      box-shadow: var(--shadow-medium) !important;
-    }
-
-    /* Professional FAQ Section */
-    .faq-item {
-      background: var(--white) !important;
-      border-radius: var(--border-radius) !important;
-      margin-bottom: 1rem !important;
-      box-shadow: var(--shadow-light) !important;
-      overflow: hidden !important;
-    }
-
-    .faq-question {
-      padding: 1.5rem !important;
-      background: var(--background-light) !important;
-      font-weight: 600 !important;
-      cursor: pointer !important;
-      transition: var(--transition) !important;
-    }
-
-    .faq-question:hover {
-      background: var(--primary-green) !important;
-      color: var(--white) !important;
-    }
-
-    .faq-answer {
-      padding: 1.5rem !important;
-      color: var(--text-light) !important;
-      line-height: 1.6 !important;
-    }
-
-    /* Professional Gallery */
-    .gallery-grid {
-      display: grid !important;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
-      gap: 1.5rem !important;
-    }
-
-    .gallery-item {
-      border-radius: var(--border-radius) !important;
-      overflow: hidden !important;
-      box-shadow: var(--shadow-light) !important;
-      transition: var(--transition) !important;
-    }
-
-    .gallery-item:hover {
-      transform: scale(1.02) !important;
-      box-shadow: var(--shadow-medium) !important;
-    }
-
-    .gallery-item img {
-      width: 100% !important;
-      height: 250px !important;
-      object-fit: cover !important;
-    }
-
-    /* Professional CTA Section */
-    .cta-section {
-      background: var(--primary-green) !important;
-      color: var(--white) !important;
-      padding: 4rem 0 !important;
-      text-align: center !important;
-    }
-
-    .cta-section h2 {
-      font-size: 2.5rem !important;
-      font-weight: 700 !important;
-      margin-bottom: 1rem !important;
-    }
-
-    .cta-section p {
-      font-size: 1.2rem !important;
-      margin-bottom: 2rem !important;
-      opacity: 0.9 !important;
-    }
-
-    .cta-buttons {
-      display: flex !important;
-      gap: 1rem !important;
-      justify-content: center !important;
-      flex-wrap: wrap !important;
-    }
-
-    @media (max-width: 768px) {
-      .cta-buttons {
-        flex-direction: column !important;
-        align-items: center !important;
-      }
-    }
-
-    /* Professional Loading States */
-    .loading {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      background: var(--white) !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      z-index: 9999 !important;
-    }
-
-    .spinner {
-      width: 40px !important;
-      height: 40px !important;
-      border: 4px solid var(--border-color) !important;
-      border-top: 4px solid var(--primary-green) !important;
-      border-radius: 50% !important;
-      animation: spin 1s linear infinite !important;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Professional Error Messages */
-    .error-message {
-      background: #f44336 !important;
-      color: var(--white) !important;
-      padding: 1rem !important;
-      border-radius: var(--border-radius) !important;
-      margin: 1rem 0 !important;
-      text-align: center !important;
-    }
-
-    /* Professional Success Messages */
-    .success-message {
-      background: var(--primary-green) !important;
-      color: var(--white) !important;
-      padding: 1rem !important;
-      border-radius: var(--border-radius) !important;
-      margin: 1rem 0 !important;
-      text-align: center !important;
-    }
-
-    /* Professional Accessibility */
-    .skip-link {
-      position: absolute !important;
-      top: -40px !important;
-      left: 6px !important;
-      background: var(--primary-green) !important;
-      color: var(--white) !important;
-      padding: 8px !important;
-      text-decoration: none !important;
-      border-radius: var(--border-radius) !important;
-      z-index: 10000 !important;
-    }
-
-    .skip-link:focus {
-      top: 6px !important;
-    }
-
-    /* Professional Print Styles */
-    @media print {
-      .main-header,
-      .footer,
-      .cta-section,
-      .btn {
-        display: none !important;
-      }
-      
-      body {
-        font-size: 12pt !important;
-        line-height: 1.4 !important;
-      }
-      
-      .hero {
-        min-height: auto !important;
-        margin-top: 0 !important;
-      }
-    }
-
-    /* Professional Header Alignment Fixes */
-    .main-header {
-      background: #fff !important;
-      min-height: 70px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 0 2rem !important;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      z-index: 1000 !important;
-    }
-    .logo {
-      display: flex !important;
-      align-items: center !important;
-      flex-shrink: 0 !important;
-    }
-    .logo img {
-      height: 50px !important;
-      width: auto !important;
-      max-width: 200px !important;
-    }
-    .nav-links { 
-      display: flex !important;
-      align-items: center !important;
-      list-style: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      gap: 2rem !important;
-      flex: 1 !important;
-      justify-content: flex-end !important;
-    }
-    .nav-links a { 
-      color: #333 !important; 
-      font-weight: 500 !important;
-      text-decoration: none !important;
-      transition: color 0.3s ease !important;
-      padding: 0.5rem 0.75rem !important;
-      border-radius: 4px !important;
-      white-space: nowrap !important;
-    }
-    .nav-links a:hover {
-      color: #2e7d32 !important;
-      background-color: rgba(46, 125, 50, 0.1) !important;
-    }
-    .nav-links li { 
-      display: flex; 
-      align-items: center; 
-    }
-    .login-buttons {
-      display: flex !important;
-      gap: 1rem !important;
-      align-items: center !important;
-      margin-left: 1rem !important;
-    }
-    .btn-login {
-      padding: 0.5rem 1rem !important;
-      border-radius: 4px !important;
-      text-decoration: none !important;
-      font-weight: 500 !important;
-      transition: all 0.3s ease !important;
-      font-size: 0.9rem !important;
-    }
-    .btn-customer {
-      background: #2e7d32 !important;
-      color: white !important;
-    }
-    .btn-admin {
-      background: #1565c0 !important;
-      color: white !important;
-    }
-    .btn-login:hover {
-      transform: translateY(-2px) !important;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-    }
-    .hamburger {
-      display: none !important;
-      background: none !important;
-      border: none !important;
-      cursor: pointer !important;
-      padding: 0.5rem !important;
-      z-index: 1001 !important;
-    }
-    .hamburger span {
-      display: block !important;
-      width: 25px !important;
-      height: 3px !important;
-      background-color: #333 !important;
-      margin: 5px 0 !important;
-      transition: 0.3s !important;
-    }
-    @media (max-width: 768px) {
-      .main-header {
-        padding: 0 1rem !important;
-      }
-      .nav-links { 
-        display: none !important; 
-        position: absolute !important; 
-        top: 100% !important; 
-        left: 0 !important; 
-        right: 0 !important; 
-        background: #4caf50 !important; 
-        padding: 1rem !important; 
-        flex-direction: column !important; 
-        align-items: center !important; 
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-        z-index: 1000 !important;
-        gap: 1rem !important;
-      }
-      .nav-links.active { 
-        display: flex !important; 
-      }
-      .hamburger { 
-        display: block !important; 
-      }
-      .login-buttons {
-        flex-direction: column !important;
-        gap: 0.5rem !important;
-        margin-left: 0 !important;
-      }
-      .nav-links a {
-        color: white !important;
-        padding: 0.75rem 1rem !important;
-      }
-      .nav-links a:hover {
-        background-color: rgba(255,255,255,0.1) !important;
-        color: white !important;
-      }
-    }
-    @media (max-width: 1200px) {
-      .nav-links {
-        gap: 1rem !important;
-      }
-      .nav-links a {
-        font-size: 0.9rem !important;
-        padding: 0.5rem 0.5rem !important;
-      }
-    }
-    @media (max-width: 992px) {
-      .nav-links {
-        gap: 0.5rem !important;
-      }
-      .nav-links a {
-        font-size: 0.85rem !important;
-        padding: 0.5rem 0.25rem !important;
-      }
-    }
-  
-    /* Loading Overlay Styles */
-    .loading {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      background: rgba(255, 255, 255, 0.95) !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      z-index: 9999 !important;
-      transition: opacity 0.3s ease, visibility 0.3s ease !important;
-    }
-    
-    .loading.hidden {
-      opacity: 0 !important;
-      visibility: hidden !important;
-      pointer-events: none !important;
-    }
-    
-    .spinner {
-      width: 50px !important;
-      height: 50px !important;
-      border: 4px solid #f3f3f3 !important;
-      border-top: 4px solid #2e7d32 !important;
-      border-radius: 50% !important;
-      animation: spin 1s linear infinite !important;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    /* Error Message Styles */
-    .error-message {
-      display: none !important;
-      position: fixed !important;
-      top: 20px !important;
-      left: 50% !important;
-      transform: translateX(-50%) !important;
-      background: #f44336 !important;
-      color: white !important;
-      padding: 1rem 2rem !important;
-      border-radius: 4px !important;
-      z-index: 10000 !important;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2) !important;
-    }
-    
-    .error-message.show {
-      display: block !important;
-    }
-  </style>
+ /* Button font fixes */
+ button, .btn, .cta-button, .submit-button {
+ font-family: "Montserrat", "Inter", system-ui, sans-serif !important;
+ }
+ 
+ /* Responsive navigation fixes */
+ @media (max-width: 768px) {
+ .nav-links {
+ display: none;
+ position: absolute;
+ top: 100%;
+ left: 0;
+ right: 0;
+ background: var(--color-primary, #4caf50);
+ padding: 1rem;
+ flex-direction: column;
+ align-items: center;
+ box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+ }
+ 
+ .nav-links.active {
+ display: flex;
+ }
+ 
+ .hamburger {
+ display: block;
+ }
+ }
+ 
+ /* Footer fixes */
+ .footer {
+ background: var(--color-primary, #4caf50);
+ color: white;
+ padding: 2rem 0;
+ margin-top: 3rem;
+ }
+ 
+ .footer-content {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 0 1rem;
+ }
+ 
+ .footer-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+ gap: 2rem;
+ margin-bottom: 2rem;
+ }
+ 
+ .footer-section h3 {
+ margin-bottom: 1rem;
+ font-family: "Montserrat", sans-serif;
+ }
+ 
+ .footer-section ul {
+ list-style: none;
+ padding: 0;
+ }
+ 
+ .footer-section ul li {
+ margin-bottom: 0.5rem;
+ }
+ 
+ .footer-section ul li a {
+ color: white;
+ text-decoration: none;
+ }
+ 
+ .footer-section ul li a:hover {
+ text-decoration: underline;
+ }
+ 
+ .footer-bottom {
+ border-top: 1px solid rgba(255, 255, 255, 0.2);
+ padding-top: 1rem;
+ text-align: center;
+ }
+ 
+ .main-header { 
+ background: #fff !important; 
+ min-height: 70px !important;
+ display: flex !important;
+ align-items: center !important;
+ justify-content: space-between !important;
+ padding: 0 2rem !important;
+ box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+ }
+ .logo {
+ display: flex !important;
+ align-items: center !important;
+ }
+ .logo img {
+ height: 50px !important;
+ width: auto !important;
+ }
+ .nav-links { 
+ display: flex !important;
+ align-items: center !important;
+ list-style: none !important;
+ margin: 0 !important;
+ padding: 0 !important;
+ gap: 2rem !important;
+ }
+ .nav-links a { 
+ padding-top: 0 !important; 
+ padding-bottom: 0 !important; 
+ color: #333 !important; 
+ font-weight: 500 !important;
+ text-decoration: none !important;
+ transition: color 0.3s ease !important;
+ }
+ .nav-links a:hover {
+ color: #2e7d32 !important;
+ }
+ .nav-links li { 
+ display: flex; 
+ align-items: center; 
+ }
+ .login-buttons {
+ display: flex !important;
+ gap: 1rem !important;
+ align-items: center !important;
+ }
+ .btn-login {
+ padding: 0.5rem 1rem !important;
+ border-radius: 4px !important;
+ text-decoration: none !important;
+ font-weight: 500 !important;
+ transition: all 0.3s ease !important;
+ }
+ .btn-customer {
+ background: #2e7d32 !important;
+ color: white !important;
+ }
+ .btn-admin {
+ background: #1565c0 !important;
+ color: white !important;
+ }
+ .btn-login:hover {
+ transform: translateY(-2px) !important;
+ box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+ }
+ .hamburger {
+ display: none !important;
+ }
+ @media (max-width: 768px) {
+ .main-header {
+ padding: 0 1rem !important;
+ }
+ .nav-links { 
+ display: none !important; 
+ position: absolute !important; 
+ top: 100% !important; 
+ left: 0 !important; 
+ right: 0 !important; 
+ background: var(--color-primary, #4caf50) !important; 
+ padding: 1rem !important; 
+ flex-direction: column !important; 
+ align-items: center !important; 
+ box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+ z-index: 1000 !important;
+ }
+ .nav-links.active { 
+ display: flex !important; 
+ }
+ .hamburger { 
+ display: block !important; 
+ }
+ .login-buttons {
+ flex-direction: column !important;
+ gap: 0.5rem !important;
+ }
+ }
+ 
+ /* Professional Lawn Care Business Responsive Design */
+ :root {
+ --primary-green: #2e7d32;
+ --light-green: #4caf50;
+ --dark-green: #1b5e20;
+ --accent-green: #8bc34a;
+ --text-dark: #333;
+ --text-light: #666;
+ --white: #ffffff;
+ --background-light: #f8f9fa;
+ --border-color: #e0e0e0;
+ --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+ --shadow-medium: 0 4px 8px rgba(0,0,0,0.15);
+ --border-radius: 8px;
+ --transition: all 0.3s ease;
+ }
+
+ /* Universal Mobile-First Responsive Design */
+ * {
+ box-sizing: border-box;
+ }
+
+ body {
+ font-family: 'Montserrat', sans-serif;
+ line-height: 1.6;
+ color: var(--text-dark);
+ margin: 0;
+ padding: 0;
+ overflow-x: hidden;
+ }
+
+ /* Container System */
+ .container {
+ width: 100%;
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 0 1rem;
+ }
+
+ @media (min-width: 768px) {
+ .container {
+ padding: 0 2rem;
+ }
+ }
+
+ @media (min-width: 1024px) {
+ .container {
+ padding: 0 3rem;
+ }
+ }
+
+ /* Professional Header Responsive Design */
+ .main-header {
+ background: var(--white) !important;
+ box-shadow: var(--shadow-light) !important;
+ position: fixed !important;
+ top: 0 !important;
+ left: 0 !important;
+ right: 0 !important;
+ z-index: 1000 !important;
+ padding: 0.75rem 1rem !important;
+ }
+
+ @media (min-width: 768px) {
+ .main-header {
+ padding: 1rem 2rem !important;
+ }
+ }
+
+ /* Professional Hero Section */
+ .hero {
+ min-height: 60vh !important;
+ display: flex !important;
+ align-items: center !important;
+ justify-content: center !important;
+ text-align: center !important;
+ color: var(--white) !important;
+ position: relative !important;
+ margin-top: 70px !important;
+ }
+
+ .hero img {
+ position: absolute !important;
+ top: 0 !important;
+ left: 0 !important;
+ width: 100% !important;
+ height: 100% !important;
+ object-fit: cover !important;
+ z-index: 1 !important;
+ }
+
+ .hero::before {
+ content: '' !important;
+ position: absolute !important;
+ top: 0 !important;
+ left: 0 !important;
+ right: 0 !important;
+ bottom: 0 !important;
+ background: rgba(0, 0, 0, 0.5) !important;
+ z-index: 2 !important;
+ }
+
+ .hero-content {
+ position: relative !important;
+ z-index: 3 !important;
+ max-width: 800px !important;
+ padding: 2rem 1rem !important;
+ }
+
+ .hero h1 {
+ font-size: 2.5rem !important;
+ font-weight: 700 !important;
+ margin-bottom: 1rem !important;
+ line-height: 1.2 !important;
+ }
+
+ .hero p {
+ font-size: 1.1rem !important;
+ margin-bottom: 2rem !important;
+ opacity: 0.9 !important;
+ }
+
+ @media (max-width: 768px) {
+ .hero h1 {
+ font-size: 2rem !important;
+ }
+ .hero p {
+ font-size: 1rem !important;
+ }
+ }
+
+ /* Professional Section Styling */
+ .section {
+ padding: 4rem 0 !important;
+ }
+
+ .section-title {
+ font-size: 2.5rem !important;
+ font-weight: 700 !important;
+ text-align: center !important;
+ margin-bottom: 3rem !important;
+ color: var(--text-dark) !important;
+ }
+
+ @media (max-width: 768px) {
+ .section-title {
+ font-size: 2rem !important;
+ margin-bottom: 2rem !important;
+ }
+ }
+
+ /* Professional Card Grid System */
+ .grid {
+ display: grid !important;
+ gap: 2rem !important;
+ }
+
+ .grid-2 {
+ grid-template-columns: 1fr !important;
+ }
+
+ .grid-3 {
+ grid-template-columns: 1fr !important;
+ }
+
+ .grid-4 {
+ grid-template-columns: 1fr !important;
+ }
+
+ @media (min-width: 768px) {
+ .grid-2 {
+ grid-template-columns: repeat(2, 1fr) !important;
+ }
+ .grid-3 {
+ grid-template-columns: repeat(2, 1fr) !important;
+ }
+ .grid-4 {
+ grid-template-columns: repeat(2, 1fr) !important;
+ }
+ }
+
+ @media (min-width: 1024px) {
+ .grid-3 {
+ grid-template-columns: repeat(3, 1fr) !important;
+ }
+ .grid-4 {
+ grid-template-columns: repeat(4, 1fr) !important;
+ }
+ }
+
+ /* Professional Card Design */
+ .card {
+ background: var(--white) !important;
+ border-radius: var(--border-radius) !important;
+ box-shadow: var(--shadow-light) !important;
+ padding: 2rem !important;
+ transition: var(--transition) !important;
+ border: 1px solid var(--border-color) !important;
+ }
+
+ .card:hover {
+ box-shadow: var(--shadow-medium) !important;
+ transform: translateY(-2px) !important;
+ }
+
+ /* Professional Button Design */
+ .btn {
+ display: inline-block !important;
+ padding: 0.75rem 1.5rem !important;
+ border-radius: var(--border-radius) !important;
+ text-decoration: none !important;
+ font-weight: 600 !important;
+ text-align: center !important;
+ transition: var(--transition) !important;
+ border: none !important;
+ cursor: pointer !important;
+ font-size: 1rem !important;
+ }
+
+ .btn-primary {
+ background: var(--primary-green) !important;
+ color: var(--white) !important;
+ }
+
+ .btn-primary:hover {
+ background: var(--dark-green) !important;
+ transform: translateY(-1px) !important;
+ }
+
+ .btn-secondary {
+ background: transparent !important;
+ color: var(--primary-green) !important;
+ border: 2px solid var(--primary-green) !important;
+ }
+
+ .btn-secondary:hover {
+ background: var(--primary-green) !important;
+ color: var(--white) !important;
+ }
+
+ /* Professional Form Design */
+ .form-group {
+ margin-bottom: 1.5rem !important;
+ }
+
+ .form-group label {
+ display: block !important;
+ margin-bottom: 0.5rem !important;
+ font-weight: 600 !important;
+ color: var(--text-dark) !important;
+ }
+
+ .form-group input,
+ .form-group select,
+ .form-group textarea {
+ width: 100% !important;
+ padding: 0.75rem !important;
+ border: 1px solid var(--border-color) !important;
+ border-radius: var(--border-radius) !important;
+ font-size: 1rem !important;
+ transition: var(--transition) !important;
+ background: var(--white) !important;
+ }
+
+ .form-group input:focus,
+ .form-group select:focus,
+ .form-group textarea:focus {
+ outline: none !important;
+ border-color: var(--primary-green) !important;
+ box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1) !important;
+ }
+
+ /* Professional Footer */
+ .footer {
+ background: var(--primary-green) !important;
+ color: var(--white) !important;
+ padding: 3rem 0 1rem !important;
+ margin-top: 4rem !important;
+ }
+
+ .footer-content {
+ max-width: 1200px !important;
+ margin: 0 auto !important;
+ padding: 0 1rem !important;
+ }
+
+ .footer-grid {
+ display: grid !important;
+ grid-template-columns: 1fr !important;
+ gap: 2rem !important;
+ margin-bottom: 2rem !important;
+ }
+
+ @media (min-width: 768px) {
+ .footer-grid {
+ grid-template-columns: repeat(2, 1fr) !important;
+ }
+ }
+
+ @media (min-width: 1024px) {
+ .footer-grid {
+ grid-template-columns: repeat(4, 1fr) !important;
+ }
+ }
+
+ .footer-section h3 {
+ margin-bottom: 1rem !important;
+ font-weight: 600 !important;
+ }
+
+ .footer-section ul {
+ list-style: none !important;
+ padding: 0 !important;
+ }
+
+ .footer-section ul li {
+ margin-bottom: 0.5rem !important;
+ }
+
+ .footer-section ul li a {
+ color: var(--white) !important;
+ text-decoration: none !important;
+ opacity: 0.9 !important;
+ transition: var(--transition) !important;
+ }
+
+ .footer-section ul li a:hover {
+ opacity: 1 !important;
+ text-decoration: underline !important;
+ }
+
+ .footer-bottom {
+ border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+ padding-top: 1rem !important;
+ text-align: center !important;
+ }
+
+ /* Professional Service Cards */
+ .service-card {
+ background: var(--white) !important;
+ border-radius: var(--border-radius) !important;
+ padding: 2rem !important;
+ box-shadow: var(--shadow-light) !important;
+ transition: var(--transition) !important;
+ border: 1px solid var(--border-color) !important;
+ text-align: center !important;
+ }
+
+ .service-card:hover {
+ box-shadow: var(--shadow-medium) !important;
+ transform: translateY(-5px) !important;
+ }
+
+ .service-icon {
+ width: 80px !important;
+ height: 80px !important;
+ margin: 0 auto 1.5rem !important;
+ display: flex !important;
+ align-items: center !important;
+ justify-content: center !important;
+ background: var(--background-light) !important;
+ border-radius: 50% !important;
+ }
+
+ .service-emoji {
+ font-size: 2.5rem !important;
+ }
+
+ .service-card h3 {
+ font-size: 1.5rem !important;
+ font-weight: 600 !important;
+ margin-bottom: 1rem !important;
+ color: var(--text-dark) !important;
+ }
+
+ .service-card p {
+ color: var(--text-light) !important;
+ margin-bottom: 1.5rem !important;
+ line-height: 1.6 !important;
+ }
+
+ /* Professional Contact Form */
+ .contact-section {
+ padding: 4rem 0 !important;
+ background: var(--background-light) !important;
+ }
+
+ .contact-layout {
+ display: grid !important;
+ grid-template-columns: 1fr !important;
+ gap: 3rem !important;
+ }
+
+ @media (min-width: 1024px) {
+ .contact-layout {
+ grid-template-columns: 2fr 1fr !important;
+ }
+ }
+
+ .contact-form-container {
+ background: var(--white) !important;
+ padding: 2rem !important;
+ border-radius: var(--border-radius) !important;
+ box-shadow: var(--shadow-light) !important;
+ }
+
+ .contact-info {
+ background: var(--white) !important;
+ padding: 2rem !important;
+ border-radius: var(--border-radius) !important;
+ box-shadow: var(--shadow-light) !important;
+ }
+
+ .contact-item {
+ display: flex !important;
+ align-items: center !important;
+ margin-bottom: 1rem !important;
+ padding: 1rem !important;
+ background: var(--background-light) !important;
+ border-radius: var(--border-radius) !important;
+ }
+
+ .contact-item i {
+ margin-right: 1rem !important;
+ color: var(--primary-green) !important;
+ font-size: 1.2rem !important;
+ }
+
+ /* Professional Testimonials */
+ .testimonial-card {
+ background: var(--white) !important;
+ padding: 2rem !important;
+ border-radius: var(--border-radius) !important;
+ box-shadow: var(--shadow-light) !important;
+ border-left: 4px solid var(--primary-green) !important;
+ }
+
+ .testimonial-content {
+ font-style: italic !important;
+ margin-bottom: 1rem !important;
+ color: var(--text-dark) !important;
+ }
+
+ .testimonial-author {
+ font-weight: 600 !important;
+ color: var(--primary-green) !important;
+ }
+
+ /* Professional About Section */
+ .about-content {
+ display: grid !important;
+ grid-template-columns: 1fr !important;
+ gap: 3rem !important;
+ align-items: center !important;
+ }
+
+ @media (min-width: 1024px) {
+ .about-content {
+ grid-template-columns: 1fr 1fr !important;
+ }
+ }
+
+ .about-text h2 {
+ font-size: 2.5rem !important;
+ font-weight: 700 !important;
+ margin-bottom: 1.5rem !important;
+ color: var(--text-dark) !important;
+ }
+
+ .about-text p {
+ font-size: 1.1rem !important;
+ line-height: 1.8 !important;
+ color: var(--text-light) !important;
+ margin-bottom: 1.5rem !important;
+ }
+
+ .about-image img {
+ width: 100% !important;
+ height: auto !important;
+ border-radius: var(--border-radius) !important;
+ box-shadow: var(--shadow-medium) !important;
+ }
+
+ /* Professional FAQ Section */
+ .faq-item {
+ background: var(--white) !important;
+ border-radius: var(--border-radius) !important;
+ margin-bottom: 1rem !important;
+ box-shadow: var(--shadow-light) !important;
+ overflow: hidden !important;
+ }
+
+ .faq-question {
+ padding: 1.5rem !important;
+ background: var(--background-light) !important;
+ font-weight: 600 !important;
+ cursor: pointer !important;
+ transition: var(--transition) !important;
+ }
+
+ .faq-question:hover {
+ background: var(--primary-green) !important;
+ color: var(--white) !important;
+ }
+
+ .faq-answer {
+ padding: 1.5rem !important;
+ color: var(--text-light) !important;
+ line-height: 1.6 !important;
+ }
+
+ /* Professional Gallery */
+ .gallery-grid {
+ display: grid !important;
+ grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+ gap: 1.5rem !important;
+ }
+
+ .gallery-item {
+ border-radius: var(--border-radius) !important;
+ overflow: hidden !important;
+ box-shadow: var(--shadow-light) !important;
+ transition: var(--transition) !important;
+ }
+
+ .gallery-item:hover {
+ transform: scale(1.02) !important;
+ box-shadow: var(--shadow-medium) !important;
+ }
+
+ .gallery-item img {
+ width: 100% !important;
+ height: 250px !important;
+ object-fit: cover !important;
+ }
+
+ /* Professional CTA Section */
+ .cta-section {
+ background: var(--primary-green) !important;
+ color: var(--white) !important;
+ padding: 4rem 0 !important;
+ text-align: center !important;
+ }
+
+ .cta-section h2 {
+ font-size: 2.5rem !important;
+ font-weight: 700 !important;
+ margin-bottom: 1rem !important;
+ }
+
+ .cta-section p {
+ font-size: 1.2rem !important;
+ margin-bottom: 2rem !important;
+ opacity: 0.9 !important;
+ }
+
+ .cta-buttons {
+ display: flex !important;
+ gap: 1rem !important;
+ justify-content: center !important;
+ flex-wrap: wrap !important;
+ }
+
+ @media (max-width: 768px) {
+ .cta-buttons {
+ flex-direction: column !important;
+ align-items: center !important;
+ }
+ }
+
+ /* Professional Loading States */
+ .loading {
+ position: fixed !important;
+ top: 0 !important;
+ left: 0 !important;
+ right: 0 !important;
+ bottom: 0 !important;
+ background: var(--white) !important;
+ display: flex !important;
+ align-items: center !important;
+ justify-content: center !important;
+ z-index: 9999 !important;
+ }
+
+ .spinner {
+ width: 40px !important;
+ height: 40px !important;
+ border: 4px solid var(--border-color) !important;
+ border-top: 4px solid var(--primary-green) !important;
+ border-radius: 50% !important;
+ animation: spin 1s linear infinite !important;
+ }
+
+ @keyframes spin {
+ 0% { transform: rotate(0deg); }
+ 100% { transform: rotate(360deg); }
+ }
+
+ /* Professional Error Messages */
+ .error-message {
+ background: #f44336 !important;
+ color: var(--white) !important;
+ padding: 1rem !important;
+ border-radius: var(--border-radius) !important;
+ margin: 1rem 0 !important;
+ text-align: center !important;
+ }
+
+ /* Professional Success Messages */
+ .success-message {
+ background: var(--primary-green) !important;
+ color: var(--white) !important;
+ padding: 1rem !important;
+ border-radius: var(--border-radius) !important;
+ margin: 1rem 0 !important;
+ text-align: center !important;
+ }
+
+ /* Professional Accessibility */
+ .skip-link {
+ position: absolute !important;
+ top: -40px !important;
+ left: 6px !important;
+ background: var(--primary-green) !important;
+ color: var(--white) !important;
+ padding: 8px !important;
+ text-decoration: none !important;
+ border-radius: var(--border-radius) !important;
+ z-index: 10000 !important;
+ }
+
+ .skip-link:focus {
+ top: 6px !important;
+ }
+
+ /* Professional Print Styles */
+ @media print {
+ .main-header,
+ .footer,
+ .cta-section,
+ .btn {
+ display: none !important;
+ }
+ 
+ body {
+ font-size: 12pt !important;
+ line-height: 1.4 !important;
+ }
+ 
+ .hero {
+ min-height: auto !important;
+ margin-top: 0 !important;
+ }
+ }
+
+ /* Professional Header Alignment Fixes */
+ .main-header {
+ background: #fff !important;
+ min-height: 70px !important;
+ display: flex !important;
+ align-items: center !important;
+ justify-content: space-between !important;
+ padding: 0 2rem !important;
+ box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+ position: fixed !important;
+ top: 0 !important;
+ left: 0 !important;
+ right: 0 !important;
+ z-index: 1000 !important;
+ }
+ .logo {
+ display: flex !important;
+ align-items: center !important;
+ flex-shrink: 0 !important;
+ }
+ .logo img {
+ height: 50px !important;
+ width: auto !important;
+ max-width: 200px !important;
+ }
+ .nav-links { 
+ display: flex !important;
+ align-items: center !important;
+ list-style: none !important;
+ margin: 0 !important;
+ padding: 0 !important;
+ gap: 2rem !important;
+ flex: 1 !important;
+ justify-content: flex-end !important;
+ }
+ .nav-links a { 
+ color: #333 !important; 
+ font-weight: 500 !important;
+ text-decoration: none !important;
+ transition: color 0.3s ease !important;
+ padding: 0.5rem 0.75rem !important;
+ border-radius: 4px !important;
+ white-space: nowrap !important;
+ }
+ .nav-links a:hover {
+ color: #2e7d32 !important;
+ background-color: rgba(46, 125, 50, 0.1) !important;
+ }
+ .nav-links li { 
+ display: flex; 
+ align-items: center; 
+ }
+ .login-buttons {
+ display: flex !important;
+ gap: 1rem !important;
+ align-items: center !important;
+ margin-left: 1rem !important;
+ }
+ .btn-login {
+ padding: 0.5rem 1rem !important;
+ border-radius: 4px !important;
+ text-decoration: none !important;
+ font-weight: 500 !important;
+ transition: all 0.3s ease !important;
+ font-size: 0.9rem !important;
+ }
+ .btn-customer {
+ background: #2e7d32 !important;
+ color: white !important;
+ }
+ .btn-admin {
+ background: #1565c0 !important;
+ color: white !important;
+ }
+ .btn-login:hover {
+ transform: translateY(-2px) !important;
+ box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+ }
+ .hamburger {
+ display: none !important;
+ background: none !important;
+ border: none !important;
+ cursor: pointer !important;
+ padding: 0.5rem !important;
+ z-index: 1001 !important;
+ }
+ .hamburger span {
+ display: block !important;
+ width: 25px !important;
+ height: 3px !important;
+ background-color: #333 !important;
+ margin: 5px 0 !important;
+ transition: 0.3s !important;
+ }
+ @media (max-width: 768px) {
+ .main-header {
+ padding: 0 1rem !important;
+ }
+ .nav-links { 
+ display: none !important; 
+ position: absolute !important; 
+ top: 100% !important; 
+ left: 0 !important; 
+ right: 0 !important; 
+ background: #4caf50 !important; 
+ padding: 1rem !important; 
+ flex-direction: column !important; 
+ align-items: center !important; 
+ box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+ z-index: 1000 !important;
+ gap: 1rem !important;
+ }
+ .nav-links.active { 
+ display: flex !important; 
+ }
+ .hamburger { 
+ display: block !important; 
+ }
+ .login-buttons {
+ flex-direction: column !important;
+ gap: 0.5rem !important;
+ margin-left: 0 !important;
+ }
+ .nav-links a {
+ color: white !important;
+ padding: 0.75rem 1rem !important;
+ }
+ .nav-links a:hover {
+ background-color: rgba(255,255,255,0.1) !important;
+ color: white !important;
+ }
+ }
+ @media (max-width: 1200px) {
+ .nav-links {
+ gap: 1rem !important;
+ }
+ .nav-links a {
+ font-size: 0.9rem !important;
+ padding: 0.5rem 0.5rem !important;
+ }
+ }
+ @media (max-width: 992px) {
+ .nav-links {
+ gap: 0.5rem !important;
+ }
+ .nav-links a {
+ font-size: 0.85rem !important;
+ padding: 0.5rem 0.25rem !important;
+ }
+ }
+ 
+ /* Loading Overlay Styles */
+ .loading {
+ position: fixed !important;
+ top: 0 !important;
+ left: 0 !important;
+ right: 0 !important;
+ bottom: 0 !important;
+ background: rgba(255, 255, 255, 0.95) !important;
+ display: flex !important;
+ justify-content: center !important;
+ align-items: center !important;
+ z-index: 9999 !important;
+ transition: opacity 0.3s ease, visibility 0.3s ease !important;
+ }
+ 
+ .loading.hidden {
+ opacity: 0 !important;
+ visibility: hidden !important;
+ pointer-events: none !important;
+ }
+ 
+ .spinner {
+ width: 50px !important;
+ height: 50px !important;
+ border: 4px solid #f3f3f3 !important;
+ border-top: 4px solid #2e7d32 !important;
+ border-radius: 50% !important;
+ animation: spin 1s linear infinite !important;
+ }
+ 
+ @keyframes spin {
+ 0% { transform: rotate(0deg); }
+ 100% { transform: rotate(360deg); }
+ }
+ 
+ /* Error Message Styles */
+ .error-message {
+ display: none !important;
+ position: fixed !important;
+ top: 20px !important;
+ left: 50% !important;
+ transform: translateX(-50%) !important;
+ background: #f44336 !important;
+ color: white !important;
+ padding: 1rem 2rem !important;
+ border-radius: 4px !important;
+ z-index: 10000 !important;
+ box-shadow: 0 2px 10px rgba(0,0,0,0.2) !important;
+ }
+ 
+ .error-message.show {
+ display: block !important;
+ }
+ </style>
 <style>
 
-    /* Standard Header and Hero Styles */
-    body {
-        padding-top: 100px;
-        margin: 0;
-        font-family: 'Montserrat', Arial, sans-serif;
-        background: #f7f7f7;
-        color: #222;
-    }
-    
-    .main-header {
-        background: #fff !important;
-        min-height: 70px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        padding: 0 2rem !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 1000 !important;
-    }
-    
-    .logo {
-        display: flex !important;
-        align-items: center !important;
-    }
-    
-    .logo img {
-        height: 50px !important;
-        width: auto !important;
-    }
-    
-    .nav-links { 
-        display: flex !important;
-        align-items: center !important;
-        list-style: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        gap: 2rem !important;
-    }
-    
-    .nav-links a { 
-        padding-top: 0 !important; 
-        padding-bottom: 0 !important; 
-        color: #333 !important; 
-        font-weight: 500 !important;
-        text-decoration: none !important;
-        transition: color 0.3s ease !important;
-    }
-    
-    .nav-links a:hover {
-        color: #2e7d32 !important;
-    }
-    
-    .nav-links li { 
-        display: flex; 
-        align-items: center; 
-    }
-    
-    .login-buttons {
-        display: flex !important;
-        gap: 1rem !important;
-        align-items: center !important;
-    }
-    
-    .btn-login {
-        padding: 0.5rem 1rem !important;
-        border-radius: 4px !important;
-        text-decoration: none !important;
-        font-weight: 500 !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .btn-customer {
-        background: #2e7d32 !important;
-        color: white !important;
-    }
-    
-    .btn-admin {
-        background: #1565c0 !important;
-        color: white !important;
-    }
-    
-    .btn-login:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-    }
-    
-    .hamburger {
-        display: none !important;
-        cursor: pointer;
-        padding: 15px;
-        z-index: 1000;
-        position: relative;
-        background: none;
-        border: none;
-        -webkit-tap-highlight-color: transparent;
-        margin-right: 10px;
-    }
+ /* Standard Header and Hero Styles */
+ body {
+ padding-top: 100px;
+ margin: 0;
+ font-family: 'Montserrat', Arial, sans-serif;
+ background: #f7f7f7;
+ color: #222;
+ }
+ 
+ .main-header {
+ background: #fff !important;
+ min-height: 70px !important;
+ display: flex !important;
+ align-items: center !important;
+ justify-content: space-between !important;
+ padding: 0 2rem !important;
+ box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+ position: fixed !important;
+ top: 0 !important;
+ left: 0 !important;
+ right: 0 !important;
+ z-index: 1000 !important;
+ }
+ 
+ .logo {
+ display: flex !important;
+ align-items: center !important;
+ }
+ 
+ .logo img {
+ height: 50px !important;
+ width: auto !important;
+ }
+ 
+ .nav-links { 
+ display: flex !important;
+ align-items: center !important;
+ list-style: none !important;
+ margin: 0 !important;
+ padding: 0 !important;
+ gap: 2rem !important;
+ }
+ 
+ .nav-links a { 
+ padding-top: 0 !important; 
+ padding-bottom: 0 !important; 
+ color: #333 !important; 
+ font-weight: 500 !important;
+ text-decoration: none !important;
+ transition: color 0.3s ease !important;
+ }
+ 
+ .nav-links a:hover {
+ color: #2e7d32 !important;
+ }
+ 
+ .nav-links li { 
+ display: flex; 
+ align-items: center; 
+ }
+ 
+ .login-buttons {
+ display: flex !important;
+ gap: 1rem !important;
+ align-items: center !important;
+ }
+ 
+ .btn-login {
+ padding: 0.5rem 1rem !important;
+ border-radius: 4px !important;
+ text-decoration: none !important;
+ font-weight: 500 !important;
+ transition: all 0.3s ease !important;
+ }
+ 
+ .btn-customer {
+ background: #2e7d32 !important;
+ color: white !important;
+ }
+ 
+ .btn-admin {
+ background: #1565c0 !important;
+ color: white !important;
+ }
+ 
+ .btn-login:hover {
+ transform: translateY(-2px) !important;
+ box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+ }
+ 
+ .hamburger {
+ display: none !important;
+ cursor: pointer;
+ padding: 15px;
+ z-index: 1000;
+ position: relative;
+ background: none;
+ border: none;
+ -webkit-tap-highlight-color: transparent;
+ margin-right: 10px;
+ }
 
-    .hamburger span {
-        display: block;
-        width: 25px;
-        height: 3px;
-        background-color: #2e7d32;
-        margin: 5px 0;
-        transition: 0.3s;
-    }
+ .hamburger span {
+ display: block;
+ width: 25px;
+ height: 3px;
+ background-color: #2e7d32;
+ margin: 5px 0;
+ transition: 0.3s;
+ }
 
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
-    }
+ .hamburger.active span:nth-child(1) {
+ transform: rotate(-45deg) translate(-5px, 6px);
+ }
 
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
+ .hamburger.active span:nth-child(2) {
+ opacity: 0;
+ }
 
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
-    }
-    
-    .hero {
-        position: relative;
-        width: 100vw;
-        min-height: 60vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #222;
-        overflow: hidden;
-        margin-top: 80px;
-    }
-    
-    .hero img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 1;
-        filter: brightness(0.6);
-    }
-    
-    .hero-content {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        color: #fff;
-        padding: 2rem;
-        max-width: 800px;
-    }
-    
-    .hero-content h1 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-    
-    .hero-content p {
-        font-size: 1.25rem;
-        font-weight: 400;
-        margin-bottom: 2rem;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    }
-    
-    @media (max-width: 768px) {
-        body {
-            padding-top: 80px;
-        }
-        
-        .main-header {
-            padding: 0 1rem !important;
-        }
-        
-        .nav-links { 
-            display: none !important; 
-            position: absolute !important; 
-            top: 100% !important; 
-            left: 0 !important; 
-            right: 0 !important; 
-            background: var(--color-primary, #4caf50) !important; 
-            padding: 1rem !important; 
-            flex-direction: column !important; 
-            align-items: center !important; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-            z-index: 1000 !important;
-        }
-        
-        .nav-links.active { 
-            display: flex !important; 
-        }
-        
-        .hamburger { 
-            display: block !important; 
-        }
-        
-        .login-buttons {
-            flex-direction: column !important;
-            gap: 0.5rem !important;
-        }
-        
-        .hero-content h1 {
-            font-size: 2rem;
-        }
-        
-        .hero-content p {
-            font-size: 1rem;
-        }
-    }
-    
-    @media (max-width: 900px) {
-        .main-header .nav-links {
-            margin-top: 0 !important;
-            padding-top: 0.5em !important;
-        }
-    }
+ .hamburger.active span:nth-child(3) {
+ transform: rotate(45deg) translate(-5px, -6px);
+ }
+ 
+ .hero {
+ position: relative;
+ width: 100vw;
+ min-height: 60vh;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ background: #222;
+ overflow: hidden;
+ margin-top: 80px;
+ }
+ 
+ .hero img {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ z-index: 1;
+ filter: brightness(0.6);
+ }
+ 
+ .hero-content {
+ position: relative;
+ z-index: 2;
+ text-align: center;
+ color: #fff;
+ padding: 2rem;
+ max-width: 800px;
+ }
+ 
+ .hero-content h1 {
+ font-size: 3rem;
+ margin-bottom: 1rem;
+ font-weight: 600;
+ letter-spacing: 1px;
+ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+ }
+ 
+ .hero-content p {
+ font-size: 1.25rem;
+ font-weight: 400;
+ margin-bottom: 2rem;
+ text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+ }
+ 
+ @media (max-width: 768px) {
+ body {
+ padding-top: 80px;
+ }
+ 
+ .main-header {
+ padding: 0 1rem !important;
+ }
+ 
+ .nav-links { 
+ display: none !important; 
+ position: absolute !important; 
+ top: 100% !important; 
+ left: 0 !important; 
+ right: 0 !important; 
+ background: var(--color-primary, #4caf50) !important; 
+ padding: 1rem !important; 
+ flex-direction: column !important; 
+ align-items: center !important; 
+ box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+ z-index: 1000 !important;
+ }
+ 
+ .nav-links.active { 
+ display: flex !important; 
+ }
+ 
+ .hamburger { 
+ display: block !important; 
+ }
+ 
+ .login-buttons {
+ flex-direction: column !important;
+ gap: 0.5rem !important;
+ }
+ 
+ .hero-content h1 {
+ font-size: 2rem;
+ }
+ 
+ .hero-content p {
+ font-size: 1rem;
+ }
+ }
+ 
+ @media (max-width: 900px) {
+ .main-header .nav-links {
+ margin-top: 0 !important;
+ padding-top: 0.5em !important;
+ }
+ }
 
 </style>
 
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="manifest.json" />
+ <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+ <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+ <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+ <link rel="manifest" href="manifest.json" />
 </head>
 <body>
-  <!-- Loading & Error Validation -->
-  <div id="loading" class="loading" role="status" aria-label="Loading page content">
-    <div class="spinner" aria-hidden="true"></div>
-  </div>
+ <!-- Loading & Error Validation -->
+ <div id="loading" class="loading" role="status" aria-label="Loading page content">
+ <div class="spinner" aria-hidden="true"></div>
+ </div>
 
-  <header class="main-header">
-  <div class="logo">
-    <a href="index.html">
-      <picture>
-        <source srcset="assets/images/hollidays-logo.webp" type="image/webp" />
-        <img src="assets/images/hollidays-logo.webp" alt="Holliday's Lawn & Garden Logo" loading="lazy" />
-      </picture>
-    </a>
-  </div>
-  <button class="hamburger" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
-  </button>
-  <nav id="nav-menu" aria-label="Main navigation">
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="education.html">Education</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-      <li class="login-buttons">
-        <a class="btn-login btn-customer" href="login.html"><i class="fas fa-user"></i> Customer Login</a>
-        <a class="btn-login btn-admin" href="admin-login.html"><i class="fas fa-lock"></i> Admin Login</a>
-      </li>
-    </ul>
-  </nav>
+ <header class="main-header">
+ <div class="logo">
+ <a href="index.html">
+ <picture>
+ <source srcset="assets/images/hollidays-logo.webp" type="image/webp" />
+ <img src="assets/images/hollidays-logo.webp" alt="Holliday's Lawn & Garden Logo" loading="lazy" />
+ </picture>
+ </a>
+ </div>
+ <button class="hamburger" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle menu">
+ <span></span><span></span><span></span>
+ </button>
+ <nav id="nav-menu" aria-label="Main navigation">
+ <ul class="nav-links">
+ <li><a href="index.html">Home</a></li>
+ <li><a href="about.html">About</a></li>
+ <li><a href="services.html">Services</a></li>
+ <li><a href="education.html">Education</a></li>
+ <li><a href="faq.html">FAQ</a></li>
+ <li><a href="contact.html">Contact</a></li>
+ <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+ <li class="login-buttons">
+ <a class="btn-login btn-customer" href="login.html"><i class="fas fa-user"></i> Customer Login</a>
+ <a class="btn-login btn-admin" href="admin-login.html"><i class="fas fa-lock"></i> Admin Login</a>
+ </li>
+ </ul>
+ </nav>
 </header>
 
-    <!-- Header Navigation -->
+ <!-- Header Navigation -->
 
 <div class="admin-header">
 <div class="logo">
@@ -1983,12 +1983,12 @@
 <div class="admin-actions">
 <button class="btn btn-logout" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>
 <i class="fas fa-sign-out-alt"></i>
-                Logout
-            </button>
+ Logout
+ </button>
 <button class="btn btn-dashboard" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>
 <i class="fas fa-tachometer-alt"></i>
-                Dashboard
-            </button>
+ Dashboard
+ </button>
 </div>
 <div aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle menu" class="hamburger" onclick="toggleMenu()">
 <span></span>
@@ -2002,16 +2002,16 @@
 <div class="communication-actions">
 <button class="btn-primary" onclick="openNewMessageModal()" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>
 <i class="fas fa-plus"></i>
-                    New Message
-                </button>
+ New Message
+ </button>
 <button class="btn-secondary" onclick="openNotificationModal()" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>
 <i class="fas fa-bell"></i>
-                    Send Notification
-                </button>
+ Send Notification
+ </button>
 <button class="btn-secondary" onclick="openBulkMessageModal()" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>
 <i class="fas fa-broadcast-tower"></i>
-                    Bulk Message
-                </button>
+ Bulk Message
+ </button>
 </div>
 </div>
 <div class="communication-stats">
@@ -2036,8 +2036,8 @@
 <div class="sidebar">
 <div class="sidebar-header">
 <i class="fas fa-users"></i>
-                    Contacts
-                </div>
+ Contacts
+ </div>
 <div class="sidebar-tabs">
 <div class="sidebar-tab active" onclick="switchTab('staff')">Staff</div>
 <div class="sidebar-tab" onclick="switchTab('customers')">Customers</div>
@@ -2069,8 +2069,8 @@
 <input disabled="" id="messageInput" placeholder="Type your message..." type="text"/>
 <button class="btn-send" disabled="" onclick="sendMessage()" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>
 <i class="fas fa-paper-plane"></i>
-                        Send
-                    </button>
+ Send
+ </button>
 </div>
 </div>
 </div>
@@ -2183,1014 +2183,1014 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
-            authDomain: "holiday-lawn-and-garden.firebaseapp.com",
-            projectId: "holiday-lawn-and-garden",
-            storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
-            messagingSenderId: "135322230444",
-            appId: "1:135322230444:web:1a487b25a48aae07368909",
-            measurementId: "G-KD6TBWR4ZT"
-        };
+ // Firebase configuration
+ const firebaseConfig = {
+ apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+ authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+ projectId: "holiday-lawn-and-garden",
+ storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+ messagingSenderId: "135322230444",
+ appId: "1:135322230444:web:1a487b25a48aae07368909",
+ measurementId: "G-KD6TBWR4ZT"
+ };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        
-        let currentTab = 'staff';
-        let currentContact = null;
-        let staffData = [];
-        let customerData = [];
-        let messageData = [];
+ // Initialize Firebase
+ firebase.initializeApp(firebaseConfig);
+ const db = firebase.firestore();
+ 
+ let currentTab = 'staff';
+ let currentContact = null;
+ let staffData = [];
+ let customerData = [];
+ let messageData = [];
 
-        // Real-time messaging functionality
-        let realTimeListener = null;
+ // Real-time messaging functionality
+ let realTimeListener = null;
 
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', async function() {
-            try {
-                showLoading('Loading communication data...');
-                await loadCommunicationData();
-                hideLoading();
-                
-                // Start real-time messaging
-                startRealTimeMessaging();
-                
-                // Set up auto-refresh every 30 seconds
-                setInterval(async () => {
-                    await loadCommunicationData();
-                }, 30000);
-                
-                // Set up event listeners
-                setupEventListeners();
-                
-            } catch (error) {
-                console.error('Error initializing page:', error);
-                hideLoading();
-                showError('Failed to load communication data');
-            }
-        });
+ // Initialize page
+ document.addEventListener('DOMContentLoaded', async function() {
+ try {
+ showLoading('Loading communication data...');
+ await loadCommunicationData();
+ hideLoading();
+ 
+ // Start real-time messaging
+ startRealTimeMessaging();
+ 
+ // Set up auto-refresh every 30 seconds
+ setInterval(async () => {
+ await loadCommunicationData();
+ }, 30000);
+ 
+ // Set up event listeners
+ setupEventListeners();
+ 
+ } catch (error) {
+ console.error('Error initializing page:', error);
+ hideLoading();
+ showError('Failed to load communication data');
+ }
+ });
 
-        function setupEventListeners() {
-            // Set up modal close events
-            window.addEventListener('click', function(event) {
-                const modals = document.querySelectorAll('.modal');
-                modals.forEach(modal => {
-                    if (event.target === modal) {
-                        modal.remove();
-                    }
-                });
-            });
-        }
+ function setupEventListeners() {
+ // Set up modal close events
+ window.addEventListener('click', function(event) {
+ const modals = document.querySelectorAll('.modal');
+ modals.forEach(modal => {
+ if (event.target === modal) {
+ modal.remove();
+ }
+ });
+ });
+ }
 
-        async function loadCommunicationData() {
-            try {
-                showLoading('Loading communication data...');
-                
-                // Check if Firebase is properly initialized
-                if (!firebase || !firebase.firestore) {
-                    throw new Error('Firebase not initialized');
-                }
+ async function loadCommunicationData() {
+ try {
+ showLoading('Loading communication data...');
+ 
+ // Check if Firebase is properly initialized
+ if (!firebase || !firebase.firestore) {
+ throw new Error('Firebase not initialized');
+ }
 
-                // Add timeout to prevent infinite loading
-                const timeoutPromise = new Promise((_, reject) => {
-                    setTimeout(() => reject(new Error('Request timeout')), 10000);
-                });
+ // Add timeout to prevent infinite loading
+ const timeoutPromise = new Promise((_, reject) => {
+ setTimeout(() => reject(new Error('Request timeout')), 10000);
+ });
 
-                // Load staff data
-                let staffSnapshot;
-                try {
-                    staffSnapshot = await Promise.race([
-                        db.collection('staff').get(),
-                        timeoutPromise
-                    ]);
-                } catch (error) {
-                    console.warn('Staff collection not accessible:', error);
-                    staffSnapshot = { forEach: () => {} };
-                }
+ // Load staff data
+ let staffSnapshot;
+ try {
+ staffSnapshot = await Promise.race([
+ db.collection('staff').get(),
+ timeoutPromise
+ ]);
+ } catch (error) {
+ console.warn('Staff collection not accessible:', error);
+ staffSnapshot = { forEach: () => {} };
+ }
 
-                // Load customer data
-                let customerSnapshot;
-                try {
-                    customerSnapshot = await Promise.race([
-                        db.collection('customers').get(),
-                        timeoutPromise
-                    ]);
-                } catch (error) {
-                    console.warn('Customers collection not accessible:', error);
-                    customerSnapshot = { forEach: () => {} };
-                }
+ // Load customer data
+ let customerSnapshot;
+ try {
+ customerSnapshot = await Promise.race([
+ db.collection('customers').get(),
+ timeoutPromise
+ ]);
+ } catch (error) {
+ console.warn('Customers collection not accessible:', error);
+ customerSnapshot = { forEach: () => {} };
+ }
 
-                // Load message data
-                let messageSnapshot;
-                try {
-                    messageSnapshot = await Promise.race([
-                        db.collection('messages').get(),
-                        timeoutPromise
-                    ]);
-                } catch (error) {
-                    console.warn('Messages collection not accessible:', error);
-                    messageSnapshot = { forEach: () => {} };
-                }
+ // Load message data
+ let messageSnapshot;
+ try {
+ messageSnapshot = await Promise.race([
+ db.collection('messages').get(),
+ timeoutPromise
+ ]);
+ } catch (error) {
+ console.warn('Messages collection not accessible:', error);
+ messageSnapshot = { forEach: () => {} };
+ }
 
-                staffData = [];
-                customerData = [];
-                messageData = [];
-                
-                staffSnapshot.forEach(doc => {
-                    const data = doc.data();
-                    staffData.push({
-                        id: doc.id,
-                        name: `${data.firstName || ''} ${data.lastName || ''}`.trim(),
-                        email: data.email || '',
-                        role: data.position || '',
-                        type: 'staff',
-                        status: data.status || 'active',
-                        ...data
-                    });
-                });
+ staffData = [];
+ customerData = [];
+ messageData = [];
+ 
+ staffSnapshot.forEach(doc => {
+ const data = doc.data();
+ staffData.push({
+ id: doc.id,
+ name: `${data.firstName || ''} ${data.lastName || ''}`.trim(),
+ email: data.email || '',
+ role: data.position || '',
+ type: 'staff',
+ status: data.status || 'active',
+ ...data
+ });
+ });
 
-                customerSnapshot.forEach(doc => {
-                    const data = doc.data();
-                    customerData.push({
-                        id: doc.id,
-                        name: data.name || 'Unknown Customer',
-                        email: data.email || '',
-                        role: 'Customer',
-                        type: 'customer',
-                        status: 'active',
-                        ...data
-                    });
-                });
+ customerSnapshot.forEach(doc => {
+ const data = doc.data();
+ customerData.push({
+ id: doc.id,
+ name: data.name || 'Unknown Customer',
+ email: data.email || '',
+ role: 'Customer',
+ type: 'customer',
+ status: 'active',
+ ...data
+ });
+ });
 
-                messageSnapshot.forEach(doc => {
-                    const data = doc.data();
-                    messageData.push({
-                        id: doc.id,
-                        ...data
-                    });
-                });
+ messageSnapshot.forEach(doc => {
+ const data = doc.data();
+ messageData.push({
+ id: doc.id,
+ ...data
+ });
+ });
 
-                loadContacts();
-                updateStats(messageData);
-                hideLoading();
-                
-            } catch (error) {
-                console.error('Error loading communication data:', error);
-                hideLoading();
-                showError('Failed to load communication data. Please try refreshing the page.');
-                loadContacts();
-                updateStats([]);
-            }
-        }
+ loadContacts();
+ updateStats(messageData);
+ hideLoading();
+ 
+ } catch (error) {
+ console.error('Error loading communication data:', error);
+ hideLoading();
+ showError('Failed to load communication data. Please try refreshing the page.');
+ loadContacts();
+ updateStats([]);
+ }
+ }
 
-        function loadContacts() {
-            const contactsList = document.getElementById('contactsList');
-            const contacts = currentTab === 'staff' ? staffData : customerData;
-            
-            if (contacts.length === 0) {
-                contactsList.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; color: #666;">
-                        <i class="fas fa-users" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                        <p>No ${currentTab} found</p>
-                    </div>
-                `;
-                return;
-            }
+ function loadContacts() {
+ const contactsList = document.getElementById('contactsList');
+ const contacts = currentTab === 'staff' ? staffData : customerData;
+ 
+ if (contacts.length === 0) {
+ contactsList.innerHTML = `
+ <div style="text-align: center; padding: 2rem; color: #666;">
+ <i class="fas fa-users" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+ <p>No ${currentTab} found</p>
+ </div>
+ `;
+ return;
+ }
 
-            contactsList.innerHTML = contacts
-                .filter(contact => contact.status === 'active')
-                .map(contact => `
-                    <div class="contact-item" onclick="selectContact('${contact.id}')">
-                        <div class="contact-avatar">
-                            ${contact.name.charAt(0).toUpperCase()}
-                        </div>
-                        <div class="contact-info">
-                            <p class="contact-name">${contact.name}</p>
-                            <p class="contact-role">${contact.role}</p>
-                        </div>
-                    </div>
-                `).join('');
-        }
+ contactsList.innerHTML = contacts
+ .filter(contact => contact.status === 'active')
+ .map(contact => `
+ <div class="contact-item" onclick="selectContact('${contact.id}')">
+ <div class="contact-avatar">
+ ${contact.name.charAt(0).toUpperCase()}
+ </div>
+ <div class="contact-info">
+ <p class="contact-name">${contact.name}</p>
+ <p class="contact-role">${contact.role}</p>
+ </div>
+ </div>
+ `).join('');
+ }
 
-        function switchTab(tab) {
-            currentTab = tab;
-            
-            // Update active tab
-            document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Load contacts for selected tab
-            loadContacts();
-            
-            // Clear current chat
-            currentContact = null;
-            document.getElementById('chatTitle').textContent = 'Select a contact to start chatting';
-            document.getElementById('chatMessages').innerHTML = `
-                <div style="text-align: center; color: #666; padding: 2rem;">
-                    <i class="fas fa-comments" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                    <h3>No conversation selected</h3>
-                    <p>Choose a contact from the sidebar to start messaging</p>
-                </div>
-            `;
-            document.getElementById('messageInput').disabled = true;
-            document.querySelector('.btn-send').disabled = true;
-        }
+ function switchTab(tab) {
+ currentTab = tab;
+ 
+ // Update active tab
+ document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+ event.target.classList.add('active');
+ 
+ // Load contacts for selected tab
+ loadContacts();
+ 
+ // Clear current chat
+ currentContact = null;
+ document.getElementById('chatTitle').textContent = 'Select a contact to start chatting';
+ document.getElementById('chatMessages').innerHTML = `
+ <div style="text-align: center; color: #666; padding: 2rem;">
+ <i class="fas fa-comments" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+ <h3>No conversation selected</h3>
+ <p>Choose a contact from the sidebar to start messaging</p>
+ </div>
+ `;
+ document.getElementById('messageInput').disabled = true;
+ document.querySelector('.btn-send').disabled = true;
+ }
 
-        function selectContact(contactId) {
-            // Remove active class from all contacts
-            document.querySelectorAll('.contact-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Add active class to selected contact
-            event.currentTarget.classList.add('active');
-            
-            const contacts = currentTab === 'staff' ? staffData : customerData;
-            currentContact = contacts.find(contact => contact.id === contactId);
-            
-            if (currentContact) {
-                document.getElementById('chatTitle').textContent = currentContact.name;
-                document.getElementById('messageInput').disabled = false;
-                document.querySelector('.btn-send').disabled = false;
-                loadChatHistory(contactId);
-            }
-        }
+ function selectContact(contactId) {
+ // Remove active class from all contacts
+ document.querySelectorAll('.contact-item').forEach(item => {
+ item.classList.remove('active');
+ });
+ 
+ // Add active class to selected contact
+ event.currentTarget.classList.add('active');
+ 
+ const contacts = currentTab === 'staff' ? staffData : customerData;
+ currentContact = contacts.find(contact => contact.id === contactId);
+ 
+ if (currentContact) {
+ document.getElementById('chatTitle').textContent = currentContact.name;
+ document.getElementById('messageInput').disabled = false;
+ document.querySelector('.btn-send').disabled = false;
+ loadChatHistory(contactId);
+ }
+ }
 
-        function loadChatHistory(contactId) {
-            const chatMessages = document.getElementById('chatMessages');
-            
-            // Filter messages for this contact
-            const contactMessages = messageData.filter(msg => 
-                msg.recipients && msg.recipients.includes(contactId)
-            );
-            
-            if (contactMessages.length === 0) {
-                chatMessages.innerHTML = `
-                    <div style="text-align: center; color: #666; padding: 2rem;">
-                        <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                        <h3>No messages yet</h3>
-                        <p>Start a conversation with ${currentContact.name}</p>
-                    </div>
-                `;
-                return;
-            }
+ function loadChatHistory(contactId) {
+ const chatMessages = document.getElementById('chatMessages');
+ 
+ // Filter messages for this contact
+ const contactMessages = messageData.filter(msg => 
+ msg.recipients && msg.recipients.includes(contactId)
+ );
+ 
+ if (contactMessages.length === 0) {
+ chatMessages.innerHTML = `
+ <div style="text-align: center; color: #666; padding: 2rem;">
+ <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+ <h3>No messages yet</h3>
+ <p>Start a conversation with ${currentContact.name}</p>
+ </div>
+ `;
+ return;
+ }
 
-            chatMessages.innerHTML = contactMessages.map(message => `
-                <div class="message ${message.sentBy === 'admin' ? 'sent' : 'received'}">
-                    <div class="message-avatar">
-                        ${message.sentBy === 'admin' ? 'A' : currentContact.name.charAt(0).toUpperCase()}
-                    </div>
-                    <div class="message-content">
-                        <div class="message-bubble">
-                            ${message.content}
-                        </div>
-                        <div class="message-time">
-                            ${formatDate(message.sentAt)}
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-            
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
+ chatMessages.innerHTML = contactMessages.map(message => `
+ <div class="message ${message.sentBy === 'admin' ? 'sent' : 'received'}">
+ <div class="message-avatar">
+ ${message.sentBy === 'admin' ? 'A' : currentContact.name.charAt(0).toUpperCase()}
+ </div>
+ <div class="message-content">
+ <div class="message-bubble">
+ ${message.content}
+ </div>
+ <div class="message-time">
+ ${formatDate(message.sentAt)}
+ </div>
+ </div>
+ </div>
+ `).join('');
+ 
+ chatMessages.scrollTop = chatMessages.scrollHeight;
+ }
 
-        function sendMessage() {
-            if (!currentContact) return;
-            
-            const messageInput = document.getElementById('messageInput');
-            const message = messageInput.value.trim();
-            
-            if (!message) return;
-            
-            // Add message to UI immediately
-            const chatMessages = document.getElementById('chatMessages');
-            const messageElement = `
-                <div class="message sent">
-                    <div class="message-avatar">A</div>
-                    <div class="message-content">
-                        <div class="message-bubble">
-                            ${message}
-                        </div>
-                        <div class="message-time">
-                            ${formatDate(new Date())}
-                        </div>
-                    </div>
-                </div>
-            `;
-            chatMessages.insertAdjacentHTML('beforeend', messageElement);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            
-            // Clear input
-            messageInput.value = '';
-            
-            // Save to Firebase
-            saveMessageToFirebase(message);
-        }
+ function sendMessage() {
+ if (!currentContact) return;
+ 
+ const messageInput = document.getElementById('messageInput');
+ const message = messageInput.value.trim();
+ 
+ if (!message) return;
+ 
+ // Add message to UI immediately
+ const chatMessages = document.getElementById('chatMessages');
+ const messageElement = `
+ <div class="message sent">
+ <div class="message-avatar">A</div>
+ <div class="message-content">
+ <div class="message-bubble">
+ ${message}
+ </div>
+ <div class="message-time">
+ ${formatDate(new Date())}
+ </div>
+ </div>
+ </div>
+ `;
+ chatMessages.insertAdjacentHTML('beforeend', messageElement);
+ chatMessages.scrollTop = chatMessages.scrollHeight;
+ 
+ // Clear input
+ messageInput.value = '';
+ 
+ // Save to Firebase
+ saveMessageToFirebase(message);
+ }
 
-        async function saveMessageToFirebase(content) {
-            try {
-                const messageData = {
-                    recipients: [currentContact.id],
-                    content: content,
-                    sentBy: 'admin',
-                    sentAt: new Date(),
-                    status: 'sent'
-                };
+ async function saveMessageToFirebase(content) {
+ try {
+ const messageData = {
+ recipients: [currentContact.id],
+ content: content,
+ sentBy: 'admin',
+ sentAt: new Date(),
+ status: 'sent'
+ };
 
-                await db.collection('messages').add(messageData);
-            } catch (error) {
-                console.error('Error saving message:', error);
-                showError('Failed to save message');
-            }
-        }
+ await db.collection('messages').add(messageData);
+ } catch (error) {
+ console.error('Error saving message:', error);
+ showError('Failed to save message');
+ }
+ }
 
-        function updateStats(data) {
-            const stats = {
-                total: data.length,
-                unread: data.filter(msg => msg.status === 'unread').length,
-                sentToday: data.filter(msg => {
-                    const today = new Date();
-                    const messageDate = new Date(msg.sentAt);
-                    return messageDate.toDateString() === today.toDateString() && msg.sentBy === 'admin';
-                }).length,
-                activeChats: new Set(data.map(msg => msg.recipients).flat()).size
-            };
+ function updateStats(data) {
+ const stats = {
+ total: data.length,
+ unread: data.filter(msg => msg.status === 'unread').length,
+ sentToday: data.filter(msg => {
+ const today = new Date();
+ const messageDate = new Date(msg.sentAt);
+ return messageDate.toDateString() === today.toDateString() && msg.sentBy === 'admin';
+ }).length,
+ activeChats: new Set(data.map(msg => msg.recipients).flat()).size
+ };
 
-            document.getElementById('totalMessages').textContent = stats.total;
-            document.getElementById('unreadMessages').textContent = stats.unread;
-            document.getElementById('sentToday').textContent = stats.sentToday;
-            document.getElementById('activeChats').textContent = stats.activeChats;
-        }
+ document.getElementById('totalMessages').textContent = stats.total;
+ document.getElementById('unreadMessages').textContent = stats.unread;
+ document.getElementById('sentToday').textContent = stats.sentToday;
+ document.getElementById('activeChats').textContent = stats.activeChats;
+ }
 
-        // Modal functions
-        function openNewMessageModal() {
-            document.getElementById('newMessageModal').style.display = 'block';
-            populateRecipients();
-        }
+ // Modal functions
+ function openNewMessageModal() {
+ document.getElementById('newMessageModal').style.display = 'block';
+ populateRecipients();
+ }
 
-        function closeNewMessageModal() {
-            document.getElementById('newMessageModal').style.display = 'none';
-        }
+ function closeNewMessageModal() {
+ document.getElementById('newMessageModal').style.display = 'none';
+ }
 
-        function openNotificationModal() {
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            modal.style.display = 'block';
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title">Create Notification</h2>
-                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
-                    </div>
-                    <form id="notificationForm">
-                        <div class="form-group">
-                            <label for="notificationTitle">Title</label>
-                            <input type="text" id="notificationTitle" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="notificationMessage">Message</label>
-                            <textarea id="notificationMessage" rows="4" required></textarea>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="notificationType">Type</label>
-                                <select id="notificationType" required>
-                                    <option value="info">Information</option>
-                                    <option value="warning">Warning</option>
-                                    <option value="success">Success</option>
-                                    <option value="error">Error</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="notificationPriority">Priority</label>
-                                <select id="notificationPriority">
-                                    <option value="low">Low</option>
-                                    <option value="normal">Normal</option>
-                                    <option value="high">High</option>
-                                    <option value="urgent">Urgent</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="notificationRecipients">Recipients</label>
-                            <select id="notificationRecipients" multiple>
-                                <option value="all-staff">All Staff</option>
-                                <option value="all-customers">All Customers</option>
-                                <option value="landscaping">Landscaping Team</option>
-                                <option value="maintenance">Maintenance Team</option>
-                                <option value="administration">Administration</option>
-                                <option value="sales">Sales Team</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="notificationExpiry">Expiry Date (Optional)</label>
-                                <input type="datetime-local" id="notificationExpiry">
-                            </div>
-                            <div class="form-group">
-                                <label for="notificationAction">Action Required</label>
-                                <select id="notificationAction">
-                                    <option value="none">None</option>
-                                    <option value="acknowledge">Acknowledge</option>
-                                    <option value="respond">Respond</option>
-                                    <option value="complete">Complete Task</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-actions">
-                            <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
-                            <button type="submit" class="btn-save">Create Notification</button>
-                        </div>
-                    </form>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            // Form submission
-            document.getElementById('notificationForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                createNotification();
-            });
-        }
+ function openNotificationModal() {
+ const modal = document.createElement('div');
+ modal.className = 'modal';
+ modal.style.display = 'block';
+ modal.innerHTML = `
+ <div class="modal-content">
+ <div class="modal-header">
+ <h2 class="modal-title">Create Notification</h2>
+ <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+ </div>
+ <form id="notificationForm">
+ <div class="form-group">
+ <label for="notificationTitle">Title</label>
+ <input type="text" id="notificationTitle" required>
+ </div>
+ 
+ <div class="form-group">
+ <label for="notificationMessage">Message</label>
+ <textarea id="notificationMessage" rows="4" required></textarea>
+ </div>
+ 
+ <div class="form-row">
+ <div class="form-group">
+ <label for="notificationType">Type</label>
+ <select id="notificationType" required>
+ <option value="info">Information</option>
+ <option value="warning">Warning</option>
+ <option value="success">Success</option>
+ <option value="error">Error</option>
+ </select>
+ </div>
+ <div class="form-group">
+ <label for="notificationPriority">Priority</label>
+ <select id="notificationPriority">
+ <option value="low">Low</option>
+ <option value="normal">Normal</option>
+ <option value="high">High</option>
+ <option value="urgent">Urgent</option>
+ </select>
+ </div>
+ </div>
+ 
+ <div class="form-group">
+ <label for="notificationRecipients">Recipients</label>
+ <select id="notificationRecipients" multiple>
+ <option value="all-staff">All Staff</option>
+ <option value="all-customers">All Customers</option>
+ <option value="landscaping">Landscaping Team</option>
+ <option value="maintenance">Maintenance Team</option>
+ <option value="administration">Administration</option>
+ <option value="sales">Sales Team</option>
+ </select>
+ </div>
+ 
+ <div class="form-row">
+ <div class="form-group">
+ <label for="notificationExpiry">Expiry Date (Optional)</label>
+ <input type="datetime-local" id="notificationExpiry">
+ </div>
+ <div class="form-group">
+ <label for="notificationAction">Action Required</label>
+ <select id="notificationAction">
+ <option value="none">None</option>
+ <option value="acknowledge">Acknowledge</option>
+ <option value="respond">Respond</option>
+ <option value="complete">Complete Task</option>
+ </select>
+ </div>
+ </div>
+ 
+ <div class="form-actions">
+ <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+ <button type="submit" class="btn-save">Create Notification</button>
+ </div>
+ </form>
+ </div>
+ `;
+ 
+ document.body.appendChild(modal);
+ 
+ // Form submission
+ document.getElementById('notificationForm').addEventListener('submit', function(e) {
+ e.preventDefault();
+ createNotification();
+ });
+ }
 
-        async function createNotification() {
-            try {
-                showLoading('Creating notification...');
-                
-                const notificationData = {
-                    title: document.getElementById('notificationTitle').value,
-                    message: document.getElementById('notificationMessage').value,
-                    type: document.getElementById('notificationType').value,
-                    priority: document.getElementById('notificationPriority').value,
-                    recipients: Array.from(document.getElementById('notificationRecipients').selectedOptions).map(option => option.value),
-                    actionRequired: document.getElementById('notificationAction').value,
-                    createdBy: 'admin',
-                    createdAt: new Date(),
-                    status: 'active',
-                    acknowledgedBy: []
-                };
-                
-                const expiryDate = document.getElementById('notificationExpiry').value;
-                if (expiryDate) {
-                    notificationData.expiryDate = new Date(expiryDate);
-                }
+ async function createNotification() {
+ try {
+ showLoading('Creating notification...');
+ 
+ const notificationData = {
+ title: document.getElementById('notificationTitle').value,
+ message: document.getElementById('notificationMessage').value,
+ type: document.getElementById('notificationType').value,
+ priority: document.getElementById('notificationPriority').value,
+ recipients: Array.from(document.getElementById('notificationRecipients').selectedOptions).map(option => option.value),
+ actionRequired: document.getElementById('notificationAction').value,
+ createdBy: 'admin',
+ createdAt: new Date(),
+ status: 'active',
+ acknowledgedBy: []
+ };
+ 
+ const expiryDate = document.getElementById('notificationExpiry').value;
+ if (expiryDate) {
+ notificationData.expiryDate = new Date(expiryDate);
+ }
 
-                await db.collection('notifications').add(notificationData);
-                showSuccess('Notification created successfully');
-                document.querySelector('.modal').remove();
-                hideLoading();
-                
-                // Refresh notification data
-                await loadCommunicationData();
-                
-            } catch (error) {
-                console.error('Error creating notification:', error);
-                hideLoading();
-                showError('Failed to create notification');
-            }
-        }
+ await db.collection('notifications').add(notificationData);
+ showSuccess('Notification created successfully');
+ document.querySelector('.modal').remove();
+ hideLoading();
+ 
+ // Refresh notification data
+ await loadCommunicationData();
+ 
+ } catch (error) {
+ console.error('Error creating notification:', error);
+ hideLoading();
+ showError('Failed to create notification');
+ }
+ }
 
-        async function acknowledgeNotification(notificationId) {
-            try {
-                await db.collection('notifications').doc(notificationId).update({
-                    acknowledgedBy: firebase.firestore.FieldValue.arrayUnion('admin'),
-                    lastAcknowledged: new Date()
-                });
-                showSuccess('Notification acknowledged');
-                await loadCommunicationData();
-            } catch (error) {
-                console.error('Error acknowledging notification:', error);
-                showError('Failed to acknowledge notification');
-            }
-        }
+ async function acknowledgeNotification(notificationId) {
+ try {
+ await db.collection('notifications').doc(notificationId).update({
+ acknowledgedBy: firebase.firestore.FieldValue.arrayUnion('admin'),
+ lastAcknowledged: new Date()
+ });
+ showSuccess('Notification acknowledged');
+ await loadCommunicationData();
+ } catch (error) {
+ console.error('Error acknowledging notification:', error);
+ showError('Failed to acknowledge notification');
+ }
+ }
 
-        async function deleteNotification(notificationId) {
-            if (!confirm('Are you sure you want to delete this notification?')) return;
-            
-            try {
-                showLoading('Deleting notification...');
-                await db.collection('notifications').doc(notificationId).delete();
-                showSuccess('Notification deleted successfully');
-                await loadCommunicationData();
-                hideLoading();
-            } catch (error) {
-                console.error('Error deleting notification:', error);
-                hideLoading();
-                showError('Failed to delete notification');
-            }
-        }
+ async function deleteNotification(notificationId) {
+ if (!confirm('Are you sure you want to delete this notification?')) return;
+ 
+ try {
+ showLoading('Deleting notification...');
+ await db.collection('notifications').doc(notificationId).delete();
+ showSuccess('Notification deleted successfully');
+ await loadCommunicationData();
+ hideLoading();
+ } catch (error) {
+ console.error('Error deleting notification:', error);
+ hideLoading();
+ showError('Failed to delete notification');
+ }
+ }
 
-        function openBulkMessageModal() {
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            modal.style.display = 'block';
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title">Bulk Message</h2>
-                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
-                    </div>
-                    <form id="bulkMessageForm">
-                        <div class="form-group">
-                            <label for="bulkMessageType">Message Type</label>
-                            <select id="bulkMessageType" required>
-                                <option value="">Select Type</option>
-                                <option value="all-staff">All Staff</option>
-                                <option value="all-customers">All Customers</option>
-                                <option value="department">By Department</option>
-                                <option value="custom">Custom Selection</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group" id="departmentSelection" style="display: none;">
-                            <label for="bulkMessageDepartment">Department</label>
-                            <select id="bulkMessageDepartment">
-                                <option value="">Select Department</option>
-                                <option value="landscaping">Landscaping</option>
-                                <option value="maintenance">Maintenance</option>
-                                <option value="administration">Administration</option>
-                                <option value="sales">Sales</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group" id="customSelection" style="display: none;">
-                            <label for="bulkMessageRecipients">Select Recipients</label>
-                            <select id="bulkMessageRecipients" multiple>
-                                ${[...staffData, ...customerData].filter(contact => contact.status === 'active').map(contact => 
-                                    `<option value="${contact.id}">${contact.name} - ${contact.role}</option>`
-                                ).join('')}
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="bulkMessageSubject">Subject</label>
-                            <input type="text" id="bulkMessageSubject" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="bulkMessageContent">Message</label>
-                            <textarea id="bulkMessageContent" rows="6" required></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="bulkMessagePriority">Priority</label>
-                            <select id="bulkMessagePriority">
-                                <option value="normal">Normal</option>
-                                <option value="high">High</option>
-                                <option value="urgent">Urgent</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-actions">
-                            <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
-                            <button type="submit" class="btn-save">Send Bulk Message</button>
-                        </div>
-                    </form>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            // Handle message type changes
-            document.getElementById('bulkMessageType').addEventListener('change', function() {
-                const departmentSelection = document.getElementById('departmentSelection');
-                const customSelection = document.getElementById('customSelection');
-                
-                departmentSelection.style.display = 'none';
-                customSelection.style.display = 'none';
-                
-                if (this.value === 'department') {
-                    departmentSelection.style.display = 'block';
-                } else if (this.value === 'custom') {
-                    customSelection.style.display = 'block';
-                }
-            });
-            
-            // Form submission
-            document.getElementById('bulkMessageForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                sendBulkMessage();
-            });
-        }
+ function openBulkMessageModal() {
+ const modal = document.createElement('div');
+ modal.className = 'modal';
+ modal.style.display = 'block';
+ modal.innerHTML = `
+ <div class="modal-content">
+ <div class="modal-header">
+ <h2 class="modal-title">Bulk Message</h2>
+ <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+ </div>
+ <form id="bulkMessageForm">
+ <div class="form-group">
+ <label for="bulkMessageType">Message Type</label>
+ <select id="bulkMessageType" required>
+ <option value="">Select Type</option>
+ <option value="all-staff">All Staff</option>
+ <option value="all-customers">All Customers</option>
+ <option value="department">By Department</option>
+ <option value="custom">Custom Selection</option>
+ </select>
+ </div>
+ 
+ <div class="form-group" id="departmentSelection" style="display: none;">
+ <label for="bulkMessageDepartment">Department</label>
+ <select id="bulkMessageDepartment">
+ <option value="">Select Department</option>
+ <option value="landscaping">Landscaping</option>
+ <option value="maintenance">Maintenance</option>
+ <option value="administration">Administration</option>
+ <option value="sales">Sales</option>
+ </select>
+ </div>
+ 
+ <div class="form-group" id="customSelection" style="display: none;">
+ <label for="bulkMessageRecipients">Select Recipients</label>
+ <select id="bulkMessageRecipients" multiple>
+ ${[...staffData, ...customerData].filter(contact => contact.status === 'active').map(contact => 
+ `<option value="${contact.id}">${contact.name} - ${contact.role}</option>`
+ ).join('')}
+ </select>
+ </div>
+ 
+ <div class="form-group">
+ <label for="bulkMessageSubject">Subject</label>
+ <input type="text" id="bulkMessageSubject" required>
+ </div>
+ 
+ <div class="form-group">
+ <label for="bulkMessageContent">Message</label>
+ <textarea id="bulkMessageContent" rows="6" required></textarea>
+ </div>
+ 
+ <div class="form-group">
+ <label for="bulkMessagePriority">Priority</label>
+ <select id="bulkMessagePriority">
+ <option value="normal">Normal</option>
+ <option value="high">High</option>
+ <option value="urgent">Urgent</option>
+ </select>
+ </div>
+ 
+ <div class="form-actions">
+ <button type="button" class="btn-cancel" onclick="this.closest('.modal').remove()">Cancel</button>
+ <button type="submit" class="btn-save">Send Bulk Message</button>
+ </div>
+ </form>
+ </div>
+ `;
+ 
+ document.body.appendChild(modal);
+ 
+ // Handle message type changes
+ document.getElementById('bulkMessageType').addEventListener('change', function() {
+ const departmentSelection = document.getElementById('departmentSelection');
+ const customSelection = document.getElementById('customSelection');
+ 
+ departmentSelection.style.display = 'none';
+ customSelection.style.display = 'none';
+ 
+ if (this.value === 'department') {
+ departmentSelection.style.display = 'block';
+ } else if (this.value === 'custom') {
+ customSelection.style.display = 'block';
+ }
+ });
+ 
+ // Form submission
+ document.getElementById('bulkMessageForm').addEventListener('submit', function(e) {
+ e.preventDefault();
+ sendBulkMessage();
+ });
+ }
 
-        async function sendBulkMessage() {
-            try {
-                showLoading('Sending bulk message...');
-                
-                const messageType = document.getElementById('bulkMessageType').value;
-                const subject = document.getElementById('bulkMessageSubject').value;
-                const content = document.getElementById('bulkMessageContent').value;
-                const priority = document.getElementById('bulkMessagePriority').value;
-                
-                let recipients = [];
-                
-                // Determine recipients based on message type
-                switch (messageType) {
-                    case 'all-staff':
-                        recipients = staffData.filter(staff => staff.status === 'active').map(staff => staff.id);
-                        break;
-                    case 'all-customers':
-                        recipients = customerData.filter(customer => customer.status === 'active').map(customer => customer.id);
-                        break;
-                    case 'department':
-                        const department = document.getElementById('bulkMessageDepartment').value;
-                        recipients = staffData.filter(staff => 
-                            staff.status === 'active' && staff.department === department
-                        ).map(staff => staff.id);
-                        break;
-                    case 'custom':
-                        recipients = Array.from(document.getElementById('bulkMessageRecipients').selectedOptions).map(option => option.value);
-                        break;
-                }
-                
-                if (recipients.length === 0) {
-                    showError('No recipients selected');
-                    hideLoading();
-                    return;
-                }
-                
-                const messageData = {
-                    recipients: recipients,
-                    subject: subject,
-                    content: content,
-                    priority: priority,
-                    messageType: 'bulk',
-                    sentBy: 'admin',
-                    sentAt: new Date(),
-                    status: 'sent'
-                };
+ async function sendBulkMessage() {
+ try {
+ showLoading('Sending bulk message...');
+ 
+ const messageType = document.getElementById('bulkMessageType').value;
+ const subject = document.getElementById('bulkMessageSubject').value;
+ const content = document.getElementById('bulkMessageContent').value;
+ const priority = document.getElementById('bulkMessagePriority').value;
+ 
+ let recipients = [];
+ 
+ // Determine recipients based on message type
+ switch (messageType) {
+ case 'all-staff':
+ recipients = staffData.filter(staff => staff.status === 'active').map(staff => staff.id);
+ break;
+ case 'all-customers':
+ recipients = customerData.filter(customer => customer.status === 'active').map(customer => customer.id);
+ break;
+ case 'department':
+ const department = document.getElementById('bulkMessageDepartment').value;
+ recipients = staffData.filter(staff => 
+ staff.status === 'active' && staff.department === department
+ ).map(staff => staff.id);
+ break;
+ case 'custom':
+ recipients = Array.from(document.getElementById('bulkMessageRecipients').selectedOptions).map(option => option.value);
+ break;
+ }
+ 
+ if (recipients.length === 0) {
+ showError('No recipients selected');
+ hideLoading();
+ return;
+ }
+ 
+ const messageData = {
+ recipients: recipients,
+ subject: subject,
+ content: content,
+ priority: priority,
+ messageType: 'bulk',
+ sentBy: 'admin',
+ sentAt: new Date(),
+ status: 'sent'
+ };
 
-                await db.collection('messages').add(messageData);
-                showSuccess(`Bulk message sent to ${recipients.length} recipients successfully`);
-                document.querySelector('.modal').remove();
-                hideLoading();
-                
-                // Refresh message data
-                await loadCommunicationData();
-                
-            } catch (error) {
-                console.error('Error sending bulk message:', error);
-                hideLoading();
-                showError('Failed to send bulk message');
-            }
-        }
+ await db.collection('messages').add(messageData);
+ showSuccess(`Bulk message sent to ${recipients.length} recipients successfully`);
+ document.querySelector('.modal').remove();
+ hideLoading();
+ 
+ // Refresh message data
+ await loadCommunicationData();
+ 
+ } catch (error) {
+ console.error('Error sending bulk message:', error);
+ hideLoading();
+ showError('Failed to send bulk message');
+ }
+ }
 
-        async function sendNewMessage() {
-            try {
-                showLoading('Sending message...');
-                
-                const messageData = {
-                    recipients: Array.from(document.getElementById('messageRecipients').selectedOptions).map(option => option.value),
-                    subject: document.getElementById('messageSubject').value,
-                    content: document.getElementById('messageContent').value,
-                    sentBy: 'admin',
-                    sentAt: new Date(),
-                    status: 'sent'
-                };
+ async function sendNewMessage() {
+ try {
+ showLoading('Sending message...');
+ 
+ const messageData = {
+ recipients: Array.from(document.getElementById('messageRecipients').selectedOptions).map(option => option.value),
+ subject: document.getElementById('messageSubject').value,
+ content: document.getElementById('messageContent').value,
+ sentBy: 'admin',
+ sentAt: new Date(),
+ status: 'sent'
+ };
 
-                await db.collection('messages').add(messageData);
-                showSuccess('Message sent successfully');
-                closeNewMessageModal();
-                hideLoading();
-            } catch (error) {
-                console.error('Error sending message:', error);
-                hideLoading();
-                showError('Failed to send message');
-            }
-        }
+ await db.collection('messages').add(messageData);
+ showSuccess('Message sent successfully');
+ closeNewMessageModal();
+ hideLoading();
+ } catch (error) {
+ console.error('Error sending message:', error);
+ hideLoading();
+ showError('Failed to send message');
+ }
+ }
 
-        function clearChat() {
-            if (!currentContact) return;
-            
-            if (confirm('Are you sure you want to clear this chat history?')) {
-                document.getElementById('chatMessages').innerHTML = `
-                    <div style="text-align: center; color: #666; padding: 2rem;">
-                        <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                        <h3>Chat cleared</h3>
-                        <p>Start a new conversation with ${currentContact.name}</p>
-                    </div>
-                `;
-            }
-        }
+ function clearChat() {
+ if (!currentContact) return;
+ 
+ if (confirm('Are you sure you want to clear this chat history?')) {
+ document.getElementById('chatMessages').innerHTML = `
+ <div style="text-align: center; color: #666; padding: 2rem;">
+ <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+ <h3>Chat cleared</h3>
+ <p>Start a new conversation with ${currentContact.name}</p>
+ </div>
+ `;
+ }
+ }
 
-        function exportChat() {
-            if (!currentContact) return;
-            
-            // Get chat history for current contact
-            const contactMessages = messageData.filter(msg => 
-                msg.recipients && msg.recipients.includes(currentContact.id)
-            );
-            
-            if (contactMessages.length === 0) {
-                showError('No messages to export');
-                return;
-            }
-            
-            // Create CSV content
-            const csvContent = generateChatCSV(contactMessages, currentContact);
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `chat-${currentContact.name.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
-            window.URL.revokeObjectURL(url);
-            
-            showSuccess('Chat exported successfully');
-        }
+ function exportChat() {
+ if (!currentContact) return;
+ 
+ // Get chat history for current contact
+ const contactMessages = messageData.filter(msg => 
+ msg.recipients && msg.recipients.includes(currentContact.id)
+ );
+ 
+ if (contactMessages.length === 0) {
+ showError('No messages to export');
+ return;
+ }
+ 
+ // Create CSV content
+ const csvContent = generateChatCSV(contactMessages, currentContact);
+ const blob = new Blob([csvContent], { type: 'text/csv' });
+ const url = window.URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href = url;
+ a.download = `chat-${currentContact.name.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.csv`;
+ a.click();
+ window.URL.revokeObjectURL(url);
+ 
+ showSuccess('Chat exported successfully');
+ }
 
-        function generateChatCSV(messages, contact) {
-            const headers = ['Date', 'Time', 'Sender', 'Message', 'Status'];
-            const rows = messages.map(message => [
-                formatDate(message.sentAt).split(' ')[0],
-                formatDate(message.sentAt).split(' ')[1],
-                message.sentBy === 'admin' ? 'Admin' : contact.name,
-                message.content,
-                message.status || 'sent'
-            ]);
-            
-            return [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
-        }
+ function generateChatCSV(messages, contact) {
+ const headers = ['Date', 'Time', 'Sender', 'Message', 'Status'];
+ const rows = messages.map(message => [
+ formatDate(message.sentAt).split(' ')[0],
+ formatDate(message.sentAt).split(' ')[1],
+ message.sentBy === 'admin' ? 'Admin' : contact.name,
+ message.content,
+ message.status || 'sent'
+ ]);
+ 
+ return [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+ }
 
-        function populateRecipients() {
-            const recipientsSelect = document.getElementById('messageRecipients');
-            const allContacts = [...staffData, ...customerData].filter(contact => contact.status === 'active');
-            
-            recipientsSelect.innerHTML = allContacts
-                .map(contact => `<option value="${contact.id}">${contact.name} - ${contact.role}</option>`)
-                .join('');
-        }
+ function populateRecipients() {
+ const recipientsSelect = document.getElementById('messageRecipients');
+ const allContacts = [...staffData, ...customerData].filter(contact => contact.status === 'active');
+ 
+ recipientsSelect.innerHTML = allContacts
+ .map(contact => `<option value="${contact.id}">${contact.name} - ${contact.role}</option>`)
+ .join('');
+ }
 
-        // Utility functions
-        function formatDate(date) {
-            if (!date) return '';
-            const d = date.toDate ? date.toDate() : new Date(date);
-            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        }
+ // Utility functions
+ function formatDate(date) {
+ if (!date) return '';
+ const d = date.toDate ? date.toDate() : new Date(date);
+ return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+ }
 
-        function showLoading(message) {
-            document.getElementById('loadingMessage').textContent = message;
-            document.getElementById('loadingOverlay').classList.remove('hidden');
-        }
+ function showLoading(message) {
+ document.getElementById('loadingMessage').textContent = message;
+ document.getElementById('loadingOverlay').classList.remove('hidden');
+ }
 
-        function hideLoading() {
-            const overlay = document.getElementById('loadingOverlay');
-            if (overlay) {
-                overlay.classList.add('hidden');
-                overlay.style.display = 'none';
-            }
-        }
+ function hideLoading() {
+ const overlay = document.getElementById('loadingOverlay');
+ if (overlay) {
+ overlay.classList.add('hidden');
+ overlay.style.display = 'none';
+ }
+ }
 
-        function forceHideLoading() {
-            const overlay = document.getElementById('loadingOverlay');
-            if (overlay) {
-                overlay.classList.add('hidden');
-                overlay.style.display = 'none';
-                overlay.style.visibility = 'hidden';
-            }
-        }
+ function forceHideLoading() {
+ const overlay = document.getElementById('loadingOverlay');
+ if (overlay) {
+ overlay.classList.add('hidden');
+ overlay.style.display = 'none';
+ overlay.style.visibility = 'hidden';
+ }
+ }
 
-        function showSuccess(message) {
-            const notification = document.createElement('div');
-            notification.className = 'notification success';
-            notification.innerHTML = `
-                <i class="fas fa-check-circle"></i>
-                <span>${message}</span>
-                <button onclick="this.parentElement.remove()">&times;</button>
-            `;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #4caf50;
-                color: white;
-                padding: 1rem;
-                border-radius: 5px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-                z-index: 10000;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                max-width: 300px;
-            `;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.remove();
-                }
-            }, 5000);
-        }
+ function showSuccess(message) {
+ const notification = document.createElement('div');
+ notification.className = 'notification success';
+ notification.innerHTML = `
+ <i class="fas fa-check-circle"></i>
+ <span>${message}</span>
+ <button onclick="this.parentElement.remove()">&times;</button>
+ `;
+ notification.style.cssText = `
+ position: fixed;
+ top: 20px;
+ right: 20px;
+ background: #4caf50;
+ color: white;
+ padding: 1rem;
+ border-radius: 5px;
+ box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+ z-index: 10000;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ max-width: 300px;
+ `;
+ document.body.appendChild(notification);
+ 
+ setTimeout(() => {
+ if (notification.parentElement) {
+ notification.remove();
+ }
+ }, 5000);
+ }
 
-        function showError(message) {
-            const notification = document.createElement('div');
-            notification.className = 'notification error';
-            notification.innerHTML = `
-                <i class="fas fa-exclamation-circle"></i>
-                <span>${message}</span>
-                <button onclick="this.parentElement.remove()">&times;</button>
-            `;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #f44336;
-                color: white;
-                padding: 1rem;
-                border-radius: 5px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-                z-index: 10000;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                max-width: 300px;
-            `;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.remove();
-                }
-            }, 8000);
-        }
+ function showError(message) {
+ const notification = document.createElement('div');
+ notification.className = 'notification error';
+ notification.innerHTML = `
+ <i class="fas fa-exclamation-circle"></i>
+ <span>${message}</span>
+ <button onclick="this.parentElement.remove()">&times;</button>
+ `;
+ notification.style.cssText = `
+ position: fixed;
+ top: 20px;
+ right: 20px;
+ background: #f44336;
+ color: white;
+ padding: 1rem;
+ border-radius: 5px;
+ box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+ z-index: 10000;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ max-width: 300px;
+ `;
+ document.body.appendChild(notification);
+ 
+ setTimeout(() => {
+ if (notification.parentElement) {
+ notification.remove();
+ }
+ }, 8000);
+ }
 
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            const newMessageModal = document.getElementById('newMessageModal');
-            const notificationModal = document.getElementById('notificationModal');
-            
-            if (event.target === newMessageModal) {
-                closeNewMessageModal();
-            }
-            if (event.target === notificationModal) {
-                this.closest('.modal').remove();
-            }
-        }
+ // Close modals when clicking outside
+ window.onclick = function(event) {
+ const newMessageModal = document.getElementById('newMessageModal');
+ const notificationModal = document.getElementById('notificationModal');
+ 
+ if (event.target === newMessageModal) {
+ closeNewMessageModal();
+ }
+ if (event.target === notificationModal) {
+ this.closest('.modal').remove();
+ }
+ }
 
-        // Real-time messaging functionality
-        function startRealTimeMessaging() {
-            if (realTimeListener) {
-                realTimeListener();
-            }
-            
-            realTimeListener = db.collection('messages')
-                .orderBy('sentAt', 'desc')
-                .limit(50)
-                .onSnapshot(snapshot => {
-                    snapshot.docChanges().forEach(change => {
-                        if (change.type === 'added') {
-                            const newMessage = { id: change.doc.id, ...change.doc.data() };
-                            handleNewMessage(newMessage);
-                        }
-                    });
-                }, error => {
-                    console.error('Real-time messaging error:', error);
-                });
-        }
+ // Real-time messaging functionality
+ function startRealTimeMessaging() {
+ if (realTimeListener) {
+ realTimeListener();
+ }
+ 
+ realTimeListener = db.collection('messages')
+ .orderBy('sentAt', 'desc')
+ .limit(50)
+ .onSnapshot(snapshot => {
+ snapshot.docChanges().forEach(change => {
+ if (change.type === 'added') {
+ const newMessage = { id: change.doc.id, ...change.doc.data() };
+ handleNewMessage(newMessage);
+ }
+ });
+ }, error => {
+ console.error('Real-time messaging error:', error);
+ });
+ }
 
-        function handleNewMessage(message) {
-            // Add new message to the messageData array
-            messageData.unshift(message);
-            
-            // Update UI if we're currently viewing messages
-            if (currentView === 'messages') {
-                displayMessages();
-            }
-            
-            // Show notification for new messages
-            if (message.sentBy !== 'admin') {
-                showNotification(`New message from ${getContactName(message.sentBy)}`);
-            }
-        }
+ function handleNewMessage(message) {
+ // Add new message to the messageData array
+ messageData.unshift(message);
+ 
+ // Update UI if we're currently viewing messages
+ if (currentView === 'messages') {
+ displayMessages();
+ }
+ 
+ // Show notification for new messages
+ if (message.sentBy !== 'admin') {
+ showNotification(`New message from ${getContactName(message.sentBy)}`);
+ }
+ }
 
-        function getContactName(contactId) {
-            const staff = staffData.find(s => s.id === contactId);
-            const customer = customerData.find(c => c.id === contactId);
-            return staff ? staff.name : customer ? customer.name : 'Unknown';
-        }
+ function getContactName(contactId) {
+ const staff = staffData.find(s => s.id === contactId);
+ const customer = customerData.find(c => c.id === contactId);
+ return staff ? staff.name : customer ? customer.name : 'Unknown';
+ }
 
-        function showNotification(message) {
-            // Create a simple notification
-            const notification = document.createElement('div');
-            notification.className = 'notification-toast';
-            notification.innerHTML = `
-                <div class="notification-content">
-                    <i class="fas fa-bell"></i>
-                    <span>${message}</span>
-                </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Remove after 5 seconds
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
+ function showNotification(message) {
+ // Create a simple notification
+ const notification = document.createElement('div');
+ notification.className = 'notification-toast';
+ notification.innerHTML = `
+ <div class="notification-content">
+ <i class="fas fa-bell"></i>
+ <span>${message}</span>
+ </div>
+ `;
+ 
+ document.body.appendChild(notification);
+ 
+ // Remove after 5 seconds
+ setTimeout(() => {
+ if (notification.parentNode) {
+ notification.parentNode.removeChild(notification);
+ }
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.querySelector('.hamburger');
-            const nav = document.querySelector('#nav-menu');
-            const navLinks = document.querySelector('.nav-links');
-            const body = document.body;
+ <script>
+ document.addEventListener('DOMContentLoaded', function() {
+ const hamburger = document.querySelector('.hamburger');
+ const nav = document.querySelector('#nav-menu');
+ const navLinks = document.querySelector('.nav-links');
+ const body = document.body;
 
-            if (hamburger) {
-                hamburger.addEventListener('click', function() {
-                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
-                    hamburger.classList.toggle('active');
-                    nav.classList.toggle('active');
-                    navLinks.classList.toggle('active');
-                    body.classList.toggle('menu-open');
-                    hamburger.setAttribute('aria-expanded', !isExpanded);
-                });
+ if (hamburger) {
+ hamburger.addEventListener('click', function() {
+ const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+ hamburger.classList.toggle('active');
+ nav.classList.toggle('active');
+ navLinks.classList.toggle('active');
+ body.classList.toggle('menu-open');
+ hamburger.setAttribute('aria-expanded', !isExpanded);
+ });
 
-                document.addEventListener('click', function(event) {
-                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
-                    if (!isClickInside && nav.classList.contains('active')) {
-                        hamburger.classList.remove('active');
-                        nav.classList.remove('active');
-                        navLinks.classList.remove('active');
-                        body.classList.remove('menu-open');
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    }
-                });
+ document.addEventListener('click', function(event) {
+ const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
+ if (!isClickInside && nav.classList.contains('active')) {
+ hamburger.classList.remove('active');
+ nav.classList.remove('active');
+ navLinks.classList.remove('active');
+ body.classList.remove('menu-open');
+ hamburger.setAttribute('aria-expanded', 'false');
+ }
+ });
 
-                document.addEventListener('keydown', function(event) {
-                    if (event.key === 'Escape' && nav.classList.contains('active')) {
-                        hamburger.classList.remove('active');
-                        nav.classList.remove('active');
-                        navLinks.classList.remove('active');
-                        body.classList.remove('menu-open');
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    }
-                });
+ document.addEventListener('keydown', function(event) {
+ if (event.key === 'Escape' && nav.classList.contains('active')) {
+ hamburger.classList.remove('active');
+ nav.classList.remove('active');
+ navLinks.classList.remove('active');
+ body.classList.remove('menu-open');
+ hamburger.setAttribute('aria-expanded', 'false');
+ }
+ });
 
-                const navItems = navLinks.querySelectorAll('a');
-                navItems.forEach(link => {
-                    link.addEventListener('click', function() {
-                        if (nav.classList.contains('active')) {
-                            hamburger.classList.remove('active');
-                            nav.classList.remove('active');
-                            navLinks.classList.remove('active');
-                            body.classList.remove('menu-open');
-                            hamburger.setAttribute('aria-expanded', 'false');
-                        }
-                    });
-                });
-            }
-        });
-    </script>
-           }, 5000);
-        }
+ const navItems = navLinks.querySelectorAll('a');
+ navItems.forEach(link => {
+ link.addEventListener('click', function() {
+ if (nav.classList.contains('active')) {
+ hamburger.classList.remove('active');
+ nav.classList.remove('active');
+ navLinks.classList.remove('active');
+ body.classList.remove('menu-open');
+ hamburger.setAttribute('aria-expanded', 'false');
+ }
+ });
+ });
+ }
+ });
+ </script>
+ }, 5000);
+ }
 
-        function stopRealTimeMessaging() {
-            if (realTimeListener) {
-                realTimeListener();
-                realTimeListener = null;
-            }
-        }
+ function stopRealTimeMessaging() {
+ if (realTimeListener) {
+ realTimeListener();
+ realTimeListener = null;
+ }
+ }
 
-        // Hamburger menu functionality
-        function toggleMenu() {
-            const hamburger = document.querySelector('.hamburger');
-            const nav = document.querySelector('.admin-nav');
-            
-            hamburger.classList.toggle('active');
-            nav.classList.toggle('active');
-        }
+ // Hamburger menu functionality
+ function toggleMenu() {
+ const hamburger = document.querySelector('.hamburger');
+ const nav = document.querySelector('.admin-nav');
+ 
+ hamburger.classList.toggle('active');
+ nav.classList.toggle('active');
+ }
 
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const hamburger = document.querySelector('.hamburger');
-            const nav = document.querySelector('.admin-nav');
-            
-            if (!hamburger.contains(event.target) &amp;&amp; !nav.contains(event.target)) {
-                hamburger.classList.remove('active');
-                nav.classList.remove('active');
-            }
-        });
+ // Close menu when clicking outside
+ document.addEventListener('click', function(event) {
+ const hamburger = document.querySelector('.hamburger');
+ const nav = document.querySelector('.admin-nav');
+ 
+ if (!hamburger.contains(event.target) &amp;&amp; !nav.contains(event.target)) {
+ hamburger.classList.remove('active');
+ nav.classList.remove('active');
+ }
+ });
 
-        // Close menu on window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth &gt; 768) {
-                const hamburger = document.querySelector('.hamburger');
-                const nav = document.querySelector('.admin-nav');
-                
-                hamburger.classList.remove('active');
-                nav.classList.remove('active');
-            }
-        });
+ // Close menu on window resize
+ window.addEventListener('resize', function() {
+ if (window.innerWidth &gt; 768) {
+ const hamburger = document.querySelector('.hamburger');
+ const nav = document.querySelector('.admin-nav');
+ 
+ hamburger.classList.remove('active');
+ nav.classList.remove('active');
+ }
+ });
 
-    <footer class="footer">
+ <footer class="footer">
 <div class="footer-content">
 <div class="footer-grid">
 <div class="footer-section">
@@ -3234,51 +3234,51 @@
 </div>
 </footer>
 
-  <script>
-    // Enhanced loading management
-    (function() {
-      var loading = document.getElementById('loading');
-      var error = document.getElementById('error');
-      
-      // Hide loading after page load
-      function hideLoading() {
-        if (loading) {
-          loading.classList.add('hidden');
-          setTimeout(function() {
-            loading.style.display = 'none';
-          }, 300);
-        }
-      }
-      
-      // Show error message
-      function showError(message) {
-        if (error) {
-          error.textContent = message;
-          error.classList.add('show');
-          setTimeout(function() {
-            error.classList.remove('show');
-          }, 5000);
-        }
-      }
-      
-      // Hide loading when DOM is ready
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', hideLoading);
-      } else {
-        hideLoading();
-      }
-      
-      // Hide loading when window loads
-      window.addEventListener('load', hideLoading);
-      
-      // Fallback: hide loading after 3 seconds
-      setTimeout(hideLoading, 3000);
-      
-      // Handle errors
-      window.addEventListener('error', function(e) {
-        console.error('Page error:', e.error);
-        showError('An error occurred while loading the page. Please refresh.');
-      });
-    })();
-  </script>
+ <script>
+ // Enhanced loading management
+ (function() {
+ var loading = document.getElementById('loading');
+ var error = document.getElementById('error');
+ 
+ // Hide loading after page load
+ function hideLoading() {
+ if (loading) {
+ loading.classList.add('hidden');
+ setTimeout(function() {
+ loading.style.display = 'none';
+ }, 300);
+ }
+ }
+ 
+ // Show error message
+ function showError(message) {
+ if (error) {
+ error.textContent = message;
+ error.classList.add('show');
+ setTimeout(function() {
+ error.classList.remove('show');
+ }, 5000);
+ }
+ }
+ 
+ // Hide loading when DOM is ready
+ if (document.readyState === 'loading') {
+ document.addEventListener('DOMContentLoaded', hideLoading);
+ } else {
+ hideLoading();
+ }
+ 
+ // Hide loading when window loads
+ window.addEventListener('load', hideLoading);
+ 
+ // Fallback: hide loading after 3 seconds
+ setTimeout(hideLoading, 3000);
+ 
+ // Handle errors
+ window.addEventListener('error', function(e) {
+ console.error('Page error:', e.error);
+ showError('An error occurred while loading the page. Please refresh.');
+ });
+ })();
+ </script>
 </body></html>

@@ -14,13 +14,12 @@ const mainPages = [
     'schedule-maintenance.html', 'bulk-message.html', 'sitemap.html'
 ];
 
-// Correct header template matching faq.html exactly
+// Correct header template matching pay-your-bill.html exactly
 const correctHeader = `  <!-- Loading & Error Validation -->
   <div id="loading" class="loading" role="status" aria-label="Loading page content">
     <div class="spinner" aria-hidden="true"></div>
   </div>
-  <div id="error" class="error-message" role="alert" aria-live="polite"></div>  <!-- Header Navigation -->
-    <div id="error" class="error-message" role="alert" aria-live="polite"></div>  <!-- Header Navigation -->
+
   <header class="main-header">
   <div class="logo">
     <a href="index.html">
@@ -48,7 +47,9 @@ const correctHeader = `  <!-- Loading & Error Validation -->
       </li>
     </ul>
   </nav>
-</header>`;
+</header>
+
+    <!-- Header Navigation -->`;
 
 function updatePage(filePath) {
     try {
@@ -56,14 +57,14 @@ function updatePage(filePath) {
         let updated = false;
         
         // Remove any existing loading/error divs and headers
-        const loadingErrorRegex = /<!-- Loading & Error Validation -->[\s\S]*?<div id="error" class="error-message" role="alert" aria-live="polite"><\/div>/gi;
+        const loadingErrorRegex = /<!-- Loading & Error Validation -->[\s\S]*?<div class="spinner" aria-hidden="true"><\/div>\s*<\/div>/gi;
         const headerRegex = /<header[^>]*class="main-header"[^>]*>[\s\S]*?<\/header>/gi;
-        const errorDivRegex = /<div id="error" class="error-message" role="alert" aria-live="polite"><\/div>\s*<!-- Header Navigation -->/gi;
+        const headerCommentRegex = /<!-- Header Navigation -->/gi;
         
         // Remove existing structures
         content = content.replace(loadingErrorRegex, '');
         content = content.replace(headerRegex, '');
-        content = content.replace(errorDivRegex, '');
+        content = content.replace(headerCommentRegex, '');
         
         // Find the body tag and insert the correct header structure
         const bodyTagRegex = /<body[^>]*>/i;
@@ -91,7 +92,7 @@ function updatePage(filePath) {
 }
 
 // Main execution
-console.log('🚀 Starting header fix to match FAQ page...\n');
+console.log('🚀 Starting header fix to match Pay Your Bill page...\n');
 
 let updatedCount = 0;
 let totalCount = 0;
@@ -114,7 +115,7 @@ console.log(`   Pages unchanged: ${totalCount - updatedCount}`);
 
 if (updatedCount > 0) {
     console.log('\n🎉 Header fix complete!');
-    console.log('All headers now match the FAQ page structure exactly.');
+    console.log('All headers now match the Pay Your Bill page structure exactly.');
 } else {
     console.log('\n✨ All pages already have the correct header structure!');
 } 

@@ -19,24 +19,22 @@ function cleanPage(filePath) {
         let content = fs.readFileSync(filePath, 'utf8');
         let updated = false;
         
-        // Remove all duplicate error divs and header navigation comments
-        const duplicateErrorRegex = /<div id="error" class="error-message" role="alert" aria-live="polite"><\/div>\s*<!-- Header Navigation -->/gi;
-        const extraHeaderComments = /<!-- Header Navigation -->\s*<!-- Header Navigation -->/gi;
+        // Remove extra blank lines and spacing
         const extraSpacing = /\n\s*\n\s*\n/g;
+        const multipleSpaces = /[ ]{2,}/g;
         
-        // Clean up duplicates
-        content = content.replace(duplicateErrorRegex, '');
-        content = content.replace(extraHeaderComments, '<!-- Header Navigation -->');
+        // Clean up spacing
         content = content.replace(extraSpacing, '\n\n');
+        content = content.replace(multipleSpaces, ' ');
+        
+        // Ensure proper spacing after header comment
+        content = content.replace(/<!-- Header Navigation -->\s*\n\s*\n\s*\n/g, '<!-- Header Navigation -->\n\n');
         
         // Remove any extra whitespace around the header
         const headerRegex = /(<header class="main-header">[\s\S]*?<\/header>)/gi;
         content = content.replace(headerRegex, (match) => {
             return match.trim();
         });
-        
-        // Ensure proper spacing after header
-        content = content.replace(/<\/header>\s*\n\s*\n\s*\n/g, '</header>\n\n');
         
         if (content !== fs.readFileSync(filePath, 'utf8')) {
             fs.writeFileSync(filePath, content, 'utf8');
@@ -54,7 +52,7 @@ function cleanPage(filePath) {
 }
 
 // Main execution
-console.log('🧹 Starting header cleanup...\n');
+console.log('🧹 Starting header cleanup to match Pay Your Bill page...\n');
 
 let cleanedCount = 0;
 let totalCount = 0;
@@ -77,7 +75,7 @@ console.log(`   Pages unchanged: ${totalCount - cleanedCount}`);
 
 if (cleanedCount > 0) {
     console.log('\n🎉 Header cleanup complete!');
-    console.log('All headers now match the FAQ page structure exactly.');
+    console.log('All headers now match the Pay Your Bill page structure exactly.');
 } else {
     console.log('\n✨ All headers are already clean!');
 } 
