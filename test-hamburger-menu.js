@@ -7,14 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Get elements
     const hamburger = document.querySelector('.hamburger');
-    const nav = document.getElementById('nav-menu');
     const navLinks = document.querySelector('.nav-links');
     
     console.log('Hamburger element:', hamburger);
-    console.log('Nav menu element:', nav);
     console.log('Nav links element:', navLinks);
     
-    if (!hamburger || !nav || !navLinks) {
+    if (!hamburger || !navLinks) {
         console.error('Missing required elements for hamburger menu');
         return;
     }
