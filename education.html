@@ -678,7 +678,29 @@
             margin-left: 0;
         }
     }
-</style>
+
+    <!-- SUPER-SPECIFIC MOBILE MENU CSS FIX -->
+    <style>
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none !important;
+        position: absolute !important;
+        top: 60px !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1200 !important;
+        background: var(--primary-green, #2e7d32) !important;
+        padding: 1rem !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+        transition: all 0.3s ease !important;
+      }
+      .nav-links.active {
+        display: flex !important;
+      }
+    }
+    </style>
 </head>
 
 <body>
@@ -692,20 +714,22 @@
     
       <!-- Header -->
   <header class="main-header">
-    <div class="logo">
-      <a href="index.html">
-        <picture>
-          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
-          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
-        </picture>
-      </a>
-    </div>
-    <nav id="nav-menu">
+    <div class="header-row">
+      <div class="logo">
+        <a href="index.html">
+          <picture>
+            <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+          </picture>
+        </a>
+      </div>
       <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
       </button>
+    </div>
+    <nav id="nav-menu">
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -714,17 +738,11 @@
         <li><a href="faq.html">FAQ</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+        <li class="login-buttons">
+          <a href="login.html" class="btn-login btn-customer"><i class="fas fa-user"></i> Customer Login</a>
+          <a href="admin-login.html" class="btn-login btn-admin"><i class="fas fa-lock"></i> Admin Login</a>
+        </li>
       </ul>
-      <div class="login-buttons">
-        <a href="login.html" class="btn-login btn-customer">
-          <i class="fas fa-user"></i>
-          Customer Login
-        </a>
-        <a href="admin-login.html" class="btn-login btn-admin">
-          <i class="fas fa-lock"></i>
-          Admin Login
-        </a>
-      </div>
     </nav>
   </header>
 
@@ -1198,47 +1216,34 @@
     <script type="module" src="assets/js/main.js"></script>
     
     <script>
+        // Single, robust hamburger menu script
+        // Ensures the hamburger menu works and does not clear or overwrite the header
+        // Place this after all other scripts
+
         document.addEventListener('DOMContentLoaded', function() {
             var hamburger = document.querySelector('.hamburger');
-            var nav = document.getElementById('nav-menu');
             var navLinks = document.querySelector('.nav-links');
             var body = document.body;
-            
-            if (!hamburger || !nav || !navLinks) return;
-            
-            function closeMenu() {
-                hamburger.classList.remove('active');
-                nav.classList.remove('active');
-                navLinks.classList.remove('active');
-                body.classList.remove('menu-open');
-                body.style.overflow = '';
-                hamburger.setAttribute('aria-expanded', 'false');
+            if (!hamburger || !navLinks) {
+                console.error('Hamburger or navLinks not found');
+                return;
             }
-            
             hamburger.addEventListener('click', function() {
                 var expanded = hamburger.getAttribute('aria-expanded') === 'true';
                 hamburger.classList.toggle('active');
-                nav.classList.toggle('active');
                 navLinks.classList.toggle('active');
                 body.classList.toggle('menu-open');
                 hamburger.setAttribute('aria-expanded', expanded ? 'false' : 'true');
                 body.style.overflow = expanded ? '' : 'hidden';
             });
-            
-            document.addEventListener('click', function(e) {
-                if (!nav.contains(e.target) && !hamburger.contains(e.target) && nav.classList.contains('active')) {
-                    closeMenu();
-                }
-            });
-            
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && nav.classList.contains('active')) {
-                    closeMenu();
-                }
-            });
-            
             navLinks.querySelectorAll('a').forEach(function(link) {
-                link.addEventListener('click', closeMenu);
+                link.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                    body.style.overflow = '';
+                });
             });
         });
     </script>

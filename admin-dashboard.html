@@ -1360,6 +1360,29 @@
     }
 
 </style>
+
+<!-- SUPER-SPECIFIC MOBILE MENU CSS FIX -->
+<style>
+@media (max-width: 900px) {
+  .nav-links {
+    display: none !important;
+    position: absolute !important;
+    top: 60px !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1200 !important;
+    background: var(--primary-green, #2e7d32) !important;
+    padding: 1rem !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+    transition: all 0.3s ease !important;
+  }
+  .nav-links.active {
+    display: flex !important;
+  }
+}
+</style>
 </head>
 <body>
   <!-- Loading Spinner -->
@@ -1543,59 +1566,36 @@
 <li><a href="#" id="mobileAppointmentsBtn"><i class="fas fa-calendar"></i> Appointments</a></li>
 <li><a href="#" id="mobileCustomersBtn">&lt;i clas</a></li></ul></nav>
  <script>
- document.addEventListener('DOMContentLoaded', function() {
- var hamburger = document.querySelector('.hamburger');
- var nav = document.getElementById('nav-menu');
- var navLinks = document.querySelector('.nav-links');
- var body = document.body;
- 
- if (hamburger && nav && navLinks) {
- hamburger.addEventListener('click', function() {
- var expanded = hamburger.getAttribute('aria-expanded') === 'true';
- hamburger.classList.toggle('active');
- nav.classList.toggle('active');
- navLinks.classList.toggle('active');
- body.classList.toggle('menu-open');
- hamburger.setAttribute('aria-expanded', expanded ? 'false' : 'true');
- body.style.overflow = expanded ? '' : 'hidden';
- });
+// Single, robust hamburger menu script
+// Ensures the hamburger menu works and does not clear or overwrite the header
+// Place this after all other scripts
 
- document.addEventListener('click', function(e) {
- if (!nav.contains(e.target) && !hamburger.contains(e.target) && nav.classList.contains('active')) {
- hamburger.classList.remove('active');
- nav.classList.remove('active');
- navLinks.classList.remove('active');
- body.classList.remove('menu-open');
- body.style.overflow = '';
- hamburger.setAttribute('aria-expanded', 'false');
- }
- });
-
- document.addEventListener('keydown', function(e) {
- if (e.key === 'Escape' && nav.classList.contains('active')) {
- hamburger.classList.remove('active');
- nav.classList.remove('active');
- navLinks.classList.remove('active');
- body.classList.remove('menu-open');
- body.style.overflow = '';
- hamburger.setAttribute('aria-expanded', 'false');
- }
- });
-
- navLinks.querySelectorAll('a').forEach(function(link) {
- link.addEventListener('click', function() {
- if (nav.classList.contains('active')) {
- hamburger.classList.remove('active');
- nav.classList.remove('active');
- navLinks.classList.remove('active');
- body.classList.remove('menu-open');
- body.style.overflow = '';
- hamburger.setAttribute('aria-expanded', 'false');
- }
- });
- });
- }
- });
+document.addEventListener('DOMContentLoaded', function() {
+  var hamburger = document.querySelector('.hamburger');
+  var navLinks = document.querySelector('.nav-links');
+  var body = document.body;
+  if (!hamburger || !navLinks) {
+    console.error('Hamburger or navLinks not found');
+    return;
+  }
+  hamburger.addEventListener('click', function() {
+    var expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+    body.classList.toggle('menu-open');
+    hamburger.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+    body.style.overflow = expanded ? '' : 'hidden';
+  });
+  navLinks.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
+      body.classList.remove('menu-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      body.style.overflow = '';
+    });
+  });
+});
  </script>
 
  <script>

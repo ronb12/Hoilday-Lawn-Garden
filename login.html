@@ -864,6 +864,29 @@
     }
 
 </style>
+
+<!-- SUPER-SPECIFIC MOBILE MENU CSS FIX -->
+<style>
+@media (max-width: 900px) {
+  .nav-links {
+    display: none !important;
+    position: absolute !important;
+    top: 60px !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1200 !important;
+    background: var(--primary-green, #2e7d32) !important;
+    padding: 1rem !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+    transition: all 0.3s ease !important;
+  }
+  .nav-links.active {
+    display: flex !important;
+  }
+}
+</style>
 </head>
 <body>
   <!-- Loading Spinner -->
