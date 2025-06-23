@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// Main pages to update (excluding utility/payment pages)
+// Main pages to update
 const mainPages = [
     'index.html', 'about.html', 'services.html', 'education.html', 'faq.html', 
     'contact.html', 'gallery.html', 'testimonials.html', 'privacy.html', 'terms.html',
@@ -14,8 +14,8 @@ const mainPages = [
     'schedule-maintenance.html', 'bulk-message.html', 'sitemap.html'
 ];
 
-// Standardized header template on one line with consistent button sizes
-const standardizedHeader = `  <!-- Loading & Error Validation -->
+// Perfect header structure
+const perfectHeader = `  <!-- Loading & Error Validation -->
   <div id="loading" class="loading" role="status" aria-label="Loading page content">
     <div class="spinner" aria-hidden="true"></div>
   </div>
@@ -51,8 +51,8 @@ const standardizedHeader = `  <!-- Loading & Error Validation -->
 
 <!-- Hero Section -->`;
 
-// Enhanced CSS for consistent button sizes and header layout
-const enhancedCSS = `
+// Perfect CSS (single instance)
+const perfectCSS = `
     /* Enhanced Header and Button Styles */
     .main-header {
         background: #fff !important;
@@ -225,50 +225,62 @@ const enhancedCSS = `
     }
 `;
 
-function updatePage(filePath) {
+function ultimateFix(filePath) {
     try {
         let content = fs.readFileSync(filePath, 'utf8');
         let updated = false;
         
-        // Remove existing header structure
+        // Remove ALL existing header-related content
         const headerRegex = /<header[^>]*class="main-header"[^>]*>[\s\S]*?<\/header>/gi;
         const loadingErrorRegex = /<!-- Loading & Error Validation -->[\s\S]*?<div class="spinner" aria-hidden="true"><\/div>\s*<\/div>/gi;
+        const enhancedCSSRegex = /\/\* Enhanced Header and Button Styles \*\/[\s\S]*?@media \(max-width: 900px\)[\s\S]*?}/gi;
+        const duplicateHeroRegex = /<!-- Hero Section -->\s*\n\s*<!-- Hero Section -->/gi;
+        const emptyStyleTags = /<style>\s*<\/style>/gi;
+        const multipleStyleTags = /<style>\s*{\s*}\s*<\/style>/gi;
         
         // Remove existing structures
         content = content.replace(loadingErrorRegex, '');
         content = content.replace(headerRegex, '');
+        content = content.replace(enhancedCSSRegex, '');
+        content = content.replace(duplicateHeroRegex, '<!-- Hero Section -->');
+        content = content.replace(emptyStyleTags, '');
+        content = content.replace(multipleStyleTags, '');
         
-        // Find the body tag and insert the standardized header structure
+        // Remove any remaining "Header Navigation" comments
+        const headerCommentRegex = /<!-- Header Navigation -->\s*\n\s*/gi;
+        content = content.replace(headerCommentRegex, '');
+        
+        // Find the body tag and insert the perfect header structure
         const bodyTagRegex = /<body[^>]*>/i;
         const bodyMatch = content.match(bodyTagRegex);
         
         if (bodyMatch) {
             const insertPosition = bodyMatch.index + bodyMatch[0].length;
-            content = content.slice(0, insertPosition) + '\n' + standardizedHeader + '\n' + content.slice(insertPosition);
+            content = content.slice(0, insertPosition) + '\n' + perfectHeader + '\n' + content.slice(insertPosition);
             updated = true;
         }
         
-        // Add enhanced CSS if not already present
-        if (!content.includes('/* Enhanced Header and Button Styles */')) {
-            const styleTagRegex = /<style[^>]*>([\s\S]*?)<\/style>/gi;
-            const lastStyleMatch = [...content.matchAll(styleTagRegex)].pop();
-            
-            if (lastStyleMatch) {
-                const insertPosition = lastStyleMatch.index + lastStyleMatch[0].length;
-                content = content.slice(0, insertPosition) + '\n<style>\n' + enhancedCSS + '\n</style>' + content.slice(insertPosition);
-            } else {
-                // Insert before closing head tag
-                const headCloseIndex = content.indexOf('</head>');
-                if (headCloseIndex !== -1) {
-                    content = content.slice(0, headCloseIndex) + '\n<style>\n' + enhancedCSS + '\n</style>\n' + content.slice(headCloseIndex);
-                }
-            }
+        // Remove ALL existing enhanced CSS and add perfect CSS
+        content = content.replace(enhancedCSSRegex, '');
+        
+        // Insert perfect CSS before closing head tag
+        const headCloseIndex = content.indexOf('</head>');
+        if (headCloseIndex !== -1) {
+            content = content.slice(0, headCloseIndex) + '\n<style>\n' + perfectCSS + '\n</style>\n' + content.slice(headCloseIndex);
             updated = true;
         }
+        
+        // Clean up any extra spacing
+        const extraBlankLines = /\n\s*\n\s*\n/g;
+        content = content.replace(extraBlankLines, '\n\n');
+        
+        // Remove any remaining extra spaces
+        const multipleSpaces = /[ ]{2,}/g;
+        content = content.replace(multipleSpaces, ' ');
         
         if (updated) {
             fs.writeFileSync(filePath, content, 'utf8');
-            console.log(`✅ Updated: ${filePath}`);
+            console.log(`✅ Fixed: ${filePath}`);
             return true;
         } else {
             console.log(`⏭️  No changes needed: ${filePath}`);
@@ -276,22 +288,22 @@ function updatePage(filePath) {
         }
         
     } catch (error) {
-        console.error(`❌ Error updating ${filePath}:`, error.message);
+        console.error(`❌ Error fixing ${filePath}:`, error.message);
         return false;
     }
 }
 
 // Main execution
-console.log('🚀 Starting header layout standardization...\n');
+console.log('🚀 Starting ultimate header fix...\n');
 
-let updatedCount = 0;
+let fixedCount = 0;
 let totalCount = 0;
 
 mainPages.forEach(page => {
     if (fs.existsSync(page)) {
         totalCount++;
-        if (updatePage(page)) {
-            updatedCount++;
+        if (ultimateFix(page)) {
+            fixedCount++;
         }
     } else {
         console.log(`⚠️  File not found: ${page}`);
@@ -300,12 +312,12 @@ mainPages.forEach(page => {
 
 console.log(`\n📊 Summary:`);
 console.log(`   Total pages processed: ${totalCount}`);
-console.log(`   Pages updated: ${updatedCount}`);
-console.log(`   Pages unchanged: ${totalCount - updatedCount}`);
+console.log(`   Pages fixed: ${fixedCount}`);
+console.log(`   Pages unchanged: ${totalCount - fixedCount}`);
 
-if (updatedCount > 0) {
-    console.log('\n🎉 Header layout standardization complete!');
-    console.log('All headers are now on one line with consistent button sizes.');
+if (fixedCount > 0) {
+    console.log('\n🎉 Ultimate header fix complete!');
+    console.log('All headers now have perfect consistency with no duplicates or white space.');
 } else {
-    console.log('\n✨ All pages already have the correct header layout!');
+    console.log('\n✨ All headers are already perfect!');
 } 
