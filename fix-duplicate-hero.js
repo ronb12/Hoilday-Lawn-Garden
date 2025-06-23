@@ -14,7 +14,7 @@ const mainPages = [
     'schedule-maintenance.html', 'bulk-message.html', 'sitemap.html'
 ];
 
-function finalCleanup(filePath) {
+function fixDuplicateHero(filePath) {
     try {
         let content = fs.readFileSync(filePath, 'utf8');
         let updated = false;
@@ -26,27 +26,6 @@ function finalCleanup(filePath) {
             updated = true;
         }
         
-        // Remove empty style tags
-        const emptyStyleRegex = /<style>\s*<\/style>/gi;
-        if (content.match(emptyStyleRegex)) {
-            content = content.replace(emptyStyleRegex, '');
-            updated = true;
-        }
-        
-        // Remove style tags with only whitespace
-        const whitespaceStyleRegex = /<style>\s*{\s*}\s*<\/style>/gi;
-        if (content.match(whitespaceStyleRegex)) {
-            content = content.replace(whitespaceStyleRegex, '');
-            updated = true;
-        }
-        
-        // Remove duplicate main tags
-        const duplicateMainRegex = /<main role="main">\s*\n\s*<!-- Hero Section -->\s*\n\s*<main role="main">/gi;
-        if (content.match(duplicateMainRegex)) {
-            content = content.replace(duplicateMainRegex, '<main role="main">\n<!-- Hero Section -->');
-            updated = true;
-        }
-        
         // Remove multiple consecutive empty lines
         const multipleEmptyLines = /\n\s*\n\s*\n/g;
         if (content.match(multipleEmptyLines)) {
@@ -54,39 +33,32 @@ function finalCleanup(filePath) {
             updated = true;
         }
         
-        // Ensure proper spacing between header and hero
-        const headerHeroSpacing = /<\/header>\s*\n\s*\n\s*<!-- Main Content -->/gi;
-        if (content.match(headerHeroSpacing)) {
-            content = content.replace(headerHeroSpacing, '</header>\n\n<!-- Main Content -->');
-            updated = true;
-        }
-        
         if (updated) {
             fs.writeFileSync(filePath, content, 'utf8');
-            console.log(`✅ Cleaned: ${filePath}`);
+            console.log(`✅ Fixed: ${filePath}`);
             return true;
         } else {
-            console.log(`⏭️  No cleanup needed: ${filePath}`);
+            console.log(`⏭️  No duplicates found: ${filePath}`);
             return false;
         }
         
     } catch (error) {
-        console.error(`❌ Error cleaning ${filePath}:`, error.message);
+        console.error(`❌ Error fixing ${filePath}:`, error.message);
         return false;
     }
 }
 
 // Main execution
-console.log('🧹 Starting final header cleanup...\n');
+console.log('🔧 Starting duplicate hero fix...\n');
 
-let cleanedCount = 0;
+let fixedCount = 0;
 let totalCount = 0;
 
 mainPages.forEach(page => {
     if (fs.existsSync(page)) {
         totalCount++;
-        if (finalCleanup(page)) {
-            cleanedCount++;
+        if (fixDuplicateHero(page)) {
+            fixedCount++;
         }
     } else {
         console.log(`⚠️  File not found: ${page}`);
@@ -95,12 +67,12 @@ mainPages.forEach(page => {
 
 console.log(`\n📊 Summary:`);
 console.log(`   Total pages processed: ${totalCount}`);
-console.log(`   Pages cleaned: ${cleanedCount}`);
-console.log(`   Pages unchanged: ${totalCount - cleanedCount}`);
+console.log(`   Pages fixed: ${fixedCount}`);
+console.log(`   Pages unchanged: ${totalCount - fixedCount}`);
 
-if (cleanedCount > 0) {
-    console.log('\n🎉 Final header cleanup complete!');
-    console.log('All headers are now perfectly clean and consistent.');
+if (fixedCount > 0) {
+    console.log('\n🎉 Duplicate hero fix complete!');
+    console.log('All pages now have clean hero sections.');
 } else {
-    console.log('\n✨ All headers are already perfectly clean!');
+    console.log('\n✨ All pages already have clean hero sections!');
 } 

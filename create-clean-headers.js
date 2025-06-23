@@ -14,10 +14,10 @@ const mainPages = [
     'schedule-maintenance.html', 'bulk-message.html', 'sitemap.html'
 ];
 
-// Original working header structure
-const originalHeader = `  <!-- Loading Spinner -->
+// Clean header structure
+const cleanHeader = `  <!-- Loading Spinner -->
   <div id="loading" class="loading" role="status" aria-label="Loading page content">
-      <div class="spinner" aria-hidden="true"></div>
+    <div class="spinner" aria-hidden="true"></div>
   </div>
   
   <!-- Error Message -->
@@ -25,48 +25,48 @@ const originalHeader = `  <!-- Loading Spinner -->
   
   <!-- Header -->
   <header class="main-header">
-      <div class="logo">
-          <a href="index.html">
-              <picture>
-                  <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
-                  <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
-              </picture>
+    <div class="logo">
+      <a href="index.html">
+        <picture>
+          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+        </picture>
+      </a>
+    </div>
+    <nav id="nav-menu">
+      <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+        <li class="login-buttons">
+          <a href="login.html" class="btn-login btn-customer">
+            <i class="fas fa-user"></i>
+            Customer Login
           </a>
-      </div>
-      <nav id="nav-menu">
-          <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
-              <span></span>
-              <span></span>
-              <span></span>
-          </button>
-          <ul class="nav-links">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="education.html">Education</a></li>
-              <li><a href="faq.html">FAQ</a></li>
-              <li><a href="contact.html">Contact</a></li>
-              <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-              <li class="login-buttons">
-                  <a href="login.html" class="btn-login btn-customer">
-                      <i class="fas fa-user"></i>
-                      Customer Login
-                  </a>
-                  <a href="admin-login.html" class="btn-login btn-admin">
-                      <i class="fas fa-lock"></i>
-                      Admin Login
-                  </a>
-              </li>
-          </ul>
-      </nav>
+          <a href="admin-login.html" class="btn-login btn-admin">
+            <i class="fas fa-lock"></i>
+            Admin Login
+          </a>
+        </li>
+      </ul>
+    </nav>
   </header>
 
   <!-- Main Content -->
   <main role="main">
-      <!-- Hero Section -->`;
+    <!-- Hero Section -->`;
 
-// Original working CSS
-const originalCSS = `
+// Clean CSS for header
+const cleanHeaderCSS = `
     /* Header Styles */
     .main-header {
         background: #fff;
@@ -239,7 +239,7 @@ const originalCSS = `
     }
 `;
 
-function restoreOriginalHeader(filePath) {
+function createCleanHeader(filePath) {
     try {
         let content = fs.readFileSync(filePath, 'utf8');
         let updated = false;
@@ -247,43 +247,36 @@ function restoreOriginalHeader(filePath) {
         // Remove all existing header-related content
         const headerRegex = /<header[^>]*class="main-header"[^>]*>[\s\S]*?<\/header>/gi;
         const loadingErrorRegex = /<!-- Loading[^>]*>[\s\S]*?<div class="spinner" aria-hidden="true"><\/div>\s*<\/div>/gi;
-        const enhancedCSSRegex = /\/\* Enhanced Header and Button Styles \*\/[\s\S]*?@media \(max-width: 900px\)[\s\S]*?}/gi;
-        const headerCSSRegex = /\/\* Header Styles \*\/[\s\S]*?@media \(max-width: 900px\)[\s\S]*?}/gi;
-        const duplicateHeroRegex = /<!-- Hero Section -->\s*\n\s*<!-- Hero Section -->/gi;
-        const emptyStyleTags = /<style>\s*<\/style>/gi;
-        const multipleStyleTags = /<style>\s*{\s*}\s*<\/style>/gi;
+        const errorMessageRegex = /<!-- Error Message -->[\s\S]*?<div id="error" class="error-message" role="alert" aria-live="polite"><\/div>/gi;
+        const mainContentRegex = /<!-- Main Content -->[\s\S]*?<main role="main">/gi;
+        const heroSectionRegex = /<!-- Hero Section -->/gi;
+        const duplicateMainRegex = /<main role="main">\s*\n\s*<!-- Hero Section -->\s*\n\s*<main role="main">/gi;
         
         // Remove existing structures
         content = content.replace(loadingErrorRegex, '');
+        content = content.replace(errorMessageRegex, '');
         content = content.replace(headerRegex, '');
-        content = content.replace(enhancedCSSRegex, '');
+        content = content.replace(mainContentRegex, '');
+        content = content.replace(duplicateMainRegex, '<main role="main">\n<!-- Hero Section -->');
+        
+        // Remove any existing header CSS
+        const headerCSSRegex = /\/\* Header Styles \*\/[\s\S]*?@media \(max-width: 900px\)[\s\S]*?}/gi;
         content = content.replace(headerCSSRegex, '');
-        content = content.replace(duplicateHeroRegex, '<!-- Hero Section -->');
-        content = content.replace(emptyStyleTags, '');
-        content = content.replace(multipleStyleTags, '');
         
-        // Remove any remaining "Header Navigation" comments
-        const headerCommentRegex = /<!-- Header Navigation -->\s*\n\s*/gi;
-        content = content.replace(headerCommentRegex, '');
-        
-        // Find the body tag and insert the original header structure
+        // Find the body tag and insert the clean header structure
         const bodyTagRegex = /<body[^>]*>/i;
         const bodyMatch = content.match(bodyTagRegex);
         
         if (bodyMatch) {
             const insertPosition = bodyMatch.index + bodyMatch[0].length;
-            content = content.slice(0, insertPosition) + '\n' + originalHeader + '\n' + content.slice(insertPosition);
+            content = content.slice(0, insertPosition) + '\n' + cleanHeader + '\n' + content.slice(insertPosition);
             updated = true;
         }
         
-        // Remove ALL existing header CSS and add original CSS
-        content = content.replace(enhancedCSSRegex, '');
-        content = content.replace(headerCSSRegex, '');
-        
-        // Insert original CSS before closing head tag
+        // Insert clean CSS before closing head tag
         const headCloseIndex = content.indexOf('</head>');
         if (headCloseIndex !== -1) {
-            content = content.slice(0, headCloseIndex) + '\n<style>\n' + originalCSS + '\n</style>\n' + content.slice(headCloseIndex);
+            content = content.slice(0, headCloseIndex) + '\n<style>\n' + cleanHeaderCSS + '\n</style>\n' + content.slice(headCloseIndex);
             updated = true;
         }
         
@@ -291,13 +284,9 @@ function restoreOriginalHeader(filePath) {
         const extraBlankLines = /\n\s*\n\s*\n/g;
         content = content.replace(extraBlankLines, '\n\n');
         
-        // Remove any remaining extra spaces
-        const multipleSpaces = /[ ]{2,}/g;
-        content = content.replace(multipleSpaces, ' ');
-        
         if (updated) {
             fs.writeFileSync(filePath, content, 'utf8');
-            console.log(`✅ Restored: ${filePath}`);
+            console.log(`✅ Created clean header: ${filePath}`);
             return true;
         } else {
             console.log(`⏭️  No changes needed: ${filePath}`);
@@ -305,22 +294,22 @@ function restoreOriginalHeader(filePath) {
         }
         
     } catch (error) {
-        console.error(`❌ Error restoring ${filePath}:`, error.message);
+        console.error(`❌ Error creating clean header for ${filePath}:`, error.message);
         return false;
     }
 }
 
 // Main execution
-console.log('🔄 Starting original header restoration...\n');
+console.log('🚀 Starting clean header creation...\n');
 
-let restoredCount = 0;
+let createdCount = 0;
 let totalCount = 0;
 
 mainPages.forEach(page => {
     if (fs.existsSync(page)) {
         totalCount++;
-        if (restoreOriginalHeader(page)) {
-            restoredCount++;
+        if (createCleanHeader(page)) {
+            createdCount++;
         }
     } else {
         console.log(`⚠️  File not found: ${page}`);
@@ -329,12 +318,12 @@ mainPages.forEach(page => {
 
 console.log(`\n📊 Summary:`);
 console.log(`   Total pages processed: ${totalCount}`);
-console.log(`   Pages restored: ${restoredCount}`);
-console.log(`   Pages unchanged: ${totalCount - restoredCount}`);
+console.log(`   Pages with clean headers: ${createdCount}`);
+console.log(`   Pages unchanged: ${totalCount - createdCount}`);
 
-if (restoredCount > 0) {
-    console.log('\n🎉 Original header restoration complete!');
-    console.log('All headers now match the original working structure.');
+if (createdCount > 0) {
+    console.log('\n🎉 Clean header creation complete!');
+    console.log('All pages now have clean, consistent headers.');
 } else {
-    console.log('\n✨ All headers are already in original format!');
+    console.log('\n✨ All pages already have clean headers!');
 } 

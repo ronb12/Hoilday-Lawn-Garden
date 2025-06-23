@@ -513,229 +513,235 @@
 
 <style>
 
- /* Header Styles */
- .main-header {
- background: #fff;
- min-height: 70px;
- display: flex;
- align-items: center;
- justify-content: space-between;
- padding: 0 2rem;
- box-shadow: 0 2px 4px rgba(0,0,0,0.1);
- position: fixed;
- top: 0;
- left: 0;
- right: 0;
- z-index: 1000;
- }
- 
- .logo {
- display: flex;
- align-items: center;
- }
- 
- .logo img {
- height: 50px;
- width: auto;
- }
- 
- .nav-links { 
- display: flex;
- align-items: center;
- list-style: none;
- margin: 0;
- padding: 0;
- gap: 2rem;
- }
- 
- .nav-links a { 
- padding-top: 0; 
- padding-bottom: 0; 
- color: #333; 
- font-weight: 500;
- text-decoration: none;
- transition: color 0.3s ease;
- }
- 
- .nav-links a:hover {
- color: #2e7d32;
- }
- 
- .nav-links li { 
- display: flex; 
- align-items: center; 
- }
- 
- .login-buttons {
- display: flex;
- gap: 1rem;
- align-items: center;
- }
- 
- .btn-login {
- padding: 0.5rem 1rem;
- border-radius: 4px;
- text-decoration: none;
- font-weight: 500;
- transition: all 0.3s ease;
- font-size: 0.9rem;
- min-width: 120px;
- text-align: center;
- display: inline-flex;
- align-items: center;
- justify-content: center;
- gap: 0.5rem;
- }
- 
- .btn-customer {
- background: #2e7d32;
- color: white;
- }
- 
- .btn-admin {
- background: #1565c0;
- color: white;
- }
- 
- .btn-login:hover {
- transform: translateY(-2px);
- box-shadow: 0 2px 8px rgba(0,0,0,0.2);
- }
- 
- .hamburger {
- display: none;
- cursor: pointer;
- padding: 15px;
- z-index: 1000;
- position: relative;
- background: none;
- border: none;
- -webkit-tap-highlight-color: transparent;
- margin-right: 10px;
  }
 
- .hamburger span {
- display: block;
- width: 25px;
- height: 3px;
- background-color: #2e7d32;
- margin: 5px 0;
- transition: 0.3s;
- }
+</style>
 
- .hamburger.active span:nth-child(1) {
- transform: rotate(-45deg) translate(-5px, 6px);
- }
+<style>
 
- .hamburger.active span:nth-child(2) {
- opacity: 0;
- }
+    /* Header Styles */
+    .main-header {
+        background: #fff;
+        min-height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+    }
+    
+    .logo {
+        display: flex;
+        align-items: center;
+    }
+    
+    .logo img {
+        height: 50px;
+        width: auto;
+    }
+    
+    .nav-links { 
+        display: flex;
+        align-items: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        gap: 2rem;
+    }
+    
+    .nav-links a { 
+        padding-top: 0; 
+        padding-bottom: 0; 
+        color: #333; 
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+        color: #2e7d32;
+    }
+    
+    .nav-links li { 
+        display: flex; 
+        align-items: center; 
+    }
+    
+    .login-buttons {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    .btn-login {
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        min-width: 120px;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .btn-customer {
+        background: #2e7d32;
+        color: white;
+    }
+    
+    .btn-admin {
+        background: #1565c0;
+        color: white;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    
+    .hamburger {
+        display: none;
+        cursor: pointer;
+        padding: 15px;
+        z-index: 1000;
+        position: relative;
+        background: none;
+        border: none;
+        -webkit-tap-highlight-color: transparent;
+        margin-right: 10px;
+    }
 
- .hamburger.active span:nth-child(3) {
- transform: rotate(45deg) translate(-5px, -6px);
- }
- 
- @media (max-width: 768px) {
- body {
- padding-top: 80px;
- }
- 
- .main-header {
- padding: 0 1rem;
- }
- 
- .nav-links { 
- display: none; 
- position: absolute; 
- top: 100%; 
- left: 0; 
- right: 0; 
- background: var(--color-primary, #4caf50); 
- padding: 1rem; 
- flex-direction: column; 
- align-items: center; 
- box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
- z-index: 1000; 
- }
- 
- .nav-links.active { 
- display: flex; 
- }
- 
- .hamburger { 
- display: block; 
- }
- 
- .login-buttons {
- flex-direction: column;
- gap: 0.5rem;
- }
- 
- .btn-login {
- min-width: 140px;
- font-size: 0.85rem;
- }
- }
- 
- @media (max-width: 900px) {
- .main-header .nav-links {
- margin-top: 0;
- padding-top: 0.5em;
- }
- }
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: #2e7d32;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+    
+    @media (max-width: 768px) {
+        body {
+            padding-top: 80px;
+        }
+        
+        .main-header {
+            padding: 0 1rem;
+        }
+        
+        .nav-links { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            left: 0; 
+            right: 0; 
+            background: var(--color-primary, #4caf50); 
+            padding: 1rem; 
+            flex-direction: column; 
+            align-items: center; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            z-index: 1000; 
+        }
+        
+        .nav-links.active { 
+            display: flex; 
+        }
+        
+        .hamburger { 
+            display: block; 
+        }
+        
+        .login-buttons {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .btn-login {
+            min-width: 140px;
+            font-size: 0.85rem;
+        }
+    }
+    
+    @media (max-width: 900px) {
+        .main-header .nav-links {
+            margin-top: 0;
+            padding-top: 0.5em;
+        }
+    }
 
 </style>
 </head>
 <body>
- <!-- Loading Spinner -->
- <div id="loading" class="loading" role="status" aria-label="Loading page content">
- <div class="spinner" aria-hidden="true"></div>
- </div>
- 
- <!-- Error Message -->
- <div id="error" class="error-message" role="alert" aria-live="polite"></div>
- 
- <!-- Header -->
- <header class="main-header">
- <div class="logo">
- <a href="index.html">
- <picture>
- <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
- <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
- </picture>
- </a>
- </div>
- <nav id="nav-menu">
- <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
- <span></span>
- <span></span>
- <span></span>
- </button>
- <ul class="nav-links">
- <li><a href="index.html">Home</a></li>
- <li><a href="about.html">About</a></li>
- <li><a href="services.html">Services</a></li>
- <li><a href="education.html">Education</a></li>
- <li><a href="faq.html">FAQ</a></li>
- <li><a href="contact.html">Contact</a></li>
- <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
- <li class="login-buttons">
- <a href="login.html" class="btn-login btn-customer">
- <i class="fas fa-user"></i>
- Customer Login
- </a>
- <a href="admin-login.html" class="btn-login btn-admin">
- <i class="fas fa-lock"></i>
- Admin Login
- </a>
- </li>
- </ul>
- </nav>
- </header>
+  <!-- Loading Spinner -->
+  <div id="loading" class="loading" role="status" aria-label="Loading page content">
+    <div class="spinner" aria-hidden="true"></div>
+  </div>
+  
+  <!-- Error Message -->
+  <div id="error" class="error-message" role="alert" aria-live="polite"></div>
+  
+  <!-- Header -->
+  <header class="main-header">
+    <div class="logo">
+      <a href="index.html">
+        <picture>
+          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+        </picture>
+      </a>
+    </div>
+    <nav id="nav-menu">
+      <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+        <li class="login-buttons">
+          <a href="login.html" class="btn-login btn-customer">
+            <i class="fas fa-user"></i>
+            Customer Login
+          </a>
+          <a href="admin-login.html" class="btn-login btn-admin">
+            <i class="fas fa-lock"></i>
+            Admin Login
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
-<!-- Main Content -->
- <main role="main">
- <!-- Hero Section -->
+  <!-- Main Content -->
+  <main role="main">
+    <!-- Hero Section -->
 
  <h1>Assigning Account Numbers...</h1>
 <p>Please wait while we assign account numbers to existing customers.</p>
