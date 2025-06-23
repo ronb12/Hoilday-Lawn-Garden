@@ -885,8 +885,12 @@ document.addEventListener('DOMContentLoaded', function() {
   var hamburger = document.querySelector('.hamburger');
   var navLinks = document.querySelector('.nav-links');
   var body = document.body;
-  if (!hamburger || !navLinks) return;
+  if (!hamburger || !navLinks) {
+    console.error('Hamburger or navLinks not found');
+    return;
+  }
   hamburger.addEventListener('click', function() {
+    console.log('Hamburger clicked');
     var expanded = hamburger.getAttribute('aria-expanded') === 'true';
     hamburger.classList.toggle('active');
     navLinks.classList.toggle('active');
