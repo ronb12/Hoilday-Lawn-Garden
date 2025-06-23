@@ -66,14 +66,100 @@
     @media (max-width: 768px) {
       body { padding-top: 80px; }
     }
-    .main-header { background: #fff !important; min-height: 70px !important; }
-    .nav-links a { padding-top: 0 !important; padding-bottom: 0 !important; color: #333 !important; font-weight: 500 !important; }
-    .nav-links li { display: flex; align-items: center; }
-    button, .btn, .cta-button, .submit-button { font-family: "Montserrat", system-ui, sans-serif !important; }
+    .main-header { 
+      background: #fff !important; 
+      min-height: 70px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 0 2rem !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    }
+    .logo {
+      display: flex !important;
+      align-items: center !important;
+    }
+    .logo img {
+      height: 50px !important;
+      width: auto !important;
+    }
+    .nav-links { 
+      display: flex !important;
+      align-items: center !important;
+      list-style: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      gap: 2rem !important;
+    }
+    .nav-links a { 
+      padding-top: 0 !important; 
+      padding-bottom: 0 !important; 
+      color: #333 !important; 
+      font-weight: 500 !important;
+      text-decoration: none !important;
+      transition: color 0.3s ease !important;
+    }
+    .nav-links a:hover {
+      color: #2e7d32 !important;
+    }
+    .nav-links li { 
+      display: flex; 
+      align-items: center; 
+    }
+    .login-buttons {
+      display: flex !important;
+      gap: 1rem !important;
+      align-items: center !important;
+    }
+    .btn-login {
+      padding: 0.5rem 1rem !important;
+      border-radius: 4px !important;
+      text-decoration: none !important;
+      font-weight: 500 !important;
+      transition: all 0.3s ease !important;
+    }
+    .btn-customer {
+      background: #2e7d32 !important;
+      color: white !important;
+    }
+    .btn-admin {
+      background: #1565c0 !important;
+      color: white !important;
+    }
+    .btn-login:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    .hamburger {
+      display: none !important;
+    }
     @media (max-width: 768px) {
-      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--color-primary, #4caf50); padding: 1rem; flex-direction: column; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-      .nav-links.active { display: flex; }
-      .hamburger { display: block; }
+      .main-header {
+        padding: 0 1rem !important;
+      }
+      .nav-links { 
+        display: none !important; 
+        position: absolute !important; 
+        top: 100% !important; 
+        left: 0 !important; 
+        right: 0 !important; 
+        background: var(--color-primary, #4caf50) !important; 
+        padding: 1rem !important; 
+        flex-direction: column !important; 
+        align-items: center !important; 
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+        z-index: 1000 !important;
+      }
+      .nav-links.active { 
+        display: flex !important; 
+      }
+      .hamburger { 
+        display: block !important; 
+      }
+      .login-buttons {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+      }
     }
     .footer { background: var(--color-primary, #4caf50); color: white; padding: 2rem 0; margin-top: 3rem; }
     .footer-content { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
