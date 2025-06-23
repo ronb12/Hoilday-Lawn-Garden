@@ -963,8 +963,7 @@
         margin-top: 0 !important;
       }
     }
-  
-  
+
     /* Professional Header Alignment Fixes */
     .main-header {
       background: #fff !important;
@@ -1395,8 +1394,12 @@
     }
 
 </style>
-</head><body style="background:var(--color-primary-light);color:var(--color-text)"><div class="loading-overlay" id="loading-overlay" style="display:none"><div class="spinner"></div><p id="loading-message">Loading...</p></div>  <!-- Header Navigation -->
-    <div id="error" class="error-message" role="alert" aria-live="polite"></div>  <!-- Header Navigation -->
+</head><body style="background:var(--color-primary-light);color:var(--color-text)">
+  <!-- Loading & Error Validation -->
+  <div id="loading" class="loading" role="status" aria-label="Loading page content">
+    <div class="spinner" aria-hidden="true"></div>
+  </div>
+
   <header class="main-header">
   <div class="logo">
     <a href="index.html">
@@ -1424,7 +1427,10 @@
       </li>
     </ul>
   </nav>
-</header><main class="testimonials-section" style="background:var(--color-primary-light);padding:2rem;border-radius:var(--border-radius);max-width:700px;margin:3rem auto"><h1 style="color:var(--color-primary-dark)">Testimonials</h1></main><footer class="footer">
+</header>
+<div class="loading-overlay" id="loading-overlay" style="display:none"><div class="spinner"></div><p id="loading-message">Loading...</p></div>  <!-- Header Navigation -->
+    
+  <main class="testimonials-section" style="background:var(--color-primary-light);padding:2rem;border-radius:var(--border-radius);max-width:700px;margin:3rem auto"><h1 style="color:var(--color-primary-dark)">Testimonials</h1></main><footer class="footer">
 <div class="footer-content">
 <div class="footer-grid">
 <div class="footer-section">

@@ -541,7 +541,11 @@
 </style>
 </head>
 <body style="background: var(--color-primary-light); color: var(--color-text)">
-  <div id="error" class="error-message" role="alert" aria-live="polite"></div>  <!-- Header Navigation -->
+  <!-- Loading & Error Validation -->
+  <div id="loading" class="loading" role="status" aria-label="Loading page content">
+    <div class="spinner" aria-hidden="true"></div>
+  </div>
+
   <header class="main-header">
   <div class="logo">
     <a href="index.html">
@@ -569,7 +573,9 @@
       </li>
     </ul>
   </nav>
-</header><div class="loading-overlay" id="loading-overlay" style="display: none">
+</header>
+
+  <div class="loading-overlay" id="loading-overlay" style="display: none">
 <div class="spinner"></div>
 <p id="loading-message">Loading...</p>
 </div>
