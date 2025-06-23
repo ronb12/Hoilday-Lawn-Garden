@@ -113,6 +113,10 @@
 
     /* Clean Professional Header */
     .main-header {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
         background: var(--white);
         box-shadow: var(--shadow-light);
         position: fixed;
@@ -122,17 +126,16 @@
         z-index: 1000;
         padding: 0 1.5rem;
         min-height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
         width: 100%;
         box-sizing: border-box;
     }
 
-    @media (min-width: 768px) {
-        .main-header {
-            padding: 0 2rem;
-        }
+    .header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        min-height: 60px;
     }
 
     .logo {
@@ -458,17 +461,24 @@
         }
 
         .main-header {
+            flex-direction: column;
             padding: 0 1rem;
         }
 
-        #nav-menu {
+        .header-row {
             flex-direction: row;
-            gap: 0.5rem;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            min-height: 60px;
+        }
+        #nav-menu {
+            width: 100%;
         }
         .nav-links {
             display: none !important;
             position: absolute;
-            top: 100%;
+            top: 60px;
             left: 0;
             right: 0;
             background: var(--primary-green, #2e7d32);
@@ -538,6 +548,7 @@
             align-items: center;
             margin-left: 2rem;
         }
+        .hamburger { display: none !important; }
     }
 
     /* Loading Spinner Styles */
@@ -683,20 +694,22 @@
   
     <!-- Header -->
   <header class="main-header">
-    <div class="logo">
-      <a href="index.html">
-        <picture>
-          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
-          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
-        </picture>
-      </a>
-    </div>
-    <nav id="nav-menu">
+    <div class="header-row">
+      <div class="logo">
+        <a href="index.html">
+          <picture>
+            <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+          </picture>
+        </a>
+      </div>
       <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
       </button>
+    </div>
+    <nav id="nav-menu">
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
