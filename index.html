@@ -197,15 +197,16 @@
 
   <!-- Scripts -->
   <script>
-    window.addEventListener('load', () => {
-      document.getElementById('loading')?.style.display = 'none';
+    window.addEventListener('load', function() {
+      var loading = document.getElementById('loading');
+      if (loading) loading.style.display = 'none';
     });
   </script>
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
+      window.addEventListener('load', function() {
         navigator.serviceWorker.register('service-worker.js')
-          .catch(err => console.error('SW registration failed:', err));
+          .catch(function(err) { console.error('SW registration failed:', err); });
       });
     }
   </script>
@@ -213,14 +214,12 @@
   <script type="module" src="assets/js/firebase-config.js"></script>
   <script type="module" src="assets/js/main.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const hamburger = document.querySelector('.hamburger');
-      const nav = document.getElementById('nav-menu');
-      const navLinks = document.querySelector('.nav-links');
-      const body = document.body;
-
+    document.addEventListener('DOMContentLoaded', function() {
+      var hamburger = document.querySelector('.hamburger');
+      var nav = document.getElementById('nav-menu');
+      var navLinks = document.querySelector('.nav-links');
+      var body = document.body;
       if (!hamburger || !nav || !navLinks) return;
-
       function closeMenu() {
         hamburger.classList.remove('active');
         nav.classList.remove('active');
@@ -229,9 +228,8 @@
         body.style.overflow = '';
         hamburger.setAttribute('aria-expanded', 'false');
       }
-
-      hamburger.addEventListener('click', () => {
-        const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.addEventListener('click', function() {
+        var expanded = hamburger.getAttribute('aria-expanded') === 'true';
         hamburger.classList.toggle('active');
         nav.classList.toggle('active');
         navLinks.classList.toggle('active');
@@ -239,24 +237,22 @@
         hamburger.setAttribute('aria-expanded', expanded ? 'false' : 'true');
         body.style.overflow = expanded ? '' : 'hidden';
       });
-
-      document.addEventListener('click', (e) => {
+      document.addEventListener('click', function(e) {
         if (!nav.contains(e.target) && !hamburger.contains(e.target) && nav.classList.contains('active')) {
           closeMenu();
         }
       });
-
-      document.addEventListener('keydown', (e) => {
+      document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && nav.classList.contains('active')) closeMenu();
       });
-
-      navLinks.querySelectorAll('a').forEach(link => {
+      navLinks.querySelectorAll('a').forEach(function(link) {
         link.addEventListener('click', closeMenu);
       });
     });
   </script>
   <script>
-    document.getElementById('current-year').textContent = new Date().getFullYear();
+    var yearSpan = document.getElementById('current-year');
+    if (yearSpan) yearSpan.textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
