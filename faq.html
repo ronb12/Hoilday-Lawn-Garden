@@ -11,7 +11,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-<link href="/assets/css/main.css?v=2024-01-15" rel="stylesheet"/>
+<link href="assets/css/main.css?v=2024-01-15" rel="stylesheet"/>
 <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
@@ -978,7 +978,10 @@
 </div>
 </footer>
 <script>
- document.getElementById('current-year').textContent = new Date().getFullYear();
+ const yearElement = document.getElementById('current-year');
+if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+}
  
  // FAQ Accordion functionality
  document.querySelectorAll('.faq-question').forEach(question => {

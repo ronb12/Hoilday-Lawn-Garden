@@ -28,8 +28,8 @@
 <meta content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/ https://apis.google.com/ https://www.googletagmanager.com/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/; font-src 'self' https://fonts.gstatic.com/; img-src 'self' data: https:; connect-src 'self' https://*.googleapis.com/ https://*.firebaseio.com/ https://*.cloudfunctions.net/; frame-src 'self' https://www.google.com/ https://accounts.google.com/;" http-equiv="Content-Security-Policy"/>
 <title>Create Account - Holliday's Lawn &amp; Garden</title>
 <!-- Stylesheets -->
-<link href="assets/styles/components/footer.css" rel="stylesheet"/>
-<link href="assets/styles/main.css" rel="stylesheet"/>
+<link href="assets/css/components/footer.css" rel="stylesheet"/>
+<link href="assets/css/main.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
 <style>
  /* Mobile Menu Styles */
@@ -1256,7 +1256,10 @@
 <script src="assets/js/firebase-config.js" type="module"></script>
 <script defer="" src="assets/js/main.min.js" type="module"></script>
 <script>
- document.getElementById('current-year').textContent = new Date().getFullYear();
+ const yearElement = document.getElementById('current-year');
+if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+}
  </script>
 <script>
  document.addEventListener('DOMContentLoaded', function() {

@@ -970,7 +970,10 @@
  </script>
 <!-- Update Copyright Year -->
 <script>
- document.getElementById('current-year').textContent = new Date().getFullYear();
+ const yearElement = document.getElementById('current-year');
+if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+}
  </script>
 
  <script>

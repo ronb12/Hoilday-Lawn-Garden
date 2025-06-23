@@ -4,8 +4,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Our Work - Holliday Lawn &amp; Garden</title>
-<link href="/assets/css/main.css" rel="stylesheet"/>
-<link href="/assets/css/mobile-enhancements.css" rel="stylesheet"/>
+<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
 <!-- Fix for fixed header spacing -->
 <style>
@@ -1273,7 +1273,10 @@
 </div>
 </footer>
 <script>
- document.getElementById('current-year').textContent = new Date().getFullYear();
+ const yearElement = document.getElementById('current-year');
+if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+}
  
  // Mobile menu functionality
  document.addEventListener('DOMContentLoaded', function() {

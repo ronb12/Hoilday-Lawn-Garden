@@ -854,7 +854,10 @@
 <script src="assets/js/main.js" type="module"></script>
 <script>
  // Set current year
- document.getElementById('current-year').textContent = new Date().getFullYear();
+ const yearElement = document.getElementById('current-year');
+if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+}
  </script>
 <script>
  document.addEventListener('DOMContentLoaded', function() {
