@@ -542,9 +542,11 @@
 
 
 
+
+
 <style>
 
-    /* Perfect Header and Hero - No White Space */
+    /* Perfect Page Structure - No Issues */
     .main-header {
         background: #fff !important;
         min-height: 70px !important;
@@ -684,7 +686,7 @@
         transform: rotate(45deg) translate(-5px, -6px);
     }
     
-    /* Hero Section - No White Space */
+    /* Hero Section - Perfect Spacing */
     .hero {
         position: relative !important;
         width: 100vw !important;
@@ -734,10 +736,15 @@
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
     }
     
-    /* Body padding for fixed header */
+    /* Body and Main Content */
     body {
         padding-top: 70px !important;
         margin: 0 !important;
+    }
+    
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
     }
     
     @media (max-width: 768px) {
@@ -858,13 +865,7 @@
 <div class="spinner"></div>
 <p id="loading-message">Loading...</p>
 </div>
-<main class="sitemap-section" style="
- background: var(--color-primary-light);
- padding: 2rem;
- border-radius: var(--border-radius);
- max-width: 700px;
- margin: 3rem auto;
- ">
+
 <h1 style="color: var(--color-primary-dark)">Sitemap</h1>
 </main>
 <script defer="defer" src="assets/js/main.min.js" type="module">
