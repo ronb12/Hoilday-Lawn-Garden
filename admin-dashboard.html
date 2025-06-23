@@ -1731,7 +1731,14 @@
 
 <style>
 
-    /* Enhanced Header Styles - Guaranteed to Work */
+    
+    }
+
+</style>
+
+<style>
+
+    /* Perfect Header Alignment - Logo and Navigation on Same Line */
     .main-header {
         background: #fff !important;
         min-height: 70px !important;
@@ -1746,16 +1753,26 @@
         right: 0 !important;
         z-index: 9999 !important;
         width: 100% !important;
+        box-sizing: border-box !important;
     }
     
     .logo {
         display: flex !important;
         align-items: center !important;
+        flex-shrink: 0 !important;
     }
     
     .logo img {
         height: 50px !important;
         width: auto !important;
+        display: block !important;
+    }
+    
+    #nav-menu {
+        display: flex !important;
+        align-items: center !important;
+        flex-grow: 1 !important;
+        justify-content: flex-end !important;
     }
     
     .nav-links { 
@@ -1765,15 +1782,18 @@
         margin: 0 !important;
         padding: 0 !important;
         gap: 2rem !important;
+        flex-wrap: nowrap !important;
     }
     
     .nav-links a { 
-        padding-top: 0 !important; 
-        padding-bottom: 0 !important; 
+        padding: 0.5rem 0.75rem !important; 
         color: #333 !important; 
         font-weight: 500 !important;
         text-decoration: none !important;
         transition: color 0.3s ease !important;
+        white-space: nowrap !important;
+        font-size: 0.95rem !important;
+        display: block !important;
     }
     
     .nav-links a:hover {
@@ -1783,12 +1803,15 @@
     .nav-links li { 
         display: flex !important; 
         align-items: center !important; 
+        margin: 0 !important;
+        padding: 0 !important;
     }
     
     .login-buttons {
         display: flex !important;
         gap: 1rem !important;
         align-items: center !important;
+        margin-left: 1rem !important;
     }
     
     .btn-login {
@@ -1804,6 +1827,7 @@
         align-items: center !important;
         justify-content: center !important;
         gap: 0.5rem !important;
+        white-space: nowrap !important;
     }
     
     .btn-customer {
@@ -1830,7 +1854,7 @@
         background: none;
         border: none;
         -webkit-tap-highlight-color: transparent;
-        margin-right: 10px;
+        margin-left: 1rem;
     }
 
     .hamburger span {
@@ -1863,6 +1887,10 @@
             padding: 0 1rem !important;
         }
         
+        #nav-menu {
+            justify-content: flex-end !important;
+        }
+        
         .nav-links { 
             display: none !important; 
             position: absolute !important; 
@@ -1888,6 +1916,7 @@
         .login-buttons {
             flex-direction: column !important;
             gap: 0.5rem !important;
+            margin-left: 0 !important;
         }
         
         .btn-login {
