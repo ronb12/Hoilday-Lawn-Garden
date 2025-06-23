@@ -1167,6 +1167,231 @@
       display: block !important;
     }
   </style>
+<style>
+
+    /* Standard Header and Hero Styles */
+    body {
+        padding-top: 100px;
+        margin: 0;
+        font-family: 'Montserrat', Arial, sans-serif;
+        background: #f7f7f7;
+        color: #222;
+    }
+    
+    .main-header {
+        background: #fff !important;
+        min-height: 70px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0 2rem !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1000 !important;
+    }
+    
+    .logo {
+        display: flex !important;
+        align-items: center !important;
+    }
+    
+    .logo img {
+        height: 50px !important;
+        width: auto !important;
+    }
+    
+    .nav-links { 
+        display: flex !important;
+        align-items: center !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 2rem !important;
+    }
+    
+    .nav-links a { 
+        padding-top: 0 !important; 
+        padding-bottom: 0 !important; 
+        color: #333 !important; 
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease !important;
+    }
+    
+    .nav-links a:hover {
+        color: #2e7d32 !important;
+    }
+    
+    .nav-links li { 
+        display: flex; 
+        align-items: center; 
+    }
+    
+    .login-buttons {
+        display: flex !important;
+        gap: 1rem !important;
+        align-items: center !important;
+    }
+    
+    .btn-login {
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .btn-customer {
+        background: #2e7d32 !important;
+        color: white !important;
+    }
+    
+    .btn-admin {
+        background: #1565c0 !important;
+        color: white !important;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    
+    .hamburger {
+        display: none !important;
+        cursor: pointer;
+        padding: 15px;
+        z-index: 1000;
+        position: relative;
+        background: none;
+        border: none;
+        -webkit-tap-highlight-color: transparent;
+        margin-right: 10px;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: #2e7d32;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+    
+    .hero {
+        position: relative;
+        width: 100vw;
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #222;
+        overflow: hidden;
+        margin-top: 80px;
+    }
+    
+    .hero img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+        filter: brightness(0.6);
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: #fff;
+        padding: 2rem;
+        max-width: 800px;
+    }
+    
+    .hero-content h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .hero-content p {
+        font-size: 1.25rem;
+        font-weight: 400;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+        body {
+            padding-top: 80px;
+        }
+        
+        .main-header {
+            padding: 0 1rem !important;
+        }
+        
+        .nav-links { 
+            display: none !important; 
+            position: absolute !important; 
+            top: 100% !important; 
+            left: 0 !important; 
+            right: 0 !important; 
+            background: var(--color-primary, #4caf50) !important; 
+            padding: 1rem !important; 
+            flex-direction: column !important; 
+            align-items: center !important; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+            z-index: 1000 !important;
+        }
+        
+        .nav-links.active { 
+            display: flex !important; 
+        }
+        
+        .hamburger { 
+            display: block !important; 
+        }
+        
+        .login-buttons {
+            flex-direction: column !important;
+            gap: 0.5rem !important;
+        }
+        
+        .hero-content h1 {
+            font-size: 2rem;
+        }
+        
+        .hero-content p {
+            font-size: 1rem;
+        }
+    }
+    
+    @media (max-width: 900px) {
+        .main-header .nav-links {
+            margin-top: 0 !important;
+            padding-top: 0.5em !important;
+        }
+    }
+
+</style>
 </head>
 <body>
 
@@ -1175,6 +1400,7 @@
     <div class="spinner" aria-hidden="true"></div>
   </div>
   <div id="error" class="error-message" role="alert" aria-live="polite"></div>  <!-- Header Navigation -->
+    <div id="error" class="error-message" role="alert" aria-live="polite"></div>  <!-- Header Navigation -->
   <header class="main-header">
   <div class="logo">
     <a href="index.html">
