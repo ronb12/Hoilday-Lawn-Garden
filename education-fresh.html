@@ -958,6 +958,157 @@
       }
     }
   
+  
+    /* Professional Header Alignment Fixes */
+    .main-header {
+      background: #fff !important;
+      min-height: 70px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 0 2rem !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 1000 !important;
+    }
+    .logo {
+      display: flex !important;
+      align-items: center !important;
+      flex-shrink: 0 !important;
+    }
+    .logo img {
+      height: 50px !important;
+      width: auto !important;
+      max-width: 200px !important;
+    }
+    .nav-links { 
+      display: flex !important;
+      align-items: center !important;
+      list-style: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      gap: 2rem !important;
+      flex: 1 !important;
+      justify-content: flex-end !important;
+    }
+    .nav-links a { 
+      color: #333 !important; 
+      font-weight: 500 !important;
+      text-decoration: none !important;
+      transition: color 0.3s ease !important;
+      padding: 0.5rem 0.75rem !important;
+      border-radius: 4px !important;
+      white-space: nowrap !important;
+    }
+    .nav-links a:hover {
+      color: #2e7d32 !important;
+      background-color: rgba(46, 125, 50, 0.1) !important;
+    }
+    .nav-links li { 
+      display: flex; 
+      align-items: center; 
+    }
+    .login-buttons {
+      display: flex !important;
+      gap: 1rem !important;
+      align-items: center !important;
+      margin-left: 1rem !important;
+    }
+    .btn-login {
+      padding: 0.5rem 1rem !important;
+      border-radius: 4px !important;
+      text-decoration: none !important;
+      font-weight: 500 !important;
+      transition: all 0.3s ease !important;
+      font-size: 0.9rem !important;
+    }
+    .btn-customer {
+      background: #2e7d32 !important;
+      color: white !important;
+    }
+    .btn-admin {
+      background: #1565c0 !important;
+      color: white !important;
+    }
+    .btn-login:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    .hamburger {
+      display: none !important;
+      background: none !important;
+      border: none !important;
+      cursor: pointer !important;
+      padding: 0.5rem !important;
+      z-index: 1001 !important;
+    }
+    .hamburger span {
+      display: block !important;
+      width: 25px !important;
+      height: 3px !important;
+      background-color: #333 !important;
+      margin: 5px 0 !important;
+      transition: 0.3s !important;
+    }
+    @media (max-width: 768px) {
+      .main-header {
+        padding: 0 1rem !important;
+      }
+      .nav-links { 
+        display: none !important; 
+        position: absolute !important; 
+        top: 100% !important; 
+        left: 0 !important; 
+        right: 0 !important; 
+        background: #4caf50 !important; 
+        padding: 1rem !important; 
+        flex-direction: column !important; 
+        align-items: center !important; 
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+        z-index: 1000 !important;
+        gap: 1rem !important;
+      }
+      .nav-links.active { 
+        display: flex !important; 
+      }
+      .hamburger { 
+        display: block !important; 
+      }
+      .login-buttons {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+        margin-left: 0 !important;
+      }
+      .nav-links a {
+        color: white !important;
+        padding: 0.75rem 1rem !important;
+      }
+      .nav-links a:hover {
+        background-color: rgba(255,255,255,0.1) !important;
+        color: white !important;
+      }
+    }
+    @media (max-width: 1200px) {
+      .nav-links {
+        gap: 1rem !important;
+      }
+      .nav-links a {
+        font-size: 0.9rem !important;
+        padding: 0.5rem 0.5rem !important;
+      }
+    }
+    @media (max-width: 992px) {
+      .nav-links {
+        gap: 0.5rem !important;
+      }
+      .nav-links a {
+        font-size: 0.85rem !important;
+        padding: 0.5rem 0.25rem !important;
+      }
+    }
   </style>
 
     <link href="assets/images/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
@@ -966,7 +1117,8 @@
     <link href="manifest.json" rel="manifest"/>
 </head>
 <body>
-<header class="main-header">
+  <!-- Header Navigation -->
+  <header class="main-header">
   <div class="logo">
     <a href="index.html">
       <picture>
