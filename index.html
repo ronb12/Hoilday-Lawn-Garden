@@ -120,8 +120,8 @@
         left: 0;
         right: 0;
         z-index: 1000;
-        padding: 0.75rem 1rem;
-        min-height: 70px;
+        padding: 0 1.5rem;
+        min-height: 60px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -131,20 +131,22 @@
 
     @media (min-width: 768px) {
         .main-header {
-            padding: 1rem 2rem;
+            padding: 0 2rem;
         }
     }
 
     .logo {
         display: flex;
         align-items: center;
-        flex-shrink: 0;
+        height: 100%;
     }
 
     .logo img {
-        height: 50px;
+        height: 44px;
         width: auto;
         display: block;
+        margin: 0;
+        vertical-align: middle;
     }
 
     #nav-menu {
