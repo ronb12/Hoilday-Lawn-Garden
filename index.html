@@ -152,9 +152,10 @@
         align-items: center;
         flex-grow: 1;
         justify-content: flex-end;
+        gap: 2rem;
     }
 
-    .nav-links { 
+    .nav-links {
         display: flex;
         align-items: center;
         list-style: none;
@@ -190,7 +191,7 @@
         display: flex;
         gap: 1rem;
         align-items: center;
-        margin-left: 1rem;
+        margin-left: 2rem;
     }
 
     .btn-login {
@@ -441,6 +442,15 @@
     }
 
     /* Mobile Responsive */
+    @media (max-width: 900px) {
+        #nav-menu {
+            gap: 1rem;
+        }
+        .login-buttons {
+            margin-left: 1rem;
+        }
+    }
+
     @media (max-width: 768px) {
         body {
             padding-top: 70px;
@@ -450,7 +460,11 @@
             padding: 0 1rem;
         }
 
-        .nav-links { 
+        #nav-menu {
+            flex-direction: row;
+            gap: 0.5rem;
+        }
+        .nav-links {
             display: none;
             position: absolute;
             top: 100%;
@@ -463,24 +477,17 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             z-index: 1000;
         }
-
-        .nav-links.active { 
+        .nav-links.active {
             display: flex;
         }
-
-        .hamburger { 
-            display: block;
-        }
-
         .login-buttons {
             flex-direction: column;
             gap: 0.5rem;
             margin-left: 0;
         }
 
-        .btn-login {
-            min-width: 140px;
-            font-size: 0.85rem;
+        .hamburger { 
+            display: block;
         }
 
         .hero-content h1 {
@@ -634,17 +641,17 @@
         <li><a href="faq.html">FAQ</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-        <li class="login-buttons">
-          <a href="login.html" class="btn-login btn-customer">
-            <i class="fas fa-user"></i>
-            Customer Login
-          </a>
-          <a href="admin-login.html" class="btn-login btn-admin">
-            <i class="fas fa-lock"></i>
-            Admin Login
-          </a>
-        </li>
       </ul>
+      <div class="login-buttons">
+        <a href="login.html" class="btn-login btn-customer">
+          <i class="fas fa-user"></i>
+          Customer Login
+        </a>
+        <a href="admin-login.html" class="btn-login btn-admin">
+          <i class="fas fa-lock"></i>
+          Admin Login
+        </a>
+      </div>
     </nav>
   </header>
 
