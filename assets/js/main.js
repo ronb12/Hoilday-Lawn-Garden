@@ -184,21 +184,20 @@ function showError(message) {
 }
 
 // Mobile Menu Functionality
+// Only use hamburger and navLinks (.nav-links) for toggling the menu
+
 document.addEventListener("DOMContentLoaded", function() {
     const hamburger = document.querySelector(".hamburger");
-    const nav = document.querySelector("nav");
     const navLinks = document.querySelector(".nav-links");
     const body = document.body;
 
     if (hamburger) {
         hamburger.setAttribute("aria-expanded", "false");
         hamburger.setAttribute("aria-controls", "nav-menu");
-        nav.setAttribute("id", "nav-menu");
 
         hamburger.addEventListener("click", function() {
             const isExpanded = hamburger.getAttribute("aria-expanded") === "true";
             hamburger.classList.toggle("active");
-            nav.classList.toggle("active");
             navLinks.classList.toggle("active");
             body.classList.toggle("menu-open");
             hamburger.setAttribute("aria-expanded", !isExpanded);
@@ -206,10 +205,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         document.addEventListener("click", function(event) {
-            const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
-            if (!isClickInside && nav.classList.contains("active")) {
+            const isClickInside = hamburger.contains(event.target) || navLinks.contains(event.target);
+            if (!isClickInside && navLinks.classList.contains("active")) {
                 hamburger.classList.remove("active");
-                nav.classList.remove("active");
                 navLinks.classList.remove("active");
                 body.classList.remove("menu-open");
                 body.style.overflow = "";
@@ -218,9 +216,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         document.addEventListener("keydown", function(event) {
-            if (event.key === "Escape" && nav.classList.contains("active")) {
+            if (event.key === "Escape" && navLinks.classList.contains("active")) {
                 hamburger.classList.remove("active");
-                nav.classList.remove("active");
                 navLinks.classList.remove("active");
                 body.classList.remove("menu-open");
                 body.style.overflow = "";
@@ -232,9 +229,8 @@ document.addEventListener("DOMContentLoaded", function() {
         window.addEventListener("resize", function() {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function() {
-                if (window.innerWidth > 768 && nav.classList.contains("active")) {
+                if (window.innerWidth > 768 && navLinks.classList.contains("active")) {
                     hamburger.classList.remove("active");
-                    nav.classList.remove("active");
                     navLinks.classList.remove("active");
                     body.classList.remove("menu-open");
                     body.style.overflow = "";
@@ -246,9 +242,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const navItems = navLinks.querySelectorAll("a");
         navItems.forEach(link => {
             link.addEventListener("click", function() {
-                if (nav.classList.contains("active")) {
+                if (navLinks.classList.contains("active")) {
                     hamburger.classList.remove("active");
-                    nav.classList.remove("active");
                     navLinks.classList.remove("active");
                     body.classList.remove("menu-open");
                     body.style.overflow = "";
