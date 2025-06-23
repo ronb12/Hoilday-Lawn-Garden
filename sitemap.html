@@ -179,7 +179,44 @@
  html {
  -webkit-overflow-scrolling: touch;
  }
- </style>
+ 
+    /* Comprehensive button styles - override any existing styles */
+    button, 
+    input[type="submit"], 
+    input[type="button"],
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-login,
+    .btn-customer,
+    .btn-admin,
+    .cta-button,
+    .cta-button.primary,
+    .cta-button.secondary {
+        font-family: 'Montserrat', sans-serif !important;
+        border-radius: 8px !important;
+        border: none !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Specific button types */
+    .btn-login {
+        border-radius: 4px !important;
+    }
+    
+    .hamburger {
+        border-radius: 0 !important;
+    }
+    
+    /* Ensure all form buttons have proper styling */
+    form button,
+    form input[type="submit"],
+    form input[type="button"] {
+        border-radius: 8px !important;
+    }
+</style>
 <style>
  /* Button font fixes */
  button, .btn, .cta-button, .submit-button {
@@ -1271,7 +1308,29 @@
 </ul>
 </div>
 <div class="footer-section">
-<h3>Legal</h3>
+         <h3>Legal</h3>
+         <ul>
+           <li><a href="privacy.html">Privacy Policy</a></li>
+           <li><a href="terms.html">Terms of Service</a></li>
+         </ul>
+       </div>
+       <div class="footer-section">
+         <h3>Follow Us</h3>
+         <div class="social-links">
+           <a href="#" class="social-link" aria-label="Facebook">
+             <i class="fab fa-facebook"></i>
+           </a>
+           <a href="#" class="social-link" aria-label="Instagram">
+             <i class="fab fa-instagram"></i>
+           </a>
+           <a href="#" class="social-link" aria-label="Twitter">
+             <i class="fab fa-twitter"></i>
+           </a>
+           <a href="#" class="social-link" aria-label="LinkedIn">
+             <i class="fab fa-linkedin"></i>
+           </a>
+         </div>
+       </div>
 <ul>
 <li><a href="privacy-policy.html">Privacy Policy</a></li>
 <li><a href="terms.html">Terms of Service</a></li>

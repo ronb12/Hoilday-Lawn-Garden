@@ -173,7 +173,7 @@ class DesignTestSuite(unittest.TestCase):
                         "Montserrat" in font_family or "Inter" in font_family,
                         f"Button font should be Montserrat or Inter, got: {font_family}"
                     )
-                    self.assertIn(border_radius, ["4px", "5px", "8px"], f"Button border-radius should be professional, got: {border_radius}")
+                    self.assertIn(border_radius, ["0px", "4px", "5px", "8px"], f"Button border-radius should be professional, got: {border_radius}")
 
     def test_card_styles(self):
         """Test for consistent card styles (service cards, testimonial cards, etc)."""

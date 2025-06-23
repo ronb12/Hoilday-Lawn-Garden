@@ -233,6 +233,7 @@
     
     /* Body and Main Content */
     body {
+        font-family: 'Montserrat', sans-serif;
         padding-top: 70px !important;
         margin: 0 !important;
     }
@@ -244,6 +245,7 @@
     
     @media (max-width: 768px) {
         body {
+        font-family: 'Montserrat', sans-serif;
             padding-top: 70px !important;
         }
         
@@ -304,6 +306,181 @@
         }
     }
 
+
+    /* Footer Styles */
+    .footer {
+        background: var(--primary-green, #2e7d32);
+        color: var(--white, #ffffff);
+        padding: 2rem 0;
+        margin-top: 3rem;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .footer-section h3 {
+        margin-bottom: 1rem;
+        font-family: "Montserrat", sans-serif;
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-section ul li {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-section ul li a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .footer-section ul li a:hover {
+        text-decoration: underline;
+    }
+
+    .footer-bottom {
+        border-top: 1px solid rgba(255,255,255,0.2);
+        padding-top: 1rem;
+        text-align: center;
+    }
+
+    .footer-contact {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .footer-contact span {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-contact a {
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .footer-contact a:hover {
+        text-decoration: underline;
+    }
+
+    .footer-contact i {
+        width: 16px;
+        text-align: center;
+    }
+
+    /* Typography fixes */
+    body {
+        font-family: 'Montserrat', sans-serif !important;
+    }
+
+    /* Button styles */
+    button {
+        font-family: 'Montserrat', sans-serif;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    
+
+    /* Comprehensive button styles - override any existing styles */
+    button, 
+    input[type="submit"], 
+    input[type="button"],
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-login,
+    .btn-customer,
+    .btn-admin,
+    .cta-button,
+    .cta-button.primary,
+    .cta-button.secondary {
+        font-family: 'Montserrat', sans-serif !important;
+        border-radius: 8px !important;
+        border: none !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Specific button types */
+    .btn-login {
+        border-radius: 4px !important;
+    }
+    
+    .hamburger {
+        border-radius: 0 !important;
+    }
+    
+    /* Ensure all form buttons have proper styling */
+    form button,
+    form input[type="submit"],
+    form input[type="button"] {
+        border-radius: 8px !important;
+    }
+
+    @media (max-width: 768px) {
+        .hamburger { 
+            display: block;
+        }
+        
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--primary-green, #2e7d32);
+            padding: 1rem;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .nav-links.active {
+            display: flex;
+        }
+        
+        .login-buttons {
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-left: 0;
+        }
+    }
 </style>
 
 <style>
@@ -501,6 +678,7 @@
     
     /* Body and Main Content - ZERO SPACING */
     body {
+        font-family: 'Montserrat', sans-serif;
         padding-top: 0 !important;
         margin: 0 !important;
     }
@@ -512,6 +690,7 @@
     
     @media (max-width: 768px) {
         body {
+        font-family: 'Montserrat', sans-serif;
             padding-top: 0 !important;
         }
         
@@ -583,7 +762,7 @@
   <!-- Error Message -->
   <div id="error" class="error-message" role="alert" aria-live="polite"></div>
   
-  <!-- Header -->
+    <!-- Header -->
   <header class="main-header">
     <div class="logo">
       <a href="index.html">
@@ -742,7 +921,29 @@
 </ul>
 </div>
 <div class="footer-section">
-<h3>Legal</h3>
+         <h3>Legal</h3>
+         <ul>
+           <li><a href="privacy.html">Privacy Policy</a></li>
+           <li><a href="terms.html">Terms of Service</a></li>
+         </ul>
+       </div>
+       <div class="footer-section">
+         <h3>Follow Us</h3>
+         <div class="social-links">
+           <a href="#" class="social-link" aria-label="Facebook">
+             <i class="fab fa-facebook"></i>
+           </a>
+           <a href="#" class="social-link" aria-label="Instagram">
+             <i class="fab fa-instagram"></i>
+           </a>
+           <a href="#" class="social-link" aria-label="Twitter">
+             <i class="fab fa-twitter"></i>
+           </a>
+           <a href="#" class="social-link" aria-label="LinkedIn">
+             <i class="fab fa-linkedin"></i>
+           </a>
+         </div>
+       </div>
 <ul>
 <li><a href="privacy-policy.html">Privacy Policy</a></li>
 <li><a href="terms.html">Terms of Service</a></li>

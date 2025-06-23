@@ -103,7 +103,37 @@
                 text-align: center;
         }
         }
-    </style>
+    
+    @media (max-width: 768px) {
+        .hamburger { 
+            display: block;
+        }
+        
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--primary-green, #2e7d32);
+            padding: 1rem;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .nav-links.active {
+            display: flex;
+        }
+        
+        .login-buttons {
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-left: 0;
+        }
+    }
+</style>
 <style>
             /* Button font fixes */
             button, .btn, .cta-button, .submit-button {
@@ -251,7 +281,12 @@
     <div class="spinner" aria-hidden="true"></div>
   </div>
   <div id="error" class="error-message" role="alert" aria-live="polite"></div><!-- Header with Mobile Menu -->
-<header class="main-header"><a aria-label="Link" class="logo link-with-loading link-with-loading" href="index.html"><picture><source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp"/><img src="assets/images/hollidays-logo.optimized-1280.png"/></picture></a><nav aria-label="Main navigation" id="nav-menu"><ul class="nav-links"><li><a aria-label="Link" class="link-with-loading link-with-loading" href="index.html">Home</a></li><li><a aria-label="Link" class="link-with-loading link-with-loading" href="about.html">Ab</a></li></ul></nav></header>
+<header class="main-header"><a aria-label="Link" class="logo link-with-loading link-with-loading" href="index.html"><picture><source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp"/><img src="assets/images/hollidays-logo.optimized-1280.png"/></picture></a><nav aria-label="Main navigation" id="nav-menu">
+      <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button><ul class="nav-links"><li><a aria-label="Link" class="link-with-loading link-with-loading" href="index.html">Home</a></li><li><a aria-label="Link" class="link-with-loading link-with-loading" href="about.html">Ab</a></li></ul></nav></header>
 <div class="offline-container">
 <div class="offline-icon">
 <i class="fas fa-wifi-slash"></i>

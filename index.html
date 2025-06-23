@@ -16,14 +16,14 @@
  <meta property="og:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/" />
  <meta property="og:title" content="Holliday's Lawn &amp; Garden – Professional Landscaping Services" />
  <meta property="og:description" content="Professional lawn care and landscaping services in Louisiana. Expert landscape design, maintenance, and eco‑friendly solutions." />
- <meta property="og:image" content="assets/images/hero-garden-landscaping.jpg" />
+ <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
  <meta property="og:site_name" content="Holliday's Lawn &amp; Garden" />
 
  <meta name="twitter:card" content="summary_large_image" />
  <meta name="twitter:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/" />
  <meta name="twitter:title" content="Holliday's Lawn &amp; Garden – Professional Landscaping Services" />
  <meta name="twitter:description" content="Professional lawn care and landscaping services in Louisiana. Expert landscape design, maintenance, and eco‑friendly solutions." />
- <meta name="twitter:image" content="assets/images/hero-garden-landscaping.jpg" />
+ <meta name="twitter:image" content="assets/images/hollidays-logo.optimized-1280.png" />
 
  <!-- Performance & Fonts -->
  <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -607,7 +607,74 @@
         width: 16px;
         text-align: center;
     }
- </style>
+ 
+    /* Comprehensive button styles - override any existing styles */
+    button, 
+    input[type="submit"], 
+    input[type="button"],
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-login,
+    .btn-customer,
+    .btn-admin,
+    .cta-button,
+    .cta-button.primary,
+    .cta-button.secondary {
+        font-family: 'Montserrat', sans-serif !important;
+        border-radius: 8px !important;
+        border: none !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Specific button types */
+    .btn-login {
+        border-radius: 4px !important;
+    }
+    
+    .hamburger {
+        border-radius: 0 !important;
+    }
+    
+    /* Ensure all form buttons have proper styling */
+    form button,
+    form input[type="submit"],
+    form input[type="button"] {
+        border-radius: 8px !important;
+    }
+
+    @media (max-width: 768px) {
+        .hamburger { 
+            display: block;
+        }
+        
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--primary-green, #2e7d32);
+            padding: 1rem;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .nav-links.active {
+            display: flex;
+        }
+        
+        .login-buttons {
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-left: 0;
+        }
+    }
+</style>
 </head>
 
 <body>
@@ -619,7 +686,7 @@
   <!-- Error Message -->
   <div id="error" class="error-message" role="alert" aria-live="polite"></div>
   
-  <!-- Header -->
+    <!-- Header -->
   <header class="main-header">
     <div class="logo">
       <a href="index.html">
@@ -719,7 +786,29 @@
  <ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li><li><a href="pay-your-bill.html">Pay Your Bill</a></li><li><a href="customer-dashboard.html">Dashboard</a></li></ul>
  </div>
  <div class="footer-section">
- <h3>Legal</h3>
+         <h3>Legal</h3>
+         <ul>
+           <li><a href="privacy.html">Privacy Policy</a></li>
+           <li><a href="terms.html">Terms of Service</a></li>
+         </ul>
+       </div>
+       <div class="footer-section">
+         <h3>Follow Us</h3>
+         <div class="social-links">
+           <a href="#" class="social-link" aria-label="Facebook">
+             <i class="fab fa-facebook"></i>
+           </a>
+           <a href="#" class="social-link" aria-label="Instagram">
+             <i class="fab fa-instagram"></i>
+           </a>
+           <a href="#" class="social-link" aria-label="Twitter">
+             <i class="fab fa-twitter"></i>
+           </a>
+           <a href="#" class="social-link" aria-label="LinkedIn">
+             <i class="fab fa-linkedin"></i>
+           </a>
+         </div>
+       </div>
  <ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li></ul>
  </div>
  </div>

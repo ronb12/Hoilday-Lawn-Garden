@@ -81,7 +81,37 @@
                 padding-top: 1rem;
                 text-align: center;
             }
-            </style>
+            
+    @media (max-width: 768px) {
+        .hamburger { 
+            display: block;
+        }
+        
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--primary-green, #2e7d32);
+            padding: 1rem;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .nav-links.active {
+            display: flex;
+        }
+        
+        .login-buttons {
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-left: 0;
+        }
+    }
+</style>
 
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
