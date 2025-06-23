@@ -1299,35 +1299,43 @@
 <div class="loading-spinner" id="loading-spinner" style="display: none;">
 <div class="spinner"></div>
 </div>
-  <!-- Header Navigation -->
+  <!-- Header -->
   <header class="main-header">
-  <div class="logo">
-    <a href="index.html">
-      <picture>
-        <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp" />
-        <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" loading="lazy" />
-      </picture>
-    </a>
-  </div>
-  <button class="hamburger" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
-  </button>
-  <nav id="nav-menu" aria-label="Main navigation">
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="education.html">Education</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-      <li class="login-buttons">
-        <a class="btn-login btn-customer" href="login.html"><i class="fas fa-user"></i> Customer Login</a>
-        <a class="btn-login btn-admin" href="admin-login.html"><i class="fas fa-lock"></i> Admin Login</a>
-      </li>
-    </ul>
-  </nav>
-</header>
+    <div class="logo">
+      <a href="index.html">
+        <picture>
+          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+        </picture>
+      </a>
+    </div>
+    <nav id="nav-menu">
+      <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+      </ul>
+      <div class="login-buttons">
+        <a href="login.html" class="btn-login btn-customer">
+          <i class="fas fa-user"></i>
+          Customer Login
+        </a>
+        <a href="admin-login.html" class="btn-login btn-admin">
+          <i class="fas fa-lock"></i>
+          Admin Login
+        </a>
+      </div>
+    </nav>
+  </header>
 <div class="container">
 <h1 id="greeting">Hello, Customer!</h1>
 <p>
@@ -1418,188 +1426,4 @@
         if (user) {
           currentUser = user;
           document.getElementById("greeting").innerText =
-            `Hello, ${user.email}!`;
-          loadRequests();
-        } else {
-          window.location.href = "login.html";
-        }
-      });
-      function loadRequests() {
-        const tbody = document.querySelector("#requestsTable tbody");
-        tbody.innerHTML = "<tr><td colspan='5'>Loading...</td></tr>";
-        db.collection("service_requests")
-          .where("customerEmail", "==", currentUser.email)
-          .orderBy("submittedAt", "desc")
-          .get()
-          .then((snapshot) => {
-            tbody.innerHTML = "";
-            if (snapshot.empty) {
-              tbody.innerHTML =
-                "<tr><td colspan='5'>No requests found.</td></tr>";
-              return;
-            }
-            snapshot.forEach((doc) => {
-              const r = doc.data();
-              tbody.innerHTML += `
-          <tr>
-            <td>${r.serviceType}</td>
-            <td>${r.preferredDate ? new Date(r.preferredDate).toLocaleDateString() : "N/A"}</td>
-            <td>${r.notes || "-"}</td>
-            <td class="status-${(r.status || "pending").toLowerCase()}">${r.status || "Pending"}</td>
-            <td><button onclick="deleteRequest('${doc.id}')" aria-label="Button" class="button-with-loading button-with-loading">Delete</button></td>
-          </tr>
-        `;
-            });
-          })
-          .catch((err) => {
-            console.error("Error loading requests:", err);
-            tbody.innerHTML =
-              "<tr><td colspan='5'>Failed to load requests.</td></tr>";
-          });
-      }
-      function submitRequest(e) {
-        e.preventDefault();
-        const type = document.getElementById("serviceType").value;
-        const date = document.getElementById("preferredDate").value;
-        const notes = document.getElementById("requestNotes").value;
-        if (!type || !date)
-          return alert("Please select a service type and preferred date.");
-        db.collection("service_requests")
-          .add({
-            fullName: currentUser.displayName || "Customer",
-            customerEmail: currentUser.email,
-            serviceType: type,
-            preferredDate: date,
-            notes: notes,
-            status: "Pending",
-            submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          })
-          .then(() => {
-            alert("✅ Request submitted");
-            document.querySelector("form").reset();
-            loadRequests();
-          });
-      }
-      function deleteRequest(id) {
-        if (confirm("Delete this request?")) {
-          db.collection("service_requests").doc(id).delete().then(loadRequests);
-        }
-      }
-      function logout() {
-        firebase
-          .auth()
-          .signOut()
-          .then(() => (window.location.href = "login.html"));
-      }
-    </script>
-<script src="assets/js/firebase-config.js" type="module"></script>
-<script defer="" src="assets/js/main.min.js" type="module"></script>
-<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.querySelector('.hamburger');
-            const nav = document.querySelector('#nav-menu');
-            const navLinks = document.querySelector('.nav-links');
-            const body = document.body;
-
-            if (hamburger) {
-                hamburger.addEventListener('click', function() {
-                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
-                    hamburger.classList.toggle('active');
-                    nav.classList.toggle('active');
-                    navLinks.classList.toggle('active');
-                    body.classList.toggle('menu-open');
-                    hamburger.setAttribute('aria-expanded', !isExpanded);
-                    body.style.overflow = !isExpanded ? 'hidden' : '';
-                });
-
-                // Close menu when clicking outside
-                document.addEventListener('click', function(event) {
-                    const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
-                    if (!isClickInside && nav.classList.contains('active')) {
-                        hamburger.classList.remove('active');
-                        nav.classList.remove('active');
-                        navLinks.classList.remove('active');
-                        body.classList.remove('menu-open');
-                        body.style.overflow = '';
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    }
-                });
-
-                // Close menu on escape key
-                document.addEventListener('keydown', function(event) {
-                    if (event.key === 'Escape' && nav.classList.contains('active')) {
-                        hamburger.classList.remove('active');
-                        nav.classList.remove('active');
-                        navLinks.classList.remove('active');
-                        body.classList.remove('menu-open');
-                        body.style.overflow = '';
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    }
-                });
-
-                // Close menu when clicking on links
-                const navItems = navLinks.querySelectorAll('a');
-                navItems.forEach(link => {
-                    link.addEventListener('click', function() {
-                        if (nav.classList.contains('active')) {
-                            hamburger.classList.remove('active');
-                            nav.classList.remove('active');
-                            navLinks.classList.remove('active');
-                            body.classList.remove('menu-open');
-                            body.style.overflow = '';
-                            hamburger.setAttribute('aria-expanded', 'false');
-                        }
-                    });
-                });
-            }
-        });
-    </script>
-
-  <script>
-    // Enhanced loading management
-    (function() {
-      var loading = document.getElementById('loading');
-      var error = document.getElementById('error');
-      
-      // Hide loading after page load
-      function hideLoading() {
-        if (loading) {
-          loading.classList.add('hidden');
-          setTimeout(function() {
-            loading.style.display = 'none';
-          }, 300);
-        }
-      }
-      
-      // Show error message
-      function showError(message) {
-        if (error) {
-          error.textContent = message;
-          error.classList.add('show');
-          setTimeout(function() {
-            error.classList.remove('show');
-          }, 5000);
-        }
-      }
-      
-      // Hide loading when DOM is ready
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', hideLoading);
-      } else {
-        hideLoading();
-      }
-      
-      // Hide loading when window loads
-      window.addEventListener('load', hideLoading);
-      
-      // Fallback: hide loading after 3 seconds
-      setTimeout(hideLoading, 3000);
-      
-      // Handle errors
-      window.addEventListener('error', function(e) {
-        console.error('Page error:', e.error);
-        showError('An error occurred while loading the page. Please refresh.');
-      });
-    })();
-  </script>
-</body></html>
+            `
