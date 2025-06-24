@@ -1684,3 +1684,14 @@ footer::before {
     padding-bottom: 70px !important;
   }
 }
+
+/* Mobile Tab Bar - Hide on Desktop */
+@media (min-width: 768px) {
+    .mobile-tab-bar { 
+        display: none !important; 
+        visibility: hidden !important;
+        opacity: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+    }
+}
