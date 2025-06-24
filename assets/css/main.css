@@ -96,25 +96,22 @@ button {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #e0e0e0;
-  min-height: 70px;
+  min-height: 80px;
 }
-.main-header nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  width: 100%;
+.main-header > * {
+  align-self: center;
 }
 .main-header .logo {
   flex-shrink: 0;
   margin-right: 2rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 .main-header .logo img {
   max-width: 200px;
-  height: auto;
+  height: 60px;
   display: block;
+  margin: 0;
 }
 .main-header .nav-links {
   display: flex;
