@@ -1564,17 +1564,22 @@
     <!-- Hero Section -->
 
  
-<div class="page-header">
-<div>
-<h1 class="page-title">Appointments</h1>
-<p class="page-subtitle">Manage and view all customer appointments</p>
-<div id="connectionStatus" style="font-size: 0.9rem; margin-top: 0.5rem;">
-  <i class="fas fa-circle" style="color: #ccc;"></i> <span>Checking connection...</span>
-</div>
-</div>
-<button class="btn btn-primary" onclick="openAddModal()">
-<i class="fas fa-plus"></i> Add Appointment
-</button>
+<div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+  <div>
+    <h1 class="page-title">Appointments</h1>
+    <p class="page-subtitle">Manage and view all customer appointments</p>
+    <div id="connectionStatus" style="font-size: 0.9rem; margin-top: 0.5rem;">
+      <i class="fas fa-circle" style="color: #ccc;"></i> <span>Checking connection...</span>
+    </div>
+  </div>
+  <div style="display: flex; gap: 1rem; align-items: center;">
+    <a href="admin-dashboard.html" class="btn btn-secondary" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+    <button class="btn btn-primary" onclick="openAddModal()">
+      <i class="fas fa-plus"></i> Add Appointment
+    </button>
+  </div>
 </div>
 <div class="filters-section">
 <div class="filters-row">
