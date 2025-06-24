@@ -1,47 +1,67 @@
-const CACHE_VERSION = 'v13';
+const CACHE_VERSION = 'v14';
 const CACHE_NAME = `holliday-cache-${CACHE_VERSION}`;
-const MAX_CACHE_SIZE = 50 * 1024 * 1024; // 50MB limit
-const ASSETS_TO_CACHE = [
-  './',
-  './index.html',
-  './about.html',
-  './services.html',
-  './faq.html',
-  './contact.html',
-  './pay-your-bill.html',
-  './education.html',
-  './assets/css/main.css',
-  './assets/css/mobile-enhancements.css',
-  './assets/js/main.js',
-  './assets/js/hero.js',
-  './assets/js/service-cache.js',
-  './assets/images/hollidays-logo.optimized-1280.png',
-  './assets/images/hollidays-logo.optimized-1280.webp',
-  './assets/images/hero-garden-landscaping.jpg',
-  './assets/images/favicon/favicon-32x32.png',
-  './assets/images/favicon/favicon-16x16.png',
-  './assets/images/favicon/apple-touch-icon.png',
-  './manifest.json'
-];
+const MAX_CACHE_SIZE = 25 * 1024 * 1024; // Reduced to 25MB limit
+const MAX_CACHE_ENTRIES = 10; // Reduced to 10 entries
 
-// Storage cleanup function
-async function cleanupStorage() {
+// Aggressive storage cleanup function
+async function aggressiveStorageCleanup() {
   try {
-    const cache = await caches.open(CACHE_NAME);
-    const keys = await cache.keys();
+    console.log('Service Worker: Starting aggressive storage cleanup...');
     
-    // If cache is getting too large, remove oldest entries
-    if (keys.length > 20) {
-      const oldestKeys = keys.slice(0, keys.length - 20);
-      await Promise.all(oldestKeys.map(key => cache.delete(key)));
-      console.log('Cleaned up old cache entries');
+    // Clear all caches except current
+    const cacheNames = await caches.keys();
+    console.log('Service Worker: Found caches:', cacheNames);
+    
+    await Promise.all(cacheNames.map(async cacheName => {
+      if (cacheName !== CACHE_NAME) {
+        try {
+          await caches.delete(cacheName);
+          console.log('Service Worker: Deleted old cache:', cacheName);
+        } catch (error) {
+          console.warn('Service Worker: Failed to delete cache:', cacheName, error);
+        }
+      }
+    }));
+    
+    // Limit current cache size
+    const currentCache = await caches.open(CACHE_NAME);
+    const keys = await currentCache.keys();
+    
+    if (keys.length > MAX_CACHE_ENTRIES) {
+      const keysToDelete = keys.slice(0, keys.length - MAX_CACHE_ENTRIES);
+      await Promise.all(keysToDelete.map(key => currentCache.delete(key)));
+      console.log('Service Worker: Cleaned up cache entries, kept:', MAX_CACHE_ENTRIES);
     }
+    
+    // Clear IndexedDB if possible
+    if ('indexedDB' in self) {
+      try {
+        const databases = await indexedDB.databases();
+        await Promise.all(databases.map(async dbInfo => {
+          const request = indexedDB.deleteDatabase(dbInfo.name);
+          await new Promise((resolve) => {
+            request.onsuccess = () => {
+              console.log('Service Worker: Deleted IndexedDB:', dbInfo.name);
+              resolve();
+            };
+            request.onerror = () => {
+              console.warn('Service Worker: Failed to delete IndexedDB:', dbInfo.name);
+              resolve();
+            };
+          });
+        }));
+      } catch (error) {
+        console.warn('Service Worker: IndexedDB cleanup failed:', error);
+      }
+    }
+    
+    console.log('Service Worker: Storage cleanup completed');
   } catch (error) {
-    console.warn('Cache cleanup failed:', error);
+    console.error('Service Worker: Storage cleanup failed:', error);
   }
 }
 
-// Install event - cache assets
+// Install event - cache assets with aggressive cleanup
 self.addEventListener('install', event => {
   console.log('Service Worker installing...');
   
@@ -49,23 +69,30 @@ self.addEventListener('install', event => {
   self.skipWaiting();
   
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      console.log('Opened cache:', CACHE_NAME);
-      
-      // Clean up storage first
-      return cleanupStorage().then(() => {
-        // Cache assets individually to handle failures gracefully
-        const cachePromises = ASSETS_TO_CACHE.map(asset => {
+    aggressiveStorageCleanup().then(() => {
+      return caches.open(CACHE_NAME).then(cache => {
+        console.log('Opened cache:', CACHE_NAME);
+        
+        // Cache only essential assets
+        const essentialAssets = [
+          './',
+          './index.html',
+          './assets/css/main.css',
+          './assets/js/main.js',
+          './assets/images/hollidays-logo.optimized-1280.png',
+          './manifest.json'
+        ];
+        
+        const cachePromises = essentialAssets.map(asset => {
           return cache.add(asset).catch(err => {
             console.warn(`Failed to cache ${asset}:`, err);
-            return Promise.resolve(); // Don't fail the install
+            return Promise.resolve();
           });
         });
         return Promise.all(cachePromises);
       });
     }).catch(err => {
       console.error('Service Worker install failed:', err);
-      // Don't fail the install
       return Promise.resolve();
     })
   );
@@ -89,17 +116,15 @@ self.addEventListener('activate', event => {
       );
     }).then(() => {
       console.log('Service Worker activated');
-      // Claim all clients immediately
       return self.clients.claim();
     }).catch(err => {
       console.error('Service Worker activation failed:', err);
-      // Don't fail activation
       return Promise.resolve();
     })
   );
 });
 
-// Fetch event - Network first, then cache
+// Fetch event - Network first, minimal caching
 self.addEventListener('fetch', event => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') {
@@ -111,21 +136,31 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Skip Firebase and analytics requests to prevent storage issues
+  // Skip all Firebase and analytics requests to prevent storage issues
   if (event.request.url.includes('firebase') || 
       event.request.url.includes('google-analytics') ||
-      event.request.url.includes('gstatic.com/firebasejs')) {
+      event.request.url.includes('gstatic.com/firebasejs') ||
+      event.request.url.includes('firebaseinstallations.googleapis.com') ||
+      event.request.url.includes('analytics.google.com')) {
+    return;
+  }
+
+  // Skip caching for dynamic content
+  if (event.request.url.includes('?') || 
+      event.request.url.includes('api/') ||
+      event.request.url.includes('dashboard')) {
     return;
   }
 
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        // Clone the response before using it
-        const responseClone = response.clone();
-        
-        // Cache successful responses (but not too many)
-        if (response.status === 200 && response.headers.get('content-type')?.includes('text/html')) {
+        // Only cache successful HTML responses
+        if (response.status === 200 && 
+            response.headers.get('content-type')?.includes('text/html') &&
+            !event.request.url.includes('dashboard')) {
+          
+          const responseClone = response.clone();
           caches.open(CACHE_NAME).then(cache => {
             cache.put(event.request, responseClone).catch(err => {
               console.warn('Failed to cache response:', err);
@@ -162,7 +197,10 @@ self.addEventListener('fetch', event => {
 // Handle storage quota exceeded
 self.addEventListener('storage', event => {
   if (event.key === 'quota-exceeded') {
-    console.log('Storage quota exceeded, cleaning up...');
-    cleanupStorage();
+    console.log('Storage quota exceeded, performing cleanup...');
+    aggressiveStorageCleanup();
   }
 });
+
+// Periodic cleanup every 10 minutes
+setInterval(aggressiveStorageCleanup, 10 * 60 * 1000); 
