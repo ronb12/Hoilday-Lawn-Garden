@@ -20,154 +20,138 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Aggressive storage cleanup function
-async function aggressiveStorageCleanup() {
+// Optimized storage cleanup function
+async function optimizedStorageCleanup() {
   try {
-    console.log('Starting aggressive storage cleanup...');
+    // Only log in development
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      console.log('Performing storage cleanup...');
+    }
     
-    // Clear all service worker caches
+    // Clear old service worker caches (keep recent ones)
     if ('caches' in window) {
       const cacheNames = await caches.keys();
-      console.log('Found caches:', cacheNames);
+      const oldCaches = cacheNames.filter(name => 
+        !name.includes('firebase') && 
+        !name.includes('google') &&
+        !name.includes('current')
+      );
       
-      await Promise.all(cacheNames.map(async cacheName => {
+      await Promise.all(oldCaches.map(async cacheName => {
         try {
           await caches.delete(cacheName);
-          console.log('Deleted cache:', cacheName);
         } catch (error) {
-          console.warn('Failed to delete cache:', cacheName, error);
+          // Silent fail for cache deletion
         }
       }));
     }
     
-    // Clear all IndexedDB databases
-    if ('indexedDB' in window) {
-      const databases = await indexedDB.databases();
-      console.log('Found IndexedDB databases:', databases);
-      
-      await Promise.all(databases.map(async dbInfo => {
-        try {
-          const request = indexedDB.deleteDatabase(dbInfo.name);
-          await new Promise((resolve, reject) => {
-            request.onsuccess = () => {
-              console.log('Deleted IndexedDB:', dbInfo.name);
-              resolve();
-            };
-            request.onerror = () => {
-              console.warn('Failed to delete IndexedDB:', dbInfo.name);
-              resolve(); // Don't reject, just continue
-            };
-          });
-        } catch (error) {
-          console.warn('Error deleting IndexedDB:', dbInfo.name, error);
-        }
-      }));
-    }
-    
-    // Clear localStorage except essential items
-    if (localStorage.length > 0) {
-      const keysToKeep = ['user', 'authUser', 'firebase:authUser'];
+    // Clear non-essential localStorage
+    if (localStorage.length > 10) {
+      const keysToKeep = ['user', 'authUser', 'firebase:authUser', 'theme', 'language'];
       const keysToRemove = Object.keys(localStorage).filter(key => !keysToKeep.includes(key));
       
-      keysToRemove.forEach(key => {
+      // Only remove old items, keep recent ones
+      keysToRemove.slice(0, 5).forEach(key => {
         try {
           localStorage.removeItem(key);
-          console.log('Removed localStorage key:', key);
         } catch (error) {
-          console.warn('Failed to remove localStorage key:', key, error);
+          // Silent fail for localStorage removal
         }
       });
     }
     
-    // Clear sessionStorage
-    if (sessionStorage.length > 0) {
+    // Clear sessionStorage (safe to clear)
+    if (sessionStorage.length > 5) {
       const keysToRemove = Object.keys(sessionStorage);
       keysToRemove.forEach(key => {
         try {
           sessionStorage.removeItem(key);
-          console.log('Removed sessionStorage key:', key);
         } catch (error) {
-          console.warn('Failed to remove sessionStorage key:', key, error);
+          // Silent fail for sessionStorage removal
         }
       });
     }
     
-    console.log('Storage cleanup completed');
   } catch (error) {
-    console.error('Storage cleanup failed:', error);
+    // Only log errors in development
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      console.warn('Storage cleanup warning:', error);
+    }
   }
 }
 
-// Check storage quota
+// Check storage quota (optimized)
 async function checkStorageQuota() {
   try {
     if ('storage' in navigator && 'estimate' in navigator.storage) {
       const estimate = await navigator.storage.estimate();
       const usagePercent = (estimate.usage / estimate.quota) * 100;
-      console.log('Storage usage:', `${usagePercent.toFixed(1)}% (${estimate.usage} / ${estimate.quota} bytes)`);
+      
+      // Only log if usage is high or in development
+      if (usagePercent > 80 || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        console.log('Storage usage:', `${usagePercent.toFixed(1)}% (${estimate.usage} / ${estimate.quota} bytes)`);
+      }
       
       if (usagePercent > 80) {
         console.warn('Storage usage is high, performing cleanup...');
-        await aggressiveStorageCleanup();
+        await optimizedStorageCleanup();
       }
     }
   } catch (error) {
-    console.warn('Could not check storage quota:', error);
+    // Silent fail for storage quota check
   }
 }
 
-// Initialize Analytics with error handling and storage management
+// Initialize Analytics with optimized error handling
 let analytics = null;
 try {
-  // Check storage first
-  await checkStorageQuota();
-  
   // Check if analytics is supported before initializing
   const analyticsSupported = await isSupported();
   if (analyticsSupported) {
     try {
       analytics = getAnalytics(app);
-      console.log('Firebase Analytics initialized successfully');
+      if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        console.log('Firebase Analytics initialized successfully');
+      }
     } catch (error) {
-      console.warn('Firebase Analytics initialization failed, trying cleanup...', error);
-      
       // Try cleanup and retry once
-      await aggressiveStorageCleanup();
+      await optimizedStorageCleanup();
       try {
         analytics = getAnalytics(app);
-        console.log('Firebase Analytics initialized after cleanup');
+        if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+          console.log('Firebase Analytics initialized after cleanup');
+        }
       } catch (retryError) {
-        console.warn('Firebase Analytics failed after cleanup, disabling:', retryError);
         analytics = null;
       }
     }
   } else {
-    console.log('Firebase Analytics not supported in this environment');
     analytics = null;
   }
 } catch (error) {
-  console.warn('Firebase Analytics not available:', error);
   analytics = null;
 }
 
-// Run storage cleanup on page load and periodically
+// Run storage cleanup on page load and periodically (optimized)
 if (typeof window !== 'undefined') {
+  // Initial check
   window.addEventListener('load', () => {
     checkStorageQuota();
   });
   
-  // Clean up storage every 5 minutes
-  setInterval(checkStorageQuota, 5 * 60 * 1000);
+  // Clean up storage every 10 minutes (reduced frequency)
+  setInterval(checkStorageQuota, 10 * 60 * 1000);
   
-  // Clean up on page unload
+  // Clean up on page unload (minimal)
   window.addEventListener('beforeunload', () => {
     // Quick cleanup on page unload
     if ('caches' in window) {
       caches.keys().then(keys => {
-        keys.forEach(key => caches.delete(key));
+        keys.slice(0, 2).forEach(key => caches.delete(key));
       });
     }
   });
 }
 
-export { app, analytics, auth, db, firebaseConfig, aggressiveStorageCleanup, checkStorageQuota }; 
+export { app, analytics, auth, db, firebaseConfig, optimizedStorageCleanup, checkStorageQuota }; 

@@ -46,7 +46,21 @@
       "name": "Book Service",
       "short_name": "Book",
       "description": "Book a lawn care service",
-      "url": "/book-service",
+      "url": "/Holliday-Lawn-Garden/services.html",
+      "icons": [{ "src": "assets/images/favicon/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Pay Bill",
+      "short_name": "Pay",
+      "description": "Pay your lawn care bill",
+      "url": "/Holliday-Lawn-Garden/pay-your-bill.html",
+      "icons": [{ "src": "assets/images/favicon/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Contact Holliday's Lawn & Garden",
+      "url": "/Holliday-Lawn-Garden/contact.html",
       "icons": [{ "src": "assets/images/favicon/android-chrome-192x192.png", "sizes": "192x192" }]
     }
   ],
