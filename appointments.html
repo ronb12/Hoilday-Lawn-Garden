@@ -1608,7 +1608,7 @@
 <input id="dateToFilter" onchange="filterAppointments()" type="date"/>
 </div>
 <div class="filter-group">
-<label> </label>
+<label> </label>
 <button class="btn btn-secondary" onclick="clearFilters()" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;">
 <i class="fas fa-times"></i> Clear Filters
 </button>
@@ -1760,6 +1760,8 @@
 
  let appointments = [];
  let currentEditId = null;
+ let hasLoadedOnce = false;
+ let isLoading = false;
  
  // Update connection status indicator
  function updateConnectionStatus(status, message) {
@@ -1837,8 +1839,15 @@
 
  // Load appointments
  async function loadAppointments() {
+   // Prevent multiple simultaneous loads
+   if (isLoading) {
+     console.log('Already loading appointments, skipping...');
+     return;
+   }
+   
    try {
      console.log('Loading appointments...');
+     isLoading = true;
      updateConnectionStatus('connecting', 'Connecting to database...');
      showLoading();
      
@@ -1867,7 +1876,15 @@
      }));
      
      console.log(`Found ${appointments.length} appointments`);
-     updateConnectionStatus('connected');
+     hasLoadedOnce = true;
+     
+     if (appointments.length === 0) {
+       updateConnectionStatus('connected', 'No appointments found');
+       console.log('No appointments in database - stopping further queries');
+     } else {
+       updateConnectionStatus('connected');
+     }
+     
      displayAppointments(appointments);
      hideLoading();
      
@@ -1895,6 +1912,8 @@
      // Show demo data as fallback
      appointments = demoAppointments;
      displayAppointments(appointments);
+   } finally {
+     isLoading = false;
    }
  }
  
@@ -2014,41 +2033,43 @@
  
  // Save appointment
  async function saveAppointment(event) {
- event.preventDefault();
- 
- const formData = new FormData(event.target);
- const appointmentData = {
- customerName: formData.get('customerName'),
- phone: formData.get('phone'),
- email: formData.get('email'),
- serviceType: formData.get('serviceType'),
- appointmentDate: formData.get('appointmentDate'),
- appointmentTime: formData.get('appointmentTime'),
- address: formData.get('address'),
- notes: formData.get('notes'),
- status: formData.get('status'),
- updatedAt: new Date()
- };
- 
- try {
- showLoading();
- if (currentEditId) {
- await db.collection('appointments').doc(currentEditId).update(appointmentData);
- showNotification('Appointment updated successfully', 'success');
- } else {
- appointmentData.createdAt = new Date();
- await db.collection('appointments').add(appointmentData);
- showNotification('Appointment created successfully', 'success');
- }
- 
- closeModal();
- loadAppointments();
- hideLoading();
- } catch (error) {
- console.error('Error saving appointment:', error);
- hideLoading();
- showNotification('Error saving appointment', 'error');
- }
+   event.preventDefault();
+   
+   const formData = new FormData(event.target);
+   const appointmentData = {
+     customerName: formData.get('customerName'),
+     phone: formData.get('phone'),
+     email: formData.get('email'),
+     serviceType: formData.get('serviceType'),
+     appointmentDate: formData.get('appointmentDate'),
+     appointmentTime: formData.get('appointmentTime'),
+     address: formData.get('address'),
+     notes: formData.get('notes'),
+     status: formData.get('status'),
+     updatedAt: new Date()
+   };
+   
+   try {
+     showLoading();
+     if (currentEditId) {
+       await db.collection('appointments').doc(currentEditId).update(appointmentData);
+       showNotification('Appointment updated successfully', 'success');
+     } else {
+       appointmentData.createdAt = new Date();
+       await db.collection('appointments').add(appointmentData);
+       showNotification('Appointment created successfully', 'success');
+       // Reset flag so periodic refresh will work
+       hasLoadedOnce = false;
+     }
+     
+     closeModal();
+     loadAppointments();
+     hideLoading();
+   } catch (error) {
+     console.error('Error saving appointment:', error);
+     hideLoading();
+     showNotification('Error saving appointment', 'error');
+   }
  }
  
  // Complete appointment
@@ -2164,6 +2185,18 @@
    setTimeout(() => {
      loadAppointments();
    }, 500);
+   
+   // Set up periodic refresh only if there are appointments
+   setInterval(() => {
+     if (hasLoadedOnce && appointments.length > 0) {
+       console.log('Refreshing appointments...');
+       loadAppointments();
+     } else if (!hasLoadedOnce) {
+       console.log('First load not completed yet, skipping refresh');
+     } else {
+       console.log('No appointments found, skipping periodic refresh');
+     }
+   }, 30000); // Check every 30 seconds only if there are appointments
  });
  
  // Auto-retry mechanism
@@ -2171,6 +2204,12 @@
  const maxRetries = 3;
 
  async function loadAppointmentsWithRetry() {
+   // Don't retry if we've already loaded and found no appointments
+   if (hasLoadedOnce && appointments.length === 0) {
+     console.log('Already loaded and found no appointments - skipping retry');
+     return;
+   }
+   
    try {
      await loadAppointments();
      retryCount = 0; // Reset retry count on success
