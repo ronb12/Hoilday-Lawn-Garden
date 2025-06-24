@@ -559,241 +559,6 @@
  </style>
 <style>
 
- /* Standard Header and Hero Styles */
- body {
- padding-top: 100px;
- margin: 0;
- font-family: 'Montserrat', Arial, sans-serif;
- background: #f7f7f7;
- color: #222;
- }
- 
- .main-header {
- background: #fff !important;
- min-height: 70px !important;
- display: flex !important;
- align-items: center !important;
- justify-content: space-between !important;
- padding: 0 2rem !important;
- box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
- position: fixed !important;
- top: 0 !important;
- left: 0 !important;
- right: 0 !important;
- z-index: 1000 !important;
- }
- 
- .logo {
- display: flex !important;
- align-items: center !important;
- }
- 
- .logo img {
- height: 50px !important;
- width: auto !important;
- }
- 
- .nav-links { 
- display: flex !important;
- align-items: center !important;
- list-style: none !important;
- margin: 0 !important;
- padding: 0 !important;
- gap: 2rem !important;
- }
- 
- .nav-links a { 
- padding-top: 0 !important; 
- padding-bottom: 0 !important; 
- color: #333 !important; 
- font-weight: 500 !important;
- text-decoration: none !important;
- transition: color 0.3s ease !important;
- }
- 
- .nav-links a:hover {
- color: #2e7d32 !important;
- }
- 
- .nav-links li { 
- display: flex; 
- align-items: center; 
- }
- 
- .login-buttons {
- display: flex !important;
- gap: 1rem !important;
- align-items: center !important;
- }
- 
- .btn-login {
- padding: 0.5rem 1rem !important;
- border-radius: 4px !important;
- text-decoration: none !important;
- font-weight: 500 !important;
- transition: all 0.3s ease !important;
- }
- 
- .btn-customer {
- background: #2e7d32 !important;
- color: white !important;
- }
- 
- .btn-admin {
- background: #1565c0 !important;
- color: white !important;
- }
- 
- .btn-login:hover {
- transform: translateY(-2px) !important;
- box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
- }
- 
- .hamburger {
- display: none !important;
- cursor: pointer;
- padding: 15px;
- z-index: 1000;
- position: relative;
- background: none;
- border: none;
- -webkit-tap-highlight-color: transparent;
- margin-right: 10px;
- }
-
- .hamburger span {
- display: block;
- width: 25px;
- height: 3px;
- background-color: #2e7d32;
- margin: 5px 0;
- transition: 0.3s;
- }
-
- .hamburger.active span:nth-child(1) {
- transform: rotate(-45deg) translate(-5px, 6px);
- }
-
- .hamburger.active span:nth-child(2) {
- opacity: 0;
- }
-
- .hamburger.active span:nth-child(3) {
- transform: rotate(45deg) translate(-5px, -6px);
- }
- 
- 
- 
- .hero img {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- object-fit: cover;
- z-index: 1;
- filter: brightness(0.6);
- }
- 
- .hero-content {
- position: relative;
- z-index: 2;
- text-align: center;
- color: #fff;
- padding: 2rem;
- max-width: 800px;
- }
- 
- .hero-content h1 {
- font-size: 3rem;
- margin-bottom: 1rem;
- font-weight: 600;
- letter-spacing: 1px;
- text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
- }
- 
- .hero-content p {
- font-size: 1.25rem;
- font-weight: 400;
- margin-bottom: 2rem;
- text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
- }
- 
- @media (max-width: 768px) {
- body {
- padding-top: 80px;
- }
- 
- .main-header {
- padding: 0 1rem !important;
- }
- 
- .nav-links { 
- display: none !important; 
- position: absolute !important; 
- top: 100% !important; 
- left: 0 !important; 
- right: 0 !important; 
- background: var(--color-primary, #4caf50) !important; 
- padding: 1rem !important; 
- flex-direction: column !important; 
- align-items: center !important; 
- box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
- z-index: 1000 !important;
- }
- 
- .nav-links.active { 
- display: flex !important; 
- }
- 
- .hamburger { 
- display: block !important; 
- }
- 
- .login-buttons {
- flex-direction: column !important;
- gap: 0.5rem !important;
- }
- 
- .hero-content h1 {
- font-size: 2rem;
- }
- 
- .hero-content p {
- font-size: 1rem;
- }
- }
- 
- @media (max-width: 900px) {
- .main-header .nav-links {
- margin-top: 0 !important;
- padding-top: 0.5em !important;
- }
- }
-
-</style>
-
-
-
- <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
- <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
- <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
- <link rel="manifest" href="manifest.json" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style>
-
     /* Perfect Page Structure - No Issues */
     .main-header {
         background: #fff !important;
@@ -957,55 +722,40 @@
         height: 100% !important;
         object-fit: cover !important;
         z-index: 1 !important;
-        filter: brightness(0.6) !important;
+        filter: brightness(0.6);
     }
     
     .hero-content {
-        position: relative !important;
-        z-index: 2 !important;
-        text-align: center !important;
-        color: #fff !important;
-        padding: 2rem !important;
-        max-width: 800px !important;
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: #fff;
+        padding: 2rem;
+        max-width: 800px;
     }
     
     .hero-content h1 {
-        font-size: 3rem !important;
-        margin-bottom: 1rem !important;
-        font-weight: 600 !important;
-        letter-spacing: 1px !important;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
     
     .hero-content p {
-        font-size: 1.25rem !important;
-        font-weight: 400 !important;
-        margin-bottom: 2rem !important;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    /* Body and Main Content */
-    body {
-        padding-top: 70px !important;
-        margin: 0 !important;
-    }
-    
-    main {
-        margin: 0 !important;
-        padding: 0 !important;
+        font-size: 1.25rem;
+        font-weight: 400;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     }
     
     @media (max-width: 768px) {
         body {
-            padding-top: 70px !important;
+            padding-top: 80px;
         }
         
         .main-header {
             padding: 0 1rem !important;
-        }
-        
-        #nav-menu {
-            justify-content: flex-end !important;
         }
         
         .nav-links { 
@@ -1033,20 +783,14 @@
         .login-buttons {
             flex-direction: column !important;
             gap: 0.5rem !important;
-            margin-left: 0 !important;
-        }
-        
-        .btn-login {
-            min-width: 140px !important;
-            font-size: 0.85rem !important;
         }
         
         .hero-content h1 {
-            font-size: 2rem !important;
+            font-size: 2rem;
         }
         
         .hero-content p {
-            font-size: 1rem !important;
+            font-size: 1rem;
         }
     }
     
@@ -1058,6 +802,25 @@
     }
 
 </style>
+
+
+
+ <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+ <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+ <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+ <link rel="manifest" href="manifest.json" />
+
+
+
+
+
+
+
+
+
+
+
+
 
 <style>
 
@@ -1380,7 +1143,7 @@
  <div class="payment-container">
 <div class="payment-header">
 <h1 class="payment-title">Payment Management</h1>
-<button class="btn-add-payment" id="showFormBtn" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;'>
+<button class="btn-add-payment" id="showFormBtn" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;">
 <i class="fas fa-plus"></i>
  Add New Payment
  </button>
@@ -1462,8 +1225,8 @@
 <textarea id="notes" placeholder="Additional payment details..." rows="4"></textarea>
 </div>
 <div class="form-actions">
-<button class="btn-cancel" id="cancelBtn" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;' type="button">Cancel</button>
-<button class="btn-save" style='font-family: "Montserrat", "Inter", system-ui, sans-serif;' type="submit">Save Payment</button>
+<button class="btn-cancel" id="cancelBtn" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;" type="button">Cancel</button>
+<button class="btn-save" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;" type="submit">Save Payment</button>
 </div>
 </form>
 </div>
@@ -1475,7 +1238,7 @@
 </div>
 </div>
 <script type="module"></script>
-<footer class="footer">
+</main><footer class="footer">
 <div class="footer-content">
 <div class="footer-grid">
 <div class="footer-section">
@@ -1527,10 +1290,6 @@
            </a>
          </div>
        </div>
-<ul>
-<li><a href="privacy-policy.html">Privacy Policy</a></li>
-<li><a href="terms.html">Terms of Service</a></li>
-</ul>
 </div>
 </div>
 <div class="footer-bottom">
@@ -1538,13 +1297,12 @@
 <p>© 2024 Holliday's Lawn &amp; Garden. All rights reserved.</p>
 </div>
 </div>
-</div>
 </footer>
 
  <script>
  // Enhanced loading management
  (function() {
- var loading = document.getElementById('loading');
+</main></main> var loading = document.getElementById('loading');
  var error = document.getElementById('error');
  
  // Hide loading after page load
