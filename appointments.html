@@ -1882,6 +1882,17 @@
      if (appointments.length === 0) {
        updateConnectionStatus('connected', 'No appointments found');
        console.log('No appointments in database - stopping further queries');
+       // Add a demo appointment for UI testing
+       appointments = [{
+         id: 'demo-1',
+         customerName: 'Demo User',
+         serviceType: 'Lawn Maintenance',
+         appointmentDate: '2025-07-01',
+         appointmentTime: '10:00',
+         status: 'scheduled',
+         phone: '(555) 000-0000',
+         address: '123 Demo Street, New Orleans, LA'
+       }];
        displayAppointments(appointments);
        hideLoading();
        return;
