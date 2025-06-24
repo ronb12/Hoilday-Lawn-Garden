@@ -46,10 +46,6 @@
         display: block;
     }
 
-    .nav-links {
-        display: none;
-    }
-
     .container {
         padding: 10px;
         margin-bottom: 60px; /* Space for mobile nav */
@@ -195,43 +191,6 @@
     padding: var(--mobile-padding);
 }
 
-/* Universal Mobile Header */
-.main-header,
-.admin-header {
-    padding: 1rem var(--mobile-padding);
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.main-header .logo,
-.admin-header .logo {
-    max-width: 150px;
-    flex-shrink: 0;
-}
-
-.main-header .logo img,
-.admin-header .logo img {
-    max-height: 40px;
-    width: auto;
-}
-
-/* Universal Mobile Navigation */
-.nav-links,
-.admin-nav {
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.nav-links a,
-.admin-nav a {
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
-    min-height: var(--touch-target-size);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 /* Mobile Admin Navigation Enhancements */
 .mobile-admin-nav {
     display: none;
@@ -248,59 +207,6 @@
 
 .mobile-admin-nav .nav-buttons {
     display: flex;
-    justify-content: space-around;
-    gap: 0.5rem;
-}
-
-.mobile-admin-nav .nav-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.5rem;
-    border: none;
-    background: none;
-    color: #666;
-    font-size: 0.8rem;
-    text-decoration: none;
-    border-radius: var(--mobile-border-radius);
-    transition: all 0.2s ease;
-    min-height: var(--touch-target-size);
-    min-width: var(--touch-target-size);
-}
-
-.mobile-admin-nav .nav-btn:hover,
-.mobile-admin-nav .nav-btn.active {
-    background: rgba(76, 175, 80, 0.1);
-    color: #4caf50;
-}
-
-.mobile-admin-nav .nav-btn i {
-    font-size: 1.2rem;
-}
-
-/* Back to Dashboard Button */
-.back-to-dashboard {
-    display: none;
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    background: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    z-index: 1001;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    transition: all 0.2s ease;
-}
-
-.back-to-dashboard:hover {
-    background: #45a049;
-    transform: scale(1.1);
 }
 
 /* Mobile Admin Header Enhancements */
