@@ -1,8 +1,35 @@
 // login.js
 // login.js
 
-import { setPersistence, browserLocalPersistence, signInWithEmailAndPassword, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+import { setPersistence, browserLocalPersistence, signInWithEmailAndPassword, signInWithPopup } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
 import { auth, googleProvider, initializeFirebase } from './firebase.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+
+// Initialize Firestore
+const db = getFirestore();
+
+// Check if user is admin
+async function checkAdminAccess(user) {
+  if (!user) return false;
+  try {
+    const userDoc = await getDoc(doc(db, 'users', user.uid));
+    if (!userDoc.exists()) {
+      console.log('No user document found for:', user.uid);
+      return false;
+    }
+    
+    const userData = userDoc.data();
+    console.log('User data for admin check:', userData);
+    
+    // Check for both possible admin fields
+    const isAdmin = userData.isAdmin === true || userData.role === 'admin';
+    console.log('Is user admin?', isAdmin);
+    return isAdmin;
+  } catch (error) {
+    console.error('Error checking admin access:', error);
+    return false;
+  }
+}
 
 // Inactivity logout logic
 let inactivityTimeout;
@@ -101,6 +128,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           const userCredential = await signInWithEmailAndPassword(auth, email, password);
           displaySuccess('Login successful! Redirecting...');
 
+          // Check user role and redirect accordingly
+          const isAdmin = await checkAdminAccess(userCredential.user);
+          
           // Store user data in localStorage
           localStorage.setItem(
             'user',
@@ -108,12 +138,17 @@ document.addEventListener('DOMContentLoaded', async () => {
               uid: userCredential.user.uid,
               email: userCredential.user.email,
               displayName: userCredential.user.displayName,
+              role: isAdmin ? 'admin' : 'customer'
             })
           );
 
-          // Redirect to dashboard after a short delay
+          // Redirect to appropriate dashboard after a short delay
           setTimeout(() => {
-            window.location.href = 'customer-dashboard.html';
+            if (isAdmin) {
+              window.location.href = 'admin-dashboard.html';
+            } else {
+              window.location.href = 'customer-dashboard.html';
+            }
           }, 1000);
         } catch (error) {
           console.error('Email login failed:', error);
@@ -156,6 +191,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           const result = await signInWithPopup(auth, googleProvider);
           displaySuccess('Login successful! Redirecting...');
 
+          // Check user role and redirect accordingly
+          const isAdmin = await checkAdminAccess(result.user);
+          
           // Store user data in localStorage
           localStorage.setItem(
             'user',
@@ -164,12 +202,17 @@ document.addEventListener('DOMContentLoaded', async () => {
               email: result.user.email,
               displayName: result.user.displayName,
               photoURL: result.user.photoURL,
+              role: isAdmin ? 'admin' : 'customer'
             })
           );
 
-          // Redirect to dashboard after a short delay
+          // Redirect to appropriate dashboard after a short delay
           setTimeout(() => {
-            window.location.href = 'customer-dashboard.html';
+            if (isAdmin) {
+              window.location.href = 'admin-dashboard.html';
+            } else {
+              window.location.href = 'customer-dashboard.html';
+            }
           }, 1000);
         } catch (error) {
           console.error('Google login failed:', error);

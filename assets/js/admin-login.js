@@ -1,6 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { firebaseConfig } from './firebase-config.js';
 
 // Initialize Firebase
@@ -52,6 +52,12 @@ if (adminLoginForm) {
     e.preventDefault();
     showLoading('Signing in...');
 
+    // Add timeout protection
+    const timeoutId = setTimeout(() => {
+      hideLoading();
+      showError('Login timeout. Please check your internet connection and try again.');
+    }, 30000); // 30 second timeout
+
     try {
       const userCredential = await signInWithEmailAndPassword(auth, adminEmail.value, adminPassword.value);
       const user = userCredential.user;
@@ -59,6 +65,7 @@ if (adminLoginForm) {
       // Check if user is an admin
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists() && userDoc.data().role === "admin") {
+        clearTimeout(timeoutId);
         showSuccess('Login successful! Redirecting to admin dashboard...');
         setTimeout(() => {
           window.location.href = 'admin-dashboard.html';
@@ -68,8 +75,20 @@ if (adminLoginForm) {
         showError('Access denied. Admin privileges required.');
       }
     } catch (error) {
+      clearTimeout(timeoutId);
       console.error('Login error:', error);
-      showError('Invalid email or password. Please try again.');
+      
+      // Provide more specific error messages
+      let errorMessage = 'Invalid email or password. Please try again.';
+      if (error.code === 'auth/network-request-failed') {
+        errorMessage = 'Network error. Please check your internet connection.';
+      } else if (error.code === 'auth/too-many-requests') {
+        errorMessage = 'Too many failed attempts. Please try again later.';
+      } else if (error.code === 'auth/user-disabled') {
+        errorMessage = 'This account has been disabled.';
+      }
+      
+      showError(errorMessage);
     } finally {
       hideLoading();
     }

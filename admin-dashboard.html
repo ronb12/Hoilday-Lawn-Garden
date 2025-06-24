@@ -1432,6 +1432,23 @@
   </header>
 <!-- Main Content -->
 <main role="main">
+    <!-- Admin Header with Logout -->
+    <div class="admin-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo">
+            </a>
+        </div>
+        <div class="admin-actions">
+            <button class="btn btn-refresh" onclick="location.reload()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button class="btn btn-logout logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+
     <!-- Hero Section -->
 
  
@@ -1564,7 +1581,13 @@
 <nav class="nav-menu">
 <ul>
 <li><a href="#" id="mobileAppointmentsBtn"><i class="fas fa-calendar"></i> Appointments</a></li>
-<li><a href="#" id="mobileCustomersBtn">&lt;i clas</a></li></ul></nav>
+<li><a href="#" id="mobileCustomersBtn"><i class="fas fa-users"></i> Customers</a></li>
+<li><a href="#" id="mobilePaymentsBtn"><i class="fas fa-credit-card"></i> Payments</a></li>
+<li><a href="#" id="mobileAnalyticsBtn"><i class="fas fa-chart-line"></i> Analytics</a></li>
+<li><a href="#" id="mobileInventoryBtn"><i class="fas fa-boxes"></i> Inventory</a></li>
+<li><a href="#" id="mobileStaffBtn"><i class="fas fa-user-tie"></i> Staff</a></li>
+<li><a href="#" id="mobileMessagesBtn"><i class="fas fa-envelope"></i> Messages</a></li>
+</ul></nav>
  <script>
 // Single, robust hamburger menu script
 // Ensures the hamburger menu works and does not clear or overwrite the header
@@ -1645,4 +1668,8 @@ document.addEventListener('DOMContentLoaded', function() {
  });
  })();
  </script>
+
+ <!-- Custom Modules -->
+ <script src="assets/js/firebase-config.js" type="module"></script>
+ <script src="assets/js/admin-dashboard.js" type="module"></script>
 </body></html>

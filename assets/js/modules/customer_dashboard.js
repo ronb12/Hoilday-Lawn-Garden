@@ -138,12 +138,9 @@ onAuthStateChanged(auth, async (user) => {
         return;
     }
 
-    // Check if user is admin
-    const isAdmin = await checkAdminAccess(user);
-    if (isAdmin) {
-        window.location.href = 'admin-dashboard.html';
-        return;
-    }
+    // For customer dashboard, we don't check admin access
+    // Customers should stay on customer dashboard regardless of their role
+    // Admin access is only checked on the login page before redirecting
 
     // Handle session
     handleSession(user);
@@ -345,10 +342,18 @@ async function loadUnpaidInvoices(userId) {
 }
 
 export function initializeEventListeners() {
-  // Add event listeners for dashboard interactions
-  const logoutButton = document.querySelector('.logout-btn');
+  // Logout button
+  const logoutButton = document.getElementById('logoutButton');
   if (logoutButton) {
     logoutButton.addEventListener('click', handleLogout);
+  }
+  
+  // Refresh dashboard button
+  const refreshButton = document.getElementById('refreshDashboard');
+  if (refreshButton) {
+    refreshButton.addEventListener('click', () => {
+      location.reload();
+    });
   }
 
   const editProfileLink = document.getElementById('editProfileLink');

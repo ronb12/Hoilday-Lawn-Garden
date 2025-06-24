@@ -1,12 +1,12 @@
 // firebase.js
 // Firebase configuration with enhanced error handling
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
 import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
-} from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+} from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
 import {
   getFirestore,
   collection,
@@ -21,19 +21,19 @@ import {
   orderBy,
   limit,
   serverTimestamp,
-} from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+} from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 import {
   getStorage,
   ref,
   uploadBytes,
   getDownloadURL,
   deleteObject,
-} from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js';
+} from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js';
 import {
   getAnalytics,
   isSupported,
   logEvent,
-} from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js';
+} from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js';
 
 // Firebase configuration
 export const firebaseConfig = {
