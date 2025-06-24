@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           // Redirect to dashboard after a short delay
           setTimeout(() => {
-            window.location.href = '/customer-dashboard.html';
+            window.location.href = 'customer-dashboard.html';
           }, 1000);
         } catch (error) {
           console.error('Email login failed:', error);
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           // Redirect to dashboard after a short delay
           setTimeout(() => {
-            window.location.href = '/customer-dashboard.html';
+            window.location.href = 'customer-dashboard.html';
           }, 1000);
         } catch (error) {
           console.error('Google login failed:', error);
