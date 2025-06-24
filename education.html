@@ -713,23 +713,21 @@
     <div id="error" class="error-message" role="alert" aria-live="polite"></div>
     
       <!-- Header -->
-  <header class="main-header">
-    <div class="header-row">
-      <div class="logo">
-        <a href="index.html">
-          <picture>
-            <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
-            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
-          </picture>
-        </a>
-      </div>
+    <header class="main-header">
+    <div class="logo">
+      <a href="index.html">
+        <picture>
+          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+        </picture>
+      </a>
+    </div>
+    <nav id="nav-menu">
       <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
       </button>
-    </div>
-    <nav id="nav-menu">
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -738,11 +736,17 @@
         <li><a href="faq.html">FAQ</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-        <li class="login-buttons">
-          <a href="login.html" class="btn-login btn-customer"><i class="fas fa-user"></i> Customer Login</a>
-          <a href="admin-login.html" class="btn-login btn-admin"><i class="fas fa-lock"></i> Admin Login</a>
-        </li>
       </ul>
+      <div class="login-buttons">
+        <a href="login.html" class="btn-login btn-customer">
+          <i class="fas fa-user"></i>
+          Customer Login
+        </a>
+        <a href="admin-login.html" class="btn-login btn-admin">
+          <i class="fas fa-lock"></i>
+          Admin Login
+        </a>
+      </div>
     </nav>
   </header>
 
