@@ -1148,6 +1148,60 @@
   }
 }
 </style>
+
+<style>
+ .hamburger {
+ display: none !important;
+ }
+ 
+ /* --- Professional Mobile Tab Bar --- */
+ @media (max-width: 768px) {
+   .main-header .nav-links,
+   .main-header .login-buttons {
+     display: none !important;
+   }
+   .mobile-tab-bar {
+     display: flex;
+     position: fixed;
+     bottom: 0;
+     left: 0;
+     width: 100vw;
+     height: 64px;
+     background: #fff;
+     border-top: 1px solid #e0e0e0;
+     box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+     z-index: 2000;
+     justify-content: space-around;
+     align-items: center;
+   }
+   .mobile-tab-bar a {
+     flex: 1 1 0;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     color: #2e7d32;
+     text-decoration: none;
+     font-size: 0.85rem;
+     font-weight: 600;
+     padding: 0.25rem 0;
+     transition: color 0.2s;
+   }
+   .mobile-tab-bar a.active,
+   .mobile-tab-bar a:active,
+   .mobile-tab-bar a:hover {
+     color: #1565c0;
+   }
+   .mobile-tab-bar i {
+     font-size: 1.5rem;
+     margin-bottom: 0.1rem;
+   }
+ }
+
+ @media (min-width: 769px) {
+   .mobile-tab-bar { display: none !important; }
+ }
+</style>
 </head>
 <body>
   <!-- Loading Spinner -->
@@ -1434,4 +1488,15 @@ document.addEventListener('DOMContentLoaded', function() {
  });
  })();
  </script>
+ 
+ <!-- Mobile Tab Bar (visible only on mobile) -->
+ <nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
+   <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
+   <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
+   <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
+   <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
+   <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
+   <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
+   <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
+ </nav>
 </body></html>
