@@ -32,6 +32,7 @@ function clearCacheAndReload() {
 
 // Handle PWA installation
 let deferredPrompt;
+
 window.addEventListener('beforeinstallprompt', e => {
   // Prevent Chrome 67 and earlier from automatically showing the prompt
   e.preventDefault();
@@ -40,38 +41,96 @@ window.addEventListener('beforeinstallprompt', e => {
   console.log('✅ PWA install prompt ready');
 
   // Create and show the install button
+  createInstallButton();
+});
+
+// Create the install button
+function createInstallButton() {
+  // Remove existing install button if it exists
+  const existingBtn = document.getElementById('installBtn');
+  if (existingBtn) {
+    existingBtn.remove();
+  }
+
+  // Create the install button
   const installBtn = document.createElement('button');
   installBtn.id = 'installBtn';
-  installBtn.className = 'floating-button install-button';
-  installBtn.innerHTML = '<i class="fas fa-download"></i>';
-  installBtn.title = 'Install App';
-  installBtn.style.display = 'none';
+  installBtn.className = 'pwa-install-button';
+  installBtn.innerHTML = '<i class="fas fa-download"></i> Install App';
+  installBtn.title = 'Install Holliday\'s Lawn & Garden App';
+  
+  // Add styles to the button
+  installBtn.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+  `;
 
-  // Add the button to the floating buttons container
-  const floatingButtons = document.querySelector('.floating-buttons');
-  if (floatingButtons) {
-    floatingButtons.appendChild(installBtn);
-    installBtn.style.display = 'block';
+  // Add hover effect
+  installBtn.addEventListener('mouseenter', () => {
+    installBtn.style.background = '#45a049';
+    installBtn.style.transform = 'translateY(-2px)';
+    installBtn.style.boxShadow = '0 6px 16px rgba(0,0,0,0.2)';
+  });
 
-    // Handle install button click
-    installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
+  installBtn.addEventListener('mouseleave', () => {
+    installBtn.style.background = '#4caf50';
+    installBtn.style.transform = 'translateY(0)';
+    installBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+  });
 
+  // Handle install button click
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) {
+      console.log('No install prompt available');
+      return;
+    }
+
+    try {
       // Show the install prompt
       deferredPrompt.prompt();
+      console.log('Install prompt shown');
 
       // Wait for the user to respond to the prompt
       const { outcome } = await deferredPrompt.userChoice;
       console.log(`User ${outcome === 'accepted' ? '✅ Installed' : '❌ Dismissed'} the app`);
 
-      // Hide the button
+      // Hide the button after user choice
       installBtn.style.display = 'none';
 
       // Clear the deferredPrompt
       deferredPrompt = null;
-    });
-  }
-});
+    } catch (error) {
+      console.error('Error showing install prompt:', error);
+    }
+  });
+
+  // Add the button to the body
+  document.body.appendChild(installBtn);
+
+  // Auto-hide the button after 10 seconds if not clicked
+  setTimeout(() => {
+    if (installBtn && installBtn.style.display !== 'none') {
+      installBtn.style.opacity = '0.7';
+      installBtn.style.transform = 'scale(0.95)';
+    }
+  }, 10000);
+}
 
 // Initialize Firebase
 function initializeFirebaseDB() {
