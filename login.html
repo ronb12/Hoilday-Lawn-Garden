@@ -883,6 +883,38 @@
         margin-top: 0 !important;
         padding-top: 0 !important;
     }
+    
+    /* Completely disable all backdrop-filter blur effects */
+    * {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    
+    /* Override any blur effects from external CSS */
+    .nav-links,
+    .nav-overlay,
+    .mobile-menu,
+    .menu-overlay,
+    [class*="blur"],
+    [class*="backdrop"] {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        filter: none !important;
+    }
+    
+    /* Ensure no blur on any elements */
+    body,
+    html,
+    .main-header,
+    .login-section,
+    .login-container,
+    .login-layout,
+    .login-form-container,
+    .login-info {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        filter: none !important;
+    }
  </style>
 </head>
 
