@@ -82,13 +82,12 @@
  }
 
  body {
- font-family: 'Montserrat', sans-serif;
- line-height: 1.6;
- color: var(--text-dark);
+ padding-top: 80px !important;
  margin: 0;
- padding: 0;
- overflow-x: hidden;
-        padding-top: 70px;
+ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+ line-height: 1.6;
+ color: #333;
+ background-color: #fff;
  }
 
  /* Container System */
@@ -112,7 +111,7 @@
  }
 
     /* Clean Professional Header */
- .main-header {
+    .main-header {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -265,7 +264,7 @@
     /* Hero Section */
     .hero {
         position: relative;
-        width: 100vw;
+        width: 100%;
         min-height: 60vh;
         display: flex;
         align-items: center;
@@ -274,6 +273,7 @@
         overflow: hidden;
         margin: 0;
         padding: 0;
+        margin-top: 0;
     }
     
     .hero img {
@@ -859,7 +859,124 @@
             padding-top: 80px !important;
         }
     }
+
+    /* Fix header positioning - ensure body has proper padding */
+    body {
+        padding-top: 80px !important;
+        margin: 0 !important;
+    }
+    
+    /* Override external CSS for header positioning */
+    .main-header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        min-height: 80px !important;
+        width: 100% !important;
+        background: white !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        padding: 0 2rem !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Ensure main content and hero are positioned correctly */
+    main {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    .hero {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        width: 100% !important;
+        position: relative !important;
+        min-height: 60vh !important;
+    }
  </style>
+  
+  <!-- Critical CSS to fix header positioning -->
+  <style>
+    /* Override external CSS for proper header positioning */
+    body {
+        padding-top: 80px !important;
+        margin: 0 !important;
+    }
+    
+    .main-header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        min-height: 80px !important;
+        width: 100% !important;
+        background: white !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        padding: 0 2rem !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+    }
+    
+    main {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    .hero {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        width: 100% !important;
+        position: relative !important;
+        min-height: 60vh !important;
+    }
+  <!-- Critical CSS to fix header positioning -->
+  <style>
+    /* Override external CSS for proper header positioning */
+    body {
+        padding-top: 80px !important;
+        margin: 0 !important;
+    }
+    
+    .main-header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        min-height: 80px !important;
+        width: 100% !important;
+        background: white !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        padding: 0 2rem !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+    }
+    
+    main {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    .hero {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        width: 100% !important;
+        position: relative !important;
+        min-height: 60vh !important;
+    }
+  </style>
 </head>
 
 <body>
