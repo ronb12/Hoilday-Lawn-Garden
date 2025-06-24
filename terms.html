@@ -1291,69 +1291,54 @@
 <ul>
 <li>Pre-existing conditions or damage</li>
 </ul></main>
-<footer class="footer">
+<footer class="footer" role="contentinfo">
 <div class="footer-content">
 <div class="footer-grid">
 <div class="footer-section">
 <h3>Contact Us</h3>
-<ul>
-<li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
-<li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
-</ul>
+<div class="footer-contact">
+<span class="footer-owner">Karl Holliday</span>
+<a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
+<a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+</div>
 </div>
 <div class="footer-section">
 <h3>Quick Links</h3>
-<ul>
-<li><a href="about.html">About Us</a></li>
-<li><a href="services.html">Services</a></li>
-<li><a href="education.html">Education</a></li>
-<li><a href="contact.html">Contact</a></li>
-</ul>
+<ul><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="education.html">Education</a></li><li><a href="contact.html">Contact</a></li></ul>
 </div>
 <div class="footer-section">
 <h3>Customer Portal</h3>
+<ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li><li><a href="pay-your-bill.html">Pay Your Bill</a></li><li><a href="customer-dashboard.html">Dashboard</a></li></ul>
+</div>
+<div class="footer-section">
+<h3>Legal</h3>
 <ul>
-<li><a href="login.html">Login</a></li>
-<li><a href="register.html">Register</a></li>
-<li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-<li><a href="customer-dashboard.html">Dashboard</a></li>
+  <li><a href="privacy.html">Privacy Policy</a></li>
+  <li><a href="terms.html">Terms of Service</a></li>
 </ul>
 </div>
 <div class="footer-section">
-         <h3>Legal</h3>
-         <ul>
-           <li><a href="privacy.html">Privacy Policy</a></li>
-           <li><a href="terms.html">Terms of Service</a></li>
-         </ul>
-       </div>
-       <div class="footer-section">
-         <h3>Follow Us</h3>
-         <div class="social-links">
-           <a href="#" class="social-link" aria-label="Facebook">
-             <i class="fab fa-facebook"></i>
-           </a>
-           <a href="#" class="social-link" aria-label="Instagram">
-             <i class="fab fa-instagram"></i>
-           </a>
-           <a href="#" class="social-link" aria-label="Twitter">
-             <i class="fab fa-twitter"></i>
-           </a>
-           <a href="#" class="social-link" aria-label="LinkedIn">
-             <i class="fab fa-linkedin"></i>
-           </a>
-         </div>
-       </div>
-<ul>
-<li><a href="privacy-policy.html">Privacy Policy</a></li>
-<li><a href="terms.html">Terms of Service</a></li>
-</ul>
+<h3>Follow Us</h3>
+<div class="social-links">
+  <a href="#" class="social-link" aria-label="Facebook">
+    <i class="fab fa-facebook"></i>
+  </a>
+  <a href="#" class="social-link" aria-label="Instagram">
+    <i class="fab fa-instagram"></i>
+  </a>
+  <a href="#" class="social-link" aria-label="Twitter">
+    <i class="fab fa-twitter"></i>
+  </a>
+  <a href="#" class="social-link" aria-label="LinkedIn">
+    <i class="fab fa-linkedin"></i>
+  </a>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="footer-bottom">
-<div class="copyright">
-<p>© 2024 Holliday's Lawn &amp; Garden. All rights reserved.</p>
-</div>
-</div>
+<p>© <span id="current-year"></span> Holliday's Lawn &amp; Garden. All rights reserved.</p>
 </div>
 </footer>
 
@@ -1459,5 +1444,10 @@
  showError('An error occurred while loading the page. Please refresh.');
  });
  })();
+ </script>
+
+<script>
+ var yearSpan = document.getElementById('current-year');
+ if (yearSpan) yearSpan.textContent = new Date().getFullYear();
  </script>
 </body></html>
