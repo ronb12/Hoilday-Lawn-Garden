@@ -776,6 +776,108 @@
     form input[type="button"] {
         border-radius: 8px !important;
     }
+
+    /* Header Fix for Desktop */
+    @media (min-width: 769px) {
+        .main-header {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 0 2.5rem !important;
+            min-height: 80px !important;
+            height: 80px !important;
+            background: white !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 1000 !important;
+        }
+        
+        #nav-menu {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            gap: 2rem !important;
+        }
+        
+        .nav-links {
+            display: flex !important;
+            position: static !important;
+            background: transparent !important;
+            padding: 0 !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            box-shadow: none !important;
+            width: auto !important;
+            top: auto !important;
+            left: auto !important;
+            right: auto !important;
+            gap: 2rem !important;
+            margin: 0 !important;
+            flex: 1 !important;
+            justify-content: center !important;
+            list-style: none !important;
+        }
+        
+        .nav-links a {
+            color: #333 !important;
+            padding: 0.75rem 1.25rem !important;
+            text-decoration: none !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+            border-radius: 6px !important;
+            white-space: nowrap !important;
+            display: block !important;
+        }
+        
+        .nav-links a:hover {
+            color: #2e7d32 !important;
+            background-color: rgba(0, 0, 0, 0.05) !important;
+            transform: translateY(-1px) !important;
+        }
+        
+        .login-buttons {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 1rem !important;
+            align-items: center !important;
+            margin-left: 2rem !important;
+        }
+        
+        .login-buttons .btn-login {
+            background-color: #2e7d32 !important;
+            color: white !important;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+        }
+        
+        .login-buttons .btn-login:hover {
+            background-color: #1b5e20 !important;
+            color: white !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        .hamburger {
+            display: none !important;
+        }
+        
+        body {
+            padding-top: 80px !important;
+        }
+    }
  </style>
 </head>
 
@@ -1015,116 +1117,6 @@
  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
  </script>
  <script src="test-hamburger-menu.js"></script>
- 
- <!-- Critical CSS Override for Desktop Navigation -->
- <style>
- /* Force navigation to show in desktop view */
- @media (min-width: 769px) {
-     .main-header {
-         flex-direction: row !important;
-         align-items: center !important;
-         justify-content: space-between !important;
-         padding: 0 2.5rem !important;
-         min-height: 80px !important;
-         height: 80px !important;
-         gap: 0 !important;
-     }
-     
-     #nav-menu {
-         display: flex !important;
-         flex-direction: row !important;
-         align-items: center !important;
-         justify-content: space-between !important;
-         width: 100% !important;
-         gap: 2rem !important;
-     }
-     
-     .logo {
-         flex: 0 0 auto !important;
-         margin-right: 3rem !important;
-     }
-     
-     .logo img {
-         max-height: 60px !important;
-         width: auto !important;
-     }
-     
-     .nav-links {
-         display: flex !important;
-         position: static !important;
-         background: transparent !important;
-         padding: 0 !important;
-         flex-direction: row !important;
-         align-items: center !important;
-         box-shadow: none !important;
-         width: auto !important;
-         top: auto !important;
-         left: auto !important;
-         right: auto !important;
-         gap: 2rem !important;
-         margin: 0 !important;
-         flex: 1 !important;
-         justify-content: center !important;
-         list-style: none !important;
-     }
-     
-     .nav-links li {
-         margin: 0 !important;
-         padding: 0 !important;
-         list-style: none !important;
-     }
-     
-     .nav-links a {
-         color: var(--text-dark) !important;
-         padding: 0.75rem 1.25rem !important;
-         text-decoration: none !important;
-         font-weight: 500 !important;
-         transition: all 0.3s ease !important;
-         border-radius: 6px !important;
-         white-space: nowrap !important;
-         display: block !important;
-     }
-     
-     .nav-links a:hover {
-         color: var(--primary-green) !important;
-         background-color: rgba(0, 0, 0, 0.05) !important;
-         transform: translateY(-1px) !important;
-     }
-     
-     .login-buttons {
-         display: flex !important;
-         flex-direction: row !important;
-         gap: 1rem !important;
-         align-items: center !important;
-         margin-left: 2rem !important;
-     }
-     
-     .login-buttons .btn-login {
-         background-color: var(--primary-green) !important;
-         color: white !important;
-         padding: 0.75rem 1.5rem !important;
-         border-radius: 6px !important;
-         font-weight: 600 !important;
-         transition: all 0.3s ease !important;
-         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-         text-decoration: none !important;
-         display: inline-flex !important;
-         align-items: center !important;
-         gap: 0.5rem !important;
-     }
-     
-     .login-buttons .btn-login:hover {
-         background-color: var(--primary-green-dark) !important;
-         color: white !important;
-         transform: translateY(-2px) !important;
-         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
-     }
-     
-     .hamburger {
-         display: none !important;
-     }
- }
- </style>
 </body>
 </html>
 
