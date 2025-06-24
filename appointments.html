@@ -1568,10 +1568,13 @@
 <div>
 <h1 class="page-title">Appointments</h1>
 <p class="page-subtitle">Manage and view all customer appointments</p>
+<div id="connectionStatus" style="font-size: 0.9rem; margin-top: 0.5rem;">
+  <i class="fas fa-circle" style="color: #ccc;"></i> <span>Checking connection...</span>
 </div>
-<button class="btn btn-primary" onclick="openAddModal()" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;">
+</div>
+<button class="btn btn-primary" onclick="openAddModal()">
 <i class="fas fa-plus"></i> Add Appointment
- </button>
+</button>
 </div>
 <div class="filters-section">
 <div class="filters-row">
@@ -1608,7 +1611,7 @@
 <label> </label>
 <button class="btn btn-secondary" onclick="clearFilters()" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;">
 <i class="fas fa-times"></i> Clear Filters
- </button>
+</button>
 </div>
 </div>
 </div>
@@ -1618,7 +1621,7 @@
 <div class="table-actions">
 <button class="btn btn-secondary" onclick="exportAppointments()" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;">
 <i class="fas fa-download"></i> Export
- </button>
+</button>
 </div>
 </div>
 <div class="table-wrapper">
@@ -1641,6 +1644,14 @@
 <i class="fas fa-calendar-times"></i>
 <h3>No Appointments Found</h3>
 <p>There are no appointments matching your criteria.</p>
+<div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+  <button class="btn btn-primary" onclick="loadAppointmentsWithRetry()" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+    <i class="fas fa-sync-alt"></i> Refresh
+  </button>
+  <button class="btn btn-secondary" onclick="openAddModal()" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+    <i class="fas fa-plus"></i> Add First Appointment
+  </button>
+</div>
 </div>
 </td>
 </tr>
@@ -1715,7 +1726,7 @@
 <button class="btn btn-secondary" onclick="closeModal()" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;" type="button">Cancel</button>
 <button class="btn btn-primary" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;" type="submit">
 <i class="fas fa-save"></i> Save Appointment
- </button>
+</button>
 </div>
 </form>
 </div>
@@ -1727,81 +1738,216 @@
 <script>
  // Firebase configuration
  const firebaseConfig = {
- apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
- authDomain: "holiday-lawn-and-garden.firebaseapp.com",
- projectId: "holiday-lawn-and-garden",
- storageBucket: "holiday-lawn-and-garden.appspot.com",
- messagingSenderId: "135322230444",
- appId: "1:135322230444:web:1a487b25a48aae07368909",
- measurementId: "G-KD6TBWR4ZT"
+   apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+   authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+   projectId: "holiday-lawn-and-garden",
+   storageBucket: "holiday-lawn-and-garden.appspot.com",
+   messagingSenderId: "135322230444",
+   appId: "1:135322230444:web:1a487b25a48aae07368909",
+   measurementId: "G-KD6TBWR4ZT"
  };
- firebase.initializeApp(firebaseConfig);
- 
- // Initialize Firestore
- const db = firebase.firestore();
+
+ // Initialize Firebase with error handling
+ let db = null;
+ try {
+   firebase.initializeApp(firebaseConfig);
+   db = firebase.firestore();
+   console.log('Firebase initialized successfully');
+ } catch (error) {
+   console.error('Firebase initialization error:', error);
+   showNotification('Database connection failed. Please check your internet connection and refresh the page.', 'error');
+ }
+
  let appointments = [];
  let currentEditId = null;
  
+ // Update connection status indicator
+ function updateConnectionStatus(status, message) {
+   const statusElement = document.getElementById('connectionStatus');
+   if (!statusElement) return;
+   
+   const icon = statusElement.querySelector('i');
+   const text = statusElement.querySelector('span');
+   
+   switch (status) {
+     case 'connected':
+       icon.style.color = '#4caf50';
+       icon.className = 'fas fa-circle';
+       text.textContent = 'Connected';
+       break;
+     case 'connecting':
+       icon.style.color = '#ff9800';
+       icon.className = 'fas fa-spinner fa-spin';
+       text.textContent = message || 'Connecting...';
+       break;
+     case 'error':
+       icon.style.color = '#f44336';
+       icon.className = 'fas fa-exclamation-circle';
+       text.textContent = message || 'Connection error';
+       break;
+     default:
+       icon.style.color = '#ccc';
+       icon.className = 'fas fa-circle';
+       text.textContent = message || 'Checking connection...';
+   }
+ }
+
+ // Check Firebase connection status
+ async function checkFirebaseConnection() {
+   try {
+     if (!firebase || !firebase.firestore) {
+       return { connected: false, error: 'Firebase not loaded' };
+     }
+     
+     if (!db) {
+       return { connected: false, error: 'Database not initialized' };
+     }
+     
+     // Try a simple query to test connection
+     await db.collection('appointments').limit(1).get();
+     return { connected: true };
+   } catch (error) {
+     return { connected: false, error: error.message };
+   }
+ }
+
+ // Fallback demo data for when database is unavailable
+ const demoAppointments = [
+   {
+     id: 'demo-1',
+     customerName: 'John Smith',
+     serviceType: 'Lawn Maintenance',
+     appointmentDate: '2024-01-15',
+     appointmentTime: '09:00',
+     status: 'scheduled',
+     phone: '(555) 123-4567',
+     address: '123 Main St, New Orleans, LA'
+   },
+   {
+     id: 'demo-2',
+     customerName: 'Sarah Johnson',
+     serviceType: 'Landscaping',
+     appointmentDate: '2024-01-16',
+     appointmentTime: '14:30',
+     status: 'completed',
+     phone: '(555) 987-6543',
+     address: '456 Oak Ave, New Orleans, LA'
+   }
+ ];
+
  // Load appointments
  async function loadAppointments() {
- try {
- showLoading();
- const appointmentsSnapshot = await db.collection('appointments').orderBy('appointmentDate', 'desc').get();
- appointments = appointmentsSnapshot.docs.map(doc => ({
- id: doc.id,
- ...doc.data()
- }));
- displayAppointments(appointments);
- hideLoading();
- } catch (error) {
- console.error('Error loading appointments:', error);
- hideLoading();
- showNotification('Error loading appointments', 'error');
- }
+   try {
+     console.log('Loading appointments...');
+     updateConnectionStatus('connecting', 'Connecting to database...');
+     showLoading();
+     
+     // Check connection first
+     const connectionStatus = await checkFirebaseConnection();
+     if (!connectionStatus.connected) {
+       updateConnectionStatus('error', 'Connection failed - showing demo data');
+       throw new Error(`Connection failed: ${connectionStatus.error}`);
+     }
+     
+     updateConnectionStatus('connecting', 'Loading appointments...');
+     console.log('Firebase connection verified, querying appointments...');
+     
+     // Add timeout to prevent hanging
+     const timeoutPromise = new Promise((_, reject) => 
+       setTimeout(() => reject(new Error('Request timeout')), 10000)
+     );
+     
+     const appointmentsPromise = db.collection('appointments').orderBy('appointmentDate', 'desc').get();
+     const appointmentsSnapshot = await Promise.race([appointmentsPromise, timeoutPromise]);
+     
+     console.log('Appointments query completed, processing results...');
+     appointments = appointmentsSnapshot.docs.map(doc => ({
+       id: doc.id,
+       ...doc.data()
+     }));
+     
+     console.log(`Found ${appointments.length} appointments`);
+     updateConnectionStatus('connected');
+     displayAppointments(appointments);
+     hideLoading();
+     
+   } catch (error) {
+     console.error('Error loading appointments:', error);
+     updateConnectionStatus('error', 'Using demo data');
+     hideLoading();
+     
+     // Show more specific error messages
+     let errorMessage = 'Error loading appointments';
+     if (error.code === 'permission-denied') {
+       errorMessage = 'Access denied. Please check your permissions.';
+     } else if (error.code === 'unavailable') {
+       errorMessage = 'Service temporarily unavailable. Please try again.';
+     } else if (error.message.includes('Firebase not initialized')) {
+       errorMessage = 'Database connection failed. Please refresh the page.';
+     } else if (error.message.includes('Request timeout')) {
+       errorMessage = 'Request timed out. Please check your connection and try again.';
+     } else if (error.message.includes('Connection failed')) {
+       errorMessage = 'Unable to connect to database. Showing demo data.';
+     }
+     
+     showNotification(errorMessage, 'error');
+     
+     // Show demo data as fallback
+     appointments = demoAppointments;
+     displayAppointments(appointments);
+   }
  }
  
  // Display appointments in table
  function displayAppointments(appointmentsToShow) {
- const tbody = document.getElementById('appointmentsTableBody');
- 
- if (appointmentsToShow.length === 0) {
- tbody.innerHTML = `
- <tr>
- <td colspan="7">
- <div class="empty-state">
- <i class="fas fa-calendar-times"></i>
- <h3>No Appointments Found</h3>
- <p>There are no appointments matching your criteria.</p>
- </div>
- </td>
- </tr>
- `;
- return;
- }
- 
- tbody.innerHTML = appointmentsToShow.map(appointment => `
- <tr>
- <td><strong>${appointment.customerName || 'N/A'}</strong></td>
- <td>${appointment.serviceType || 'N/A'}</td>
- <td>${formatDate(appointment.appointmentDate)} ${appointment.appointmentTime || ''}</td>
- <td><span class="status-badge status-${appointment.status || 'scheduled'}">${appointment.status || 'scheduled'}</span></td>
- <td>${appointment.phone || 'N/A'}</td>
- <td>${appointment.address || 'N/A'}</td>
- <td>
- <div class="action-buttons">
- <button class="btn-small btn-secondary" onclick="editAppointment('${appointment.id}')">
- <i class="fas fa-edit"></i> Edit
- </button>
- <button class="btn-small btn-primary" onclick="completeAppointment('${appointment.id}')">
- <i class="fas fa-check"></i> Complete
- </button>
- <button class="btn-small btn-danger" onclick="deleteAppointment('${appointment.id}')">
- <i class="fas fa-trash"></i> Delete
- </button>
- </div>
- </td>
- </tr>
- `).join('');
+   const tbody = document.getElementById('appointmentsTableBody');
+   
+   if (appointmentsToShow.length === 0) {
+     tbody.innerHTML = `
+       <tr>
+         <td colspan="7">
+           <div class="empty-state" style="text-align: center; padding: 3rem 1rem;">
+             <i class="fas fa-calendar-times" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+             <h3 style="color: #666; margin-bottom: 0.5rem;">No Appointments Found</h3>
+             <p style="color: #999; margin-bottom: 1.5rem;">There are no appointments matching your criteria.</p>
+             <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+               <button class="btn btn-primary" onclick="loadAppointmentsWithRetry()" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                 <i class="fas fa-sync-alt"></i> Refresh
+               </button>
+               <button class="btn btn-secondary" onclick="openAddModal()" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                 <i class="fas fa-plus"></i> Add First Appointment
+               </button>
+             </div>
+           </div>
+         </td>
+       </tr>
+     `;
+     return;
+   }
+   
+   tbody.innerHTML = appointmentsToShow.map(appointment => `
+     <tr>
+       <td><strong>${appointment.customerName || 'N/A'}</strong></td>
+       <td>${appointment.serviceType || 'N/A'}</td>
+       <td>${formatDate(appointment.appointmentDate)} ${appointment.appointmentTime || ''}</td>
+       <td><span class="status-badge status-${appointment.status || 'scheduled'}">${appointment.status || 'scheduled'}</span></td>
+       <td>${appointment.phone || 'N/A'}</td>
+       <td>${appointment.address || 'N/A'}</td>
+       <td>
+         <div class="action-buttons">
+           <button class="btn-small btn-secondary" onclick="editAppointment('${appointment.id}')">
+             <i class="fas fa-edit"></i> Edit
+           </button>
+           <button class="btn-small btn-primary" onclick="completeAppointment('${appointment.id}')">
+             <i class="fas fa-check"></i> Complete
+           </button>
+           <button class="btn-small btn-danger" onclick="deleteAppointment('${appointment.id}')">
+             <i class="fas fa-trash"></i> Delete
+           </button>
+         </div>
+       </td>
+     </tr>
+   `).join('');
  }
  
  // Filter appointments
@@ -1970,10 +2116,18 @@
  }
  
  function showLoading() {
- const loading = document.createElement('div');
- loading.id = 'loading';
- loading.innerHTML = '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9999;"><div style="background:white;padding:2rem;border-radius:8px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div></div>';
- document.body.appendChild(loading);
+   const loading = document.createElement('div');
+   loading.id = 'loading';
+   loading.innerHTML = `
+     <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9999;">
+       <div style="background:white;padding:2rem;border-radius:8px;text-align:center;max-width:300px;">
+         <i class="fas fa-spinner fa-spin" style="font-size:2rem;color:#4caf50;margin-bottom:1rem;"></i>
+         <div style="font-weight:600;margin-bottom:0.5rem;">Loading Appointments</div>
+         <div style="font-size:0.9rem;color:#666;">Please wait while we fetch your data...</div>
+       </div>
+     </div>
+   `;
+   document.body.appendChild(loading);
  }
  
  function hideLoading() {
@@ -2003,8 +2157,37 @@
  }
  
  // Load appointments when page loads
- document.addEventListener('DOMContentLoaded', loadAppointments);
+ document.addEventListener('DOMContentLoaded', function() {
+   console.log('DOM loaded, initializing appointments page...');
+   
+   // Add a small delay to ensure Firebase is fully loaded
+   setTimeout(() => {
+     loadAppointments();
+   }, 500);
+ });
  
+ // Auto-retry mechanism
+ let retryCount = 0;
+ const maxRetries = 3;
+
+ async function loadAppointmentsWithRetry() {
+   try {
+     await loadAppointments();
+     retryCount = 0; // Reset retry count on success
+   } catch (error) {
+     retryCount++;
+     if (retryCount < maxRetries) {
+       console.log(`Retry attempt ${retryCount} of ${maxRetries}`);
+       setTimeout(() => {
+         loadAppointmentsWithRetry();
+       }, 2000 * retryCount); // Exponential backoff
+     } else {
+       console.error('Max retries reached');
+       showNotification('Failed to load appointments after multiple attempts. Please refresh the page.', 'error');
+     }
+   }
+ }
+
  // Hamburger menu functionality
  function toggleMenu() {
  const hamburger = document.querySelector('.hamburger');
