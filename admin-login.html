@@ -1133,4 +1133,366 @@ document.addEventListener('DOMContentLoaded', function() {
  });
  })();
  </script>
+
+/* Additional mobile improvements */
+@media (max-width: 768px) {
+    /* Improve touch targets */
+    .form-group input,
+    .btn.btn-primary,
+    .remember-me input[type="checkbox"] {
+        min-height: 44px !important; /* Apple's recommended minimum touch target */
+    }
+    
+    .remember-me input[type="checkbox"] {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    
+    /* Better spacing for mobile */
+    .login-container {
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+    
+    /* Improve form layout */
+    .form-group {
+        position: relative !important;
+    }
+    
+    .form-group input {
+        transition: all 0.3s ease !important;
+    }
+    
+    .form-group input:focus {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.15) !important;
+    }
+    
+    /* Better button styling */
+    .btn.btn-primary {
+        background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%) !important;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .btn.btn-primary:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 16px rgba(46, 125, 50, 0.4) !important;
+    }
+    
+    .btn.btn-primary:active {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3) !important;
+    }
+    
+    /* Improve security notice readability */
+    .security-notice-pro {
+        background: linear-gradient(135deg, #fbeaea 0%, #ffebee 100%) !important;
+        border-left: 5px solid #d32f2f !important;
+    }
+    
+    .security-notice-pro i {
+        font-size: 2rem !important;
+    }
+    
+    /* Better error/success message styling */
+    .error-message,
+    .success-message {
+        border-radius: 8px !important;
+        border-left: 4px solid !important;
+        font-weight: 500 !important;
+    }
+    
+    .error-message {
+        border-left-color: #d32f2f !important;
+        background: linear-gradient(135deg, #ffebee 0%, #fbeaea 100%) !important;
+    }
+    
+    .success-message {
+        border-left-color: #388e3c !important;
+        background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%) !important;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    /* Ensure proper viewport usage */
+    .login-section {
+        min-height: calc(100vh - 70px) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Better form spacing */
+    .form-group {
+        margin-bottom: 1.25rem !important;
+    }
+    
+    /* Improve button accessibility */
+    .btn.btn-primary {
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .btn.btn-primary::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: -100% !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent) !important;
+        transition: left 0.5s !important;
+    }
+    
+    .btn.btn-primary:hover::before {
+        left: 100% !important;
+    }
+}
+
+/* Landscape orientation fixes */
+@media (max-width: 768px) and (orientation: landscape) {
+    .login-section {
+        padding: 0.5rem !important;
+    }
+    
+    .hero {
+        min-height: 40vh !important;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.8rem !important;
+    }
+    
+    .hero-content p {
+        font-size: 0.9rem !important;
+    }
+}
+
+/* Mobile-specific improvements for admin login */
+@media (max-width: 768px) {
+    .login-section {
+        padding: 1rem !important;
+        margin-top: 0 !important;
+    }
+    
+    .login-container {
+        max-width: 100% !important;
+        padding: 1rem !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+    
+    .login-container > div {
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+    
+    .login-form {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem !important;
+        position: relative !important;
+    }
+    
+    .form-group label {
+        font-size: 1rem !important;
+        margin-bottom: 0.5rem !important;
+        display: block !important;
+    }
+    
+    .form-group input {
+        width: 100% !important;
+        padding: 1rem !important;
+        font-size: 1rem !important;
+        border-radius: 8px !important;
+        border: 2px solid #e0e0e0 !important;
+        box-sizing: border-box !important;
+        min-height: 44px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .form-group input:focus {
+        border-color: #2e7d32 !important;
+        outline: none !important;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.15) !important;
+        transform: translateY(-1px) !important;
+    }
+    
+    .remember-me {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .remember-me label {
+        font-size: 1rem !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+    }
+    
+    .remember-me input[type="checkbox"] {
+        width: 20px !important;
+        height: 20px !important;
+        min-height: 44px !important;
+    }
+    
+    .btn.btn-primary {
+        width: 100% !important;
+        padding: 1rem !important;
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        border-radius: 8px !important;
+        margin-bottom: 1rem !important;
+        min-height: 50px !important;
+        background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%) !important;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .btn.btn-primary:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 16px rgba(46, 125, 50, 0.4) !important;
+    }
+    
+    .btn.btn-primary:active {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3) !important;
+    }
+    
+    .security-notice-pro {
+        flex-direction: column !important;
+        gap: 1rem !important;
+        padding: 1.5rem !important;
+        margin-top: 1.5rem !important;
+        background: linear-gradient(135deg, #fbeaea 0%, #ffebee 100%) !important;
+        border-left: 5px solid #d32f2f !important;
+    }
+    
+    .security-notice-pro > div:first-child {
+        align-self: center !important;
+    }
+    
+    .security-notice-pro h3 {
+        font-size: 1.1rem !important;
+        text-align: center !important;
+    }
+    
+    .security-notice-pro p {
+        font-size: 1rem !important;
+        text-align: center !important;
+        line-height: 1.6 !important;
+    }
+    
+    .security-notice-pro i {
+        font-size: 2rem !important;
+    }
+    
+    .error-container {
+        margin-bottom: 1rem !important;
+    }
+    
+    .error-message,
+    .success-message {
+        padding: 1rem !important;
+        font-size: 1rem !important;
+        border-radius: 8px !important;
+        border-left: 4px solid !important;
+        font-weight: 500 !important;
+    }
+    
+    .error-message {
+        border-left-color: #d32f2f !important;
+        background: linear-gradient(135deg, #ffebee 0%, #fbeaea 100%) !important;
+    }
+    
+    .success-message {
+        border-left-color: #388e3c !important;
+        background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%) !important;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    .login-section {
+        padding: 0.5rem !important;
+        min-height: calc(100vh - 70px) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .login-container {
+        padding: 0.5rem !important;
+    }
+    
+    .login-container h2 {
+        font-size: 1.8rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .form-group {
+        margin-bottom: 1.25rem !important;
+    }
+    
+    .form-group input {
+        padding: 0.875rem !important;
+        font-size: 0.95rem !important;
+    }
+    
+    .btn.btn-primary {
+        padding: 0.875rem !important;
+        font-size: 1rem !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .btn.btn-primary::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: -100% !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent) !important;
+        transition: left 0.5s !important;
+    }
+    
+    .btn.btn-primary:hover::before {
+        left: 100% !important;
+    }
+    
+    .security-notice-pro {
+        padding: 1rem !important;
+    }
+    
+    .security-notice-pro h3 {
+        font-size: 1rem !important;
+    }
+    
+    .security-notice-pro p {
+        font-size: 0.9rem !important;
+    }
+}
+
+/* Landscape orientation fixes */
+@media (max-width: 768px) and (orientation: landscape) {
+    .login-section {
+        padding: 0.5rem !important;
+    }
+    
+    .hero {
+        min-height: 40vh !important;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.8rem !important;
+    }
+    
+    .hero-content p {
+        font-size: 0.9rem !important;
+    }
+}
 </body></html>
