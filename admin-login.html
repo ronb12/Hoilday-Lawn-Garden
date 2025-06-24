@@ -81,9 +81,6 @@
  display: flex !important; 
  }
  
- .hamburger { 
- display: block !important; 
- }
  
  .login-buttons {
  flex-direction: column !important;
@@ -241,9 +238,6 @@
         border-radius: 4px !important;
     }
     
-    .hamburger {
-        border-radius: 0 !important;
-    }
     
     /* Ensure all form buttons have proper styling */
     form button,
@@ -253,32 +247,37 @@
     }
 
     @media (max-width: 768px) {
-        .hamburger { 
-            display: block;
-        }
-        
-        .nav-links {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--primary-green, #2e7d32);
-            padding: 1rem;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-        
-        .nav-links.active {
-            display: flex;
+        /* Hide desktop navigation on mobile */
+        .desktop-nav { 
+            display: none !important; 
         }
         
         .login-buttons {
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-left: 0;
+            flex-direction: column !important;
+            gap: 0.5rem !important;
+            margin-left: 0 !important;
+        }
+        
+        .btn-login {
+            min-width: 140px !important;
+            font-size: 0.85rem !important;
+        }
+        
+        .btn-login .btn-text {
+            display: none !important; /* Hide text on mobile, show only icons */
+        }
+        
+        .hero-content h1 {
+            font-size: 2rem !important;
+        }
+        
+        .hero-content p {
+            font-size: 1rem !important;
+        }
+        
+        /* Adjust login section for mobile tabs */
+        .login-section {
+            margin-bottom: 80px !important;
         }
     }
 </style>
@@ -406,38 +405,10 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
     }
     
-    .hamburger {
-        display: none !important;
-        cursor: pointer;
-        padding: 15px;
-        z-index: 1000;
-        position: relative;
-        background: none;
-        border: none;
-        -webkit-tap-highlight-color: transparent;
-        margin-left: 1rem;
-    }
 
-    .hamburger span {
-        display: block;
-        width: 25px;
-        height: 3px;
-        background-color: #2e7d32;
-        margin: 5px 0;
-        transition: 0.3s;
-    }
 
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
-    }
 
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
 
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
-    }
     
     /* Hero Section - Perfect Spacing */
     .hero {
@@ -673,38 +644,10 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
     }
     
-    .hamburger {
-        display: none !important;
-        cursor: pointer;
-        padding: 15px;
-        z-index: 1000;
-        position: relative;
-        background: none;
-        border: none;
-        -webkit-tap-highlight-color: transparent;
-        margin-left: 1rem;
-    }
 
-    .hamburger span {
-        display: block;
-        width: 25px;
-        height: 3px;
-        background-color: #2e7d32;
-        margin: 5px 0;
-        transition: 0.3s;
-    }
 
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
-    }
 
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
 
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
-    }
     
     /* Hero Section - ZERO SPACING */
     .hero {
@@ -801,9 +744,6 @@
             display: flex !important; 
         }
         
-        .hamburger { 
-            display: block !important; 
-        }
         
         .login-buttons {
             flex-direction: column !important;
@@ -877,12 +817,7 @@
       </a>
     </div>
     <nav id="nav-menu">
-      <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <ul class="nav-links">
+      <ul class="nav-links desktop-nav">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="services.html">Services</a></li>
@@ -894,11 +829,11 @@
       <div class="login-buttons">
         <a href="login.html" class="btn-login btn-customer">
           <i class="fas fa-user"></i>
-          Customer Login
+          <span class="btn-text">Customer Login</span>
         </a>
         <a href="admin-login.html" class="btn-login btn-admin active">
           <i class="fas fa-lock"></i>
-          Admin Login
+          <span class="btn-text">Admin Login</span>
         </a>
       </div>
     </nav>
