@@ -3,12 +3,12 @@
   "short_name": "Holliday's",
   "lang": "en",
   "dir": "ltr",
-  "start_url": "/",
+  "start_url": "/Holliday-Lawn-Garden/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2e7d32",
   "orientation": "portrait",
-  "scope": "/",
+  "scope": "/Holliday-Lawn-Garden/",
   "description": "Professional landscaping and garden services",
   "icons": [
     {
