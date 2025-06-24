@@ -953,7 +953,7 @@ footer::before {
   top: 0;
 }
 .faq-section {
-  padding: 5rem 0;
+  padding: 2rem 0;
   background-color: #fff;
 }
 .faq-grid {
@@ -964,10 +964,11 @@ footer::before {
 }
 .faq-item {
   background: var(--light-bg);
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s;
+  margin-bottom: 1rem;
 }
 .faq-item:hover {
   transform: translateY(-3px);
@@ -993,7 +994,7 @@ footer::before {
     grid-template-columns: 1fr;
   }
   .faq-item {
-    padding: 1.5rem;
+    padding: 1rem;
   }
 }
 .services-preview {
