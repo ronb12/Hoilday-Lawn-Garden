@@ -1,1 +1,689 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Holliday Lawn & Garden</title><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" /><link href="assets/css/main.css" rel="stylesheet" /><style>body{padding-top:80px!important;margin:0;font-family:Montserrat,sans-serif;}.main-header{display:flex;align-items:center;background:white;box-shadow:0 2px 4px rgba(0,0,0,0.1);position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.5rem;min-height:80px;width:100%;}.logo img{height:60px;width:auto;}.nav-links{display:flex;list-style:none;margin:0;padding:0;gap:1rem;}.nav-links a{color:#333;text-decoration:none;font-weight:500;}.login-buttons{display:flex;gap:0.75rem;margin-left:auto;}.btn-login{padding:0.5rem 0.75rem;border-radius:6px;text-decoration:none;font-weight:600;}.btn-customer{background:#2e7d32;color:white;}.btn-admin{background:#1565c0;color:white;}.hero{background:linear-gradient(135deg,#2e7d32 0%,#4caf50 100%);color:white;padding:6rem 0;text-align:center;min-height:80vh;display:flex;align-items:center;justify-content:center;}.hero h1{font-size:3rem;font-weight:700;margin-bottom:1.5rem;}.hero p{font-size:1.3rem;margin-bottom:2.5rem;}.hero-buttons{display:flex;gap:1.5rem;justify-content:center;}.btn-primary,.btn-secondary{padding:1rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;}.btn-primary{background:white;color:#2e7d32;}.btn-secondary{background:transparent;color:white;border:2px solid white;}</style></head><body><header class="main-header"><div class="logo"><img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday Lawn & Garden Logo" /></div><nav><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="education.html">Education</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li><li><a href="pay-your-bill.html">Pay Your Bill</a></li></ul><div class="login-buttons"><a href="login.html" class="btn-login btn-customer"><i class="fas fa-user"></i>Customer Login</a><a href="admin-login.html" class="btn-login btn-admin"><i class="fas fa-lock"></i>Admin Login</a></div></nav></header><section class="hero"><div class="hero-content"><h1>Professional Lawn Care & Landscaping Services</h1><p>Transform your outdoor space with expert landscaping, maintenance, and eco-friendly solutions. Serving Louisiana with quality and care.</p><div class="hero-buttons"><a href="services.html" class="btn-primary">Our Services</a><a href="contact.html" class="btn-secondary">Get Quote</a></div></div></section><script src="assets/js/main.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+ <!-- SEO Meta Tags -->
+ <title>Holliday's Lawn &amp; Garden - Professional Landscaping Services</title>
+ <meta name="description" content="Professional lawn care and landscaping services in Louisiana. Expert landscape design, maintenance, and eco‑friendly solutions for your home or business." />
+ <meta name="keywords" content="lawn care, landscaping, garden services, landscape design, lawn maintenance, Louisiana, professional landscaping" />
+ <meta name="author" content="Holliday's Lawn &amp; Garden" />
+ <meta name="robots" content="index, follow" />
+
+ <!-- Open Graph / Twitter -->
+ <meta property="og:type" content="website" />
+ <meta property="og:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/" />
+ <meta property="og:title" content="Holliday's Lawn &amp; Garden – Professional Landscaping Services" />
+ <meta property="og:description" content="Professional lawn care and landscaping services in Louisiana. Expert landscape design, maintenance, and eco‑friendly solutions." />
+ <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
+ <meta property="og:site_name" content="Holliday's Lawn &amp; Garden" />
+
+ <meta name="twitter:card" content="summary_large_image" />
+ <meta name="twitter:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/" />
+ <meta name="twitter:title" content="Holliday's Lawn &amp; Garden – Professional Landscaping Services" />
+ <meta name="twitter:description" content="Professional lawn care and landscaping services in Louisiana. Expert landscape design, maintenance, and eco‑friendly solutions." />
+ <meta name="twitter:image" content="assets/images/hollidays-logo.optimized-1280.png" />
+
+ <!-- Performance & Fonts -->
+ <link rel="preconnect" href="https://fonts.googleapis.com" />
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+ <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+ <!-- Icon Stylesheet -->
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+ <!-- Stylesheets -->
+ <link href="assets/css/hero.css" rel="stylesheet" />
+ <link href="assets/css/main.css" rel="stylesheet" />
+ <link href="assets/css/mobile-enhancements.css" rel="stylesheet" />
+
+ <!-- Favicons & Manifest -->
+ <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+ <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+ <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+ <link rel="manifest" href="manifest.json" />
+ <link rel="mask-icon" color="#5bbad5" href="assets/images/favicon/safari-pinned-tab.svg" />
+ <meta name="msapplication-TileColor" content="#2e7d32" />
+ <meta name="theme-color" content="#2e7d32" />
+
+ <!-- Updated CSP -->
+ <meta http-equiv="Content-Security-Policy" content="
+ default-src 'self';
+ script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.gstatic.com https://www.googletagmanager.com https://apis.google.com;
+ style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+ font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+ img-src 'self' data: https:;
+ connect-src 'self' https://www.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://firebase.googleapis.com https://firebaseinstallations.googleapis.com https://analytics.google.com https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://stats.g.doubleclick.net https://accounts.google.com;
+ frame-src 'self' https://accounts.google.com;
+ " />
+
+ <!-- Clean Header & Page Styles -->
+ <style>
+ /* Completely disable all blur and backdrop-filter effects globally */
+ *, *::before, *::after {
+   backdrop-filter: none !important;
+   -webkit-backdrop-filter: none !important;
+   filter: none !important;
+ }
+
+ /* Professional Lawn Care Business Responsive Design */
+ :root {
+ --primary-green: #2e7d32;
+ --light-green: #4caf50;
+ --dark-green: #1b5e20;
+ --accent-green: #8bc34a;
+ --text-dark: #333;
+ --text-light: #666;
+ --white: #ffffff;
+ --background-light: #f8f9fa;
+ --border-color: #e0e0e0;
+ --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+ --shadow-medium: 0 4px 8px rgba(0,0,0,0.15);
+ --border-radius: 8px;
+ --transition: all 0.3s ease;
+ }
+
+ /* Universal Mobile-First Responsive Design */
+ * {
+ box-sizing: border-box;
+ }
+
+ body {
+ padding-top: 80px !important;
+ margin: 0;
+ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+ line-height: 1.6;
+ color: #333;
+ background-color: #fff;
+ }
+
+ /* Container System */
+ .container {
+ width: 100%;
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 0 1rem;
+ }
+
+ @media (min-width: 768px) {
+ .container {
+ padding: 0 2rem;
+ }
+ }
+
+ @media (min-width: 1024px) {
+ .container {
+ padding: 0 3rem;
+ }
+ }
+
+    /* Clean Professional Header */
+    .main-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        background: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 0 1.5rem;
+        min-height: 80px;
+        width: 100%;
+        box-sizing: border-box;
+        gap: 2rem;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        margin-right: 0;
+        flex-shrink: 0;
+    }
+
+    .logo img {
+        height: 60px;
+        width: auto;
+        display: block;
+        margin: 0;
+    }
+
+    #nav-menu {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 1rem;
+    }
+ 
+    .nav-links { 
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .nav-links a { 
+        padding: 0.25rem 0.5rem;
+        color: #333;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        font-size: 0.9rem;
+        display: block;
+        border-radius: 6px;
+    }
+    
+    .nav-links a:hover {
+        color: #2e7d32;
+        background-color: rgba(0, 0, 0, 0.05);
+        transform: translateY(-1px);
+    }
+    
+    .nav-links li { 
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+    .login-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 0.75rem;
+        align-items: center;
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+    
+    .btn-login {
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 0.85rem;
+        min-width: 110px;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        white-space: nowrap;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-customer {
+        background: #2e7d32;
+        color: white;
+    }
+    
+    .btn-admin {
+        background: #1565c0;
+        color: white;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+        }
+        
+        .login-buttons {
+            gap: 0.5rem;
+        }
+        
+        .btn-login {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.8rem;
+            min-width: 90px;
+        }
+    }
+
+    /* Hero Section Styles */
+    .hero {
+        background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+        line-height: 1.6;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-block;
+        min-width: 140px;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background: white;
+        color: #2e7d32;
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .btn-secondary:hover {
+        background: white;
+        color: #2e7d32;
+        transform: translateY(-2px);
+    }
+
+    /* Services Preview Section */
+    .services-preview {
+        padding: 4rem 0;
+        background: #f8f9fa;
+    }
+
+    .services-preview h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 3rem;
+        color: #333;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .service-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        border: 1px solid #e0e0e0;
+    }
+
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .service-card i {
+        font-size: 3rem;
+        color: #2e7d32;
+        margin-bottom: 1rem;
+    }
+
+    .service-card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    .service-card p {
+        color: #666;
+        line-height: 1.6;
+    }
+
+    /* About Preview Section */
+    .about-preview {
+        padding: 4rem 0;
+        background: white;
+    }
+
+    .about-content {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .about-content h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+
+    .about-content p {
+        font-size: 1.1rem;
+        color: #666;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+    }
+
+    /* Footer Styles */
+    .footer {
+        background: #2e7d32;
+        color: white;
+        padding: 3rem 0 1rem;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .footer-section h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: white;
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-section ul li {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-section ul li a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer-section ul li a:hover {
+        color: white;
+    }
+
+    .footer-section ul li i {
+        margin-right: 0.5rem;
+        width: 16px;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .social-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1rem;
+        text-align: center;
+    }
+
+    .copyright p {
+        color: rgba(255, 255, 255, 0.7);
+        margin: 0;
+    }
+
+    /* Mobile Responsive Adjustments */
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2rem;
+        }
+
+        .hero p {
+            font-size: 1rem;
+        }
+
+        .hero-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-primary, .btn-secondary {
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .services-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .social-links {
+            justify-content: center;
+        }
+    }
+ </style>
+</head>
+
+<body>
+ <!-- Header -->
+ <header class="main-header">
+  <div class="logo">
+   <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" />
+  </div>
+  <nav id="nav-menu">
+   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="education.html">Education</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+   </ul>
+   <div class="login-buttons">
+    <a href="login.html" class="btn-login btn-customer">
+     <i class="fas fa-user"></i>
+     Customer Login
+    </a>
+    <a href="admin-login.html" class="btn-login btn-admin">
+     <i class="fas fa-lock"></i>
+     Admin Login
+    </a>
+   </div>
+  </nav>
+ </header>
+
+ <!-- Hero Section -->
+ <section class="hero">
+  <div class="hero-content">
+   <h1>Professional Lawn Care & Landscaping Services</h1>
+   <p>Transform your outdoor space with expert landscaping, maintenance, and eco-friendly solutions. Serving Louisiana with quality and care.</p>
+   <div class="hero-buttons">
+    <a href="services.html" class="btn-primary">Our Services</a>
+    <a href="contact.html" class="btn-secondary">Get Quote</a>
+   </div>
+  </div>
+ </section>
+
+ <!-- Main Content -->
+ <main>
+  <!-- Services Preview -->
+  <section class="services-preview">
+   <div class="container">
+    <h2>Our Services</h2>
+    <div class="services-grid">
+     <div class="service-card">
+      <i class="fas fa-leaf"></i>
+      <h3>Lawn Maintenance</h3>
+      <p>Regular mowing, edging, and lawn care to keep your property looking its best.</p>
+     </div>
+     <div class="service-card">
+      <i class="fas fa-seedling"></i>
+      <h3>Landscape Design</h3>
+      <p>Custom landscape design and installation to create your perfect outdoor space.</p>
+     </div>
+     <div class="service-card">
+      <i class="fas fa-tree"></i>
+      <h3>Tree Services</h3>
+      <p>Tree trimming, removal, and maintenance for healthy, beautiful trees.</p>
+     </div>
+    </div>
+   </div>
+  </section>
+
+  <!-- About Preview -->
+  <section class="about-preview">
+   <div class="container">
+    <div class="about-content">
+     <h2>About Holliday's Lawn & Garden</h2>
+     <p>With years of experience in lawn care and landscaping, we provide professional services tailored to your needs. Our commitment to quality and customer satisfaction sets us apart.</p>
+     <a href="about.html" class="btn-primary">Learn More</a>
+    </div>
+   </div>
+  </section>
+ </main>
+
+ <!-- Footer -->
+ <footer class="footer">
+  <div class="footer-content">
+   <div class="footer-grid">
+    <div class="footer-section">
+     <h3>Contact Us</h3>
+     <ul>
+      <li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
+      <li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
+     </ul>
+    </div>
+    <div class="footer-section">
+     <h3>Quick Links</h3>
+     <ul>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="education.html">Education</a></li>
+      <li><a href="contact.html">Contact</a></li>
+     </ul>
+    </div>
+    <div class="footer-section">
+     <h3>Customer Portal</h3>
+     <ul>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+      <li><a href="customer-dashboard.html">Dashboard</a></li>
+     </ul>
+    </div>
+    <div class="footer-section">
+     <h3>Legal</h3>
+     <ul>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms of Service</a></li>
+     </ul>
+    </div>
+    <div class="footer-section">
+     <h3>Follow Us</h3>
+     <div class="social-links">
+      <a href="#" class="social-link" aria-label="Facebook">
+       <i class="fab fa-facebook"></i>
+      </a>
+      <a href="#" class="social-link" aria-label="Instagram">
+       <i class="fab fa-instagram"></i>
+      </a>
+      <a href="#" class="social-link" aria-label="Twitter">
+       <i class="fab fa-twitter"></i>
+      </a>
+      <a href="#" class="social-link" aria-label="LinkedIn">
+       <i class="fab fa-linkedin"></i>
+      </a>
+     </div>
+    </div>
+   </div>
+   <div class="footer-bottom">
+    <div class="copyright">
+     <p>© 2024 Holliday's Lawn & Garden. All rights reserved.</p>
+    </div>
+   </div>
+  </div>
+ </footer>
+
+ <!-- Scripts -->
+ <script src="assets/js/main.js"></script>
+</body>
+</html>
