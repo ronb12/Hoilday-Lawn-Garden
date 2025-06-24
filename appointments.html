@@ -2054,16 +2054,25 @@
      if (currentEditId) {
        await db.collection('appointments').doc(currentEditId).update(appointmentData);
        showNotification('Appointment updated successfully', 'success');
+       
+       // Update local data instead of reloading
+       const appointment = appointments.find(a => a.id === currentEditId);
+       if (appointment) {
+         Object.assign(appointment, appointmentData);
+         displayAppointments(appointments);
+       }
      } else {
        appointmentData.createdAt = new Date();
-       await db.collection('appointments').add(appointmentData);
+       const docRef = await db.collection('appointments').add(appointmentData);
        showNotification('Appointment created successfully', 'success');
-       // Reset flag so periodic refresh will work
-       hasLoadedOnce = false;
+       
+       // Add to local data
+       const newAppointment = { id: docRef.id, ...appointmentData };
+       appointments.unshift(newAppointment);
+       displayAppointments(appointments);
      }
      
      closeModal();
-     loadAppointments();
      hideLoading();
    } catch (error) {
      console.error('Error saving appointment:', error);
@@ -2074,39 +2083,51 @@
  
  // Complete appointment
  async function completeAppointment(id) {
- if (!confirm('Mark this appointment as completed?')) return;
- 
- try {
- showLoading();
- await db.collection('appointments').doc(id).update({
- status: 'completed',
- completedAt: new Date()
- });
- showNotification('Appointment marked as completed', 'success');
- loadAppointments();
- hideLoading();
- } catch (error) {
- console.error('Error completing appointment:', error);
- hideLoading();
- showNotification('Error completing appointment', 'error');
- }
+   if (!confirm('Mark this appointment as completed?')) return;
+   
+   try {
+     showLoading();
+     await db.collection('appointments').doc(id).update({
+       status: 'completed',
+       completedAt: new Date()
+     });
+     showNotification('Appointment marked as completed', 'success');
+     
+     // Update local data instead of reloading
+     const appointment = appointments.find(a => a.id === id);
+     if (appointment) {
+       appointment.status = 'completed';
+       appointment.completedAt = new Date();
+       displayAppointments(appointments);
+     }
+     
+     hideLoading();
+   } catch (error) {
+     console.error('Error completing appointment:', error);
+     hideLoading();
+     showNotification('Error completing appointment', 'error');
+   }
  }
  
  // Delete appointment
  async function deleteAppointment(id) {
- if (!confirm('Are you sure you want to delete this appointment?')) return;
- 
- try {
- showLoading();
- await db.collection('appointments').doc(id).delete();
- showNotification('Appointment deleted successfully', 'success');
- loadAppointments();
- hideLoading();
- } catch (error) {
- console.error('Error deleting appointment:', error);
- hideLoading();
- showNotification('Error deleting appointment', 'error');
- }
+   if (!confirm('Are you sure you want to delete this appointment?')) return;
+   
+   try {
+     showLoading();
+     await db.collection('appointments').doc(id).delete();
+     showNotification('Appointment deleted successfully', 'success');
+     
+     // Update local data instead of reloading
+     appointments = appointments.filter(a => a.id !== id);
+     displayAppointments(appointments);
+     
+     hideLoading();
+   } catch (error) {
+     console.error('Error deleting appointment:', error);
+     hideLoading();
+     showNotification('Error deleting appointment', 'error');
+   }
  }
  
  // Export appointments
@@ -2185,18 +2206,6 @@
    setTimeout(() => {
      loadAppointments();
    }, 500);
-   
-   // Set up periodic refresh only if there are appointments
-   setInterval(() => {
-     if (hasLoadedOnce && appointments.length > 0) {
-       console.log('Refreshing appointments...');
-       loadAppointments();
-     } else if (!hasLoadedOnce) {
-       console.log('First load not completed yet, skipping refresh');
-     } else {
-       console.log('No appointments found, skipping periodic refresh');
-     }
-   }, 30000); // Check every 30 seconds only if there are appointments
  });
  
  // Auto-retry mechanism
