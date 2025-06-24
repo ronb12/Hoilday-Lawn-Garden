@@ -505,6 +505,7 @@
         body {
         font-family: 'Montserrat', sans-serif;
             padding-top: 70px !important;
+            padding-bottom: 80px !important; /* Space for mobile tabs */
         }
         
         .main-header {
@@ -515,26 +516,14 @@
             justify-content: flex-end !important;
         }
         
-        .nav-links { 
+        /* Hide desktop navigation on mobile */
+        .desktop-nav { 
             display: none !important; 
-            position: absolute !important; 
-            top: 100% !important; 
-            left: 0 !important; 
-            right: 0 !important; 
-            background: var(--color-primary, #4caf50) !important; 
-            padding: 1rem !important; 
-            flex-direction: column !important; 
-            align-items: center !important; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-            z-index: 1000 !important;
         }
         
-        .nav-links.active { 
-            display: flex !important; 
-        }
-        
-        .hamburger { 
-            display: block !important; 
+        /* Show mobile tabs */
+        .mobile-tabs {
+            display: flex !important;
         }
         
         .login-buttons {
@@ -548,12 +537,21 @@
             font-size: 0.85rem !important;
         }
         
+        .btn-login .btn-text {
+            display: none !important; /* Hide text on mobile, show only icons */
+        }
+        
         .hero-content h1 {
             font-size: 2rem !important;
         }
         
         .hero-content p {
             font-size: 1rem !important;
+        }
+        
+        /* Adjust login section for mobile tabs */
+        .login-section {
+            margin-bottom: 80px !important;
         }
     }
     
@@ -869,7 +867,6 @@
   <div id="error" class="error-message" role="alert" aria-live="polite"></div>
   
     <!-- Header -->
-      <!-- Header -->
   <header class="main-header">
     <div class="logo">
       <a href="index.html">
@@ -880,12 +877,28 @@
       </a>
     </div>
     <nav id="nav-menu">
-      <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <ul class="nav-links">
+      <!-- Mobile Tab Navigation -->
+      <div class="mobile-tabs">
+        <a href="index.html" class="tab-item">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+        <a href="services.html" class="tab-item">
+          <i class="fas fa-tools"></i>
+          <span>Services</span>
+        </a>
+        <a href="contact.html" class="tab-item">
+          <i class="fas fa-phone"></i>
+          <span>Contact</span>
+        </a>
+        <a href="pay-your-bill.html" class="tab-item">
+          <i class="fas fa-credit-card"></i>
+          <span>Pay Bill</span>
+        </a>
+      </div>
+      
+      <!-- Desktop Navigation -->
+      <ul class="nav-links desktop-nav">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="services.html">Services</a></li>
@@ -894,14 +907,15 @@
         <li><a href="contact.html">Contact</a></li>
         <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
       </ul>
+      
       <div class="login-buttons">
         <a href="login.html" class="btn-login btn-customer">
           <i class="fas fa-user"></i>
-          Customer Login
+          <span class="btn-text">Customer Login</span>
         </a>
-        <a href="admin-login.html" class="btn-login btn-admin">
+        <a href="admin-login.html" class="btn-login btn-admin active">
           <i class="fas fa-lock"></i>
-          Admin Login
+          <span class="btn-text">Admin Login</span>
         </a>
       </div>
     </nav>
@@ -969,10 +983,32 @@
 </div>
 </section>
 </main>
+
+<!-- Mobile Tab Navigation -->
+<div class="mobile-tabs">
+  <a href="index.html" class="tab-item">
+    <i class="fas fa-home"></i>
+    <span>Home</span>
+  </a>
+  <a href="services.html" class="tab-item">
+    <i class="fas fa-tools"></i>
+    <span>Services</span>
+  </a>
+  <a href="contact.html" class="tab-item">
+    <i class="fas fa-phone"></i>
+    <span>Contact</span>
+  </a>
+  <a href="pay-your-bill.html" class="tab-item">
+    <i class="fas fa-credit-card"></i>
+    <span>Pay Bill</span>
+  </a>
+</div>
+
 <div class="loading-overlay" id="loading-overlay" style="display: none">
 <div class="spinner"></div>
 <p id="loading-message">Loading...</p>
 </div>
+
 <footer class="footer">
 <div class="footer-content">
 <div class="footer-grid">
@@ -1054,33 +1090,35 @@
 <script src="assets/js/firebase-config.js" type="module"></script>
 <script src="assets/js/admin-login.js" type="module"></script>
 <script>
-// Single, robust hamburger menu script
-// Ensures the hamburger menu works and does not clear or overwrite the header
-// Place this after all other scripts
-
+// Mobile tab navigation functionality
 document.addEventListener('DOMContentLoaded', function() {
-  var hamburger = document.querySelector('.hamburger');
-  var navLinks = document.querySelector('.nav-links');
-  var body = document.body;
-  if (!hamburger || !navLinks) {
-    console.error('Hamburger or navLinks not found');
-    return;
-  }
-  hamburger.addEventListener('click', function() {
-    var expanded = hamburger.getAttribute('aria-expanded') === 'true';
-    hamburger.classList.toggle('active');
-    navLinks.classList.toggle('active');
-    body.classList.toggle('menu-open');
-    hamburger.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-    body.style.overflow = expanded ? '' : 'hidden';
+  // Add active state to current page tab
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const tabItems = document.querySelectorAll('.mobile-tabs .tab-item');
+  
+  tabItems.forEach(function(tab) {
+    const href = tab.getAttribute('href');
+    if (href === currentPage || (currentPage === 'admin-login.html' && href === 'index.html')) {
+      tab.classList.add('active');
+    }
+    
+    // Add smooth transition on click
+    tab.addEventListener('click', function(e) {
+      // Remove active class from all tabs
+      tabItems.forEach(t => t.classList.remove('active'));
+      // Add active class to clicked tab
+      this.classList.add('active');
+    });
   });
-  navLinks.querySelectorAll('a').forEach(function(link) {
-    link.addEventListener('click', function() {
-      hamburger.classList.remove('active');
-      navLinks.classList.remove('active');
-      body.classList.remove('menu-open');
-      hamburger.setAttribute('aria-expanded', 'false');
-      body.style.overflow = '';
+  
+  // Add touch feedback for mobile tabs
+  tabItems.forEach(function(tab) {
+    tab.addEventListener('touchstart', function() {
+      this.style.transform = 'scale(0.95)';
+    });
+    
+    tab.addEventListener('touchend', function() {
+      this.style.transform = 'scale(1)';
     });
   });
 });
@@ -1270,229 +1308,103 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 }
 
-/* Mobile-specific improvements for admin login */
-@media (max-width: 768px) {
-    .login-section {
-        padding: 1rem !important;
-        margin-top: 0 !important;
-    }
-    
-    .login-container {
-        max-width: 100% !important;
-        padding: 1rem !important;
-        margin: 0 !important;
-        border-radius: 0 !important;
-    }
-    
-    .login-container > div {
-        max-width: 100% !important;
-        padding: 0 !important;
-    }
-    
-    .login-form {
-        margin-bottom: 1.5rem !important;
-    }
-    
-    .form-group {
-        margin-bottom: 1.5rem !important;
-        position: relative !important;
-    }
-    
-    .form-group label {
-        font-size: 1rem !important;
-        margin-bottom: 0.5rem !important;
-        display: block !important;
-    }
-    
-    .form-group input {
-        width: 100% !important;
-        padding: 1rem !important;
-        font-size: 1rem !important;
-        border-radius: 8px !important;
-        border: 2px solid #e0e0e0 !important;
-        box-sizing: border-box !important;
-        min-height: 44px !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .form-group input:focus {
-        border-color: #2e7d32 !important;
-        outline: none !important;
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.15) !important;
-        transform: translateY(-1px) !important;
-    }
-    
-    .remember-me {
-        margin-bottom: 1.5rem !important;
-    }
-    
-    .remember-me label {
-        font-size: 1rem !important;
-        display: flex !important;
-        align-items: center !important;
-        gap: 0.5rem !important;
-    }
-    
-    .remember-me input[type="checkbox"] {
-        width: 20px !important;
-        height: 20px !important;
-        min-height: 44px !important;
-    }
-    
-    .btn.btn-primary {
-        width: 100% !important;
-        padding: 1rem !important;
-        font-size: 1.1rem !important;
-        font-weight: 600 !important;
-        border-radius: 8px !important;
-        margin-bottom: 1rem !important;
-        min-height: 50px !important;
-        background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%) !important;
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3) !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .btn.btn-primary:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 16px rgba(46, 125, 50, 0.4) !important;
-    }
-    
-    .btn.btn-primary:active {
-        transform: translateY(0) !important;
-        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3) !important;
-    }
-    
-    .security-notice-pro {
-        flex-direction: column !important;
-        gap: 1rem !important;
-        padding: 1.5rem !important;
-        margin-top: 1.5rem !important;
-        background: linear-gradient(135deg, #fbeaea 0%, #ffebee 100%) !important;
-        border-left: 5px solid #d32f2f !important;
-    }
-    
-    .security-notice-pro > div:first-child {
-        align-self: center !important;
-    }
-    
-    .security-notice-pro h3 {
-        font-size: 1.1rem !important;
-        text-align: center !important;
-    }
-    
-    .security-notice-pro p {
-        font-size: 1rem !important;
-        text-align: center !important;
-        line-height: 1.6 !important;
-    }
-    
-    .security-notice-pro i {
-        font-size: 2rem !important;
-    }
-    
-    .error-container {
-        margin-bottom: 1rem !important;
-    }
-    
-    .error-message,
-    .success-message {
-        padding: 1rem !important;
-        font-size: 1rem !important;
-        border-radius: 8px !important;
-        border-left: 4px solid !important;
-        font-weight: 500 !important;
-    }
-    
-    .error-message {
-        border-left-color: #d32f2f !important;
-        background: linear-gradient(135deg, #ffebee 0%, #fbeaea 100%) !important;
-    }
-    
-    .success-message {
-        border-left-color: #388e3c !important;
-        background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%) !important;
-    }
+/* Mobile Tab Navigation Styles */
+.mobile-tabs {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-top: 2px solid #e0e0e0;
+    padding: 0.5rem 0;
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
 }
 
-/* Extra small devices */
-@media (max-width: 480px) {
-    .login-section {
-        padding: 0.5rem !important;
-        min-height: calc(100vh - 70px) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-    
-    .login-container {
-        padding: 0.5rem !important;
-    }
-    
-    .login-container h2 {
-        font-size: 1.8rem !important;
-        margin-bottom: 1rem !important;
-    }
-    
-    .form-group {
-        margin-bottom: 1.25rem !important;
-    }
-    
-    .form-group input {
-        padding: 0.875rem !important;
-        font-size: 0.95rem !important;
-    }
-    
-    .btn.btn-primary {
-        padding: 0.875rem !important;
-        font-size: 1rem !important;
-        position: relative !important;
-        overflow: hidden !important;
-    }
-    
-    .btn.btn-primary::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: -100% !important;
-        width: 100% !important;
-        height: 100% !important;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent) !important;
-        transition: left 0.5s !important;
-    }
-    
-    .btn.btn-primary:hover::before {
-        left: 100% !important;
-    }
-    
-    .security-notice-pro {
-        padding: 1rem !important;
-    }
-    
-    .security-notice-pro h3 {
-        font-size: 1rem !important;
-    }
-    
-    .security-notice-pro p {
-        font-size: 0.9rem !important;
-    }
+.mobile-tabs .tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: #666;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 0 0.25rem;
 }
 
-/* Landscape orientation fixes */
-@media (max-width: 768px) and (orientation: landscape) {
-    .login-section {
-        padding: 0.5rem !important;
-    }
-    
-    .hero {
-        min-height: 40vh !important;
-    }
-    
-    .hero-content h1 {
-        font-size: 1.8rem !important;
-    }
-    
-    .hero-content p {
-        font-size: 0.9rem !important;
-    }
+.mobile-tabs .tab-item i {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.mobile-tabs .tab-item span {
+    font-size: 0.7rem;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.mobile-tabs .tab-item:hover {
+    color: #2e7d32;
+    background: rgba(46, 125, 50, 0.05);
+}
+
+.mobile-tabs .tab-item.active {
+    color: #2e7d32;
+    background: rgba(46, 125, 50, 0.1);
+}
+
+.mobile-tabs .tab-item.active i {
+    transform: scale(1.1);
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+    display: flex !important;
+    align-items: center !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 2rem !important;
+    flex-wrap: nowrap !important;
+}
+
+.desktop-nav a { 
+    padding: 0.5rem 0.75rem !important; 
+    color: #333 !important; 
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+    white-space: nowrap !important;
+    font-size: 0.95rem !important;
+    display: block !important;
+}
+
+.desktop-nav a:hover {
+    color: #2e7d32 !important;
+}
+
+.desktop-nav li { 
+    display: flex !important; 
+    align-items: center !important; 
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Login button active state */
+.btn-login.active {
+    background: #1565c0 !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3) !important;
+}
+
+.btn-login .btn-text {
+    display: inline;
 }
 </body></html>
