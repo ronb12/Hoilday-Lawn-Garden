@@ -88,44 +88,41 @@ button {
   align-items: center;
   justify-content: space-between;
   height: 80px;
-  min-height: 80px;
   padding: 0 2rem;
   background: #fff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  border-bottom: 1px solid #e0e0e0;
+  box-sizing: border-box;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   z-index: 9999;
 }
-.main-header .logo {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  margin: 0 2rem 0 0;
+.logo {
+  flex-shrink: 0;
+  margin-right: 2rem;
 }
-.main-header .logo img {
+.logo img {
   max-height: 60px;
-  height: 60px;
   width: auto;
   display: block;
-  margin: 0;
 }
-.main-header #nav-menu {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  min-width: 0;
-}
-.main-header .nav-links {
+#nav-menu {
   display: flex;
   align-items: center;
   gap: 2rem;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
   margin: 0;
   padding: 0;
-  list-style: none;
-  height: 100%;
+}
+.login-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 2rem;
+  flex-shrink: 0;
 }
 .main-header .nav-links li {
   display: flex;
@@ -148,13 +145,6 @@ button {
 .main-header .nav-links a:hover {
   color: #2e7d32;
   background: rgba(46, 125, 50, 0.08);
-}
-.main-header .login-buttons {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-left: 2rem;
-  height: 100%;
 }
 .main-header .btn-login {
   display: flex;
