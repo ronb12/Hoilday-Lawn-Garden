@@ -1882,6 +1882,9 @@
      if (appointments.length === 0) {
        updateConnectionStatus('connected', 'No appointments found');
        console.log('No appointments in database - stopping further queries');
+       displayAppointments(appointments);
+       hideLoading();
+       return;
      } else {
        updateConnectionStatus('connected');
      }
