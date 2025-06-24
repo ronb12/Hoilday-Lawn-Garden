@@ -142,5 +142,3 @@ export async function initializeFirebase() {
   }
   return window.HollidayApp.app;
 }
-
-export { showError, showLoading, hideLoading, initializeFirebase };
