@@ -29,28 +29,40 @@ if (loginForm) {
             // First, check if the email is in the customers collection
             const customerDoc = await getDoc(doc(db, "customers", email));
             if (!customerDoc.exists()) {
-                throw new Error("Invalid email or password");
+                // If not in customers collection, check if they're an admin
+                try {
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    
+                    // Check if user is admin in users collection
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists() && userDoc.data().role === 'admin') {
+                        // Admin user - redirect to admin login
+                        await auth.signOut();
+                        window.location.href = "admin-login.html";
+                        return;
+                    } else {
+                        // Not admin and not customer - sign out and show error
+                        await auth.signOut();
+                        throw new Error("Invalid email or password. Please check your credentials.");
+                    }
+                } catch (authError) {
+                    throw new Error("Invalid email or password. Please check your credentials.");
+                }
             }
 
-            // Then attempt to sign in
+            // Customer exists - proceed with login
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // Double-check customer status
-            const userDoc = await getDoc(doc(db, "users", user.uid));
-            if (!userDoc.exists()) {
-                // Create user document if it doesn't exist
-                await setDoc(doc(db, "users", user.uid), {
-                    email: user.email,
-                    role: 'user',
-                    createdAt: new Date().toISOString()
-                });
-            } else if (userDoc.data().role === 'admin') {
-                // If user is admin, redirect to admin login
-                await auth.signOut();
-                window.location.href = "admin-login.html";
-                return;
-            }
+            // Create or update user document for customer
+            await setDoc(doc(db, "users", user.uid), {
+                email: user.email,
+                role: 'customer',
+                customerId: email,
+                createdAt: new Date().toISOString(),
+                lastLogin: new Date().toISOString()
+            }, { merge: true });
 
             // Show success message
             const successMessage = document.getElementById("successMessage");
@@ -83,25 +95,28 @@ if (googleSignInButton) {
             // Check if the user is in the customers collection
             const customerDoc = await getDoc(doc(db, "customers", user.email));
             if (!customerDoc.exists()) {
-                await auth.signOut();
-                throw new Error("Invalid email or password");
+                // If not in customers collection, check if they're an admin
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists() && userDoc.data().role === 'admin') {
+                    // Admin user - redirect to admin login
+                    await auth.signOut();
+                    window.location.href = "admin-login.html";
+                    return;
+                } else {
+                    // Not admin and not customer - sign out and show error
+                    await auth.signOut();
+                    throw new Error("Invalid email or password. Please check your credentials.");
+                }
             }
 
-            // Double-check customer status
-            const userDoc = await getDoc(doc(db, "users", user.uid));
-            if (!userDoc.exists()) {
-                // Create user document if it doesn't exist
-                await setDoc(doc(db, "users", user.uid), {
-                    email: user.email,
-                    role: 'user',
-                    createdAt: new Date().toISOString()
-                });
-            } else if (userDoc.data().role === 'admin') {
-                // If user is admin, redirect to admin login
-                await auth.signOut();
-                window.location.href = "admin-login.html";
-                return;
-            }
+            // Customer exists - create or update user document
+            await setDoc(doc(db, "users", user.uid), {
+                email: user.email,
+                role: 'customer',
+                customerId: user.email,
+                createdAt: new Date().toISOString(),
+                lastLogin: new Date().toISOString()
+            }, { merge: true });
 
             // Show success message
             const successMessage = document.getElementById("successMessage");
