@@ -1,1582 +1,699 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-<meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"/>
-<meta content="no-cache" http-equiv="Pragma"/>
-<meta content="0" http-equiv="Expires"/>
-<!-- Force cache refresh with timestamp -->
-<script>
- // Redirect to timestamped URL to force cache refresh
- if (!window.location.search.includes('v=')) {
- const separator = window.location.href.includes('?') ? '&' : '?';
- window.location.href = window.location.href + separator + 'v=' + Date.now();
- }
- </script>
-<title>Login - Holliday's Lawn &amp; Garden</title>
-<meta content="Sign in to your Holliday's Lawn &amp; Garden account to access your services, schedule appointments, and manage your account." name="description"/>
-<meta content="login, customer portal, lawn care login, garden services login" name="keywords"/>
-<meta content="Holliday's Lawn &amp; Garden" name="author"/>
-<meta content="Login - Holliday's Lawn &amp; Garden" property="og:title"/>
-<meta content="Sign in to your account to access your services and manage your account." property="og:description"/>
-<meta content="website" property="og:type"/>
-<meta content="https://ronb12.github.io/Holliday-Lawn-Garden/login.html" property="og:url"/>
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="Login - Holliday's Lawn &amp; Garden" name="twitter:title"/>
-<meta content="Sign in to your account to access your services and manage your account." name="twitter:description"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
-<link href="assets/css/main.css" id="main-css" rel="stylesheet"/>
-<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
-<link rel="manifest" href="manifest.json" />
-<style>
- /* Reset body styles to prevent shadows */
- body {
-        font-family: 'Montserrat', sans-serif; padding-top: 100px; margin: 0; }
- *, *:before, *:after {
- box-sizing: inherit;
- }
- 
- /* Login page styles - enhanced modern design */
- 
- 
- 
- .hero img {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- object-fit: cover;
- z-index: 1;
- filter: brightness(0.6);
- }
- 
- .hero-content {
- position: relative;
- z-index: 2;
- text-align: center;
- color: #fff;
- padding: 2rem;
- max-width: 800px;
- }
- 
- .hero-content h1 {
- font-size: 3rem;
- margin-bottom: 1rem;
- font-weight: 600;
- letter-spacing: 1px;
- text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
- }
- 
- .hero-content p {
- font-size: 1.25rem;
- font-weight: 400;
- margin-bottom: 2rem;
- text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
- }
- 
- @media (max-width: 768px) {
- body {
-        font-family: 'Montserrat', sans-serif;
- padding-top: 80px;
- }
- 
- .main-header {
- padding: 0 1rem !important;
- }
- 
- .nav-links { 
- display: none !important; 
- position: absolute !important; 
- top: 100% !important; 
- left: 0 !important; 
- right: 0 !important; 
- background: var(--color-primary, #4caf50) !important; 
- padding: 1rem !important; 
- flex-direction: column !important; 
- align-items: center !important; 
- box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
- z-index: 1000 !important;
- }
- 
- .nav-links.active { 
- display: flex !important; 
- }
- 
- .hamburger { 
- display: block !important; 
- }
- 
- .login-buttons {
- flex-direction: column !important;
- gap: 0.5rem !important;
- }
- 
- .hero-content h1 {
- font-size: 2rem;
- }
- 
- .hero-content p {
- font-size: 1rem;
- }
- }
- 
- @media (max-width: 900px) {
- .main-header .nav-links {
- margin-top: 0 !important;
- padding-top: 0.5em !important;
- }
- }
+    <!-- SEO Meta Tags -->
+    <title>Login - Holliday's Lawn &amp; Garden</title>
+    <meta name="description" content="Sign in to your Holliday's Lawn &amp; Garden account to access your services, schedule appointments, and manage your account." />
+    <meta name="keywords" content="login, customer portal, lawn care login, garden services login" />
+    <meta name="author" content="Holliday's Lawn &amp; Garden" />
+    <meta name="robots" content="index, follow" />
 
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/login.html" />
+    <meta property="og:title" content="Login - Holliday's Lawn &amp; Garden" />
+    <meta property="og:description" content="Sign in to your account to access your services and manage your account." />
+    <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
+    <meta property="og:site_name" content="Holliday's Lawn &amp; Garden" />
 
-    /* Footer Styles */
-    .footer {
-        background: var(--primary-green, #2e7d32);
-        color: var(--white, #ffffff);
-        padding: 2rem 0;
-        margin-top: 3rem;
-    }
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/login.html" />
+    <meta name="twitter:title" content="Login - Holliday's Lawn &amp; Garden" />
+    <meta name="twitter:description" content="Sign in to your account to access your services and manage your account." />
+    <meta name="twitter:image" content="assets/images/hollidays-logo.optimized-1280.png" />
 
-    .footer-content {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1rem;
-    }
+    <!-- Performance & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-    .footer-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin-bottom: 2rem;
-    }
+    <!-- Icon Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 
-    .footer-section h3 {
-        margin-bottom: 1rem;
-        font-family: "Montserrat", sans-serif;
-    }
+    <!-- Stylesheets -->
+    <link href="assets/css/main.css" rel="stylesheet" />
+    <link href="assets/css/mobile-enhancements.css" rel="stylesheet" />
 
-    .footer-section ul {
-        list-style: none;
-        padding: 0;
-    }
+    <!-- Favicons & Manifest -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="mask-icon" color="#5bbad5" href="assets/images/favicon/safari-pinned-tab.svg" />
+    <meta name="msapplication-TileColor" content="#2e7d32" />
+    <meta name="theme-color" content="#2e7d32" />
 
-    .footer-section ul li {
-        margin-bottom: 0.5rem;
-    }
+    <!-- Updated CSP -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.gstatic.com https://www.googletagmanager.com;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+        font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+        img-src 'self' data: https:;
+        connect-src 'self' https://www.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://firebase.googleapis.com https://analytics.google.com https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://stats.g.doubleclick.net;
+    " />
 
-    .footer-section ul li a {
-        color: white;
-        text-decoration: none;
-    }
-
-    .footer-section ul li a:hover {
-        text-decoration: underline;
-    }
-
-    .footer-bottom {
-        border-top: 1px solid rgba(255,255,255,0.2);
-        padding-top: 1rem;
-        text-align: center;
-    }
-
-    .footer-contact {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .footer-contact span {
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-    }
-
-    .footer-contact a {
-        color: white;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .footer-contact a:hover {
-        text-decoration: underline;
-    }
-
-    .footer-contact i {
-        width: 16px;
-        text-align: center;
-    }
-
-    /* Typography fixes */
-    body {
-        font-family: 'Montserrat', sans-serif !important;
-    }
-
-    /* Button styles */
-    button {
-        font-family: 'Montserrat', sans-serif;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .btn {
-        display: inline-block;
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-        border-radius: 4px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        text-align: center;
-    }
-
-    .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    
-
-    /* Comprehensive button styles - override any existing styles */
-    button, 
-    input[type="submit"], 
-    input[type="button"],
-    .btn,
-    .btn-primary,
-    .btn-secondary,
-    .btn-login,
-    .btn-customer,
-    .btn-admin,
-    .cta-button,
-    .cta-button.primary,
-    .cta-button.secondary {
-        font-family: 'Montserrat', sans-serif !important;
-        border-radius: 8px !important;
-        border: none !important;
-        cursor: pointer !important;
-        transition: all 0.3s ease !important;
-        box-sizing: border-box !important;
-    }
-    
-    /* Specific button types */
-    .btn-login {
-        border-radius: 4px !important;
-    }
-    
-    .hamburger {
-        border-radius: 0 !important;
-    }
-    
-    /* Ensure all form buttons have proper styling */
-    form button,
-    form input[type="submit"],
-    form input[type="button"] {
-        border-radius: 8px !important;
-    }
-
-    @media (max-width: 768px) {
-        .hamburger { 
-            display: block;
+    <!-- Login Page Specific Styles -->
+    <style>
+        /* Login Page Variables */
+        :root {
+            --primary-green: #2e7d32;
+            --light-green: #4caf50;
+            --dark-green: #1b5e20;
+            --accent-green: #8bc34a;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #ffffff;
+            --background-light: #f8f9fa;
+            --border-color: #e0e0e0;
+            --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-medium: 0 4px 8px rgba(0,0,0,0.15);
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
         }
-        
-        .nav-links {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--primary-green, #2e7d32);
-            padding: 1rem;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            z-index: 1000;
+
+        /* Login Page Layout */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            padding-top: 80px;
+            margin: 0;
+            background-color: var(--background-light);
         }
-        
-        .nav-links.active {
+
+        /* Login Section */
+        .login-section {
+            padding: 2rem 0;
+            min-height: calc(100vh - 80px);
             display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .login-buttons {
-            flex-direction: column;
+
+        .login-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .login-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+            overflow: hidden;
+        }
+
+        .login-form-container {
+            padding: 3rem 2rem;
+        }
+
+        .login-info {
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: var(--white);
+        }
+
+        /* Form Styles */
+        .login-form-container h2 {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .form-intro {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: var(--white);
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-primary:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Social Login */
+        .social-login {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .social-login p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .social-login p::before,
+        .social-login p::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .social-login p::before {
+            left: 0;
+        }
+
+        .social-login p::after {
+            right: 0;
+        }
+
+        .google-sign-in {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            color: var(--text-dark);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .google-sign-in:hover {
+            border-color: var(--primary-green);
+            box-shadow: var(--shadow-light);
+        }
+
+        .google-sign-in:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Login Links */
+        .login-links {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .login-links a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .login-links a:hover {
+            color: var(--dark-green);
+            text-decoration: underline;
+        }
+
+        .separator {
+            margin: 0 0.5rem;
+            color: var(--text-light);
+        }
+
+        /* Info Section */
+        .login-info h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .info-content p {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .info-content i {
+            color: var(--accent-green);
+            font-size: 1.1rem;
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item i {
+            width: 16px;
+            text-align: center;
+            color: var(--accent-green);
+        }
+
+        .contact-item a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Message Styles */
+        .error-container,
+        .success-message {
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .error-container {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+
+        .success-message {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        .error-container.show,
+        .success-message.show {
+            display: flex;
+            align-items: center;
             gap: 0.5rem;
-            margin-left: 0;
         }
-    }
-</style>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style>
-
-    /* Perfect Page Structure - No Issues */
-    .main-header {
-        background: #fff !important;
-        min-height: 70px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        padding: 0 2rem !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 9999 !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
-    
-    .logo {
-        display: flex !important;
-        align-items: center !important;
-        flex-shrink: 0 !important;
-    }
-    
-    .logo img {
-        height: 50px !important;
-        width: auto !important;
-        display: block !important;
-    }
-    
-    #nav-menu {
-        display: flex !important;
-        align-items: center !important;
-        flex-grow: 1 !important;
-        justify-content: flex-end !important;
-    }
-    
-    .nav-links { 
-        display: flex !important;
-        align-items: center !important;
-        list-style: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        gap: 2rem !important;
-        flex-wrap: nowrap !important;
-    }
-    
-    .nav-links a { 
-        padding: 0.5rem 0.75rem !important; 
-        color: #333 !important; 
-        font-weight: 500 !important;
-        text-decoration: none !important;
-        transition: color 0.3s ease !important;
-        white-space: nowrap !important;
-        font-size: 0.95rem !important;
-        display: block !important;
-    }
-    
-    .nav-links a:hover {
-        color: #2e7d32 !important;
-    }
-    
-    .nav-links li { 
-        display: flex !important; 
-        align-items: center !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    .login-buttons {
-        display: flex !important;
-        gap: 1rem !important;
-        align-items: center !important;
-        margin-left: 1rem !important;
-    }
-    
-    .btn-login {
-        padding: 0.5rem 1rem !important;
-        border-radius: 4px !important;
-        text-decoration: none !important;
-        font-weight: 500 !important;
-        transition: all 0.3s ease !important;
-        font-size: 0.9rem !important;
-        min-width: 120px !important;
-        text-align: center !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 0.5rem !important;
-        white-space: nowrap !important;
-    }
-    
-    .btn-customer {
-        background: #2e7d32 !important;
-        color: white !important;
-    }
-    
-    .btn-admin {
-        background: #1565c0 !important;
-        color: white !important;
-    }
-    
-    .btn-login:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-    }
-    
-    .hamburger {
-        display: none !important;
-        cursor: pointer;
-        padding: 15px;
-        z-index: 1000;
-        position: relative;
-        background: none;
-        border: none;
-        -webkit-tap-highlight-color: transparent;
-        margin-left: 1rem;
-    }
-
-    .hamburger span {
-        display: block;
-        width: 25px;
-        height: 3px;
-        background-color: #2e7d32;
-        margin: 5px 0;
-        transition: 0.3s;
-    }
-
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
-    }
-    
-    /* Hero Section - Perfect Spacing */
-    .hero {
-        position: relative !important;
-        width: 100vw !important;
-        min-height: 60vh !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        background: #222 !important;
-        overflow: hidden !important;
-        margin: 0 !important;
-        margin-top: 70px !important;
-        padding: 0 !important;
-    }
-    
-    .hero img {
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        z-index: 1 !important;
-        filter: brightness(0.6) !important;
-    }
-    
-    .hero-content {
-        position: relative !important;
-        z-index: 2 !important;
-        text-align: center !important;
-        color: #fff !important;
-        padding: 2rem !important;
-        max-width: 800px !important;
-    }
-    
-    .hero-content h1 {
-        font-size: 3rem !important;
-        margin-bottom: 1rem !important;
-        font-weight: 600 !important;
-        letter-spacing: 1px !important;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    .hero-content p {
-        font-size: 1.25rem !important;
-        font-weight: 400 !important;
-        margin-bottom: 2rem !important;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    /* Body and Main Content */
-    body {
-        font-family: 'Montserrat', sans-serif;
-        padding-top: 70px !important;
-        margin: 0 !important;
-    }
-    
-    main {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    @media (max-width: 768px) {
-        body {
-        font-family: 'Montserrat', sans-serif;
-            padding-top: 70px !important;
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
         }
-        
-        .main-header {
-            padding: 0 1rem !important;
-        }
-        
-        #nav-menu {
-            justify-content: flex-end !important;
-        }
-        
-        .nav-links { 
-            display: none !important; 
-            position: absolute !important; 
-            top: 100% !important; 
-            left: 0 !important; 
-            right: 0 !important; 
-            background: var(--color-primary, #4caf50) !important; 
-            padding: 1rem !important; 
-            flex-direction: column !important; 
-            align-items: center !important; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-            z-index: 1000 !important;
-        }
-        
-        .nav-links.active { 
-            display: flex !important; 
-        }
-        
-        .hamburger { 
-            display: block !important; 
-        }
-        
-        .login-buttons {
-            flex-direction: column !important;
-            gap: 0.5rem !important;
-            margin-left: 0 !important;
-        }
-        
-        .btn-login {
-            min-width: 140px !important;
-            font-size: 0.85rem !important;
-        }
-        
-        .hero-content h1 {
-            font-size: 2rem !important;
-        }
-        
-        .hero-content p {
-            font-size: 1rem !important;
-        }
-    }
-    
-    @media (max-width: 900px) {
-        .main-header .nav-links {
-            margin-top: 0 !important;
-            padding-top: 0.5em !important;
-        }
-    }
 
-</style>
+        .loading-content {
+            text-align: center;
+        }
 
-<style>
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
 
-    /* Final Perfect Header and Hero - Zero Spacing */
-    .main-header {
-        background: #fff !important;
-        min-height: 70px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        padding: 0 2rem !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 9999 !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
-    
-    .logo {
-        display: flex !important;
-        align-items: center !important;
-        flex-shrink: 0 !important;
-    }
-    
-    .logo img {
-        height: 50px !important;
-        width: auto !important;
-        display: block !important;
-    }
-    
-    #nav-menu {
-        display: flex !important;
-        align-items: center !important;
-        flex-grow: 1 !important;
-        justify-content: flex-end !important;
-    }
-    
-    .nav-links { 
-        display: flex !important;
-        align-items: center !important;
-        list-style: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        gap: 2rem !important;
-        flex-wrap: nowrap !important;
-    }
-    
-    .nav-links a { 
-        padding: 0.5rem 0.75rem !important; 
-        color: #333 !important; 
-        font-weight: 500 !important;
-        text-decoration: none !important;
-        transition: color 0.3s ease !important;
-        white-space: nowrap !important;
-        font-size: 0.95rem !important;
-        display: block !important;
-    }
-    
-    .nav-links a:hover {
-        color: #2e7d32 !important;
-    }
-    
-    .nav-links li { 
-        display: flex !important; 
-        align-items: center !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    .login-buttons {
-        display: flex !important;
-        gap: 1rem !important;
-        align-items: center !important;
-        margin-left: 1rem !important;
-    }
-    
-    .btn-login {
-        padding: 0.5rem 1rem !important;
-        border-radius: 4px !important;
-        text-decoration: none !important;
-        font-weight: 500 !important;
-        transition: all 0.3s ease !important;
-        font-size: 0.9rem !important;
-        min-width: 120px !important;
-        text-align: center !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 0.5rem !important;
-        white-space: nowrap !important;
-    }
-    
-    .btn-customer {
-        background: #2e7d32 !important;
-        color: white !important;
-    }
-    
-    .btn-admin {
-        background: #1565c0 !important;
-        color: white !important;
-    }
-    
-    .btn-login:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-    }
-    
-    .hamburger {
-        display: none !important;
-        cursor: pointer;
-        padding: 15px;
-        z-index: 1000;
-        position: relative;
-        background: none;
-        border: none;
-        -webkit-tap-highlight-color: transparent;
-        margin-left: 1rem;
-    }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-    .hamburger span {
-        display: block;
-        width: 25px;
-        height: 3px;
-        background-color: #2e7d32;
-        margin: 5px 0;
-        transition: 0.3s;
-    }
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 80px;
+            }
 
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
-    }
+            .login-layout {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
 
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
+            .login-form-container,
+            .login-info {
+                padding: 2rem 1.5rem;
+            }
 
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
-    }
-    
-    /* Hero Section - ZERO SPACING */
-    .hero {
-        position: relative !important;
-        width: 100vw !important;
-        min-height: 60vh !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        background: #222 !important;
-        overflow: hidden !important;
-        margin: 0 !important;
-        margin-top: 0 !important;
-        padding: 0 !important;
-        top: 70px !important;
-    }
-    
-    .hero img {
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        z-index: 1 !important;
-        filter: brightness(0.6) !important;
-    }
-    
-    .hero-content {
-        position: relative !important;
-        z-index: 2 !important;
-        text-align: center !important;
-        color: #fff !important;
-        padding: 2rem !important;
-        max-width: 800px !important;
-    }
-    
-    .hero-content h1 {
-        font-size: 3rem !important;
-        margin-bottom: 1rem !important;
-        font-weight: 600 !important;
-        letter-spacing: 1px !important;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    .hero-content p {
-        font-size: 1.25rem !important;
-        font-weight: 400 !important;
-        margin-bottom: 2rem !important;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    /* Body and Main Content - ZERO SPACING */
-    body {
-        font-family: 'Montserrat', sans-serif;
-        padding-top: 0 !important;
-        margin: 0 !important;
-    }
-    
-    main {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    @media (max-width: 768px) {
-        body {
-        font-family: 'Montserrat', sans-serif;
-            padding-top: 0 !important;
-        }
-        
-        .main-header {
-            padding: 0 1rem !important;
-        }
-        
-        #nav-menu {
-            justify-content: flex-end !important;
-        }
-        
-        .nav-links { 
-            display: none !important; 
-            position: absolute !important; 
-            top: 100% !important; 
-            left: 0 !important; 
-            right: 0 !important; 
-            background: var(--color-primary, #4caf50) !important; 
-            padding: 1rem !important; 
-            flex-direction: column !important; 
-            align-items: center !important; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-            z-index: 1000 !important;
-        }
-        
-        .nav-links.active { 
-            display: flex !important; 
-        }
-        
-        .hamburger { 
-            display: block !important; 
-        }
-        
-        .login-buttons {
-            flex-direction: column !important;
-            gap: 0.5rem !important;
-            margin-left: 0 !important;
-        }
-        
-        .btn-login {
-            min-width: 140px !important;
-            font-size: 0.85rem !important;
-        }
-        
-        .hero-content h1 {
-            font-size: 2rem !important;
-        }
-        
-        .hero-content p {
-            font-size: 1rem !important;
-        }
-    }
-    
-    @media (max-width: 900px) {
-        .main-header .nav-links {
-            margin-top: 0 !important;
-            padding-top: 0.5em !important;
-        }
-    }
+            .login-form-container h2 {
+                font-size: 1.75rem;
+            }
 
-</style>
+            .btn-primary,
+            .google-sign-in {
+                padding: 1rem 1.5rem;
+                font-size: 1.1rem;
+            }
+        }
 
-<!-- SUPER-SPECIFIC MOBILE MENU CSS FIX -->
-<style>
-@media (max-width: 900px) {
-  .nav-links {
-    display: none !important;
-    position: absolute !important;
-    top: 60px !important;
-    left: 0 !important;
-    right: 0 !important;
-    z-index: 1200 !important;
-    background: var(--primary-green, #2e7d32) !important;
-    padding: 1rem !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-    transition: all 0.3s ease !important;
-  }
-  .nav-links.active {
-    display: flex !important;
-  }
-}
-</style>
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 0 0.5rem;
+            }
+
+            .login-form-container,
+            .login-info {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <!-- Loading Spinner -->
-  <div id="loading" class="loading" role="status" aria-label="Loading page content">
-    <div class="spinner" aria-hidden="true"></div>
-  </div>
-  
-  <!-- Error Message -->
-  <div id="error" class="error-message" role="alert" aria-live="polite"></div>
-  
-    <!-- Header -->
-      <!-- Header -->
-  <header class="main-header">
-    <div class="logo">
-      <a href="index.html">
-        <picture>
-          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
-          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
-        </picture>
-      </a>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p id="loading-message">Loading...</p>
+        </div>
     </div>
-    <nav id="nav-menu">
-      <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="education.html">Education</a></li>
-        <li><a href="faq.html">FAQ</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-      </ul>
-      <div class="login-buttons">
-        <a href="login.html" class="btn-login btn-customer">
-          <i class="fas fa-user"></i>
-          Customer Login
-        </a>
-        <a href="admin-login.html" class="btn-login btn-admin">
-          <i class="fas fa-lock"></i>
-          Admin Login
-        </a>
-      </div>
-    </nav>
-  </header>
-<!-- Main Content -->
-<main role="main">
-    <!-- Hero Section -->
 
- 
-<div class="hero">
-<img src="assets/images/hero-garden-landscaping.jpg" alt="Beautiful garden landscaping" loading="eager"/>
-<div class="hero-content">
-<h1>Welcome Back</h1>
-<p>Sign in to access your account and manage your lawn care services</p>
-</div>
-</div>
-<section class="login-section">
-<div class="login-container">
-<div class="login-layout">
-<div class="login-form-container">
-<h2>Sign In to Your Account</h2>
-<p class="form-intro">Enter your credentials to access your lawn care services</p>
-<div class="error-container" id="error-container">
-<div class="error-message">
-<i class="fas fa-exclamation-circle"></i>
-<span id="errorMessage"></span>
-</div>
-</div>
-<div class="success-message" id="successMessage">
-<i class="fas fa-check-circle"></i>
-<span>Login successful! Redirecting...</span>
-</div>
-<form class="login-form" id="login-form">
-<div class="form-group">
-<label for="email">Email Address</label>
-<input autocomplete="email" id="email" name="email" placeholder="Enter your email" required="" type="email"/>
-</div>
-<div class="form-group">
-<label for="password">Password</label>
-<input autocomplete="current-password" id="password" name="password" placeholder="Enter your password" required="" type="password"/>
-</div>
-<button class="btn btn-primary" id="submitBtn" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;" type="submit">Sign In</button>
-</form>
-<div class="social-login">
-<p>or</p>
-<button aria-label="Sign in with Google" class="google-sign-in" data-mobile-friendly="true" id="googleSignIn" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;" type="button">
-<img alt="Google logo" height="18" loading="lazy" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"/>
-<span>Sign in with Google</span>
-</button>
-</div>
-<div class="login-links">
-<a href="forgot-password.html">Forgot Password?</a>
-<span class="separator">|</span>
-<a href="register.html">Create Account</a>
-</div>
-</div>
-<div class="login-info">
-<h3>Why Create an Account?</h3>
-<div class="info-content">
-<p>
-<i class="fas fa-check-circle"></i>
- Access your service history
- </p>
-<p>
-<i class="fas fa-check-circle"></i>
- Schedule and manage appointments
- </p>
-<p>
-<i class="fas fa-check-circle"></i>
- View and pay invoices online
- </p>
-<p>
-<i class="fas fa-check-circle"></i>
- Receive service updates and notifications
- </p>
-</div>
-<h3 style="margin-top: 2rem;">Need Help?</h3>
-<div class="contact-info">
-<div class="contact-item">
-<i class="fas fa-phone"></i>
-<a href="tel:+15047171887">(504) 717-1887</a>
-</div>
-<div class="contact-item">
-<i class="fas fa-envelope"></i>
-<a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
-</div>
-<div class="contact-item">
-<i class="fas fa-clock"></i>
-<span>Mon-Fri: 8am-5pm</span>
-</div>
-<div class="contact-item">
-<i class="fas fa-question-circle"></i>
-<a href="faq.html">Visit our FAQ</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-</main>
-<!-- Loading Overlay -->
-<div class="loading-overlay" id="loading-overlay">
-<div class="loading-content">
-<div class="spinner"></div>
-<p id="loading-message">Loading...</p>
-</div>
-</div>
-<footer class="footer">
-<div class="footer-content">
-<div class="footer-grid">
-<div class="footer-section">
-<h3>Contact Us</h3>
-<ul>
-<li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
-<li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
-</ul>
-</div>
-<div class="footer-section">
-<h3>Quick Links</h3>
-<ul>
-<li><a href="about.html">About Us</a></li>
-<li><a href="services.html">Services</a></li>
-<li><a href="education.html">Education</a></li>
-<li><a href="contact.html">Contact</a></li>
-</ul>
-</div>
-<div class="footer-section">
-<h3>Customer Portal</h3>
-<ul>
-<li><a href="login.html">Login</a></li>
-<li><a href="register.html">Register</a></li>
-<li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-<li><a href="customer-dashboard.html">Dashboard</a></li>
-</ul>
-</div>
-<div class="footer-section">
-         <h3>Legal</h3>
-         <ul>
-           <li><a href="privacy.html">Privacy Policy</a></li>
-           <li><a href="terms.html">Terms of Service</a></li>
-         </ul>
-       </div>
-       <div class="footer-section">
-         <h3>Follow Us</h3>
-         <div class="social-links">
-           <a href="#" class="social-link" aria-label="Facebook">
-             <i class="fab fa-facebook"></i>
-           </a>
-           <a href="#" class="social-link" aria-label="Instagram">
-             <i class="fab fa-instagram"></i>
-           </a>
-           <a href="#" class="social-link" aria-label="Twitter">
-             <i class="fab fa-twitter"></i>
-           </a>
-           <a href="#" class="social-link" aria-label="LinkedIn">
-             <i class="fab fa-linkedin"></i>
-           </a>
-         </div>
-       </div>
-</div>
-</div>
-<div class="footer-bottom">
-<div class="copyright">
-<p>© 2024 Holliday's Lawn &amp; Garden. All rights reserved.</p>
-</div>
-</div>
-</footer>
-<!-- Modular Firebase Auth and Firestore (no compat) -->
-<script type="module">
- // Import Firebase modules with correct version
- import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
- import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
- import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    <!-- Header -->
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <picture>
+                    <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+                    <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+                </picture>
+            </a>
+        </div>
+        <nav id="nav-menu">
+            <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+            </ul>
+            <div class="login-buttons">
+                <a href="login.html" class="btn-login btn-customer">
+                    <i class="fas fa-user"></i>
+                    Customer Login
+                </a>
+                <a href="admin-login.html" class="btn-login btn-admin">
+                    <i class="fas fa-lock"></i>
+                    Admin Login
+                </a>
+            </div>
+        </nav>
+    </header>
 
- // Firebase configuration
- const firebaseConfig = {
- apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
- authDomain: "holiday-lawn-and-garden.firebaseapp.com",
- projectId: "holiday-lawn-and-garden",
- storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
- messagingSenderId: "135322230444",
- appId: "1:135322230444:web:1a487b25a48aae07368909",
- measurementId: "G-KD6TBWR4ZT"
- };
+    <!-- Main Content -->
+    <main role="main">
+        <section class="login-section">
+            <div class="login-container">
+                <div class="login-layout">
+                    <div class="login-form-container">
+                        <h2>Sign In to Your Account</h2>
+                        <p class="form-intro">Enter your credentials to access your lawn care services</p>
+                        
+                        <!-- Error Container -->
+                        <div class="error-container" id="error-container">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span id="errorMessage"></span>
+                        </div>
+                        
+                        <!-- Success Message -->
+                        <div class="success-message" id="successMessage">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Login successful! Redirecting...</span>
+                        </div>
+                        
+                        <!-- Login Form -->
+                        <form class="login-form" id="login-form">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="Enter your email" required autocomplete="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">Sign In</button>
+                        </form>
+                        
+                        <!-- Social Login -->
+                        <div class="social-login">
+                            <p>or</p>
+                            <button type="button" class="google-sign-in" id="googleSignIn">
+                                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" width="18" height="18" loading="lazy">
+                                <span>Sign in with Google</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Login Links -->
+                        <div class="login-links">
+                            <a href="forgot-password.html">Forgot Password?</a>
+                            <span class="separator">|</span>
+                            <a href="register.html">Create Account</a>
+                        </div>
+                    </div>
+                    
+                    <div class="login-info">
+                        <h3>Why Create an Account?</h3>
+                        <div class="info-content">
+                            <p>
+                                <i class="fas fa-check-circle"></i>
+                                Access your service history
+                            </p>
+                            <p>
+                                <i class="fas fa-check-circle"></i>
+                                Schedule and manage appointments
+                            </p>
+                            <p>
+                                <i class="fas fa-check-circle"></i>
+                                View and pay invoices online
+                            </p>
+                            <p>
+                                <i class="fas fa-check-circle"></i>
+                                Receive service updates and notifications
+                            </p>
+                        </div>
+                        
+                        <h3 style="margin-top: 2rem;">Need Help?</h3>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+15047171887">(504) 717-1887</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Mon-Fri: 8am-5pm</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-question-circle"></i>
+                                <a href="faq.html">Visit our FAQ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
- // Initialize Firebase
- const app = initializeApp(firebaseConfig);
- const auth = getAuth(app);
- const db = getFirestore(app);
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="footer-contact">
+                        <span class="footer-owner">Karl Holliday</span>
+                        <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
+                        <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Portal</h3>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                        <li><a href="customer-dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© <span id="current-year"></span> Holliday's Lawn &amp; Garden. All rights reserved.</p>
+        </div>
+    </footer>
 
- // DOM Content Loaded
- document.addEventListener('DOMContentLoaded', function() {
- const emailInput = document.getElementById('email');
- const passwordInput = document.getElementById('password');
- 
- if (emailInput) {
- emailInput.addEventListener('input', clearMessages);
- }
- if (passwordInput) {
- passwordInput.addEventListener('input', clearMessages);
- }
- });
+    <!-- Scripts -->
+    <script type="module" src="assets/js/firebase-config.js"></script>
+    <script type="module" src="assets/js/modules/login.js"></script>
+    <script>
+        // Simple loading management
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading overlay
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'none';
+            }
 
- // Immediate execution for viewport check
- (function() {
- function forceDesktopLayout() {
- const isDesktop = window.innerWidth >= 1025;
- const loginLayout = document.querySelector('.login-layout');
- 
- if (isDesktop && loginLayout) {
- loginLayout.style.cssText = `
- display: grid !important;
- grid-template-columns: 1fr 1fr !important;
- gap: 3rem !important;
- align-items: start !important;
- max-width: 1000px !important;
- margin: 0 auto !important;
- `;
- loginLayout.classList.add('force-desktop-layout');
- }
- }
- 
- // Run immediately and after DOM is ready
- forceDesktopLayout();
- if (document.readyState === 'loading') {
- document.addEventListener('DOMContentLoaded', forceDesktopLayout);
- } else {
- forceDesktopLayout();
- }
- })();
+            // Set current year
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
 
- // Clear error and success messages
- function clearMessages() {
- const successMessage = document.getElementById('successMessage');
- const errorContainer = document.getElementById('error-container');
- 
- if (successMessage) {
- successMessage.style.display = 'none';
- }
- if (errorContainer) {
- errorContainer.style.display = 'none';
- }
- }
+            // Hamburger menu functionality
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
 
- // Show error message
- function showError(message) {
- const errorContainer = document.getElementById('error-container');
- const errorMessage = document.getElementById('errorMessage');
- const successMessage = document.getElementById('successMessage');
- 
- // Hide success message if showing
- if (successMessage) {
- successMessage.style.display = 'none';
- }
- 
- if (errorContainer && errorMessage) {
- errorMessage.textContent = message;
- errorContainer.style.display = 'block';
- }
- }
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', function() {
+                    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                    hamburger.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+                    body.style.overflow = expanded ? '' : 'hidden';
+                });
 
- // Show success message
- function showSuccess() {
- const successMessage = document.getElementById('successMessage');
- const errorContainer = document.getElementById('error-container');
- 
- // Hide error message if showing
- if (errorContainer) {
- errorContainer.style.display = 'none';
- }
- 
- // Show success message
- if (successMessage) {
- successMessage.style.display = 'flex';
- }
- }
+                // Close menu when clicking on links
+                navLinks.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        body.classList.remove('menu-open');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                        body.style.overflow = '';
+                    });
+                });
+            }
+        });
 
- // Handle form submission (email/password)
- document.getElementById('login-form').addEventListener('submit', async e => {
- e.preventDefault();
- const submitBtn = document.getElementById('submitBtn');
- const email = document.getElementById('email').value;
- const password = document.getElementById('password').value;
- if (!email || !password || !submitBtn) return;
- try {
- submitBtn.disabled = true;
- submitBtn.textContent = 'Signing in...';
- const userCredential = await signInWithEmailAndPassword(auth, email, password);
- const user = userCredential.user;
- // Check if user exists in Firestore
- const userDoc = await getDoc(doc(db, 'users', user.uid));
- if (!userDoc.exists()) {
- // Create user document if it doesn't exist
- await setDoc(doc(db, 'users', user.uid), {
- email: user.email,
- displayName: user.displayName || '',
- photoURL: user.photoURL || '',
- createdAt: serverTimestamp(),
- isAdmin: false,
- role: 'customer',
- });
- }
- showSuccess();
- setTimeout(() => {
- window.location.href = 'customer-dashboard.html';
- }, 1500);
- } catch (error) {
- console.error('Login error:', error);
- let errorMessage = 'An error occurred during login. Please try again.';
- switch (error.code) {
- case 'auth/user-not-found':
- errorMessage = 'No account found with this email.';
- break;
- case 'auth/wrong-password':
- errorMessage = 'Incorrect password. Please try again.';
- break;
- case 'auth/invalid-email':
- errorMessage = 'Please enter a valid email address.';
- break;
- case 'auth/user-disabled':
- errorMessage = 'This account has been disabled. Please contact support.';
- break;
- }
- showError(errorMessage);
- } finally {
- if (submitBtn) {
- submitBtn.disabled = false;
- submitBtn.textContent = 'Sign In';
- }
- }
- });
+        // Fallback error handling
+        window.addEventListener('error', function(e) {
+            console.error('Page error:', e.error);
+            const errorContainer = document.getElementById('error-container');
+            const errorMessage = document.getElementById('errorMessage');
+            if (errorContainer && errorMessage) {
+                errorMessage.textContent = 'An error occurred while loading the page. Please refresh.';
+                errorContainer.classList.add('show');
+            }
+        });
 
- // Handle Google Sign-in (modular)
- document.getElementById('googleSignIn').addEventListener('click', async function () {
- const googleBtn = this;
- const originalText = googleBtn.innerHTML;
- const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
- 
- try {
- // Show loading state
- googleBtn.disabled = true;
- googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
- 
- const provider = new GoogleAuthProvider();
- provider.addScope('profile');
- provider.addScope('email');
- 
- // Mobile-specific parameters
- if (isMobile) {
- provider.setCustomParameters({ 
- prompt: 'select_account',
- ux_mode: 'popup',
- access_type: 'offline'
- });
- } else {
- provider.setCustomParameters({ 
- prompt: 'select_account',
- ux_mode: 'popup'
- });
- }
- 
- const result = await signInWithPopup(auth, provider);
- const user = result.user;
- 
- // Check if user exists in Firestore
- const userDoc = await getDoc(doc(db, 'users', user.uid));
- if (!userDoc.exists()) {
- // Create user document if it doesn't exist
- await setDoc(doc(db, 'users', user.uid), {
- email: user.email,
- displayName: user.displayName || '',
- photoURL: user.photoURL || '',
- createdAt: serverTimestamp(),
- isAdmin: false,
- role: 'customer',
- });
- }
- 
- showSuccess();
- setTimeout(() => {
- window.location.href = 'customer-dashboard.html';
- }, 1500);
- 
- } catch (error) {
- console.error('Google sign-in error:', error);
- let errorMessage = 'An error occurred during Google sign-in. Please try again.';
- 
- switch (error.code) {
- case 'auth/account-exists-with-different-credential':
- errorMessage = 'An account already exists with the same email address but different sign-in credentials.';
- break;
- case 'auth/popup-blocked':
- errorMessage = isMobile 
- ? 'The sign-in popup was blocked. Please try again or use email/password login.'
- : 'The sign-in popup was blocked by the browser. Please allow popups and try again.';
- break;
- case 'auth/popup-closed-by-user':
- errorMessage = 'The sign-in popup was closed before completing the sign-in.';
- break;
- case 'auth/cancelled-popup-request':
- errorMessage = 'The sign-in popup was cancelled. Please try again.';
- break;
- case 'auth/network-request-failed':
- errorMessage = 'Network error. Please check your internet connection and try again.';
- break;
- case 'auth/operation-not-allowed':
- errorMessage = 'Google sign-in is not enabled. Please contact support.';
- break;
- case 'auth/unauthorized-domain':
- errorMessage = 'This domain is not authorized for Google sign-in. Please contact support.';
- break;
- case 'auth/browser-not-supported':
- errorMessage = isMobile 
- ? 'Your mobile browser may not support Google sign-in. Please try email/password login.'
- : 'Your browser does not support Google sign-in. Please try a different browser.';
- break;
- case 'auth/web-storage-unsupported':
- errorMessage = 'Your browser does not support web storage. Please enable cookies and try again.';
- break;
- case 'auth/too-many-requests':
- errorMessage = 'Too many sign-in attempts. Please try again later.';
- break;
- case 'auth/user-disabled':
- errorMessage = 'This account has been disabled. Please contact support.';
- break;
- default:
- errorMessage = `Sign-in failed: ${error.message}`;
- }
- 
- showError(errorMessage);
- } finally {
- // Restore button state
- googleBtn.disabled = false;
- googleBtn.innerHTML = originalText;
- }
- });
- </script>
-<script data-missing-img="/assets/js/main.min.js" defer="" type="module"></script>
-<script>
- // Aggressive cache busting script to force reload of updated content
- (function() {
- // Force hard refresh if this is an old version
- const currentVersion = '2024-01-15-v3-desktop-fix';
- const storedVersion = sessionStorage.getItem('loginPageVersion');
- 
- if (storedVersion !== currentVersion) {
- sessionStorage.setItem('loginPageVersion', currentVersion);
- window.location.reload(true);
- return;
- }
- 
- // Add timestamp to main.css to force cache refresh
- const mainCss = document.getElementById('main-css');
- if (mainCss) {
- const href = mainCss.href;
- const separator = href.includes('?') ? '&' : '?';
- mainCss.href = href + separator + 'v=' + Date.now();
- }
- 
- // Force reload if page was loaded from cache
- window.addEventListener('pageshow', function(event) {
- if (event.persisted) {
- window.location.reload(true);
- }
- });
- 
- // Clear all caches aggressively
- if ('caches' in window) {
- caches.keys().then(function(names) {
- for (let name of names) {
- caches.delete(name);
- }
- });
- }
- 
- // Force desktop layout check
- setTimeout(function() {
- const isDesktop = window.innerWidth >= 1025;
- const loginLayout = document.querySelector('.login-layout');
- if (isDesktop && loginLayout) {
- loginLayout.style.cssText = `
- display: grid !important;
- grid-template-columns: 1fr 1fr !important;
- gap: 3rem !important;
- align-items: start !important;
- max-width: 1000px !important;
- margin: 0 auto !important;
- `;
- }
- }, 100);
- })();
- </script>
-<script>
- if ('serviceWorker' in navigator) {
- navigator.serviceWorker.getRegistrations().then(function(registrations) {
- for(let registration of registrations) {
- registration.unregister();
- }
- });
- }
- </script>
-<script>
- // Cache-busting for CSS and JS assets
- document.addEventListener('DOMContentLoaded', function() {
- var assets = [
- document.getElementById('main-css'),
- ...Array.from(document.querySelectorAll('script[src*="main.min.js"]'))
- ];
- assets.forEach(function(asset) {
- if (asset && asset.src) {
- var separator = asset.src.includes('?') ? '&' : '?';
- asset.src = asset.src + separator + 'v=' + Date.now();
- }
- if (asset && asset.href) {
- var separator = asset.href.includes('?') ? '&' : '?';
- asset.href = asset.href + separator + 'v=' + Date.now();
- }
- });
- });
- </script>
-<script>
- document.addEventListener('DOMContentLoaded', function() {
- const hamburger = document.querySelector('.hamburger');
- const nav = document.querySelector('#nav-menu');
- const navLinks = document.querySelector('.nav-links');
- const body = document.body;
-
- if (hamburger) {
- hamburger.addEventListener('click', function() {
- const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
- hamburger.classList.toggle('active');
- nav.classList.toggle('active');
- navLinks.classList.toggle('active');
- body.classList.toggle('menu-open');
- hamburger.setAttribute('aria-expanded', !isExpanded);
- body.style.overflow = !isExpanded ? 'hidden' : '';
- });
-
- // Close menu when clicking outside
- document.addEventListener('click', function(event) {
- const isClickInside = nav.contains(event.target) || hamburger.contains(event.target);
- if (!isClickInside && nav.classList.contains('active')) {
- hamburger.classList.remove('active');
- nav.classList.remove('active');
- navLinks.classList.remove('active');
- body.classList.remove('menu-open');
- body.style.overflow = '';
- hamburger.setAttribute('aria-expanded', 'false');
- }
- });
-
- // Close menu on escape key
- document.addEventListener('keydown', function(event) {
- if (event.key === 'Escape' && nav.classList.contains('active')) {
- hamburger.classList.remove('active');
- nav.classList.remove('active');
- navLinks.classList.remove('active');
- body.classList.remove('menu-open');
- body.style.overflow = '';
- hamburger.setAttribute('aria-expanded', 'false');
- }
- });
-
- // Close menu when clicking on links
- const navItems = navLinks.querySelectorAll('a');
- navItems.forEach(link => {
- link.addEventListener('click', function() {
- if (nav.classList.contains('active')) {
- hamburger.classList.remove('active');
- nav.classList.remove('active');
- navLinks.classList.remove('active');
- body.classList.remove('menu-open');
- body.style.overflow = '';
- hamburger.setAttribute('aria-expanded', 'false');
- }
- });
- });
- }
- });
- </script>
-
- <script>
- // Enhanced loading management
- (function() {
- var loading = document.getElementById('loading');
- var error = document.getElementById('error');
- 
- // Hide loading after page load
- function hideLoading() {
- if (loading) {
- loading.classList.add('hidden');
- setTimeout(function() {
- loading.style.display = 'none';
- }, 300);
- }
- }
- 
- // Show error message
- function showError(message) {
- if (error) {
- error.textContent = message;
- error.classList.add('show');
- setTimeout(function() {
- error.classList.remove('show');
- }, 5000);
- }
- }
- 
- // Hide loading when DOM is ready
- if (document.readyState === 'loading') {
- document.addEventListener('DOMContentLoaded', hideLoading);
- } else {
- hideLoading();
- }
- 
- // Hide loading when window loads
- window.addEventListener('load', hideLoading);
- 
- // Fallback: hide loading after 3 seconds
- setTimeout(hideLoading, 3000);
- 
- // Handle errors
- window.addEventListener('error', function(e) {
- console.error('Page error:', e.error);
- showError('An error occurred while loading the page. Please refresh.');
- });
- })();
- </script>
-
- <script>
-setTimeout(function() {
-  var loading = document.getElementById('loading');
-  if (loading) {
-    loading.classList.add('hidden');
-    loading.style.display = 'none';
-  }
-}, 3000);
-</script>
-
-<script>
-window.addEventListener('error', function(e) {
-  var error = document.getElementById('error');
-  if (error) {
-    error.textContent = 'A critical error occurred while loading the page. Please refresh or try again later.';
-    error.classList.add('show');
-  }
-});
-</script>
-</body></html>
+        // Service Worker registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('service-worker.js')
+                    .catch(function(err) { 
+                        console.error('SW registration failed:', err); 
+                    });
+            });
+        }
+    </script>
+</body>
+</html> 
