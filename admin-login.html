@@ -877,28 +877,12 @@
       </a>
     </div>
     <nav id="nav-menu">
-      <!-- Mobile Tab Navigation -->
-      <div class="mobile-tabs">
-        <a href="index.html" class="tab-item">
-          <i class="fas fa-home"></i>
-          <span>Home</span>
-        </a>
-        <a href="services.html" class="tab-item">
-          <i class="fas fa-tools"></i>
-          <span>Services</span>
-        </a>
-        <a href="contact.html" class="tab-item">
-          <i class="fas fa-phone"></i>
-          <span>Contact</span>
-        </a>
-        <a href="pay-your-bill.html" class="tab-item">
-          <i class="fas fa-credit-card"></i>
-          <span>Pay Bill</span>
-        </a>
-      </div>
-      
-      <!-- Desktop Navigation -->
-      <ul class="nav-links desktop-nav">
+      <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="services.html">Services</a></li>
@@ -907,15 +891,14 @@
         <li><a href="contact.html">Contact</a></li>
         <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
       </ul>
-      
       <div class="login-buttons">
         <a href="login.html" class="btn-login btn-customer">
           <i class="fas fa-user"></i>
-          <span class="btn-text">Customer Login</span>
+          Customer Login
         </a>
         <a href="admin-login.html" class="btn-login btn-admin active">
           <i class="fas fa-lock"></i>
-          <span class="btn-text">Admin Login</span>
+          Admin Login
         </a>
       </div>
     </nav>
@@ -984,21 +967,21 @@
 </section>
 </main>
 
-<!-- Mobile Tab Navigation -->
-<div class="mobile-tabs">
-  <a href="index.html" class="tab-item">
+<!-- Mobile Tab Bar -->
+<div class="mobile-tab-bar">
+  <a href="index.html">
     <i class="fas fa-home"></i>
     <span>Home</span>
   </a>
-  <a href="services.html" class="tab-item">
+  <a href="services.html">
     <i class="fas fa-tools"></i>
     <span>Services</span>
   </a>
-  <a href="contact.html" class="tab-item">
+  <a href="contact.html">
     <i class="fas fa-phone"></i>
     <span>Contact</span>
   </a>
-  <a href="pay-your-bill.html" class="tab-item">
+  <a href="pay-your-bill.html">
     <i class="fas fa-credit-card"></i>
     <span>Pay Bill</span>
   </a>
@@ -1113,6 +1096,33 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Add touch feedback for mobile tabs
   tabItems.forEach(function(tab) {
+    tab.addEventListener('touchstart', function() {
+      this.style.transform = 'scale(0.95)';
+    });
+    
+    tab.addEventListener('touchend', function() {
+      this.style.transform = 'scale(1)';
+    });
+  });
+});
+</script>
+
+<script>
+// Standard mobile tab bar functionality
+document.addEventListener('DOMContentLoaded', function() {
+  // Add active state to current page tab
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const tabBarItems = document.querySelectorAll('.mobile-tab-bar a');
+  
+  tabBarItems.forEach(function(tab) {
+    const href = tab.getAttribute('href');
+    if (href === currentPage || (currentPage === 'admin-login.html' && href === 'index.html')) {
+      tab.classList.add('active');
+    }
+  });
+  
+  // Add touch feedback for mobile tab bar
+  tabBarItems.forEach(function(tab) {
     tab.addEventListener('touchstart', function() {
       this.style.transform = 'scale(0.95)';
     });
@@ -1406,5 +1416,59 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .btn-login .btn-text {
     display: inline;
+}
+
+/* --- Professional Mobile Tab Bar --- */
+@media (max-width: 768px) {
+  .main-header .nav-links,
+  .main-header .login-buttons {
+    display: none !important;
+  }
+  .mobile-tab-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 64px;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+    z-index: 2000;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .mobile-tab-bar a {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #2e7d32;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.25rem 0;
+    transition: color 0.2s;
+  }
+  .mobile-tab-bar a.active,
+  .mobile-tab-bar a:active,
+  .mobile-tab-bar a:hover {
+    color: #1565c0;
+  }
+  .mobile-tab-bar i {
+    font-size: 1.5rem;
+    margin-bottom: 0.1rem;
+  }
+  body {
+    padding-bottom: 64px !important;
+  }
+  .login-section {
+    margin-bottom: 64px !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-tab-bar { display: none !important; }
 }
 </body></html>
