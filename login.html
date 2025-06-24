@@ -115,7 +115,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
         background: white;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         position: fixed;
@@ -123,7 +123,7 @@
         left: 0;
         right: 0;
         z-index: 1000;
-        padding: 0 2rem;
+        padding: 0 1.5rem;
         min-height: 80px;
         width: 100%;
         box-sizing: border-box;
@@ -133,7 +133,8 @@
         display: flex;
         align-items: center;
         height: 100%;
-        margin-right: 0.5rem;
+        margin-right: 2rem;
+        flex-shrink: 0;
     }
 
     .logo img {
@@ -147,20 +148,21 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
         width: 100%;
-        gap: 2rem;
+        gap: 1.5rem;
     }
  
     .nav-links { 
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
-        gap: 0;
+        justify-content: flex-start;
+        gap: 0.5rem;
         list-style: none;
         margin: 0;
         padding: 0;
+        flex-wrap: wrap;
     }
     
     .nav-links a { 
@@ -170,7 +172,7 @@
         text-decoration: none;
         transition: all 0.3s ease;
         white-space: nowrap;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         display: block;
         border-radius: 6px;
     }
@@ -192,24 +194,25 @@
     .login-buttons {
         display: flex;
         flex-direction: row;
-        gap: 1rem;
+        gap: 0.75rem;
         align-items: center;
-        margin-left: 0;
+        margin-left: auto;
+        flex-shrink: 0;
     }
     
     .btn-login {
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 0.75rem;
         border-radius: 6px;
         text-decoration: none;
         font-weight: 600;
         transition: all 0.3s ease;
-        font-size: 0.9rem;
-        min-width: 120px;
+        font-size: 0.85rem;
+        min-width: 110px;
         text-align: center;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 0.5rem;
+        gap: 0.4rem;
         white-space: nowrap;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
@@ -745,8 +748,8 @@
     .main-header {
         flex-direction: row !important;
         align-items: center !important;
-        justify-content: space-between !important;
-        padding: 0 2.5rem !important;
+        justify-content: flex-start !important;
+        padding: 0 2rem !important;
         min-height: 80px !important;
         height: 80px !important;
         gap: 0 !important;
@@ -755,7 +758,7 @@
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
-        justify-content: space-between !important;
+        justify-content: flex-start !important;
         width: 100% !important;
         gap: 0 !important;
         padding: 0 !important;
@@ -764,7 +767,7 @@
     }
     .logo {
         flex: 0 0 auto !important;
-        margin-right: 3rem !important;
+        margin-right: 2.5rem !important;
     }
     .logo img {
         max-height: 60px !important;
@@ -782,18 +785,18 @@
         top: auto !important;
         left: auto !important;
         right: auto !important;
-        gap: 2rem !important;
+        gap: 1.5rem !important;
         margin: 0 !important;
         flex: 1 !important;
-        justify-content: center !important;
+        justify-content: flex-start !important;
         list-style: none !important;
     }
     .nav-links { 
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
-        justify-content: center !important;
-        gap: 2rem !important;
+        justify-content: flex-start !important;
+        gap: 1.5rem !important;
         position: static !important;
         background: none !important;
         padding: 0 !important;
@@ -811,13 +814,14 @@
     }
     .nav-links a { 
         color: var(--text-dark) !important;
-        padding: 0.75rem 1.25rem !important;
+        padding: 0.6rem 1rem !important;
         text-decoration: none !important;
         font-weight: 500 !important;
         transition: all 0.3s ease !important;
         border-radius: 6px !important;
         white-space: nowrap !important;
         display: block !important;
+        font-size: 0.9rem !important;
     }
     .nav-links a:hover {
         color: var(--primary-green) !important;
@@ -827,7 +831,7 @@
     .nav-links .btn-login {
         background-color: var(--primary-green) !important;
         color: white !important;
-        padding: 0.75rem 1.5rem !important;
+        padding: 0.6rem 1rem !important;
         border-radius: 6px !important;
         font-weight: 600 !important;
         transition: all 0.3s ease !important;
@@ -838,6 +842,15 @@
         color: white !important;
         transform: translateY(-2px) !important;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+    }
+    .login-buttons {
+        margin-left: auto !important;
+        gap: 0.75rem !important;
+    }
+    .btn-login {
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.85rem !important;
+        min-width: 110px !important;
     }
     .hamburger { display: none !important; }
     }
