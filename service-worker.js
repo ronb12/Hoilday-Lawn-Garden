@@ -1,5 +1,6 @@
-const CACHE_VERSION = 'v12';
+const CACHE_VERSION = 'v13';
 const CACHE_NAME = `holliday-cache-${CACHE_VERSION}`;
+const MAX_CACHE_SIZE = 50 * 1024 * 1024; // 50MB limit
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -23,6 +24,23 @@ const ASSETS_TO_CACHE = [
   './manifest.json'
 ];
 
+// Storage cleanup function
+async function cleanupStorage() {
+  try {
+    const cache = await caches.open(CACHE_NAME);
+    const keys = await cache.keys();
+    
+    // If cache is getting too large, remove oldest entries
+    if (keys.length > 20) {
+      const oldestKeys = keys.slice(0, keys.length - 20);
+      await Promise.all(oldestKeys.map(key => cache.delete(key)));
+      console.log('Cleaned up old cache entries');
+    }
+  } catch (error) {
+    console.warn('Cache cleanup failed:', error);
+  }
+}
+
 // Install event - cache assets
 self.addEventListener('install', event => {
   console.log('Service Worker installing...');
@@ -33,14 +51,18 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       console.log('Opened cache:', CACHE_NAME);
-      // Cache assets individually to handle failures gracefully
-      const cachePromises = ASSETS_TO_CACHE.map(asset => {
-        return cache.add(asset).catch(err => {
-          console.warn(`Failed to cache ${asset}:`, err);
-          return Promise.resolve(); // Don't fail the install
+      
+      // Clean up storage first
+      return cleanupStorage().then(() => {
+        // Cache assets individually to handle failures gracefully
+        const cachePromises = ASSETS_TO_CACHE.map(asset => {
+          return cache.add(asset).catch(err => {
+            console.warn(`Failed to cache ${asset}:`, err);
+            return Promise.resolve(); // Don't fail the install
+          });
         });
+        return Promise.all(cachePromises);
       });
-      return Promise.all(cachePromises);
     }).catch(err => {
       console.error('Service Worker install failed:', err);
       // Don't fail the install
@@ -59,7 +81,10 @@ self.addEventListener('activate', event => {
       return Promise.all(
         keys.filter(key => key !== CACHE_NAME).map(key => {
           console.log('Deleting old cache:', key);
-          return caches.delete(key);
+          return caches.delete(key).catch(err => {
+            console.warn(`Failed to delete cache ${key}:`, err);
+            return Promise.resolve();
+          });
         })
       );
     }).then(() => {
@@ -86,16 +111,25 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Skip Firebase and analytics requests to prevent storage issues
+  if (event.request.url.includes('firebase') || 
+      event.request.url.includes('google-analytics') ||
+      event.request.url.includes('gstatic.com/firebasejs')) {
+    return;
+  }
+
   event.respondWith(
     fetch(event.request)
       .then(response => {
         // Clone the response before using it
         const responseClone = response.clone();
         
-        // Cache successful responses
-        if (response.status === 200) {
+        // Cache successful responses (but not too many)
+        if (response.status === 200 && response.headers.get('content-type')?.includes('text/html')) {
           caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, responseClone);
+            cache.put(event.request, responseClone).catch(err => {
+              console.warn('Failed to cache response:', err);
+            });
           });
         }
         
@@ -109,7 +143,7 @@ self.addEventListener('fetch', event => {
           }
           
           // Return offline page for HTML requests
-          if (event.request.headers.get('accept').includes('text/html')) {
+          if (event.request.headers.get('accept')?.includes('text/html')) {
             return caches.match('./offline.html');
           }
           
@@ -123,4 +157,12 @@ self.addEventListener('fetch', event => {
         });
       })
   );
+});
+
+// Handle storage quota exceeded
+self.addEventListener('storage', event => {
+  if (event.key === 'quota-exceeded') {
+    console.log('Storage quota exceeded, cleaning up...');
+    cleanupStorage();
+  }
 });
