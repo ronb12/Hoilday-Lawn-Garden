@@ -519,15 +519,21 @@ button {
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
 }
 .form-group label {
-  color: var(--text-color);
-  font-weight: 500;
+  min-width: 140px;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
 }
 .form-group input,
 .form-group select,
 .form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
   padding: 0.8rem;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -539,6 +545,13 @@ button {
 .form-group textarea:focus {
   outline: 0;
   border-color: var(--primary-color);
+}
+.form-group .error-message {
+  color: #d32f2f;
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+  display: block;
 }
 .checkbox-container {
   display: flex;
@@ -622,6 +635,13 @@ footer::before {
   grid-template-columns: repeat(4, 1fr);
   gap: 3rem;
   margin-bottom: 4rem;
+}
+.footer-section {
+  min-height: 220px;
+  vertical-align: top;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 .footer-section h3 {
   color: #fff;
@@ -1579,5 +1599,88 @@ footer::before {
   select,
   textarea {
     font-size: 16px;
+  }
+}
+
+/* --- Alignment Improvements --- */
+
+/* Footer: Make all sections the same min-height and align to top */
+.footer-section {
+  min-height: 220px;
+  vertical-align: top;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Form fields: Fixed label width and aligned error messages */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+.form-group label {
+  min-width: 140px;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  box-sizing: border-box;
+}
+.form-group .error-message {
+  color: #d32f2f;
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+  display: block;
+}
+
+/* Contact/FAQ items: Vertically center icon and text */
+.contact-item, .faq-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+.contact-item i, .faq-item i {
+  font-size: 1.5rem;
+  min-width: 28px;
+  text-align: center;
+}
+.contact-item-content, .faq-item-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Card/grid consistency for services, testimonials, etc. */
+.service-card, .testimonial-card, .value-card, .contact-info {
+  padding: 2rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 260px;
+  margin-bottom: 1.5rem;
+}
+
+/* Mobile tab bar: ensure it does not overlap content */
+@media (max-width: 768px) {
+  .mobile-tab-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+  }
+  body, .container, main {
+    padding-bottom: 70px !important;
   }
 }
