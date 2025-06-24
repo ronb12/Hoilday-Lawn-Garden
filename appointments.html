@@ -1928,6 +1928,7 @@
      appointments = demoAppointments;
      displayAppointments(appointments);
    } finally {
+     hideLoading();
      isLoading = false;
    }
  }
@@ -2173,6 +2174,8 @@
  }
  
  function showLoading() {
+   // Always remove any existing loading overlay first
+   hideLoading();
    const loading = document.createElement('div');
    loading.id = 'loading';
    loading.innerHTML = `
