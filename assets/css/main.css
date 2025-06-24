@@ -131,7 +131,7 @@ button {
 }
 .main-header .nav-links a {
   padding: 0 0.2rem;
-  font-size: 0.75rem;
+  font-size: 0.95rem;
   color: #333;
   font-weight: 500;
   text-decoration: none;
@@ -152,7 +152,7 @@ button {
   padding: 0 0.3rem;
   border-radius: 6px;
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: 0.95rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   transition: all 0.3s;
   white-space: nowrap;
