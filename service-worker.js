@@ -78,7 +78,6 @@ self.addEventListener('install', event => {
           '/Holliday-Lawn-Garden/',
           '/Holliday-Lawn-Garden/index.html',
           '/Holliday-Lawn-Garden/assets/css/main.css',
-          '/Holliday-Lawn-Garden/assets/js/main.js',
           '/Holliday-Lawn-Garden/assets/images/hollidays-logo.optimized-1280.png',
           '/Holliday-Lawn-Garden/manifest.json',
           '/Holliday-Lawn-Garden/offline.html'
