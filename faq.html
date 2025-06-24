@@ -864,6 +864,8 @@
 </style>
 
 <!-- --- Professional Mobile Tab Bar --- -->
+<style>
+/* --- Professional Mobile Tab Bar --- */
 @media (max-width: 768px) {
   .main-header .nav-links,
   .main-header .login-buttons {
@@ -910,336 +912,339 @@
 @media (min-width: 769px) {
   .mobile-tab-bar { display: none !important; }
 }
+</style>
 </head>
 <body>
-  <!-- Loading Spinner -->
-  <div id="loading" class="loading" role="status" aria-label="Loading page content">
-    <div class="spinner" aria-hidden="true"></div>
+<!-- Loading Spinner -->
+<div id="loading" class="loading" role="status" aria-label="Loading page content">
+  <div class="spinner" aria-hidden="true"></div>
+</div>
+
+<!-- Error Message -->
+<div id="error" class="error-message" role="alert" aria-live="polite"></div>
+
+<!-- Header -->
+<header class="main-header">
+  <div class="logo">
+    <a href="index.html">
+      <picture>
+        <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+        <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+      </picture>
+    </a>
   </div>
-  
-  <!-- Error Message -->
-  <div id="error" class="error-message" role="alert" aria-live="polite"></div>
-  
-    <!-- Header -->
-  <header class="main-header">
-    <div class="logo">
-      <a href="index.html">
-        <picture>
-          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
-          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
-        </picture>
+  <nav id="nav-menu">
+    <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="education.html">Education</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+    </ul>
+    <div class="login-buttons">
+      <a href="login.html" class="btn-login btn-customer">
+        <i class="fas fa-user"></i>
+        Customer Login
+      </a>
+      <a href="admin-login.html" class="btn-login btn-admin">
+        <i class="fas fa-lock"></i>
+        Admin Login
       </a>
     </div>
-    <nav id="nav-menu">
-      <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="education.html">Education</a></li>
-        <li><a href="faq.html">FAQ</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-      </ul>
-      <div class="login-buttons">
-        <a href="login.html" class="btn-login btn-customer">
-          <i class="fas fa-user"></i>
-          Customer Login
-        </a>
-        <a href="admin-login.html" class="btn-login btn-admin">
-          <i class="fas fa-lock"></i>
-          Admin Login
-        </a>
-      </div>
-    </nav>
-  </header>
+  </nav>
+</header>
+
 <!-- Main Content -->
 <main role="main">
-    <!-- Hero Section -->
+  <!-- Hero Section -->
+  <div class="hero">
+    <picture>
+      <source srcset="assets/images/hero-garden-landscaping-1280-1280.webp" type="image/webp"/>
+      <img alt="Beautiful garden landscaping" data-missing-img="/assets/images/hero-garden-landscaping-1280-1280.jpg" loading="lazy"/>
+    </picture>
+    <div class="hero-content">
+      <h1>Frequently Asked Questions</h1>
+      <p>Find answers to common questions about our lawn care and landscaping services. Can't find what you're looking for? Contact us directly!</p>
+    </div>
+  </div>
 
- <div class="hero">
-<picture>
-<source srcset="assets/images/hero-garden-landscaping-1280-1280.webp" type="image/webp"/>
-<img alt="Beautiful garden landscaping" data-missing-img="/assets/images/hero-garden-landscaping-1280-1280.jpg" loading="lazy"/>
-</picture>
-<div class="hero-content">
-<h1>Frequently Asked Questions</h1>
-<p>Find answers to common questions about our lawn care and landscaping services. Can't find what you're looking for? Contact us directly!</p>
-</div>
-</div>
-
-<div class="faq-container">
-<!-- General Questions -->
-<div class="faq-section">
-<h2>🌱 General Questions</h2>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>📍 What areas do you serve?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>We provide comprehensive lawn care and landscaping services throughout New Orleans and the surrounding areas including Metairie, Kenner, Gretna, and nearby communities. Contact us to confirm service availability in your specific neighborhood.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>📅 How often should I schedule lawn maintenance?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>We recommend weekly or bi-weekly maintenance for optimal lawn health. However, we can customize a schedule based on your specific needs, property size, and grass type. During peak growing seasons (spring and fall), more frequent maintenance may be beneficial.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>📋 Do you provide free estimates?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>Yes, we offer free, no-obligation estimates for all our services. Our team will visit your property to assess your needs and provide a detailed quote. Contact us to schedule a consultation at your convenience.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>📜 Are you licensed and insured?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>Yes, we are fully licensed and insured for all our services. We carry comprehensive liability insurance and workers' compensation coverage. We can provide proof of insurance upon request for your peace of mind.</p>
-</div>
-</div>
-</div>
-<!-- Services & Scheduling -->
-<div class="faq-section">
-<h2>🛠️ Services &amp; Scheduling</h2>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>🌤️ Do you offer seasonal services?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>Yes, we provide comprehensive seasonal services including spring cleanup, summer maintenance, fall preparation, and winter protection. Our seasonal programs are designed to keep your lawn healthy year-round and prepare it for the changing weather conditions.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>🚨 Do you offer emergency services?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>Yes, we provide emergency services for storm damage cleanup, urgent lawn maintenance, and smaller landscaping emergencies. However, we do not cut down or remove large trees. For large tree removal, we recommend contacting a specialized tree service company.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>⏰ What is your cancellation policy?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>We require 24-hour notice for service cancellations. Please contact us as soon as possible if you need to reschedule. This helps us manage our schedule efficiently and accommodate other customers who may need our services.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>🌳 What types of trees and shrubs do you work with?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>We work with all types of trees and shrubs commonly found in Louisiana landscapes, including live oaks, magnolias, crepe myrtles, azaleas, and many others. Our team has extensive experience with local plant species and their specific care requirements.</p>
-</div>
-</div>
-</div>
-<!-- Payment & Billing -->
-<div class="faq-section">
-<h2>💳 Payment &amp; Billing</h2>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>💳 What payment methods do you accept?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>We accept all major credit cards (Visa, MasterCard, American Express, Discover), cash, and online payments through our secure payment system. We also offer convenient payment plans for larger projects.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>📊 Do you offer payment plans?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>We accept payment in full upon completion of services. We accept all major credit cards (Visa, MasterCard, American Express, Discover), cash, and online payments through our secure payment system for your convenience.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>🧾 How do I pay my bill online?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>You can easily pay your bill online through our secure customer portal. Simply visit our "Pay Your Bill" page, enter your account information, and complete your payment using any major credit card or bank account.</p>
-</div>
-</div>
-</div>
-<!-- Maintenance & Care -->
-<div class="faq-section">
-<h2>🌿 Maintenance &amp; Care</h2>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>🌱 What grass types do you specialize in?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>We specialize in warm-season grasses common to Louisiana, including St. Augustine, Bermuda, Zoysia, and Centipede grass. Each type has specific care requirements, and we tailor our maintenance programs accordingly.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>💧 Do you provide irrigation services?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>We ensure your lawn is being properly watered as part of our lawn care services. We can assess your lawn's watering needs and provide recommendations for optimal watering practices, but we do not install, maintain, or repair irrigation systems.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>🌺 Do you handle garden maintenance?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>Absolutely! We provide comprehensive garden maintenance including planting, pruning, fertilizing, pest control, and seasonal cleanup. Our team can help you maintain beautiful flower beds, vegetable gardens, and ornamental plants.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question">
-<h3>
-<span>🦗 Do you offer pest control services?</span>
-<i class="fas fa-chevron-down icon"></i>
-</h3>
-</div>
-<div class="faq-answer">
-<p>Yes, we offer integrated pest management services for common lawn and garden pests. We use environmentally responsible methods to control insects, weeds, and diseases while protecting beneficial organisms.</p>
-</div>
-</div>
-</div>
-<!-- Contact Section -->
-<div class="contact-section">
-<h2>📞 Still Have Questions?</h2>
-<p>Can't find the answer you're looking for? We're here to help!</p>
-<div class="contact-info">
-<div class="contact-item">
-<i class="fas fa-phone"></i>
-<span>(504) 717-1887</span>
-</div>
-<div class="contact-item">
-<i class="fas fa-envelope"></i>
-<span>7holliday@gmail.com</span>
-</div>
-<div class="contact-item">
-<i class="fas fa-user"></i>
-<span>Karl Holliday</span>
-</div>
-</div>
-<div>
-<a class="btn" data-broken-link="/contact.html">Contact Us</a>
-<a class="btn" href="services.html">View Services</a>
-<a class="btn" href="pay-your-bill.html">Pay Your Bill</a>
-</div>
-</div>
-</div>
+  <div class="faq-container">
+    <!-- General Questions -->
+    <div class="faq-section">
+      <h2>🌱 General Questions</h2>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>📍 What areas do you serve?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>We provide comprehensive lawn care and landscaping services throughout New Orleans and the surrounding areas including Metairie, Kenner, Gretna, and nearby communities. Contact us to confirm service availability in your specific neighborhood.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>📅 How often should I schedule lawn maintenance?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>We recommend weekly or bi-weekly maintenance for optimal lawn health. However, we can customize a schedule based on your specific needs, property size, and grass type. During peak growing seasons (spring and fall), more frequent maintenance may be beneficial.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>📋 Do you provide free estimates?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, we offer free, no-obligation estimates for all our services. Our team will visit your property to assess your needs and provide a detailed quote. Contact us to schedule a consultation at your convenience.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>📜 Are you licensed and insured?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, we are fully licensed and insured for all our services. We carry comprehensive liability insurance and workers' compensation coverage. We can provide proof of insurance upon request for your peace of mind.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Services & Scheduling -->
+    <div class="faq-section">
+      <h2>🛠️ Services &amp; Scheduling</h2>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>🌤️ Do you offer seasonal services?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, we provide comprehensive seasonal services including spring cleanup, summer maintenance, fall preparation, and winter protection. Our seasonal programs are designed to keep your lawn healthy year-round and prepare it for the changing weather conditions.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>🚨 Do you offer emergency services?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, we provide emergency services for storm damage cleanup, urgent lawn maintenance, and smaller landscaping emergencies. However, we do not cut down or remove large trees. For large tree removal, we recommend contacting a specialized tree service company.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>⏰ What is your cancellation policy?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>We require 24-hour notice for service cancellations. Please contact us as soon as possible if you need to reschedule. This helps us manage our schedule efficiently and accommodate other customers who may need our services.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>🌳 What types of trees and shrubs do you work with?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>We work with all types of trees and shrubs commonly found in Louisiana landscapes, including live oaks, magnolias, crepe myrtles, azaleas, and many others. Our team has extensive experience with local plant species and their specific care requirements.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Payment & Billing -->
+    <div class="faq-section">
+      <h2>💳 Payment &amp; Billing</h2>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>💳 What payment methods do you accept?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>We accept all major credit cards (Visa, MasterCard, American Express, Discover), cash, and online payments through our secure payment system. We also offer convenient payment plans for larger projects.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>📊 Do you offer payment plans?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>We accept payment in full upon completion of services. We accept all major credit cards (Visa, MasterCard, American Express, Discover), cash, and online payments through our secure payment system for your convenience.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>🧾 How do I pay my bill online?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>You can easily pay your bill online through our secure customer portal. Simply visit our "Pay Your Bill" page, enter your account information, and complete your payment using any major credit card or bank account.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Maintenance & Care -->
+    <div class="faq-section">
+      <h2>🌿 Maintenance &amp; Care</h2>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>🌱 What grass types do you specialize in?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>We specialize in warm-season grasses common to Louisiana, including St. Augustine, Bermuda, Zoysia, and Centipede grass. Each type has specific care requirements, and we tailor our maintenance programs accordingly.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>💧 Do you provide irrigation services?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>We ensure your lawn is being properly watered as part of our lawn care services. We can assess your lawn's watering needs and provide recommendations for optimal watering practices, but we do not install, maintain, or repair irrigation systems.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>🌺 Do you handle garden maintenance?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>Absolutely! We provide comprehensive garden maintenance including planting, pruning, fertilizing, pest control, and seasonal cleanup. Our team can help you maintain beautiful flower beds, vegetable gardens, and ornamental plants.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>
+            <span>🦗 Do you offer pest control services?</span>
+            <i class="fas fa-chevron-down icon"></i>
+          </h3>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, we offer integrated pest management services for common lawn and garden pests. We use environmentally responsible methods to control insects, weeds, and diseases while protecting beneficial organisms.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Contact Section -->
+    <div class="contact-section">
+      <h2>📞 Still Have Questions?</h2>
+      <p>Can't find the answer you're looking for? We're here to help!</p>
+      <div class="contact-info">
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <span>(504) 717-1887</span>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <span>7holliday@gmail.com</span>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-user"></i>
+          <span>Karl Holliday</span>
+        </div>
+      </div>
+      <div>
+        <a class="btn" data-broken-link="/contact.html">Contact Us</a>
+        <a class="btn" href="services.html">View Services</a>
+        <a class="btn" href="pay-your-bill.html">Pay Your Bill</a>
+      </div>
+    </div>
+  </div>
 </main>
+
 <footer class="footer">
-<div class="footer-content">
-<div class="footer-grid">
-<div class="footer-section">
-<h3>Contact Us</h3>
-<ul>
-<li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
-<li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
-</ul>
-</div>
-<div class="footer-section">
-<h3>Quick Links</h3>
-<ul>
-<li><a href="about.html">About Us</a></li>
-<li><a href="services.html">Services</a></li>
-<li><a href="education.html">Education</a></li>
-<li><a href="contact.html">Contact</a></li>
-</ul>
-</div>
-<div class="footer-section">
-<h3>Customer Portal</h3>
-<ul>
-<li><a href="login.html">Login</a></li>
-<li><a href="register.html">Register</a></li>
-<li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-<li><a href="customer-dashboard.html">Dashboard</a></li>
-</ul>
-</div>
-<div class="footer-section">
-         <h3>Legal</h3>
-         <ul>
-           <li><a href="privacy.html">Privacy Policy</a></li>
-           <li><a href="terms.html">Terms of Service</a></li>
-         </ul>
-       </div>
-       <div class="footer-section">
-         <h3>Follow Us</h3>
-         <div class="social-links">
-           <a href="#" class="social-link" aria-label="Facebook">
-             <i class="fab fa-facebook"></i>
-           </a>
-           <a href="#" class="social-link" aria-label="Instagram">
-             <i class="fab fa-instagram"></i>
-           </a>
-           <a href="#" class="social-link" aria-label="Twitter">
-             <i class="fab fa-twitter"></i>
-           </a>
-           <a href="#" class="social-link" aria-label="LinkedIn">
-             <i class="fab fa-linkedin"></i>
-           </a>
-         </div>
-       </div>
-</div>
-</div>
-<div class="footer-bottom">
-<div class="copyright">
-<p>© 2024 Holliday's Lawn &amp; Garden. All rights reserved.</p>
-</div>
-</div>
+  <div class="footer-content">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <ul>
+          <li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
+          <li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Customer Portal</h3>
+        <ul>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+          <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+          <li><a href="customer-dashboard.html">Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Facebook">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="#" class="social-link" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="social-link" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="social-link" aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copyright">
+      <p>© 2024 Holliday's Lawn &amp; Garden. All rights reserved.</p>
+    </div>
+  </div>
 </footer>
+
 <script>
  const yearElement = document.getElementById('current-year');
 if (yearElement) {
@@ -1283,6 +1288,7 @@ if (yearElement) {
  });
  }
  </script>
+
 <script>
 // Single, robust hamburger menu script
 // Ensures the hamburger menu works and does not clear or overwrite the header
