@@ -52,23 +52,31 @@ let auth;
 let db;
 let storage;
 let analytics;
+let googleProvider;
 
 try {
   app = initializeApp(firebaseConfig);
   auth = getAuth(app);
   db = getFirestore(app);
   storage = getStorage(app);
+  
+  // Create Google Auth Provider
+  googleProvider = new GoogleAuthProvider();
 
-  // Initialize Analytics if supported
-  if (await isSupported()) {
-    analytics = getAnalytics(app);
-  }
+  // Initialize Analytics if supported (without await for now)
+  isSupported().then(supported => {
+    if (supported) {
+      analytics = getAnalytics(app);
+    }
+  }).catch(error => {
+    console.warn('Analytics not supported:', error);
+  });
 } catch (error) {
   showError('Failed to initialize the application. Please refresh the page.', true);
   throw error;
 }
 
-export { app, auth, db, storage, analytics };
+export { app, auth, db, storage, analytics, googleProvider };
 
 // Export Firebase modules
 export {
