@@ -941,7 +941,7 @@
 
  
 <div class="hero">
-<img alt="Beautiful garden landscaping" data-missing-img="/assets/images/hero-garden-landscaping.jpg" loading="eager"/>
+<img src="assets/images/hero-garden-landscaping.jpg" alt="Beautiful garden landscaping" loading="eager"/>
 <div class="hero-content">
 <h1>Welcome Back</h1>
 <p>Sign in to access your account and manage your lawn care services</p>
@@ -1559,4 +1559,24 @@
  });
  })();
  </script>
+
+ <script>
+setTimeout(function() {
+  var loading = document.getElementById('loading');
+  if (loading) {
+    loading.classList.add('hidden');
+    loading.style.display = 'none';
+  }
+}, 3000);
+</script>
+
+<script>
+window.addEventListener('error', function(e) {
+  var error = document.getElementById('error');
+  if (error) {
+    error.textContent = 'A critical error occurred while loading the page. Please refresh or try again later.';
+    error.classList.add('show');
+  }
+});
+</script>
 </body></html>
