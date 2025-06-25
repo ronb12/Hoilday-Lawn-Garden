@@ -201,10 +201,13 @@
     }
     
     .login-buttons {
-        display: flex;
+        display: flex !important;
         gap: 1rem;
         align-items: center;
         margin-left: auto;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
     }
     
     .btn-login {
@@ -216,12 +219,14 @@
         font-size: 0.85rem;
         min-width: 110px;
         text-align: center;
-        display: inline-flex;
+        display: inline-flex !important;
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
         white-space: nowrap;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
     .btn-customer {
@@ -310,6 +315,27 @@
         .main-header {
             justify-content: flex-start !important;
             padding: 0 1rem !important;
+        }
+    }
+
+    /* Desktop Specific - Ensure login buttons are visible */
+    @media (min-width: 769px) {
+        .login-buttons {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative !important;
+            left: auto !important;
+        }
+        
+        .btn-login {
+            display: inline-flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .mobile-tab-bar {
+            display: none !important;
         }
     }
 
