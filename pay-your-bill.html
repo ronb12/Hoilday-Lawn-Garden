@@ -655,36 +655,7 @@
 </div>
 </form>
 <!-- PayPal Button Container -->
-<div id="paypal-button-container">
-    <!-- Loading state -->
-    <div id="paypal-loading" style="text-align: center; padding: 20px;">
-        <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; border: 1px solid #dee2e6;">
-            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px;">
-                <div style="width: 20px; height: 20px; border: 2px solid #2e7d32; border-top: 2px solid transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                <span style="color: #2e7d32; font-weight: 600;">Loading PayPal...</span>
-            </div>
-            <p style="color: #6c757d; font-size: 0.9rem; margin: 0;">Please wait while we load secure payment options</p>
-        </div>
-    </div>
-    
-    <!-- Fallback PayPal button in case SDK fails to load -->
-    <div id="paypal-fallback" style="display: none; text-align: center; padding: 20px;">
-        <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; border: 1px solid #dee2e6; margin-bottom: 20px;">
-            <p style="color: #6c757d; margin-bottom: 15px; font-weight: 600;">PayPal Payment</p>
-            <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 20px;">Please contact us directly to complete your payment:</p>
-            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <a href="tel:+15047171887" style="background: #2e7d32; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-phone"></i>
-                    Call (504) 717-1887
-                </a>
-                <a href="mailto:7holliday@gmail.com" style="background: #1565c0; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-envelope"></i>
-                    Email Us
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+<div id="paypal-button-container"></div>
 <div class="payment-note">
 <i class="fab fa-paypal"></i>
 <strong>Secure Payment Options:</strong> Don't have a PayPal account? No problem! You can pay securely using your credit or debit card as a guest.
@@ -755,12 +726,7 @@
  
  // PayPal button rendering using the new integration
  function renderPayPalButtons() {
-     const container = document.getElementById('paypal-button-container');
-     const fallback = document.getElementById('paypal-fallback');
-     const loading = document.getElementById('paypal-loading');
-     
      if (window.PayPalIntegration) {
-         console.log('PayPal integration available, rendering buttons...');
          window.PayPalIntegration.renderPayPalButtons('paypal-button-container', {
              onSuccess: function(details) {
                  // Additional success handling if needed
@@ -768,46 +734,12 @@
              },
              onError: function(err) {
                  // Additional error handling if needed
-                 console.error('PayPal error:', err);
-                 // Show fallback if PayPal fails
-                 if (fallback) {
-                     fallback.style.display = 'block';
-                 }
-                 if (loading) {
-                     loading.style.display = 'none';
-                 }
+                 
              }
          });
-         
-         // Add a timeout to show fallback if PayPal takes too long
-         setTimeout(function() {
-             if (loading && loading.style.display !== 'none') {
-                 console.log('PayPal taking too long, showing fallback');
-                 if (loading) {
-                     loading.style.display = 'none';
-                 }
-                 if (fallback) {
-                     fallback.style.display = 'block';
-                 }
-             }
-         }, 8000); // 8 second timeout
-         
      } else {
-         console.log('PayPal integration not available, will retry...');
-         // Fallback: try again after a short delay, then show fallback
-         setTimeout(function() {
-             if (!window.PayPalIntegration) {
-                 console.log('PayPal integration still not available, showing fallback');
-                 if (loading) {
-                     loading.style.display = 'none';
-                 }
-                 if (fallback) {
-                     fallback.style.display = 'block';
-                 }
-             } else {
-                 renderPayPalButtons();
-             }
-         }, 3000); // Wait 3 seconds before showing fallback
+         // Fallback: try again after a short delay
+         setTimeout(renderPayPalButtons, 100);
      }
  }
  
