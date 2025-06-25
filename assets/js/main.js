@@ -44,6 +44,18 @@ window.addEventListener('beforeinstallprompt', e => {
   createInstallButton();
 });
 
+// Handle successful installation
+window.addEventListener('appinstalled', (evt) => {
+  console.log('✅ App was successfully installed');
+  // Hide the install button
+  const installBtn = document.getElementById('installBtn');
+  if (installBtn) {
+    installBtn.style.display = 'none';
+  }
+  // Clear the deferredPrompt
+  deferredPrompt = null;
+});
+
 // Create the install button
 function createInstallButton() {
   // Remove existing install button if it exists
@@ -98,6 +110,8 @@ function createInstallButton() {
   installBtn.addEventListener('click', async () => {
     if (!deferredPrompt) {
       console.log('No install prompt available');
+      // Show user-friendly message
+      showNotification('App is already installed or not available for installation', 'info');
       return;
     }
 
@@ -110,6 +124,10 @@ function createInstallButton() {
       const { outcome } = await deferredPrompt.userChoice;
       console.log(`User ${outcome === 'accepted' ? '✅ Installed' : '❌ Dismissed'} the app`);
 
+      if (outcome === 'accepted') {
+        showNotification('App installed successfully! You can now access it from your home screen.', 'success');
+      }
+
       // Hide the button after user choice
       installBtn.style.display = 'none';
 
@@ -117,20 +135,84 @@ function createInstallButton() {
       deferredPrompt = null;
     } catch (error) {
       console.error('Error showing install prompt:', error);
+      showNotification('Failed to install app. Please try again.', 'error');
     }
   });
 
   // Add the button to the body
   document.body.appendChild(installBtn);
 
-  // Auto-hide the button after 10 seconds if not clicked
+  // Auto-hide the button after 15 seconds if not clicked
   setTimeout(() => {
     if (installBtn && installBtn.style.display !== 'none') {
       installBtn.style.opacity = '0.7';
       installBtn.style.transform = 'scale(0.95)';
     }
-  }, 10000);
+  }, 15000);
 }
+
+// Show notification function
+function showNotification(message, type = 'info') {
+  // Remove existing notification
+  const existingNotification = document.getElementById('pwa-notification');
+  if (existingNotification) {
+    existingNotification.remove();
+  }
+
+  const notification = document.createElement('div');
+  notification.id = 'pwa-notification';
+  notification.textContent = message;
+  
+  const colors = {
+    success: '#4caf50',
+    error: '#f44336',
+    info: '#2196f3'
+  };
+  
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${colors[type]};
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10001;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    max-width: 300px;
+    animation: slideIn 0.3s ease;
+  `;
+
+  document.body.appendChild(notification);
+
+  // Auto-remove after 5 seconds
+  setTimeout(() => {
+    if (notification.parentNode) {
+      notification.style.animation = 'slideOut 0.3s ease';
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.remove();
+        }
+      }, 300);
+    }
+  }, 5000);
+}
+
+// Add CSS animations for notifications
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+  }
+`;
+document.head.appendChild(style);
 
 // Initialize Firebase
 function initializeFirebaseDB() {

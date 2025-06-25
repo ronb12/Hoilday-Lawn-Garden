@@ -75,12 +75,12 @@ self.addEventListener('install', event => {
         
         // Cache only essential assets
         const essentialAssets = [
-          '/Holliday-Lawn-Garden/',
-          '/Holliday-Lawn-Garden/index.html',
-          '/Holliday-Lawn-Garden/assets/css/main.css',
-          '/Holliday-Lawn-Garden/assets/images/hollidays-logo.optimized-1280.png',
-          '/Holliday-Lawn-Garden/manifest.json',
-          '/Holliday-Lawn-Garden/offline.html'
+          '/',
+          '/index.html',
+          '/assets/css/main.css',
+          '/assets/images/hollidays-logo.optimized-1280.png',
+          '/manifest.json',
+          '/offline.html'
         ];
         
         const cachePromises = essentialAssets.map(asset => {
@@ -179,7 +179,7 @@ self.addEventListener('fetch', event => {
           
           // Return offline page for HTML requests
           if (event.request.headers.get('accept')?.includes('text/html')) {
-            return caches.match('/Holliday-Lawn-Garden/offline.html');
+            return caches.match('/offline.html');
           }
           
           return new Response('Network error', {
