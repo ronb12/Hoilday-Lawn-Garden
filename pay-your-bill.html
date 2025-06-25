@@ -355,6 +355,11 @@
             function validateAccount(showError) {
                 const value = accountInput.value.trim();
                 const hlgPattern = /^HLG[0-9]{4}$/;
+                if (value === "") {
+                    accountInput.classList.remove('error');
+                    accountError.classList.remove('show');
+                    return false;
+                }
                 if (!hlgPattern.test(value)) {
                     if (showError) {
                         accountInput.classList.add('error');
@@ -368,8 +373,14 @@
                 }
             }
             function validateAmount(showError) {
-                const value = parseFloat(amountInput.value);
-                if (isNaN(value) || value < 1) {
+                const value = amountInput.value.trim();
+                if (value === "") {
+                    amountInput.classList.remove('error');
+                    amountError.classList.remove('show');
+                    return false;
+                }
+                const numValue = parseFloat(value);
+                if (isNaN(numValue) || numValue < 1) {
                     if (showError) {
                         amountInput.classList.add('error');
                         amountError.classList.add('show');
