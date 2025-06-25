@@ -366,16 +366,20 @@
             const displayAmount = document.getElementById('displayAmount');
             let accountTouched = false;
             let amountTouched = false;
+            
             function validateAccount(showError) {
                 const value = accountInput.value.trim();
                 const hlgPattern = /^HLG[0-9]{4}$/;
+                
+                // Don't show error if field is empty and hasn't been touched
                 if (value === "") {
                     accountInput.classList.remove('error');
                     accountError.classList.remove('show');
                     return false;
                 }
+                
                 if (!hlgPattern.test(value)) {
-                    if (showError) {
+                    if (showError && accountTouched) {
                         accountInput.classList.add('error');
                         accountError.classList.add('show');
                     }
@@ -386,16 +390,20 @@
                     return true;
                 }
             }
+            
             function validateAmount(showError) {
                 const value = amountInput.value.trim();
+                
+                // Don't show error if field is empty and hasn't been touched
                 if (value === "") {
                     amountInput.classList.remove('error');
                     amountError.classList.remove('show');
                     return false;
                 }
+                
                 const numValue = parseFloat(value);
                 if (isNaN(numValue) || numValue < 1) {
-                    if (showError) {
+                    if (showError && amountTouched) {
                         amountInput.classList.add('error');
                         amountError.classList.add('show');
                     }
@@ -406,19 +414,41 @@
                     return true;
                 }
             }
+            
+            // Only validate on blur (when user leaves the field)
             accountInput.addEventListener('blur', function() {
                 accountTouched = true;
                 validateAccount(true);
             });
+            
             amountInput.addEventListener('blur', function() {
                 amountTouched = true;
                 validateAmount(true);
             });
+            
+            // On input, only update amount display, don't show validation errors
             accountInput.addEventListener('input', function() {
-                if (accountTouched) validateAccount(true);
+                // Only validate if field has been touched and has content
+                if (accountTouched && accountInput.value.trim() !== '') {
+                    validateAccount(true);
+                } else {
+                    // Clear errors if field is empty
+                    accountInput.classList.remove('error');
+                    accountError.classList.remove('show');
+                }
             });
+            
             amountInput.addEventListener('input', function() {
-                if (amountTouched) validateAmount(true);
+                // Only validate if field has been touched and has content
+                if (amountTouched && amountInput.value.trim() !== '') {
+                    validateAmount(true);
+                } else {
+                    // Clear errors if field is empty
+                    amountInput.classList.remove('error');
+                    amountError.classList.remove('show');
+                }
+                
+                // Update amount display
                 const value = parseFloat(amountInput.value);
                 if (!isNaN(value) && value >= 1) {
                     amountDisplay.classList.add('show');
@@ -428,11 +458,16 @@
                     displayAmount.textContent = '$0.00';
                 }
             });
+            
             // On form submit, show errors if invalid
             document.getElementById('payment-form').addEventListener('submit', function(e) {
                 let valid = true;
-                if (!validateAccount(true)) { valid = false; accountTouched = true; }
-                if (!validateAmount(true)) { valid = false; amountTouched = true; }
+                accountTouched = true;
+                amountTouched = true;
+                
+                if (!validateAccount(true)) { valid = false; }
+                if (!validateAmount(true)) { valid = false; }
+                
                 if (!valid) e.preventDefault();
             });
         });
