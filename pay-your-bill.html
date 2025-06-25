@@ -35,6 +35,61 @@
             body { padding-top: 50px; }
         }
         
+        /* Remove any red borders, outlines, or focus styles */
+        * {
+            outline: none !important;
+        }
+        
+        *:focus {
+            outline: none !important;
+            border-color: #ddd !important;
+            box-shadow: none !important;
+        }
+        
+        /* Remove any red borders from form elements */
+        input, select, textarea, button {
+            border-color: #ddd !important;
+            outline: none !important;
+        }
+        
+        input:focus, select:focus, textarea:focus, button:focus {
+            border-color: #2e7d32 !important;
+            outline: none !important;
+            box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2) !important;
+        }
+        
+        /* Remove any red borders from error states */
+        input.error, select.error, textarea.error {
+            border-color: #dc3545 !important;
+            outline: none !important;
+        }
+        
+        /* Remove any red borders from header */
+        .main-header, .main-header *, .nav-links, .nav-links * {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        
+        .main-header:focus, .nav-links:focus, .nav-links a:focus {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        
+        /* Remove any red borders from navigation */
+        .nav-links a, .nav-links li {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        
+        .nav-links a:focus, .nav-links li:focus {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        
         .hero-section {
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('assets/images/hero-garden-landscaping.jpg');
             background-size: cover;
@@ -162,7 +217,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: none !important;
             position: fixed;
             top: 0;
             left: 0;
@@ -263,6 +318,16 @@
             background: #0d47a1;
         }
         
+        .nav-links a.active,
+        .nav-links a:active,
+        .nav-links a:focus {
+            border-bottom: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+            background: none !important;
+            color: #2e7d32 !important;
+        }
+        
         /* Footer Styles */
         .footer {
             background: #2e7d32;
@@ -337,56 +402,65 @@
         }
         
         .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 1rem;
             text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
         }
         
         /* Mobile Tab Bar */
+        .mobile-tab-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #ddd;
+            padding: 0.5rem;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-tab-bar a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            font-size: 0.8rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .mobile-tab-bar a.active,
+        .mobile-tab-bar a:hover {
+            color: #2e7d32;
+            background: rgba(46, 125, 50, 0.1);
+        }
+        
+        .mobile-tab-bar i {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+        
         @media (max-width: 768px) {
-            .main-header .nav-links,
-            .main-header .login-buttons {
+            .nav-links {
+                display: none;
+            }
+            
+            .login-buttons {
                 display: none;
             }
             
             .mobile-tab-bar {
                 display: flex;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100vw;
-                height: 64px;
-                background: #fff;
-                border-top: 1px solid #e0e0e0;
-                box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
-                z-index: 2000;
                 justify-content: space-around;
-                align-items: center;
             }
             
-            .mobile-tab-bar a {
-                flex: 1 1 0;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                color: #2e7d32;
-                text-decoration: none;
-                font-size: 0.85rem;
-                font-weight: 600;
-                padding: 0.25rem 0;
-                transition: color 0.2s;
-            }
-            
-            .mobile-tab-bar a.active,
-            .mobile-tab-bar a:active,
-            .mobile-tab-bar a:hover {
-                color: #1565c0;
-            }
-            
-            .mobile-tab-bar i {
-                font-size: 1.5rem;
-                margin-bottom: 0.1rem;
+            body, .container, main {
+                padding-bottom: 80px;
             }
         }
         
@@ -394,6 +468,18 @@
             .mobile-tab-bar { 
                 display: none; 
             }
+        }
+        
+        /* Remove any underline/line for active nav link */
+        .nav-links a.active::after,
+        .nav-links a:active::after,
+        .nav-links a:focus::after {
+            display: none !important;
+            background: none !important;
+            border: none !important;
+            width: 0 !important;
+            height: 0 !important;
+            content: none !important;
         }
     </style>
 </head>
