@@ -4,7 +4,7 @@
   min-height: 500px;
   background:
     linear-gradient(135deg, rgba(56, 142, 60, 0.32) 0%, rgba(37, 96, 41, 0.32) 100%),
-    url('/assets/images/hero-garden-landscaping.jpg') center/cover no-repeat;
+    url('../../images/hero-garden-landscaping.jpg') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
