@@ -24,6 +24,8 @@
 <link href="assets/css/hero.css?v=1.0.6" rel="stylesheet"/>
 <link href="assets/css/main.css" rel="stylesheet"/>
 <link href="assets/css/components/payment.css" rel="stylesheet"/>
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
 <!-- Fix for fixed header spacing -->
 <style>
  body { padding-top: 100px; margin: 0; }
@@ -726,26 +728,118 @@
  
  // PayPal button rendering using the new integration
  function renderPayPalButtons() {
-     if (window.PayPalIntegration) {
-         window.PayPalIntegration.renderPayPalButtons('paypal-button-container', {
-             onSuccess: function(details) {
-                 // Additional success handling if needed
-                 console.log('Payment successful:', details);
-             },
-             onError: function(err) {
-                 // Additional error handling if needed
-                 
-             }
-         });
-     } else {
-         // Fallback: try again after a short delay
-         setTimeout(renderPayPalButtons, 100);
+     const container = document.getElementById('paypal-button-container');
+     
+     if (!container) {
+         console.error('PayPal container not found');
+         return;
      }
+     
+     // Check if PayPal SDK is available
+     if (!window.paypal) {
+         console.error('PayPal SDK not available');
+         container.innerHTML = '<p style="color: #dc3545; text-align: center; padding: 20px;">PayPal is currently unavailable. Please try again later or contact us for assistance.</p>';
+         return;
+     }
+     
+     console.log('Rendering PayPal buttons...');
+     
+     // Clear container
+     container.innerHTML = '';
+     
+     // Create PayPal buttons
+     window.paypal.Buttons({
+         style: {
+             layout: 'vertical',
+             color: 'gold',
+             shape: 'rect',
+             label: 'paypal'
+         },
+         createOrder: function(data, actions) {
+             const amount = document.getElementById('paymentAmount')?.value || '10.00';
+             const account = document.getElementById('accountNumber')?.value || '';
+
+             // Validate inputs
+             if (!amount || amount <= 0) {
+                 alert('Please enter a valid amount.');
+                 return;
+             }
+
+             if (!account) {
+                 alert('Please enter your account number.');
+                 return;
+             }
+
+             console.log('Creating PayPal order for amount:', amount, 'account:', account);
+
+             // Create order using PayPal's client-side API
+             return actions.order.create({
+                 purchase_units: [{
+                     amount: {
+                         value: amount,
+                     },
+                     description: `Payment for account ${account}`,
+                 }],
+             });
+         },
+         onApprove: function(data, actions) {
+             console.log('PayPal order approved, capturing payment...');
+             return actions.order.capture().then(function(details) {
+                 console.log('Payment captured successfully:', details);
+                 
+                 // Show success message
+                 const successMessage = `
+Payment completed successfully!
+
+Transaction ID: ${details.id}
+Payer: ${details.payer.name.given_name} ${details.payer.name.surname}
+Amount: $${details.purchase_units[0].amount.value}
+Account: ${document.getElementById('accountNumber')?.value || 'N/A'}
+
+Thank you for your payment!
+`;
+                 alert(successMessage);
+
+                 // Reset form if it exists
+                 const form = document.getElementById('payment-form');
+                 if (form) {
+                     form.reset();
+                 }
+
+                 // Hide amount display if it exists
+                 const amountDisplay = document.getElementById('amountDisplay');
+                 if (amountDisplay) {
+                     amountDisplay.style.display = 'none';
+                 }
+             });
+         },
+         onError: function(err) {
+             console.error('PayPal Error:', err);
+             alert('An error occurred during payment. Please try again or contact us for assistance.');
+         },
+     }).render(container).then(() => {
+         console.log('PayPal buttons rendered successfully');
+     }).catch((error) => {
+         console.error('Error rendering PayPal buttons:', error);
+         container.innerHTML = '<p style="color: #dc3545; text-align: center; padding: 20px;">PayPal buttons could not be loaded. Please try refreshing the page or contact us for assistance.</p>';
+     });
  }
  
  // Initialize PayPal buttons when the page loads
  document.addEventListener('DOMContentLoaded', function() {
-     renderPayPalButtons();
+     // Add a small delay to ensure PayPal SDK is loaded
+     setTimeout(function() {
+         renderPayPalButtons();
+     }, 500);
+     
+     // Fallback: try again after 2 seconds if buttons don't appear
+     setTimeout(function() {
+         const container = document.getElementById('paypal-button-container');
+         if (container && container.children.length === 0) {
+             console.log('PayPal buttons not rendered, trying again...');
+             renderPayPalButtons();
+         }
+     }, 2000);
  });
  });
  </script>
