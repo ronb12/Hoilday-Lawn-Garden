@@ -28,11 +28,11 @@
 <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
 <!-- Fix for fixed header spacing -->
 <style>
- body { padding-top: 100px; margin: 0; }
+ body { padding-top: 80px; margin: 0; }
  
  @media (max-width: 768px) {
  body {
- padding-top: 60px; /* Smaller padding for mobile */
+ padding-top: 50px; /* Smaller padding for mobile */
  }
  }
  
@@ -741,7 +741,7 @@
      // Check if PayPal SDK is available
      if (!window.paypal) {
          console.error('PayPal SDK not available');
-         container.innerHTML = '<p style="color: #dc3545; text-align: center; padding: 20px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; margin: 10px 0;">PayPal is currently unavailable. Please try refreshing the page or contact us for assistance.</p>';
+         container.innerHTML = '<p style="color: #6c757d; text-align: center; padding: 15px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; margin: 10px 0; font-size: 0.9rem;"><i class="fas fa-info-circle"></i> PayPal is loading... Please wait a moment.</p>';
          return;
      }
      
@@ -825,11 +825,11 @@ Thank you for your payment!
              console.log('PayPal buttons rendered successfully');
          }).catch((error) => {
              console.error('Error rendering PayPal buttons:', error);
-             container.innerHTML = '<p style="color: #dc3545; text-align: center; padding: 20px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; margin: 10px 0;">PayPal buttons could not be loaded. Please try refreshing the page or contact us for assistance.</p>';
+             container.innerHTML = '<p style="color: #6c757d; text-align: center; padding: 15px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; margin: 10px 0; font-size: 0.9rem;"><i class="fas fa-clock"></i> PayPal is taking longer than expected. Alternative payment options are available below.</p>';
          });
      } catch (error) {
          console.error('Exception in PayPal button creation:', error);
-         container.innerHTML = '<p style="color: #dc3545; text-align: center; padding: 20px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; margin: 10px 0;">PayPal encountered an error. Please try refreshing the page or contact us for assistance.</p>';
+         container.innerHTML = '<p style="color: #6c757d; text-align: center; padding: 15px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; margin: 10px 0; font-size: 0.9rem;"><i class="fas fa-info-circle"></i> PayPal is temporarily unavailable. Please use the alternative payment methods below.</p>';
      }
  }
  
