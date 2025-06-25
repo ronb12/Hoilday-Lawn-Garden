@@ -195,3 +195,9 @@ window.PayPalIntegration = {
     capturePayPalPayment,
     renderPayPalButtons
 };
+
+// Auto-initialize when script loads
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('PayPal integration script loaded');
+    // The buttons will be rendered by the main page script
+});
