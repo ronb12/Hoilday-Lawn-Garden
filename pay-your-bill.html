@@ -22,9 +22,14 @@
     <link href="assets/css/components/payment.css" rel="stylesheet">
     
     <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&disable-funding=venmo,paylater"></script>
+    <script src="https://www.paypal.com/sdk/js?currency=USD&disable-funding=venmo,paylater"></script>
     
     <style>
+        /* Suppress any potential warnings */
+        * {
+            box-sizing: border-box;
+        }
+        
         html, body {
             margin: 0;
             padding: 0;
@@ -424,24 +429,32 @@
         });
         // PayPal button rendering (replace with your real PayPal client ID in production)
         document.addEventListener('DOMContentLoaded', function() {
-            if (window.paypal) {
-                paypal.Buttons({
-                    style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
-                    createOrder: function(data, actions) {
-                        const amount = document.getElementById('paymentAmount').value;
-                        return actions.order.create({
-                            purchase_units: [{ amount: { value: amount || '1.00' } }]
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            console.log('Payment completed by ' + details.payer.name.given_name + '!');
-                        });
-                    },
-                    onError: function(err) {
-                        console.log('An error occurred during payment. Please try again.');
-                    }
-                }).render('#paypal-button-container');
+            try {
+                if (window.paypal) {
+                    paypal.Buttons({
+                        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+                        createOrder: function(data, actions) {
+                            const amount = document.getElementById('paymentAmount').value;
+                            return actions.order.create({
+                                purchase_units: [{ amount: { value: amount || '1.00' } }]
+                            });
+                        },
+                        onApprove: function(data, actions) {
+                            return actions.order.capture().then(function(details) {
+                                console.log('Payment completed by ' + details.payer.name.given_name + '!');
+                                // You can add a success message here instead of alert
+                            });
+                        },
+                        onError: function(err) {
+                            console.log('An error occurred during payment. Please try again.');
+                            // You can add an error message here instead of alert
+                        }
+                    }).render('#paypal-button-container');
+                } else {
+                    console.log('PayPal SDK not loaded');
+                }
+            } catch (error) {
+                console.log('PayPal integration error:', error);
             }
         });
     </script>
