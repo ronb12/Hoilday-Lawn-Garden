@@ -148,8 +148,11 @@
    }
  
    /* Hide desktop navigation on mobile */
-   .main-header .nav-links,
-   .main-header .login-buttons {
+   .main-header .nav-links {
+     display: none !important;
+   }
+   
+   .login-buttons {
      display: none !important;
    }
  
@@ -172,6 +175,44 @@
 /* Mobile Tab Bar - Hide on Desktop */
 @media (min-width: 769px) {
   .mobile-tab-bar { display: none !important; }
+}
+
+.login-buttons {
+  display: flex !important;
+  gap: 1rem !important;
+  align-items: center !important;
+  margin-left: 1rem !important;
+}
+
+.btn-login {
+  padding: 0.5rem 1rem !important;
+  border-radius: 4px !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  font-size: 0.9rem !important;
+  min-width: 120px !important;
+  text-align: center !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  white-space: nowrap !important;
+}
+
+.btn-customer {
+  background: #2e7d32 !important;
+  color: white !important;
+}
+
+.btn-admin {
+  background: #1565c0 !important;
+  color: white !important;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
 }
 </style>
 
