@@ -718,16 +718,22 @@
  </script>
 <!-- Mobile Menu Script -->
 <script>
-// Single, robust 
+// Single, robust mobile menu handler
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu functionality can be added here if needed
+    console.log('Mobile menu script loaded');
+});
+</script>
+
 <!-- Update Copyright Year -->
 <script>
- const yearElement = document.getElementById('current-year');
+const yearElement = document.getElementById('current-year');
 if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
 }
- </script>
+</script>
 
- <script>
+<script>
  // Enhanced loading management
  (function() {
  var loading = document.getElementById('loading');
