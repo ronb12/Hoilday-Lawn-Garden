@@ -37,7 +37,10 @@
             color: #222;
         }
         body { padding-top: 80px; }
-        @media (max-width: 768px) { body { padding-top: 56px; } }
+        @media (max-width: 768px) {
+            .nav-links { 
+                display: none !important; 
+            } body { padding-top: 56px; } }
         .main-header {
             background: #fff;
             min-height: 70px;
@@ -95,7 +98,25 @@
         .btn-login:hover { background: #1b5e20; }
         .btn-login.btn-admin:hover { background: #0d47a1; }
         @media (max-width: 768px) {
-            .nav-links, 
+            .nav-links { 
+                display: none !important; 
+            }
+            .nav-links { 
+                display: none !important; 
+            }
+        
+        /* Hide mobile tab bar by default (desktop) */
+        .mobile-tab-bar {
+            display: none !important;
+        }
+        
+            .mobile-tab-bar { 
+                display: flex !important; 
+                justify-content: space-around !important; 
+            }
+            body { 
+                padding-bottom: 70px !important; 
+            }
         }
         .hero-section {
             background: linear-gradient(rgba(46,125,50,0.7),rgba(46,125,50,0.3)), url('assets/images/hero-garden-landscaping.jpg') center/cover no-repeat;
@@ -187,6 +208,12 @@
         .social-link { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; transition: background 0.2s; }
         .social-link:hover { background: rgba(255,255,255,0.2); }
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem; text-align: center; }
+        
+        /* Hide mobile tab bar by default (desktop) */
+        .mobile-tab-bar {
+            display: none !important;
+        }
+        
         .mobile-tab-bar {
             display: none;
             position: fixed;
@@ -214,11 +241,6 @@
             background: #e8f5e9;
         }
         .mobile-tab-bar i { font-size: 1.2rem; margin-bottom: 0.2rem; }
-        @media (max-width: 768px) {
-            .nav-links, 
-            .mobile-tab-bar { display: flex; justify-content: space-around; }
-            body { padding-bottom: 70px; }
-        }
     </style>
 </head>
 <body>
@@ -238,7 +260,7 @@
                 <li><a href="pay-your-bill.html" class="active">Pay Your Bill</a></li>
             </ul>
             <div class="login-buttons">
-                <a href="login.html" class="btn-login"><i class="fas fa-user"></i>Customer Login</a>
+                <a href="login.html" class="btn-login btn-customer"><i class="fas fa-user"></i>Customer Login</a>
                 <a href="admin-login.html" class="btn-login btn-admin"><i class="fas fa-cog"></i>Admin Login</a>
             </div>
         </nav>
