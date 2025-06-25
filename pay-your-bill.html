@@ -350,12 +350,16 @@
             const amountError = document.getElementById('amountError');
             const amountDisplay = document.getElementById('amountDisplay');
             const displayAmount = document.getElementById('displayAmount');
-            function validateAccount() {
+            let accountTouched = false;
+            let amountTouched = false;
+            function validateAccount(showError) {
                 const value = accountInput.value.trim();
                 const hlgPattern = /^HLG[0-9]{4}$/;
                 if (!hlgPattern.test(value)) {
-                    accountInput.classList.add('error');
-                    accountError.classList.add('show');
+                    if (showError) {
+                        accountInput.classList.add('error');
+                        accountError.classList.add('show');
+                    }
                     return false;
                 } else {
                     accountInput.classList.remove('error');
@@ -363,11 +367,13 @@
                     return true;
                 }
             }
-            function validateAmount() {
+            function validateAmount(showError) {
                 const value = parseFloat(amountInput.value);
                 if (isNaN(value) || value < 1) {
-                    amountInput.classList.add('error');
-                    amountError.classList.add('show');
+                    if (showError) {
+                        amountInput.classList.add('error');
+                        amountError.classList.add('show');
+                    }
                     return false;
                 } else {
                     amountInput.classList.remove('error');
@@ -375,9 +381,19 @@
                     return true;
                 }
             }
-            accountInput.addEventListener('input', validateAccount);
+            accountInput.addEventListener('blur', function() {
+                accountTouched = true;
+                validateAccount(true);
+            });
+            amountInput.addEventListener('blur', function() {
+                amountTouched = true;
+                validateAmount(true);
+            });
+            accountInput.addEventListener('input', function() {
+                if (accountTouched) validateAccount(true);
+            });
             amountInput.addEventListener('input', function() {
-                validateAmount();
+                if (amountTouched) validateAmount(true);
                 const value = parseFloat(amountInput.value);
                 if (!isNaN(value) && value >= 1) {
                     amountDisplay.classList.add('show');
@@ -386,6 +402,13 @@
                     amountDisplay.classList.remove('show');
                     displayAmount.textContent = '$0.00';
                 }
+            });
+            // On form submit, show errors if invalid
+            document.getElementById('payment-form').addEventListener('submit', function(e) {
+                let valid = true;
+                if (!validateAccount(true)) { valid = false; accountTouched = true; }
+                if (!validateAmount(true)) { valid = false; amountTouched = true; }
+                if (!valid) e.preventDefault();
             });
         });
         // PayPal button rendering (replace with your real PayPal client ID in production)
