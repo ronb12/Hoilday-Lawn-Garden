@@ -3,712 +3,68 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- SEO Meta Tags -->
-    <title>Frequently Asked Questions Holliday's Lawn &amp; Garden</title>
+    <title>Frequently Asked Questions | Holliday's Lawn & Garden</title>
     <meta name="description" content="Find answers to common questions about our lawn care and landscaping services. Get expert advice on maintenance, scheduling, and more." />
-    <meta name="keywords" content="lawn care FAQ, landscaping questions, lawn maintenance, garden care, professional services" />
-    <meta name="author" content="Holliday's Lawn &amp; Garden" />
-    <meta name="robots" content="index, follow" />
-
-    <!-- Open Graph / Twitter -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/faq.html" />
-    <meta property="og:title" content="Frequently Asked Questions Holliday's Lawn &amp; Garden" />
-    <meta property="og:description" content="Find answers to common questions about our lawn care and landscaping services. Get expert advice on maintenance, scheduling, and more." />
-    <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
-    <meta property="og:site_name" content="Holliday's Lawn &amp; Garden" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/faq.html" />
-    <meta name="twitter:title" content="Frequently Asked Questions Holliday's Lawn &amp; Garden" />
-    <meta name="twitter:description" content="Find answers to common questions about our lawn care and landscaping services. Get expert advice on maintenance, scheduling, and more." />
-    <meta name="twitter:image" content="assets/images/hollidays-logo.optimized-1280.png" />
-
-    <!-- Performance & Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-    <!-- Icon Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-
-    <!-- Stylesheets -->
     <link href="assets/css/hero.css" rel="stylesheet" />
     <link href="assets/css/main.css" rel="stylesheet" />
     <link href="assets/css/mobile-enhancements.css" rel="stylesheet" />
-
-    <!-- Favicons & Manifest -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="manifest.json" />
-    <link rel="mask-icon" color="#5bbad5" href="assets/images/favicon/safari-pinned-tab.svg" />
-    <meta name="msapplication-TileColor" content="#2e7d32" />
-    <meta name="theme-color" content="#2e7d32" />
-
-    <!-- Updated CSP -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.gstatic.com https://www.googletagmanager.com;
-        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
-        font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
-        img-src 'self' data: https:;
-        connect-src 'self' https://www.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://firebase.googleapis.com https://analytics.google.com https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://stats.g.doubleclick.net;
-    " />
-
-    <!-- FAQ Page Specific Styles -->
     <style>
-        /* Professional FAQ Styling */
-        .faq-container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 3rem 2rem;
-          background: #fff;
-          border-radius: 12px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-          margin-top: -50px;
-          position: relative;
-          z-index: 10;
-        }
-
-        .faq-section {
-          margin-bottom: 3rem;
-          padding: 2rem;
-          background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-          border-radius: 10px;
-          border-left: 4px solid #4caf50;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .faq-section h2 {
-          color: #2e7d32;
-          font-size: 2rem;
-          font-weight: 700;
-          margin-bottom: 2rem;
-          text-align: center;
-          position: relative;
-          padding-bottom: 1rem;
-        }
-
-        .faq-section h2::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 60px;
-          height: 3px;
-          background: linear-gradient(90deg, #4caf50, #66bb6a);
-          border-radius: 2px;
-        }
-
-        .faq-item {
-          background: #fff;
-          border-radius: 8px;
-          margin-bottom: 1rem;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-          border: 1px solid #e8f5e8;
-          transition: all 0.3s ease;
-          overflow: hidden;
-        }
-
-        .faq-item:hover {
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-          transform: translateY(-2px);
-          border-color: #4caf50;
-        }
-
-        .faq-question {
-          cursor: pointer;
-          padding: 1.5rem;
-          background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-          border-bottom: 1px solid #e8f5e8;
-          transition: all 0.3s ease;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .faq-question:hover {
-          background: linear-gradient(135deg, #e8f5e8 0%, #f1f8f1 100%);
-        }
-
-        .faq-question h3 {
-          margin: 0;
-          font-size: 1.1rem;
-          font-weight: 600;
-          color: #2e7d32;
-          flex: 1;
-          line-height: 1.4;
-        }
-
-        .faq-question .icon {
-          font-size: 1.2rem;
-          color: #4caf50;
-          transition: transform 0.3s ease;
-          margin-left: 1rem;
-          flex-shrink: 0;
-        }
-
-        .faq-item.active .faq-question .icon {
-          transform: rotate(180deg);
-        }
-
-        .faq-answer {
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.3s ease, padding 0.3s ease;
-          background: #fff;
-          padding: 0 1.5rem;
-        }
-
-        .faq-item.active .faq-answer {
-          max-height: 500px;
-          padding: 1.5rem;
-        }
-
-        .faq-answer p {
-          margin: 0;
-          color: #555;
-          line-height: 1.6;
-          font-size: 1rem;
-        }
-
-        /* Contact Section Styling */
-        .contact-section {
-          background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
-          color: #fff;
-          padding: 3rem 2rem;
-          border-radius: 12px;
-          text-align: center;
-          margin-top: 3rem;
-          box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
-        }
-
-        .contact-section h2 {
-          font-size: 2.5rem;
-          margin-bottom: 1rem;
-          font-weight: 700;
-        }
-
-        .contact-section p {
-          font-size: 1.2rem;
-          margin-bottom: 2rem;
-          opacity: 0.95;
-        }
-
-        .contact-info {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 2rem;
-          margin-top: 2rem;
-        }
-
-        .contact-card {
-          background: rgba(255, 255, 255, 0.1);
-          padding: 1.5rem;
-          border-radius: 8px;
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          transition: transform 0.3s ease;
-        }
-
-        .contact-card:hover {
-          transform: translateY(-5px);
-          background: rgba(255, 255, 255, 0.15);
-        }
-
-        .contact-card i {
-          font-size: 2rem;
-          margin-bottom: 1rem;
-          display: block;
-        }
-
-        .contact-card h3 {
-          font-size: 1.2rem;
-          margin-bottom: 0.5rem;
-          font-weight: 600;
-        }
-
-        .contact-card a {
-          color: #fff;
-          text-decoration: none;
-          font-weight: 500;
-          transition: opacity 0.3s ease;
-        }
-
-        .contact-card a:hover {
-          opacity: 0.8;
-        }
-
-        /* Search Functionality */
-        .faq-search {
-          margin-bottom: 3rem;
-          text-align: center;
-        }
-
-        .search-container {
-          max-width: 500px;
-          margin: 0 auto;
-          position: relative;
-        }
-
-        .search-input {
-          width: 100%;
-          padding: 1rem 1.5rem;
-          border: 2px solid #e0e0e0;
-          border-radius: 50px;
-          font-size: 1rem;
-          background: #fff;
-          transition: all 0.3s ease;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .search-input:focus {
-          outline: none;
-          border-color: #4caf50;
-          box-shadow: 0 4px 20px rgba(76, 175, 80, 0.2);
-        }
-
-        .search-input::placeholder {
-          color: #999;
-        }
-
-        .search-icon {
-          position: absolute;
-          right: 1.5rem;
-          top: 50%;
-          transform: translateY(-50%);
-          color: #4caf50;
-          font-size: 1.2rem;
-        }
-
-        /* Category Navigation */
-        .faq-categories {
-          display: flex;
-          justify-content: center;
-          flex-wrap: wrap;
-          gap: 1rem;
-          margin-bottom: 3rem;
-        }
-
-        .category-btn {
-          padding: 0.75rem 1.5rem;
-          background: #fff;
-          border: 2px solid #e0e0e0;
-          border-radius: 25px;
-          color: #666;
-          text-decoration: none;
-          font-weight: 600;
-          transition: all 0.3s ease;
-          cursor: pointer;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .category-btn:hover,
-        .category-btn.active {
-          background: #4caf50;
-          border-color: #4caf50;
-          color: #fff;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-          .faq-container {
-            margin: -30px 1rem 0;
-            padding: 2rem 1rem;
-          }
-
-          .faq-section {
-            padding: 1.5rem;
-          }
-
-          .faq-section h2 {
-            font-size: 1.5rem;
-          }
-
-          .faq-question h3 {
-            font-size: 1rem;
-          }
-
-          .contact-info {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-          }
-
-          .faq-categories {
-            gap: 0.5rem;
-          }
-
-          .category-btn {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-          }
-        }
-
-        /* Hide/Show FAQ items based on search */
-        .faq-item.hidden {
-          display: none;
-        }
-
-        .faq-section.hidden {
-          display: none;
-        }
-
-        /* Loading animation for search */
-        .searching {
-          opacity: 0.7;
-          pointer-events: none;
-        }
-
-        /* No results message */
-        .no-results {
-          text-align: center;
-          padding: 3rem;
-          color: #666;
-          font-style: italic;
-        }
-
-        .no-results i {
-          font-size: 3rem;
-          color: #ccc;
-          margin-bottom: 1rem;
-          display: block;
-        }
-
-        /* FAQ Accordion Styles */
-        .faq-answer {
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.3s ease, padding 0.3s ease;
-          background: #fff;
-          padding: 0 1.5rem;
-        }
-
-        .faq-item.active .faq-answer {
-          max-height: 500px;
-          padding: 1.5rem;
-        }
-
-        .faq-question .icon {
-          transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-question .icon {
-          transform: rotate(180deg);
-        }
-
-        /* Ensure hero background image displays */
+        body { padding-top: 80px !important; margin: 0 !important; }
         .hero {
-          background: 
-            linear-gradient(135deg, rgba(56, 142, 60, 0.32) 0%, rgba(37, 96, 41, 0.32) 100%),
-            url('../images/hero-garden-landscaping.jpg') center/cover no-repeat !important;
-        }
-    
-
-}
-
-/* Mobile Tab Bar - Hide on Desktop */
-@media (min-width: 769px) {
-  .mobile-tab-bar { display: none !important; }
-}
-</style>
-
-<style>
-
-    /* Perfect Page Structure - No Issues */
-    .main-header {
-        background: #fff !important;
-        min-height: 70px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        padding: 0 2rem !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 9999 !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
-    
-    .logo {
-        display: flex !important;
-        align-items: center !important;
-        flex-shrink: 0 !important;
-    }
-    
-    .logo img {
-        height: 50px !important;
-        width: auto !important;
-        display: block !important;
-    }
-    
-    #nav-menu {
-        display: flex !important;
-        align-items: center !important;
-        flex-grow: 1 !important;
-        justify-content: flex-end !important;
-    }
-    
-    .nav-links { 
-        display: flex !important;
-        align-items: center !important;
-        list-style: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        gap: 2rem !important;
-        flex-wrap: nowrap !important;
-    }
-    
-    .nav-links a { 
-        padding: 0.5rem 0.75rem !important; 
-        color: #333 !important; 
-        font-weight: 500 !important;
-        text-decoration: none !important;
-        transition: color 0.3s ease !important;
-        white-space: nowrap !important;
-        font-size: 0.95rem !important;
-        display: block !important;
-    }
-    
-    .nav-links a:hover {
-        color: #2e7d32 !important;
-    }
-    
-    .nav-links li { 
-        display: flex !important; 
-        align-items: center !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    .login-buttons {
-        display: flex !important;
-        gap: 1rem !important;
-        align-items: center !important;
-        margin-left: 1rem !important;
-    }
-    
-    .btn-login {
-        padding: 0.5rem 1rem !important;
-        border-radius: 4px !important;
-        text-decoration: none !important;
-        font-weight: 500 !important;
-        transition: all 0.3s ease !important;
-        font-size: 0.9rem !important;
-        min-width: 120px !important;
-        text-align: center !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 0.5rem !important;
-        white-space: nowrap !important;
-    }
-    
-    .btn-customer {
-        background: #2e7d32 !important;
-        color: white !important;
-    }
-    
-    .btn-admin {
-        background: #1565c0 !important;
-        color: white !important;
-    }
-    
-    .btn-login:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-    }
-    
-    
-
-    
-
-    
-
-    
-
-    
-    
-    /* Hero Section - Perfect Spacing */
-    .hero {
-        position: relative !important;
-        width: 100vw !important;
-        min-height: 60vh !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        background: #222 !important;
-        overflow: hidden !important;
-        margin: 0 !important;
-        margin-top: 70px !important;
-        padding: 0 !important;
-    }
-    
-    .hero img {
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        z-index: 1 !important;
-        filter: brightness(0.6) !important;
-    }
-    
-    .hero-content {
-        position: relative !important;
-        z-index: 2 !important;
-        text-align: center !important;
-        color: #fff !important;
-        padding: 2rem !important;
-        max-width: 800px !important;
-    }
-    
-    .hero-content h1 {
-        font-size: 3rem !important;
-        margin-bottom: 1rem !important;
-        font-weight: 600 !important;
-        letter-spacing: 1px !important;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    .hero-content p {
-        font-size: 1.25rem !important;
-        font-weight: 400 !important;
-        margin-bottom: 2rem !important;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    /* Body and Main Content */
-    body {
-        padding-top: 70px !important;
-        margin: 0 !important;
-    }
-    
-    main {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    @media (max-width: 768px) {
-        body {
-            padding-top: 70px !important;
-        }
-        
-        .main-header {
-            padding: 0 1rem !important;
-        }
-        
-        #nav-menu {
-            justify-content: flex-end !important;
-        }
-        
-        .nav-links { 
-            display: none !important; 
-            position: absolute !important; 
-            top: 100% !important; 
-            left: 0 !important; 
-            right: 0 !important; 
-            background: var(--color-primary, #4caf50) !important; 
-            padding: 1rem !important; 
-            flex-direction: column !important; 
-            align-items: center !important; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-            z-index: 1000 !important;
-        }
-        
-        .nav-links.active { 
-            display: flex !important; 
-        }
-        
-        
-        
-        .login-buttons {
-            flex-direction: column !important;
-            gap: 0.5rem !important;
-            margin-left: 0 !important;
-        }
-        
-        .btn-login {
-            min-width: 140px !important;
-            font-size: 0.85rem !important;
-        }
-        
-        .hero-content h1 {
-            font-size: 2rem !important;
-        }
-        
-        .hero-content p {
-            font-size: 1rem !important;
-        }
-    }
-    
-    @media (max-width: 900px) {
-        .main-header .nav-links {
+            position: relative !important;
+            width: 100vw !important;
+            min-height: 60vh !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: 
+                linear-gradient(135deg, rgba(56, 142, 60, 0.32) 0%, rgba(37, 96, 41, 0.32) 100%),
+                url('assets/images/hero-garden-landscaping-1280.jpg') center/cover no-repeat !important;
+            background-color: #2e7d32 !important;
+            overflow: hidden !important;
+            margin: 0 !important;
             margin-top: 0 !important;
-            padding-top: 0.5em !important;
+            padding: 0 !important;
         }
-    }
-
-</style>
-
-<style>
-/* Ensure hero H1 elements are always visible */
-.hero h1 {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    z-index: 10 !important;
-}
-
-/* Ensure hero content is visible */
-.hero-content {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
-/* Ensure hero section itself is visible */
-.hero {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-</style>
-
-<style>
-/* Ensure hero H1 elements are always visible */
-.hero h1 {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    z-index: 10 !important;
-}
-</style>
-
-<style>
-/* Hero section visibility - Professional Design Standard */
-.hero h1 { display: block !important; visibility: visible !important; opacity: 1 !important; }
-</style>
+        .hero-content {
+            position: relative !important;
+            z-index: 2 !important;
+            text-align: center !important;
+            color: #fff !important;
+            padding: 2rem !important;
+            background: rgba(56, 142, 60, 0.18) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+            backdrop-filter: blur(4px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            max-width: 800px !important;
+            margin: 0 auto !important;
+        }
+        .hero-content h1 {
+            font-size: 3.5rem !important;
+            margin-bottom: 1rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 1px !important;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3) !important;
+            line-height: 1.2 !important;
+        }
+        .hero-content p {
+            font-size: 1.25rem !important;
+            font-weight: 400 !important;
+            margin-bottom: 2rem !important;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1) !important;
+            line-height: 1.6 !important;
+            opacity: 0.97 !important;
+        }
+    </style>
 </head>
 <body>
   <!-- Header -->
   <header class="main-header">
     <div class="logo">
       <a href="index.html">
-        <picture>
-          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
-          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
-        </picture>
+        <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" loading="lazy">
       </a>
     </div>
     <nav id="nav-menu">
@@ -722,57 +78,33 @@
         <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
       </ul>
       <div class="login-buttons">
-        <a href="login.html" class="btn-login btn-customer">
-          <i class="fas fa-user"></i>
-          <span>Customer Login</span>
-        </a>
-        <a href="admin-login.html" class="btn-login btn-admin">
-          <i class="fas fa-lock"></i>
-          <span>Admin Login</span>
-        </a>
+        <a href="login.html" class="btn-login btn-customer"><i class="fas fa-user"></i> Customer Login</a>
+        <a href="admin-login.html" class="btn-login btn-admin"><i class="fas fa-lock"></i> Admin Login</a>
       </div>
     </nav>
   </header>
-
   <!-- Mobile Tab Bar -->
   <div class="mobile-tab-bar">
-    <a href="index.html">
-      <i class="fas fa-home"></i>
-      <span>Home</span>
-    </a>
-    <a href="services.html">
-      <i class="fas fa-tools"></i>
-      <span>Services</span>
-    </a>
-    <a href="pay-your-bill.html">
-      <i class="fas fa-credit-card"></i>
-      <span>Pay Bill</span>
-    </a>
-    <a href="contact.html">
-      <i class="fas fa-phone"></i>
-      <span>Contact</span>
-    </a>
-    <a href="login.html">
-      <i class="fas fa-user"></i>
-      <span>Login</span>
-    </a>
+    <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="services.html"><i class="fas fa-tools"></i><span>Services</span></a>
+    <a href="pay-your-bill.html"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
+    <a href="contact.html"><i class="fas fa-phone"></i><span>Contact</span></a>
+    <a href="login.html"><i class="fas fa-user"></i><span>Login</span></a>
   </div>
-
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
       <h1>Frequently Asked Questions</h1>
-      <p>Find answers to common questions about our lawn care and landscaping services. Can't find what you're looking for? Contact us directly!</p>
+      <p>Find answers to common questions about our lawn care and landscaping services. Get expert advice on maintenance, scheduling, and more.</p>
     </div>
   </section>
-
-  <!-- Main Content -->
+  <!-- Main FAQ Content -->
   <main role="main">
     <div class="faq-container">
       <!-- Search Functionality -->
       <div class="faq-search">
         <div class="search-container">
-          <input type="text" class="search-input" placeholder="Search for answers..." id="faqSearch">
+          <input type="text" id="faqSearch" class="search-input" placeholder="Search FAQs...">
           <i class="fas fa-search search-icon"></i>
         </div>
       </div>
@@ -780,201 +112,197 @@
       <!-- Category Navigation -->
       <div class="faq-categories">
         <button class="category-btn active" data-category="all">All Questions</button>
-        <button class="category-btn" data-category="general">General</button>
         <button class="category-btn" data-category="services">Services</button>
-        <button class="category-btn" data-category="payment">Payment</button>
+        <button class="category-btn" data-category="scheduling">Scheduling</button>
+        <button class="category-btn" data-category="pricing">Pricing</button>
         <button class="category-btn" data-category="maintenance">Maintenance</button>
       </div>
 
-      <!-- General Questions -->
-      <div class="faq-section" data-category="general">
-        <h2>🌱 General Questions</h2>
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3>
-              <span>📍 What areas do you serve?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
-          </div>
-          <div class="faq-answer">
-            <p>We provide comprehensive lawn care and landscaping services throughout New Orleans and the surrounding areas including Metairie, Kenner, Gretna, and nearby communities. Contact us to confirm service availability in your specific neighborhood.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3>
-              <span>📅 How often should I schedule lawn maintenance?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
-          </div>
-          <div class="faq-answer">
-            <p>We recommend weekly or bi-weekly maintenance for optimal lawn health. However, we can customize a schedule based on your specific needs, property size, and grass type. During peak growing seasons (spring and fall), more frequent maintenance may be beneficial.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3>
-              <span>📋 Do you provide free estimates?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
-          </div>
-          <div class="faq-answer">
-            <p>Yes, we offer free, no-obligation estimates for all our services. Our team will visit your property to assess your needs and provide a detailed quote. Contact us to schedule a consultation at your convenience.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3>
-              <span>📜 Are you licensed and insured?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
-          </div>
-          <div class="faq-answer">
-            <p>Yes, we are fully licensed and insured for all our services. We carry comprehensive liability insurance and workers' compensation coverage. We can provide proof of insurance upon request for your peace of mind.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Services & Scheduling -->
+      <!-- Services FAQ Section -->
       <div class="faq-section" data-category="services">
-        <h2>🛠️ Services &amp; Scheduling</h2>
+        <h2>Services & Offerings</h2>
+        
         <div class="faq-item">
           <div class="faq-question">
-            <h3>
-              <span>🌤️ Do you offer seasonal services?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
+            <h3><span>What lawn care services do you offer?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
           </div>
           <div class="faq-answer">
-            <p>Yes, we provide comprehensive seasonal services including spring cleanup, summer maintenance, fall preparation, and winter protection. Our seasonal programs are designed to keep your lawn healthy year-round and prepare it for the changing weather conditions.</p>
+            <p>We offer comprehensive lawn care services including mowing, edging, trimming, fertilization, weed control, pest management, aeration, overseeding, and seasonal cleanups. We also provide landscaping design and installation services.</p>
           </div>
         </div>
+
         <div class="faq-item">
           <div class="faq-question">
-            <h3>
-              <span>🚨 Do you offer emergency services?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
+            <h3><span>Do you offer one-time services or only recurring maintenance?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
           </div>
           <div class="faq-answer">
-            <p>Yes, we provide emergency services for storm damage cleanup, urgent lawn maintenance, and smaller landscaping emergencies. However, we do not cut down or remove large trees. For large tree removal, we recommend contacting a specialized tree service company.</p>
+            <p>We offer both one-time services and recurring maintenance plans. Whether you need a single cleanup, ongoing weekly maintenance, or seasonal services, we can accommodate your needs with flexible scheduling options.</p>
           </div>
         </div>
+
         <div class="faq-item">
           <div class="faq-question">
-            <h3>
-              <span>⏰ What is your cancellation policy?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
+            <h3><span>What areas do you service?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
           </div>
           <div class="faq-answer">
-            <p>We require 24-hour notice for service cancellations. Please contact us as soon as possible if you need to reschedule. This helps us manage our schedule efficiently and accommodate other customers who may need our services.</p>
+            <p>We service the greater New Orleans area and surrounding communities. Contact us with your specific location to confirm we service your area and to get a free estimate.</p>
           </div>
         </div>
+
         <div class="faq-item">
           <div class="faq-question">
-            <h3>
-              <span>🌳 What types of trees and shrubs do you work with?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
+            <h3><span>Do you handle both residential and commercial properties?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
           </div>
           <div class="faq-answer">
-            <p>We work with all types of trees and shrubs commonly found in Louisiana landscapes, including live oaks, magnolias, crepe myrtles, azaleas, and many others. Our team has extensive experience with local plant species and their specific care requirements.</p>
+            <p>Yes, we provide lawn care services for both residential and commercial properties. Our team is experienced in maintaining various property types and sizes, from small residential yards to large commercial landscapes.</p>
           </div>
         </div>
       </div>
 
-      <!-- Payment & Billing -->
-      <div class="faq-section" data-category="payment">
-        <h2>💳 Payment &amp; Billing</h2>
+      <!-- Scheduling FAQ Section -->
+      <div class="faq-section" data-category="scheduling">
+        <h2>Scheduling & Appointments</h2>
+        
         <div class="faq-item">
           <div class="faq-question">
-            <h3>
-              <span>💳 What payment methods do you accept?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
+            <h3><span>How do I schedule a service?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
           </div>
           <div class="faq-answer">
-            <p>We accept all major credit cards (Visa, MasterCard, American Express, Discover), cash, and online payments through our secure payment system. We also offer convenient payment plans for larger projects.</p>
+            <p>You can schedule a service by calling us at (504) 717-1887, emailing us at 7holliday@gmail.com, or using our online booking system. We'll work with you to find a convenient time that fits your schedule.</p>
           </div>
         </div>
+
         <div class="faq-item">
           <div class="faq-question">
-            <h3>
-              <span>📊 Do you offer payment plans?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
+            <h3><span>What are your service hours?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
           </div>
           <div class="faq-answer">
-            <p>We accept payment in full upon completion of services. We accept all major credit cards (Visa, MasterCard, American Express, Discover), cash, and online payments through our secure payment system for your convenience.</p>
+            <p>We typically work Monday through Friday, 7:00 AM to 6:00 PM, and Saturdays from 8:00 AM to 4:00 PM. We can accommodate special scheduling needs for commercial clients or emergency situations.</p>
           </div>
         </div>
+
         <div class="faq-item">
           <div class="faq-question">
-            <h3>
-              <span>🧾 How do I pay my bill online?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
+            <h3><span>How far in advance should I schedule?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
           </div>
           <div class="faq-answer">
-            <p>You can easily pay your bill online through our secure customer portal. Simply visit our "Pay Your Bill" page, enter your account information, and complete your payment using any major credit card or bank account.</p>
+            <p>For regular maintenance, we recommend scheduling at least a week in advance. For one-time services or seasonal work, 2-3 weeks notice is ideal, especially during peak seasons (spring and fall).</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3><span>What happens if it rains on my scheduled service day?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We monitor weather conditions and will reschedule your service if heavy rain or severe weather would affect the quality of our work. We'll contact you to reschedule for the next available time slot.</p>
           </div>
         </div>
       </div>
 
-      <!-- Maintenance & Care -->
+      <!-- Pricing FAQ Section -->
+      <div class="faq-section" data-category="pricing">
+        <h2>Pricing & Payment</h2>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3><span>How much do your services cost?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Pricing varies based on property size, service type, and frequency. We provide free estimates after assessing your property. Contact us for a detailed quote tailored to your specific needs.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3><span>Do you offer any discounts or package deals?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, we offer discounts for recurring maintenance plans, seasonal packages, and referrals. We also provide special pricing for commercial clients and larger properties. Ask us about our current promotions!</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3><span>What payment methods do you accept?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We accept cash, checks, credit cards, and online payments. We can set up automatic billing for recurring services, and we offer convenient online payment options through our customer portal.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3><span>When is payment due?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Payment is typically due upon completion of service. For recurring maintenance plans, we offer monthly billing options. Commercial clients may be eligible for net 30 payment terms.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Maintenance FAQ Section -->
       <div class="faq-section" data-category="maintenance">
-        <h2>🌿 Maintenance &amp; Care</h2>
+        <h2>Lawn Care & Maintenance</h2>
+        
         <div class="faq-item">
           <div class="faq-question">
-            <h3>
-              <span>🌱 What grass types do you specialize in?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
+            <h3><span>How often should I have my lawn mowed?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
           </div>
           <div class="faq-answer">
-            <p>We specialize in warm-season grasses common to Louisiana, including St. Augustine, Bermuda, Zoysia, and Centipede grass. Each type has specific care requirements, and we tailor our maintenance programs accordingly.</p>
+            <p>During the growing season (spring and summer), most lawns benefit from weekly mowing. In fall and winter, mowing frequency can be reduced to every 2-3 weeks. We'll adjust based on your grass type and growth rate.</p>
           </div>
         </div>
+
         <div class="faq-item">
           <div class="faq-question">
-            <h3>
-              <span>💧 Do you provide irrigation services?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
+            <h3><span>What's the best time to fertilize my lawn?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
           </div>
           <div class="faq-answer">
-            <p>We ensure your lawn is being properly watered as part of our lawn care services. We can assess your lawn's watering needs and provide recommendations for optimal watering practices, but we do not install, maintain, or repair irrigation systems.</p>
+            <p>For warm-season grasses common in Louisiana, the best times to fertilize are late spring (May) and late summer (August/September). We'll create a customized fertilization schedule based on your specific grass type and soil conditions.</p>
           </div>
         </div>
+
         <div class="faq-item">
           <div class="faq-question">
-            <h3>
-              <span>🌺 Do you handle garden maintenance?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
+            <h3><span>How do you handle weeds and pests?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
           </div>
           <div class="faq-answer">
-            <p>Absolutely! We provide comprehensive garden maintenance including planting, pruning, fertilizing, pest control, and seasonal cleanup. Our team can help you maintain beautiful flower beds, vegetable gardens, and ornamental plants.</p>
+            <p>We use integrated pest management techniques, including pre-emergent weed control, targeted herbicide applications, and natural pest control methods when possible. We'll identify specific issues and recommend the most effective treatment.</p>
           </div>
         </div>
+
         <div class="faq-item">
           <div class="faq-question">
-            <h3>
-              <span>🦗 Do you offer pest control services?</span>
-              <i class="fas fa-chevron-down icon"></i>
-            </h3>
+            <h3><span>Do you provide seasonal lawn care advice?</span></h3>
+            <i class="fas fa-chevron-down icon"></i>
           </div>
           <div class="faq-answer">
-            <p>Yes, we offer integrated pest management services for common lawn and garden pests. We use environmentally responsible methods to control insects, weeds, and diseases while protecting beneficial organisms.</p>
+            <p>Yes! We provide seasonal care tips and recommendations for your specific lawn type. We'll help you understand what your lawn needs during each season and can adjust our services accordingly.</p>
           </div>
         </div>
       </div>
 
       <!-- Contact Section -->
       <div class="contact-section">
-        <h2>📞 Still Have Questions?</h2>
-        <p>Can't find the answer you're looking for? We're here to help!</p>
+        <h2>Still Have Questions?</h2>
+        <p>Can't find what you're looking for? Our expert team is here to help!</p>
+        
         <div class="contact-info">
           <div class="contact-card">
             <i class="fas fa-phone"></i>
@@ -987,9 +315,9 @@
             <a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
           </div>
           <div class="contact-card">
-            <i class="fas fa-user"></i>
-            <h3>Contact Person</h3>
-            <span>Karl Holliday</span>
+            <i class="fas fa-calendar"></i>
+            <h3>Get a Quote</h3>
+            <a href="contact.html">Request Free Estimate</a>
           </div>
         </div>
       </div>
@@ -997,69 +325,55 @@
   </main>
 
   <!-- Footer -->
-  <footer class="footer" style="background: #2e7d32; color: white; padding: 3rem 0 1rem;">
-    <div class="footer-content" style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
-      <div class="footer-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-grid">
         <div class="footer-section">
-          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: white;">Contact Us</h3>
-          <div class="footer-contact" style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <span style="font-weight: 600;">Karl Holliday</span>
-            <a href="tel:+15047171887" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
-              <i class="fas fa-phone"></i>
-              (504) 717‑1887
-            </a>
-            <a href="mailto:7holliday@gmail.com" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
-              <i class="fas fa-envelope"></i>
-              7holliday@gmail.com
-            </a>
+          <h3>Contact Us</h3>
+          <div class="footer-contact">
+            <span class="footer-owner">Karl Holliday</span>
+            <a href="tel:+15047171887"><i class="fas fa-phone"></i> (504) 717‑1887</a>
+            <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope"></i> 7holliday@gmail.com</a>
           </div>
         </div>
         <div class="footer-section">
-          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: white;">Quick Links</h3>
-          <ul style="list-style: none; padding: 0; margin: 0;">
-            <li style="margin-bottom: 0.5rem;"><a href="about.html" style="color: white; text-decoration: none;">About Us</a></li>
-            <li style="margin-bottom: 0.5rem;"><a href="services.html" style="color: white; text-decoration: none;">Services</a></li>
-            <li style="margin-bottom: 0.5rem;"><a href="education.html" style="color: white; text-decoration: none;">Education</a></li>
-            <li style="margin-bottom: 0.5rem;"><a href="contact.html" style="color: white; text-decoration: none;">Contact</a></li>
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="education.html">Education</a></li>
+            <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-section">
-          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: white;">Customer Portal</h3>
-          <ul style="list-style: none; padding: 0; margin: 0;">
-            <li style="margin-bottom: 0.5rem;"><a href="login.html" style="color: white; text-decoration: none;">Login</a></li>
-            <li style="margin-bottom: 0.5rem;"><a href="register.html" style="color: white; text-decoration: none;">Register</a></li>
-            <li style="margin-bottom: 0.5rem;"><a href="pay-your-bill.html" style="color: white; text-decoration: none;">Pay Your Bill</a></li>
-            <li style="margin-bottom: 0.5rem;"><a href="customer-dashboard.html" style="color: white; text-decoration: none;">Dashboard</a></li>
+          <h3>Customer Portal</h3>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+            <li><a href="customer-dashboard.html">Dashboard</a></li>
           </ul>
         </div>
         <div class="footer-section">
-          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: white;">Legal</h3>
-          <ul style="list-style: none; padding: 0; margin: 0;">
-            <li style="margin-bottom: 0.5rem;"><a href="privacy.html" style="color: white; text-decoration: none;">Privacy Policy</a></li>
-            <li style="margin-bottom: 0.5rem;"><a href="terms.html" style="color: white; text-decoration: none;">Terms of Service</a></li>
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
           </ul>
         </div>
         <div class="footer-section">
-          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: white;">Follow Us</h3>
-          <div class="social-links" style="display: flex; gap: 1rem;">
-            <a href="#" class="social-link" aria-label="Facebook" style="color: white; font-size: 1.5rem;">
-              <i class="fab fa-facebook"></i>
-            </a>
-            <a href="#" class="social-link" aria-label="Instagram" style="color: white; font-size: 1.5rem;">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#" class="social-link" aria-label="Twitter" style="color: white; font-size: 1.5rem;">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="social-link" aria-label="LinkedIn" style="color: white; font-size: 1.5rem;">
-              <i class="fab fa-linkedin"></i>
-            </a>
+          <h3>Follow Us</h3>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
           </div>
         </div>
       </div>
     </div>
-    <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem; text-align: center;">
-      <p style="margin: 0; color: white;">© <span id="current-year"></span> Holliday's Lawn &amp; Garden. All rights reserved.</p>
+    <div class="footer-bottom">
+      <p>&copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
     </div>
   </footer>
 
