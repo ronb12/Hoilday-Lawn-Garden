@@ -81,14 +81,16 @@
         .device-button.active {
             background: #2e7d32;
         }
-    </style>
+    
+@media (max-width: 600px) { body { font-size: 16px; } }
+</style>
 </head>
 <body>
     <div class="test-container">
         <h1>🍔 Hamburger Menu Browser Test</h1>
         
         <div class="test-section">
-            <h3>Device Simulation</h3>
+            <h2>Device Simulation</h2>
             <div class="device-selector">
                 <button class="device-button active" onclick="setDevice('desktop')">Desktop (1200px)</button>
                 <button class="device-button" onclick="setDevice('tablet')">Tablet (768px)</button>

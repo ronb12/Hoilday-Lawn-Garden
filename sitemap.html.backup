@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com" rel="dns-prefetch"/>
+<link href="https://fonts.gstatic.com" rel="dns-prefetch"/>
+<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net" rel="dns-prefetch"/>
+<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+<link rel="manifest" href="manifest.json" />
+<link color="#5bbad5" href="/assets/images/favicon/safari-pinned-tab.svg" rel="mask-icon"/>
+<meta content="#da532c" name="msapplication-TileColor"/>
+<meta content="#ffffff" name="theme-color"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Professional landscaping and garden services in your area." name="description"/>
+<meta content="lawn care, garden services, landscaping, sitemap" name="keywords"/>
+<meta content="Holliday Lawn &amp; Garden" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="Holliday Lawn &amp; Garden - Sitemap" property="og:title"/>
+<meta content="Professional lawn care and garden services by Holliday Lawn &amp; Garden." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://hollidaylawngarden.com/sitemap" property="og:url"/>
+<meta content="https://hollidaylawngarden.com/assets/images/og-image.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Holliday Lawn &amp; Garden - Sitemap" name="twitter:title"/>
+<meta content="Professional lawn care and garden services by Holliday Lawn &amp; Garden." name="twitter:description"/>
+<meta content="https://hollidaylawngarden.com/assets/images/og-image.jpg" name="twitter:image"/>
+<link href="https://hollidaylawngarden.com/sitemap" rel="canonical"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com" rel="dns-prefetch"/>
+<link href="https://fonts.gstatic.com" rel="dns-prefetch"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Holliday Lawn &amp; Garden</title>
+<link href="assets/css/variables.css?v=1.0.4" rel="stylesheet"/>
+<link href="assets/css/main.css?v=1.0.4" rel="stylesheet"/>
+<script type="application/ld+json">
+ {
+ "@context": "https://schema.org",
+ "@type": "WebPage",
+ "name": "Sitemap - Holliday Lawn & Garden",
+ "description": "Navigate the Holliday Lawn & Garden website with our comprehensive sitemap.",
+ "url": "https://hollidaylawngarden.com/sitemap",
+ "publisher": {
+ "@type": "Organization",
+ "name": "Holliday Lawn & Garden",
+ "logo": {
+ "@type": "ImageObject",
+ "url": "https://hollidaylawngarden.com/assets/images/hollidays-logo.png"
+ }
+ }
+ }
+ </script>
+<style>
+ /* Mobile Menu Styles */

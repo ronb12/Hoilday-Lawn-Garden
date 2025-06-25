@@ -90,7 +90,9 @@
         .device-frame.mobile {
             width: 375px;
         }
-    </style>
+    
+@media (max-width: 600px) { body { font-size: 16px; } }
+</style>
 </head>
 <body>
     <div class="test-header">
@@ -100,7 +102,7 @@
 
     <div class="test-grid">
         <div class="test-card">
-            <h3>Desktop View (>768px)</h3>
+            <h2>Desktop View (>768px)</h2>
             <div class="device-preview">
                 <div class="device-frame desktop">
                     <iframe id="desktop-frame" src="index.html"></iframe>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Create your account to manage your lawn care services with Holliday's Lawn &amp; Garden." name="description"/>
+<meta content="lawn care, garden services, landscaping, create account, sign up" name="keywords"/>
+<meta content="Holliday's Lawn &amp; Garden" name="author"/>
+<meta content="index, follow" name="robots"/>
+<!-- Open Graph / Facebook -->
+<meta content="website" property="og:type"/>
+<meta content="https://hollidayslawnandgarden.com/create-account" property="og:url"/>
+<meta content="Create Account - Holliday's Lawn &amp; Garden" property="og:title"/>
+<meta content="Create your account to manage your lawn care services with Holliday's Lawn &amp; Garden." property="og:description"/>
+<meta content="assets/images/hollidays-logo.optimized-1280.png" property="og:image"/>
+<!-- Twitter -->
+<meta content="summary_large_image" property="twitter:card"/>
+<meta content="https://hollidayslawnandgarden.com/create-account" property="twitter:url"/>
+<meta content="Create Account - Holliday's Lawn &amp; Garden" property="twitter:title"/>
+<meta content="Create your account to manage your lawn care services with Holliday's Lawn &amp; Garden." property="twitter:description"/>
+<meta content="assets/images/hollidays-logo.optimized-1280.png" property="twitter:image"/>
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="manifest.json" />
+<!-- Content Security Policy -->
+<meta content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/ https://apis.google.com/ https://www.googletagmanager.com/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/; font-src 'self' https://fonts.gstatic.com/; img-src 'self' data: https:; connect-src 'self' https://*.googleapis.com/ https://*.firebaseio.com/ https://*.cloudfunctions.net/; frame-src 'self' https://www.google.com/ https://accounts.google.com/;" http-equiv="Content-Security-Policy"/>
+<title>Create Account - Holliday's Lawn &amp; Garden</title>
+<!-- Stylesheets -->
+<link href="assets/css/components/footer.css" rel="stylesheet"/>
+<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<style>
+ /* Mobile Menu Styles */
+ </script>
+<script>
+ document.addEventListener('DOMContentLoaded', function() {

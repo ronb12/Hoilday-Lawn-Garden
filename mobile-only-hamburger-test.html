@@ -94,7 +94,9 @@
             font-size: 12px;
             white-space: pre-wrap;
         }
-    </style>
+    
+@media (max-width: 600px) { body { font-size: 16px; } }
+</style>
 </head>
 <body>
     <div class="test-container">
@@ -102,7 +104,7 @@
         <p>This test verifies that the hamburger menu ONLY appears and works on mobile devices (≤768px).</p>
         
         <div class="test-section">
-            <h3>Test Instructions</h3>
+            <h2>Test Instructions</h2>
             <div class="status info">
                 <strong>Desktop (>768px):</strong> Hamburger menu should be HIDDEN, full navigation visible<br>
                 <strong>Mobile (≤768px):</strong> Hamburger menu should be VISIBLE, navigation hidden until clicked

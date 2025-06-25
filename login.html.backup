@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+ <!-- SEO Meta Tags -->
+ <title>Login - Holliday's Lawn &amp; Garden</title>
+ <meta name="description" content="Sign in to your Holliday's Lawn &amp; Garden account to access your services, schedule appointments, and manage your account." />
+ <meta name="keywords" content="login, customer portal, lawn care login, garden services login" />
+ <meta name="author" content="Holliday's Lawn &amp; Garden" />
+ <meta name="robots" content="index, follow" />
+
+ <!-- Open Graph / Twitter -->
+ <meta property="og:type" content="website" />
+ <meta property="og:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/login.html" />
+ <meta property="og:title" content="Login - Holliday's Lawn &amp; Garden" />
+ <meta property="og:description" content="Sign in to your account to access your services and manage your account." />
+ <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
+ <meta property="og:site_name" content="Holliday's Lawn &amp; Garden" />
+
+ <meta name="twitter:card" content="summary_large_image" />
+ <meta name="twitter:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/login.html" />
+ <meta name="twitter:title" content="Login - Holliday's Lawn &amp; Garden" />
+ <meta name="twitter:description" content="Sign in to your account to access your services and manage your account." />
+ <meta name="twitter:image" content="assets/images/hollidays-logo.optimized-1280.png" />
+
+ <!-- Performance & Fonts -->
+ <link rel="preconnect" href="https://fonts.googleapis.com" />
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+ <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+ <!-- Icon Stylesheet -->
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+ <!-- Stylesheets -->
+ <link href="assets/css/hero.css" rel="stylesheet" />
+ <link href="assets/css/main.css" rel="stylesheet" />
+ <link href="assets/css/mobile-enhancements.css" rel="stylesheet" />
+
+ <!-- Favicons & Manifest -->
+ <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+ <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+ <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+ <link rel="manifest" href="manifest.json" />
+ <link rel="mask-icon" color="#5bbad5" href="assets/images/favicon/safari-pinned-tab.svg" />
+ <meta name="msapplication-TileColor" content="#2e7d32" />
+ <meta name="theme-color" content="#2e7d32" />
+
+ <!-- Updated CSP -->
+ <meta http-equiv="Content-Security-Policy" content="
+ default-src 'self';
+ script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.gstatic.com https://www.googletagmanager.com https://apis.google.com;
+ style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+ font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+ img-src 'self' data: https:;
+ connect-src 'self' https://www.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://firebase.googleapis.com https://firebaseinstallations.googleapis.com https://analytics.google.com https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://stats.g.doubleclick.net https://accounts.google.com;
+ frame-src 'self' https://accounts.google.com https://holiday-lawn-and-garden.firebaseapp.com;
+ " />
+
+ <!-- Login Page Specific Styles -->
+ <style>
+ /* Professional Lawn Care Business Responsive Design */
+ :root {
+ --primary-green: #2e7d32;
+ --light-green: #4caf50;
+ --dark-green: #1b5e20;
+ --accent-green: #8bc34a;
+ --text-dark: #333;
+ --text-light: #666;
+ --white: #ffffff;
+ --background-light: #f8f9fa;
+ --border-color: #e0e0e0;
+ --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+ --shadow-medium: 0 4px 8px rgba(0,0,0,0.15);
+ --border-radius: 8px;
+ --transition: all 0.3s ease;
+ }
+
+ /* Universal Mobile-First Responsive Design */
+ * {
+ box-sizing: border-box;
+ }
+
+ body {
+ padding-top: 80px !important;
+ margin: 0;
+ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+ line-height: 1.6;
+ color: #333;
+ background-color: var(--background-light);
+ }
+
+ /* Container System */
+ .container {
+ width: 100%;
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 0 1rem;
+ }
+
+ @media (min-width: 768px) {
+ .container {
+ padding: 0 2rem;
+ }
+ }
+
+ @media (min-width: 1024px) {
+ .container {
+ padding: 0 3rem;
+ }
+ }
+
+    /* Clean Professional Header */
+    .main-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        background: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 0 1.5rem;
+        min-height: 80px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        margin-right: 2rem;
+        flex-shrink: 0;
+    }
+
+    .logo img {
+        height: 60px;
+        width: auto;
+        display: block;
+        margin: 0;
+    }
+
+    #nav-menu {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        gap: 1.5rem;
+    }
+ 
+    .nav-links { 
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0.5rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        flex-wrap: wrap;
+    }
+    
+    .nav-links a { 
+        padding: 0.25rem 0.5rem;
+        color: #333;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        font-size: 0.9rem;
+        display: block;
+        border-radius: 6px;
+    }
+    
+    .nav-links a:hover {
+        color: #2e7d32;
+        background-color: rgba(0, 0, 0, 0.05);
+        transform: translateY(-1px);
+    }
+    
+    .nav-links li { 
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+    .login-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 0.75rem;
+        align-items: center;
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+    
+    .btn-login {
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 0.85rem;
+        min-width: 110px;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        white-space: nowrap;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-customer {
+        background: #2e7d32;
+        color: white;
+    }
+    
+    .btn-admin {
+        background: #1565c0;
+        color: white;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    

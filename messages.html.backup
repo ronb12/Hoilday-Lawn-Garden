@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Communication Center - Holliday's Lawn &amp; Garden</title>
+<link href="assets/images/favicon/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
+<style>
+ body { padding-top: 100px; margin: 0; }
+ 
+ .admin-header {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ background: #fff;
+ padding: 1.5rem 2rem;
+ box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+ position: sticky;
+ top: 0;
+ z-index: 100;
+ }
+ 
+ .admin-header .logo {
+ display: flex;
+ align-items: center;
+ gap: 1rem;
+ }
+ 
+ .admin-header .logo img {
+ height: 48px;
+ width: auto;
+ object-fit: contain;
+ }
+ 
+ .admin-header .admin-nav {
+ display: flex;
+ gap: 2rem;
+ align-items: center;
+ }
+ 
+ .admin-header .admin-nav a {
+ color: #2c5530;
+ text-decoration: none;
+ font-weight: 600;
+ font-size: 1rem;
+ transition: color 0.2s;
+ }
+ 
+ .admin-header .admin-nav a:hover {
+ color: #4caf50;
+ }
+ 
+ .admin-header .admin-actions {
+ display: flex;
+ gap: 1rem;
+ }
+ 
+ .admin-header .btn {
+ padding: 0.75rem 1.5rem;
+ border-radius: 6px;
+ border: none;
+ font-weight: 600;
+ font-size: 0.9rem;
+ cursor: pointer;
+ transition: background 0.2s, color 0.2s;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ min-width: 100px;
+ justify-content: center;
+ text-decoration: none;
+ }
+ 
+ .admin-header .btn-logout {
+ background: #222;
+ color: #fff;
+ }
+ 
+ .admin-header .btn-logout:hover {
+ background: #111;
+ }
+ 
+ .admin-header .btn-dashboard {
+ background: #4caf50;
+ color: #fff;
+ }
+ 
+ .admin-header .btn-dashboard:hover {
+ background: #388e3c;
+ }
+ 
+ /* Mobile menu styles */
