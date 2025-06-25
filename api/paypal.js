@@ -1,35 +1,50 @@
 // Client-side PayPal integration
 // This file handles PayPal button rendering and payment processing in the browser
 
-// PayPal SDK loading
+// PayPal SDK loading with improved error handling
 function loadPayPalSDK() {
     return new Promise((resolve, reject) => {
         // Check if PayPal SDK is already loaded
         if (window.paypal) {
+            console.log('PayPal SDK already loaded');
             resolve(window.paypal);
             return;
         }
 
+        console.log('Loading PayPal SDK...');
+        
         // Load PayPal SDK with test client ID
         const script = document.createElement('script');
         script.src = 'https://www.paypal.com/sdk/js?client-id=test&currency=USD&components=buttons,funding-eligibility&disable-funding=venmo,paylater';
+        script.async = true;
+        
         script.onload = () => {
-            if (window.paypal) {
-                resolve(window.paypal);
-            } else {
-                reject(new Error('PayPal SDK failed to load'));
-            }
+            console.log('PayPal SDK script loaded');
+            // Wait a bit for PayPal to initialize
+            setTimeout(() => {
+                if (window.paypal) {
+                    console.log('PayPal SDK initialized successfully');
+                    resolve(window.paypal);
+                } else {
+                    console.error('PayPal SDK not available after script load');
+                    reject(new Error('PayPal SDK failed to initialize'));
+                }
+            }, 500);
         };
+        
         script.onerror = () => {
+            console.error('Failed to load PayPal SDK script');
             reject(new Error('Failed to load PayPal SDK'));
         };
+        
         document.head.appendChild(script);
     });
 }
 
-// Initialize PayPal
+// Initialize PayPal with better error handling
 async function initializePayPal() {
     try {
+        console.log('Initializing PayPal...');
         const paypal = await loadPayPalSDK();
         console.log('PayPal SDK loaded successfully');
         return paypal;
@@ -105,6 +120,8 @@ function renderPayPalButtons(containerId, options = {}) {
         return;
     }
 
+    console.log('Starting PayPal button rendering...');
+
     // Show loading state
     if (loading) {
         loading.style.display = 'block';
@@ -115,9 +132,11 @@ function renderPayPalButtons(containerId, options = {}) {
 
     // Initialize PayPal with retry logic
     let retryCount = 0;
-    const maxRetries = 3;
+    const maxRetries = 2; // Reduced retries for faster fallback
 
     function attemptPayPalInit() {
+        console.log('Attempting PayPal initialization (attempt ' + (retryCount + 1) + ')');
+        
         initializePayPal().then(paypal => {
             console.log('PayPal SDK loaded, rendering buttons...');
             
@@ -148,6 +167,8 @@ function renderPayPalButtons(containerId, options = {}) {
                         return;
                     }
 
+                    console.log('Creating PayPal order for amount:', amount, 'account:', account);
+
                     // Create order using PayPal's client-side API
                     return actions.order.create({
                         purchase_units: [{
@@ -159,7 +180,10 @@ function renderPayPalButtons(containerId, options = {}) {
                     });
                 },
                 onApprove: function(data, actions) {
+                    console.log('PayPal order approved, capturing payment...');
                     return actions.order.capture().then(function(details) {
+                        console.log('Payment captured successfully:', details);
+                        
                         // Show success message
                         const successMessage = `
 Payment completed successfully!
@@ -217,9 +241,11 @@ Thank you for your payment!
             retryCount++;
             
             if (retryCount < maxRetries) {
-                // Retry after a delay
-                setTimeout(attemptPayPalInit, 1000 * retryCount);
+                // Retry after a shorter delay
+                console.log('Retrying PayPal initialization in ' + (500 * retryCount) + 'ms...');
+                setTimeout(attemptPayPalInit, 500 * retryCount);
             } else {
+                console.log('PayPal failed to load after ' + maxRetries + ' attempts, showing fallback');
                 // Hide loading and show fallback message
                 if (loading) {
                     loading.style.display = 'none';

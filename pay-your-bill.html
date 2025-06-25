@@ -757,8 +757,10 @@
  function renderPayPalButtons() {
      const container = document.getElementById('paypal-button-container');
      const fallback = document.getElementById('paypal-fallback');
+     const loading = document.getElementById('paypal-loading');
      
      if (window.PayPalIntegration) {
+         console.log('PayPal integration available, rendering buttons...');
          window.PayPalIntegration.renderPayPalButtons('paypal-button-container', {
              onSuccess: function(details) {
                  // Additional success handling if needed
@@ -771,20 +773,41 @@
                  if (fallback) {
                      fallback.style.display = 'block';
                  }
+                 if (loading) {
+                     loading.style.display = 'none';
+                 }
              }
          });
+         
+         // Add a timeout to show fallback if PayPal takes too long
+         setTimeout(function() {
+             if (loading && loading.style.display !== 'none') {
+                 console.log('PayPal taking too long, showing fallback');
+                 if (loading) {
+                     loading.style.display = 'none';
+                 }
+                 if (fallback) {
+                     fallback.style.display = 'block';
+                 }
+             }
+         }, 8000); // 8 second timeout
+         
      } else {
+         console.log('PayPal integration not available, will retry...');
          // Fallback: try again after a short delay, then show fallback
          setTimeout(function() {
              if (!window.PayPalIntegration) {
-                 console.log('PayPal integration not available, showing fallback');
+                 console.log('PayPal integration still not available, showing fallback');
+                 if (loading) {
+                     loading.style.display = 'none';
+                 }
                  if (fallback) {
                      fallback.style.display = 'block';
                  }
              } else {
                  renderPayPalButtons();
              }
-         }, 2000); // Wait 2 seconds before showing fallback
+         }, 3000); // Wait 3 seconds before showing fallback
      }
  }
  
