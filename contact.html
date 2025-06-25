@@ -629,6 +629,127 @@ showError('An error occurred while loading the page. Please refresh.');
 /* Hero section visibility - Professional Design Standard */
 .hero h1 { display: block !important; visibility: visible !important; opacity: 1 !important; }
 </style>
+
+<style>
+/* Ensure header displays correctly */
+.main-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1000 !important;
+  padding: 0 1.5rem !important;
+  min-height: 80px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure mobile tab bar displays correctly */
+.mobile-tab-bar {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .mobile-tab-bar {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: white !important;
+    border-top: 1px solid #e0e0e0 !important;
+    z-index: 1000 !important;
+    padding: 0.5rem 0 !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+  }
+  
+  .mobile-tab-bar a {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-decoration: none !important;
+    color: #666 !important;
+    font-size: 0.8rem !important;
+    padding: 0.5rem !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .mobile-tab-bar a.active {
+    color: #4caf50 !important;
+    background: rgba(76, 175, 80, 0.1) !important;
+  }
+  
+  .mobile-tab-bar i {
+    font-size: 1.2rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+}
+
+/* Ensure footer displays correctly */
+.footer {
+  background: #2c5530 !important;
+  color: white !important;
+  padding: 2rem 0 1rem 0 !important;
+  margin-top: 3rem !important;
+}
+
+.footer-content {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 2rem !important;
+}
+
+.footer-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+  gap: 2rem !important;
+  margin-bottom: 2rem !important;
+}
+
+.footer-section h3 {
+  color: #4caf50 !important;
+  margin-bottom: 1rem !important;
+  font-size: 1.2rem !important;
+}
+
+.footer-section ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem !important;
+}
+
+.footer-section ul li a {
+  color: #ccc !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease !important;
+}
+
+.footer-section ul li a:hover {
+  color: #4caf50 !important;
+}
+
+.footer-bottom {
+  border-top: 1px solid #3a6b3e !important;
+  padding-top: 1rem !important;
+  text-align: center !important;
+}
+
+.copyright p {
+  color: #ccc !important;
+  margin: 0 !important;
+}
+</style>
 </head>
 <body>
         <!-- Header -->
@@ -807,10 +928,11 @@ showError('An error occurred while loading the page. Please refresh.');
             <div class="footer-grid">
                 <div class="footer-section">
                     <h3>Contact Us</h3>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
-                        <li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
-                    </ul>
+                    <div class="footer-contact">
+                        <span class="footer-owner">Karl Holliday</span>
+                        <a href="tel:+15047171887"><i class="fas fa-phone"></i> (504) 717‑1887</a>
+                        <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope"></i> 7holliday@gmail.com</a>
+                    </div>
                 </div>
                 <div class="footer-section">
                     <h3>Quick Links</h3>
@@ -833,38 +955,29 @@ showError('An error occurred while loading the page. Please refresh.');
                 <div class="footer-section">
                     <h3>Legal</h3>
                     <ul>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
                         <li><a href="terms.html">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h3>Follow Us</h3>
                     <div class="social-links">
-                        <a href="#" class="social-link" aria-label="Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <div class="copyright">
-                    <p>© 2024 Holliday's Lawn & Garden. All rights reserved.</p>
-                </div>
-            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/firebase-config.js" type="module"></script>
+    <script src="assets/js/main.js" type="module"></script>
     <script>
         // Handle contact form submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {
@@ -880,5 +993,11 @@ showError('An error occurred while loading the page. Please refresh.');
             // Reset form
             this.reset();
         });
+        
+        // Update copyright year
+        const yearElement = document.getElementById('current-year');
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
     </script>
 </body></html>
