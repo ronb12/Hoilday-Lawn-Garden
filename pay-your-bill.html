@@ -1,798 +1,674 @@
 <!DOCTYPE html>
-
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="Pay your lawn care and landscaping services bill securely online with PayPal or credit card." name="description"/>
-<title>Pay Your Bill - Holliday's Lawn &amp; Garden</title>
-    <meta property="og:title" content="Pay Your Bill - Holliday's Lawn &amp; Garden" />
-    <meta property="og:description" content="Pay your lawn care and landscaping service bills securely online." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="./pay-your-bill.html" />
-    <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Pay Your Bill - Holliday's Lawn &amp; Garden" />
-    <meta name="twitter:description" content="Pay your lawn care and landscaping service bills securely online." />
-<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
-<link rel="manifest" href="manifest.json" />
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-<link href="assets/css/hero.css?v=1.0.6" rel="stylesheet"/>
-<link href="assets/css/main.css" rel="stylesheet"/>
-<link href="assets/css/components/payment.css" rel="stylesheet"/>
-<!-- PayPal SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
-<!-- Fix for fixed header spacing -->
-<style>
- body { padding-top: 80px; margin: 0; }
- 
- @media (max-width: 768px) {
- body {
- padding-top: 50px; /* Smaller padding for mobile */
- }
- }
- 
- /* Header alignment fix */
- .nav-links a {
- padding-top: 0 !important;
- padding-bottom: 0 !important;
- }
- .nav-links li {
- display: flex;
- align-items: center;
- }
- 
-    /* Comprehensive button styles - override any existing styles */
-    button, 
-    input[type="submit"], 
-    input[type="button"],
-    .btn,
-    .btn-primary,
-    .btn-secondary,
-    .btn-login,
-    .btn-customer,
-    .btn-admin,
-    .cta-button,
-    .cta-button.primary,
-    .cta-button.secondary {
-        font-family: 'Montserrat', sans-serif !important;
-        border-radius: 8px !important;
-        border: none !important;
-        cursor: pointer !important;
-        transition: all 0.3s ease !important;
-        box-sizing: border-box !important;
-    }
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Your Bill - Holliday's Lawn & Garden</title>
+    <meta name="description" content="Pay your lawn care and landscaping services bill securely online with PayPal or credit card.">
     
-    /* Specific button types */
-    .btn-login {
-        border-radius: 4px !important;
-    }
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
     
-
-}
-
-/* Mobile Tab Bar - Hide on Desktop */
-@media (min-width: 769px) {
-  .mobile-tab-bar { display: none !important; }
-}
-</style>
-
-<!-- --- Professional Mobile Tab Bar --- -->
-<style>
-@media (max-width: 768px) {
-  .main-header .nav-links,
-  .main-header .login-buttons {
-    display: none !important;
-  }
-  .mobile-tab-bar {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    height: 64px;
-    background: #fff;
-    border-top: 1px solid #e0e0e0;
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
-    z-index: 2000;
-    justify-content: space-around;
-    align-items: center;
-  }
-  .mobile-tab-bar a {
-    flex: 1 1 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #2e7d32;
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 0.25rem 0;
-    transition: color 0.2s;
-  }
-  .mobile-tab-bar a.active,
-  .mobile-tab-bar a:active,
-  .mobile-tab-bar a:hover {
-    color: #1565c0;
-  }
-  .mobile-tab-bar i {
-    font-size: 1.5rem;
-    margin-bottom: 0.1rem;
-  }
-}
-
-@media (min-width: 769px) {
-  .mobile-tab-bar { display: none !important; }
-}
-</style>
-
-<style>
-
-    /* Perfect Page Structure - No Issues */
-    .main-header {
-        background: #fff !important;
-        min-height: 70px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        padding: 0 2rem !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 9999 !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    .logo {
-        display: flex !important;
-        align-items: center !important;
-        flex-shrink: 0 !important;
-    }
+    <!-- Styles -->
+    <link href="assets/css/hero.css?v=1.0.7" rel="stylesheet">
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/css/components/payment.css" rel="stylesheet">
     
-    .logo img {
-        height: 50px !important;
-        width: auto !important;
-        display: block !important;
-    }
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
     
-    #nav-menu {
-        display: flex !important;
-        align-items: center !important;
-        flex-grow: 1 !important;
-        justify-content: flex-end !important;
-    }
-    
-    .nav-links { 
-        display: flex !important;
-        align-items: center !important;
-        list-style: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        gap: 2rem !important;
-        flex-wrap: nowrap !important;
-    }
-    
-    .nav-links a { 
-        padding: 0.5rem 0.75rem !important; 
-        color: #333 !important; 
-        font-weight: 500 !important;
-        text-decoration: none !important;
-        transition: color 0.3s ease !important;
-        white-space: nowrap !important;
-        font-size: 0.95rem !important;
-        display: block !important;
-    }
-    
-    .nav-links a:hover {
-        color: #2e7d32 !important;
-    }
-    
-    .nav-links li { 
-        display: flex !important; 
-        align-items: center !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    .login-buttons {
-        display: flex !important;
-        gap: 1rem !important;
-        align-items: center !important;
-        margin-left: 1rem !important;
-    }
-    
-    .btn-login {
-        padding: 0.5rem 1rem !important;
-        border-radius: 4px !important;
-        text-decoration: none !important;
-        font-weight: 500 !important;
-        transition: all 0.3s ease !important;
-        font-size: 0.9rem !important;
-        min-width: 120px !important;
-        text-align: center !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 0.5rem !important;
-        white-space: nowrap !important;
-    }
-    
-    .btn-customer {
-        background: #2e7d32 !important;
-        color: white !important;
-    }
-    
-    .btn-admin {
-        background: #1565c0 !important;
-        color: white !important;
-    }
-    
-    .btn-login:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-    }
-    
-    
-
-    
-
-    
-
-    
-
-    
-    
-    /* Hero Section - Perfect Spacing */
-    .hero {
-        position: relative !important;
-        width: 100vw !important;
-        min-height: 60vh !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        background: #222 !important;
-        overflow: hidden !important;
-        margin: 0 !important;
-        margin-top: 70px !important;
-        padding: 0 !important;
-    }
-    
-    .hero img {
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        z-index: 1 !important;
-        filter: brightness(0.6) !important;
-    }
-    
-    .hero-content {
-        position: relative !important;
-        z-index: 2 !important;
-        text-align: center !important;
-        color: #fff !important;
-        padding: 2rem !important;
-        max-width: 800px !important;
-    }
-    
-    .hero-content h1 {
-        font-size: 3rem !important;
-        margin-bottom: 1rem !important;
-        font-weight: 600 !important;
-        letter-spacing: 1px !important;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    .hero-content p {
-        font-size: 1.25rem !important;
-        font-weight: 400 !important;
-        margin-bottom: 2rem !important;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    /* Body and Main Content */
-    body {
-        padding-top: 70px !important;
-        margin: 0 !important;
-    }
-    
-    main {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    @media (max-width: 768px) {
-        body {
-            padding-top: 70px !important;
+    <style>
+        body { 
+            padding-top: 80px; 
+            margin: 0; 
+            font-family: 'Montserrat', sans-serif;
         }
         
+        @media (max-width: 768px) {
+            body { padding-top: 50px; }
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('assets/images/hero-garden.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .hero-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .payment-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .payment-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .form-group input.error {
+            border-color: #dc3545;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .payment-amount-display {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            text-align: center;
+            display: none;
+        }
+        
+        .payment-amount-display.show {
+            display: block;
+        }
+        
+        .amount {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+        
+        #paypal-button-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .payment-note {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            text-align: center;
+            color: #1976d2;
+        }
+        
+        .help-text {
+            text-align: center;
+            margin-top: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .help-text a {
+            color: #2e7d32;
+            text-decoration: none;
+        }
+        
+        .help-text a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Header Styles */
         .main-header {
-            padding: 0 1rem !important;
+            background: #fff;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+            display: block;
         }
         
         #nav-menu {
-            justify-content: flex-end !important;
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: flex-end;
         }
         
         .nav-links { 
-            display: none !important; 
-            position: absolute !important; 
-            top: 100% !important; 
-            left: 0 !important; 
-            right: 0 !important; 
-            background: var(--color-primary, #4caf50) !important; 
-            padding: 1rem !important; 
-            flex-direction: column !important; 
-            align-items: center !important; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-            z-index: 1000 !important;
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+            flex-wrap: nowrap;
         }
         
-        .nav-links.active { 
-            display: flex !important; 
+        .nav-links a { 
+            padding: 0.5rem 0.75rem; 
+            color: #333; 
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+            font-size: 0.95rem;
+            display: block;
         }
         
+        .nav-links a:hover {
+            color: #2e7d32;
+        }
         
+        .nav-links li { 
+            display: flex; 
+            align-items: center; 
+            margin: 0;
+            padding: 0;
+        }
         
         .login-buttons {
-            flex-direction: column !important;
-            gap: 0.5rem !important;
-            margin-left: 0 !important;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-left: 1rem;
         }
         
         .btn-login {
-            min-width: 140px !important;
-            font-size: 0.85rem !important;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            min-width: 120px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
         
-        .hero-content h1 {
-            font-size: 2rem !important;
+        .btn-customer {
+            background: #2e7d32;
+            color: white;
         }
         
-        .hero-content p {
-            font-size: 1rem !important;
+        .btn-customer:hover {
+            background: #1b5e20;
         }
-    }
-    
-    @media (max-width: 900px) {
-        .main-header .nav-links {
-            margin-top: 0 !important;
-            padding-top: 0.5em !important;
+        
+        .btn-admin {
+            background: #1565c0;
+            color: white;
         }
-    }
-
-</style>
-
-<style>
-/* Ensure hero H1 elements are always visible */
-.hero h1 {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    z-index: 10 !important;
-}
-
-/* Ensure hero content is visible */
-.hero-content {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
-/* Ensure hero section itself is visible */
-.hero {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-</style>
-
-<style>
-/* Ensure hero H1 elements are always visible */
-.hero h1 {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    z-index: 10 !important;
-}
-</style>
-
-<style>
-/* Hero section visibility - Professional Design Standard */
-.hero h1 { display: block !important; visibility: visible !important; opacity: 1 !important; }
-</style>
-
-<!-- Payment Form Styles -->
-<style>
-.payment-section {
-    padding: 4rem 2rem;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    min-height: 60vh;
-}
-
-.payment-section h2 {
-    text-align: center;
-    color: #2e7d32;
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    font-weight: 600;
-}
-
-.security-badges {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-}
-
-.security-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: white;
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    color: #2e7d32;
-    font-weight: 500;
-}
-
-.security-badge i {
-    font-size: 1.2rem;
-}
-
-.payment-form {
-    max-width: 600px;
-    margin: 0 auto;
-    background: white;
-    padding: 3rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-}
-
-.form-group {
-    margin-bottom: 2rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #333;
-    font-weight: 600;
-    font-size: 1rem;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 1rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #2e7d32;
-    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
-}
-
-.form-group input.error {
-    border-color: #dc3545;
-}
-
-.error-message {
-    display: none;
-    color: #dc3545;
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
-}
-
-.error-message.show {
-    display: block;
-}
-
-.payment-amount-display {
-    background: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 2rem;
-    border: 2px solid #2e7d32;
-}
-
-.payment-amount-display .amount {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #2e7d32;
-    margin-top: 0.5rem;
-}
-
-#paypal-button-container {
-    margin: 2rem 0;
-    text-align: center;
-}
-
-.payment-note {
-    background: #e8f5e8;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-top: 2rem;
-    border-left: 4px solid #2e7d32;
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-}
-
-.payment-note i {
-    color: #2e7d32;
-    font-size: 1.2rem;
-    margin-top: 0.2rem;
-}
-
-.payment-note strong {
-    color: #2e7d32;
-}
-
-@media (max-width: 768px) {
-    .payment-section {
-        padding: 2rem 1rem;
-    }
-    
-    .payment-section h2 {
-        font-size: 2rem;
-    }
-    
-    .security-badges {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-    }
-    
-    .payment-form {
-        padding: 2rem 1.5rem;
-    }
-}
-</style>
+        
+        .btn-admin:hover {
+            background: #0d47a1;
+        }
+        
+        /* Footer Styles */
+        .footer {
+            background: #2e7d32;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: #b3e5fc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .footer-contact a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Mobile Tab Bar */
+        @media (max-width: 768px) {
+            .main-header .nav-links,
+            .main-header .login-buttons {
+                display: none;
+            }
+            
+            .mobile-tab-bar {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100vw;
+                height: 64px;
+                background: #fff;
+                border-top: 1px solid #e0e0e0;
+                box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+                z-index: 2000;
+                justify-content: space-around;
+                align-items: center;
+            }
+            
+            .mobile-tab-bar a {
+                flex: 1 1 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: #2e7d32;
+                text-decoration: none;
+                font-size: 0.85rem;
+                font-weight: 600;
+                padding: 0.25rem 0;
+                transition: color 0.2s;
+            }
+            
+            .mobile-tab-bar a.active,
+            .mobile-tab-bar a:active,
+            .mobile-tab-bar a:hover {
+                color: #1565c0;
+            }
+            
+            .mobile-tab-bar i {
+                font-size: 1.5rem;
+                margin-bottom: 0.1rem;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-tab-bar { 
+                display: none; 
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Loading Spinner -->
-  <div id="loading" class="loading" role="status" aria-label="Loading page content">
-    <div class="spinner" aria-hidden="true"></div>
-  </div>
-  
-  <!-- Error Message -->
-  <div id="error" class="error-message" role="alert" aria-live="polite"></div>
-  
     <!-- Header -->
-          <!-- Header -->
-  <header class="main-header">
-    <div class="logo">
-      <a href="index.html">
-        <picture>
-          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
-          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
-        </picture>
-      </a>
-    </div>
-    <nav id="nav-menu">
-      
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="education.html">Education</a></li>
-        <li><a href="faq.html">FAQ</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-      </ul>
-      <div class="login-buttons">
-        <a href="login.html" class="btn-login btn-customer">
-          <i class="fas fa-user"></i>
-          Customer Login
-        </a>
-        <a href="admin-login.html" class="btn-login btn-admin">
-          <i class="fas fa-lock"></i>
-          Admin Login
-        </a>
-      </div>
-    </nav>
-  </header>
-<!-- Main Content -->
-<main role="main">
+    <header class="main-header" role="banner">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" />
+        </div>
+        <nav id="nav-menu" role="navigation">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+            </ul>
+            <div class="login-buttons">
+                <a href="login.html" class="btn-login btn-customer">
+                    <i class="fas fa-user"></i>
+                    Customer Login
+                </a>
+                <a href="admin-login.html" class="btn-login btn-admin">
+                    <i class="fas fa-cog"></i>
+                    Admin Login
+                </a>
+            </div>
+        </nav>
+    </header>
+
     <!-- Hero Section -->
+    <section class="hero-section">
+        <h1>Pay Your Bill</h1>
+        <p>Quick and secure online payment options for your lawn care and landscaping services.</p>
+    </section>
 
- <div class="hero">
-<img alt="Beautiful garden landscaping" loading="eager" src="assets/images/hero-garden-landscaping.optimized-1280-320.jpg"/>
-<div class="hero-content">
-<h1>Pay Your Bill</h1>
-<p>Quick and secure online payment options for your lawn care and landscaping services.</p>
-</div>
-</div>
-<!-- Payment Section -->
-<section class="payment-section">
-<h2>Secure Payment</h2>
-<div class="security-badges">
-<div class="security-badge">
-<i class="fas fa-shield-alt"></i>
-<span>SSL Secured</span>
-</div>
-<div class="security-badge">
-<i class="fas fa-lock"></i>
-<span>PCI Compliant</span>
-</div>
-<div class="security-badge">
-<i class="fas fa-credit-card"></i>
-<span>Secure Processing</span>
-</div>
-</div>
-<form class="payment-form" id="payment-form">
-<div class="form-group">
-<label for="accountNumber">Account Number *</label>
-<input id="accountNumber" maxlength="7" minlength="7" name="accountNumber" pattern="HLG[0-9]{4}" placeholder="e.g., HLG1234" required="" type="text"/>
-<div class="error-message" id="accountError">Please enter a valid account number (format: HLG followed by 4 digits)</div>
-</div>
-<div class="form-group">
-<label for="paymentAmount">Payment Amount ($) *</label>
-<input id="paymentAmount" min="1" name="paymentAmount" placeholder="0.00" required="" step="0.01" type="number"/>
-<div class="error-message" id="amountError">Please enter a valid payment amount (minimum $1.00)</div>
-</div>
-<div class="payment-amount-display" id="amountDisplay" style="display: none;">
-<div>Payment Total:</div>
-<div class="amount" id="displayAmount">$0.00</div>
-</div>
-</form>
-<!-- PayPal Button Container -->
-<div id="paypal-button-container"></div>
-<div class="payment-note">
-<i class="fab fa-paypal"></i>
-<strong>Secure Payment Options:</strong> Don't have a PayPal account? No problem! You can pay securely using your credit or debit card as a guest.
- </div>
-<div style="text-align: center; margin-top: 2rem; color: #666; font-size: 0.9rem;">
-<i class="fas fa-info-circle"></i>
- Need help? Contact us at <a href="tel:+15047171887">(504) 717‑1887</a> or <a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
-</div>
-</section>
-<!-- Payment Script -->
-<script>
- document.addEventListener('DOMContentLoaded', function () {
- const accountInput = document.getElementById('accountNumber');
- const amountInput = document.getElementById('paymentAmount');
- const accountError = document.getElementById('accountError');
- const amountError = document.getElementById('amountError');
- const amountDisplay = document.getElementById('amountDisplay');
- const displayAmount = document.getElementById('displayAmount');
- 
- // Form validation
- function validateAccount() {
- const value = accountInput.value.trim();
- const hlgPattern = /^HLG[0-9]{4}$/;
- 
- if (value.length !== 7 || !hlgPattern.test(value)) {
- accountInput.classList.add('error');
- accountError.classList.add('show');
- return false;
- } else {
- accountInput.classList.remove('error');
- accountError.classList.remove('show');
- return true;
- }
- }
- 
- function validateAmount() {
- const value = parseFloat(amountInput.value);
- if (isNaN(value) || value < 1) {
- amountInput.classList.add('error');
- amountError.classList.add('show');
- return false;
- } else {
- amountInput.classList.remove('error');
- amountError.classList.remove('show');
- return true;
- }
- }
- 
- // Update amount display
- function updateAmountDisplay() {
- const amount = parseFloat(amountInput.value);
- if (!isNaN(amount) && amount > 0) {
- displayAmount.textContent = `$${amount.toFixed(2)}`;
- amountDisplay.style.display = 'block';
- } else {
- amountDisplay.style.display = 'none';
- }
- }
- 
- // Event listeners
- accountInput.addEventListener('input', validateAccount);
- accountInput.addEventListener('blur', validateAccount);
- amountInput.addEventListener('input', function() {
- validateAmount();
- updateAmountDisplay();
- });
- amountInput.addEventListener('blur', validateAmount);
- 
- // PayPal button rendering using the new integration
- function renderPayPalButtons() {
-     const container = document.getElementById('paypal-button-container');
-     
-     if (!container) {
-         console.error('PayPal container not found');
-         return;
-     }
-     
-     console.log('PayPal SDK status:', typeof window.paypal);
-     console.log('PayPal object:', window.paypal);
-     
-     // Check if PayPal SDK is available
-     if (!window.paypal) {
-         console.error('PayPal SDK not available');
-         container.innerHTML = '<p style="color: #6c757d; text-align: center; padding: 15px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; margin: 10px 0; font-size: 0.9rem;"><i class="fas fa-info-circle"></i> PayPal is loading... Please wait a moment.</p>';
-         return;
-     }
-     
-     console.log('Rendering PayPal buttons...');
-     
-     // Clear container
-     container.innerHTML = '';
-     
-     try {
-         // Create PayPal buttons
-         window.paypal.Buttons({
-             style: {
-                 layout: 'vertical',
-                 color: 'gold',
-                 shape: 'rect',
-                 label: 'paypal'
-             },
-             createOrder: function(data, actions) {
-                 const amount = document.getElementById('paymentAmount')?.value || '10.00';
-                 const account = document.getElementById('accountNumber')?.value || '';
+    <!-- Main Content -->
+    <main class="payment-container">
+        <div class="payment-form">
+            <h2>Secure Payment</h2>
+            <div style="display: flex; gap: 1rem; margin-bottom: 2rem; justify-content: center;">
+                <span style="display: flex; align-items: center; gap: 0.5rem; color: #2e7d32;">
+                    <i class="fas fa-lock"></i> SSL Secured
+                </span>
+                <span style="display: flex; align-items: center; gap: 0.5rem; color: #2e7d32;">
+                    <i class="fas fa-shield-alt"></i> PCI Compliant
+                </span>
+                <span style="display: flex; align-items: center; gap: 0.5rem; color: #2e7d32;">
+                    <i class="fas fa-check-circle"></i> Secure Processing
+                </span>
+            </div>
 
-                 // Validate inputs
-                 if (!amount || amount <= 0) {
-                     alert('Please enter a valid amount.');
-                     return;
-                 }
+            <form id="payment-form">
+                <div class="form-group">
+                    <label for="accountNumber">Account Number *</label>
+                    <input type="text" id="accountNumber" name="accountNumber" placeholder="HLG1234" required>
+                    <div class="error-message" id="accountError">Please enter a valid account number (format: HLG followed by 4 digits)</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="paymentAmount">Payment Amount ($) *</label>
+                    <input type="number" id="paymentAmount" name="paymentAmount" min="1" step="0.01" placeholder="0.00" required>
+                    <div class="error-message" id="amountError">Please enter a valid payment amount (minimum $1.00)</div>
+                </div>
+                
+                <div class="payment-amount-display" id="amountDisplay">
+                    <div>Payment Total:</div>
+                    <div class="amount" id="displayAmount">$0.00</div>
+                </div>
+            </form>
 
-                 if (!account) {
-                     alert('Please enter your account number.');
-                     return;
-                 }
+            <!-- PayPal Button Container -->
+            <div id="paypal-button-container"></div>
+            
+            <div class="payment-note">
+                <i class="fab fa-paypal"></i>
+                <strong>Secure Payment Options:</strong> Don't have a PayPal account? No problem! You can pay securely using your credit or debit card as a guest.
+            </div>
+            
+            <div class="help-text">
+                <i class="fas fa-info-circle"></i>
+                Need help? Contact us at <a href="tel:+15047171887">(504) 717‑1887</a> or <a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
+            </div>
+        </div>
+    </main>
 
-                 console.log('Creating PayPal order for amount:', amount, 'account:', account);
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="footer-contact">
+                        <span class="footer-owner">Karl Holliday</span>
+                        <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
+                        <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Portal</h3>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                        <li><a href="customer-dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-                 // Create order using PayPal's client-side API
-                 return actions.order.create({
-                     purchase_units: [{
-                         amount: {
-                             value: amount,
-                         },
-                         description: `Payment for account ${account}`,
-                     }],
-                 });
-             },
-             onApprove: function(data, actions) {
-                 console.log('PayPal order approved, capturing payment...');
-                 return actions.order.capture().then(function(details) {
-                     console.log('Payment captured successfully:', details);
-                     
-                     // Show success message
-                     const successMessage = `
+    <!-- Mobile Tab Bar -->
+    <nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
+        <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
+        <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
+        <a href="pay-your-bill.html" aria-label="Pay Your Bill" class="active"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
+        <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
+        <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
+        <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
+    </nav>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accountInput = document.getElementById('accountNumber');
+            const amountInput = document.getElementById('paymentAmount');
+            const accountError = document.getElementById('accountError');
+            const amountError = document.getElementById('amountError');
+            const amountDisplay = document.getElementById('amountDisplay');
+            const displayAmount = document.getElementById('displayAmount');
+            
+            // Form validation
+            function validateAccount() {
+                const value = accountInput.value.trim();
+                const hlgPattern = /^HLG[0-9]{4}$/;
+                
+                if (value.length !== 7 || !hlgPattern.test(value)) {
+                    accountInput.classList.add('error');
+                    accountError.classList.add('show');
+                    return false;
+                } else {
+                    accountInput.classList.remove('error');
+                    accountError.classList.remove('show');
+                    return true;
+                }
+            }
+            
+            function validateAmount() {
+                const value = parseFloat(amountInput.value);
+                if (isNaN(value) || value < 1) {
+                    amountInput.classList.add('error');
+                    amountError.classList.add('show');
+                    return false;
+                } else {
+                    amountInput.classList.remove('error');
+                    amountError.classList.remove('show');
+                    return true;
+                }
+            }
+            
+            // Update amount display
+            function updateAmountDisplay() {
+                const amount = parseFloat(amountInput.value);
+                if (!isNaN(amount) && amount > 0) {
+                    displayAmount.textContent = `$${amount.toFixed(2)}`;
+                    amountDisplay.classList.add('show');
+                } else {
+                    amountDisplay.classList.remove('show');
+                }
+            }
+            
+            // Event listeners
+            accountInput.addEventListener('input', validateAccount);
+            accountInput.addEventListener('blur', validateAccount);
+            amountInput.addEventListener('input', function() {
+                validateAmount();
+                updateAmountDisplay();
+            });
+            amountInput.addEventListener('blur', validateAmount);
+            
+            // PayPal integration
+            function renderPayPalButtons() {
+                const container = document.getElementById('paypal-button-container');
+                
+                if (!container) {
+                    console.error('PayPal container not found');
+                    return;
+                }
+                
+                if (!window.paypal) {
+                    console.error('PayPal SDK not available');
+                    container.innerHTML = '<p style="color: #6c757d; text-align: center; padding: 15px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; margin: 10px 0; font-size: 0.9rem;"><i class="fas fa-info-circle"></i> PayPal is loading... Please wait a moment.</p>';
+                    return;
+                }
+                
+                console.log('Rendering PayPal buttons...');
+                container.innerHTML = '';
+                
+                window.paypal.Buttons({
+                    style: {
+                        layout: 'vertical',
+                        color: 'gold',
+                        shape: 'rect',
+                        label: 'paypal'
+                    },
+                    createOrder: function(data, actions) {
+                        const amount = document.getElementById('paymentAmount')?.value || '10.00';
+                        const account = document.getElementById('accountNumber')?.value || '';
+
+                        if (!amount || amount <= 0) {
+                            alert('Please enter a valid amount.');
+                            return;
+                        }
+
+                        if (!account) {
+                            alert('Please enter your account number.');
+                            return;
+                        }
+
+                        console.log('Creating PayPal order for amount:', amount, 'account:', account);
+
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: amount,
+                                },
+                                description: `Payment for account ${account}`,
+                            }],
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        console.log('PayPal order approved, capturing payment...');
+                        return actions.order.capture().then(function(details) {
+                            console.log('Payment captured successfully:', details);
+                            
+                            const successMessage = `
 Payment completed successfully!
 
 Transaction ID: ${details.id}
@@ -802,229 +678,50 @@ Account: ${document.getElementById('accountNumber')?.value || 'N/A'}
 
 Thank you for your payment!
 `;
-                     alert(successMessage);
+                            alert(successMessage);
 
-                     // Reset form if it exists
-                     const form = document.getElementById('payment-form');
-                     if (form) {
-                         form.reset();
-                     }
+                            // Reset form
+                            const form = document.getElementById('payment-form');
+                            if (form) {
+                                form.reset();
+                            }
 
-                     // Hide amount display if it exists
-                     const amountDisplay = document.getElementById('amountDisplay');
-                     if (amountDisplay) {
-                         amountDisplay.style.display = 'none';
-                     }
-                 });
-             },
-             onError: function(err) {
-                 console.error('PayPal Error:', err);
-                 alert('An error occurred during payment. Please try again or contact us for assistance.');
-             },
-         }).render(container).then(() => {
-             console.log('PayPal buttons rendered successfully');
-         }).catch((error) => {
-             console.error('Error rendering PayPal buttons:', error);
-             container.innerHTML = '<p style="color: #6c757d; text-align: center; padding: 15px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; margin: 10px 0; font-size: 0.9rem;"><i class="fas fa-clock"></i> PayPal is taking longer than expected. Alternative payment options are available below.</p>';
-         });
-     } catch (error) {
-         console.error('Exception in PayPal button creation:', error);
-         container.innerHTML = '<p style="color: #6c757d; text-align: center; padding: 15px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; margin: 10px 0; font-size: 0.9rem;"><i class="fas fa-info-circle"></i> PayPal is temporarily unavailable. Please use the alternative payment methods below.</p>';
-     }
- }
- 
- // Initialize PayPal buttons when the page loads
- document.addEventListener('DOMContentLoaded', function() {
-     console.log('DOM loaded, initializing PayPal...');
-     
-     // Function to check if PayPal is ready
-     function checkPayPalReady() {
-         if (window.paypal) {
-             console.log('PayPal SDK is ready');
-             renderPayPalButtons();
-             return true;
-         }
-         return false;
-     }
-     
-     // Try immediately
-     if (!checkPayPalReady()) {
-         // Try after 500ms
-         setTimeout(function() {
-             if (!checkPayPalReady()) {
-                 // Try after 1 second
-                 setTimeout(function() {
-                     if (!checkPayPalReady()) {
-                         // Try after 2 seconds
-                         setTimeout(function() {
-                             if (!checkPayPalReady()) {
-                                 // Final attempt after 3 seconds
-                                 setTimeout(function() {
-                                     if (!checkPayPalReady()) {
-                                         console.error('PayPal SDK failed to load after multiple attempts');
-                                         showFallbackPayment();
-                                     }
-                                 }, 1000);
-                             }
-                         }, 1000);
-                     }
-                 }, 1000);
-             }
-         }, 500);
-     }
-     
-     // Fallback payment option
-     function showFallbackPayment() {
-         const container = document.getElementById('paypal-button-container');
-         if (container) {
-             container.innerHTML = `
-                 <div style="text-align: center; padding: 20px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; margin: 10px 0;">
-                     <h4 style="color: #495057; margin-bottom: 15px;">Payment Options</h4>
-                     <p style="color: #6c757d; margin-bottom: 20px;">PayPal is currently unavailable. Please use one of these payment methods:</p>
-                     <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-                         <button onclick="contactForPayment()" style="background: #007bff; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 500;">
-                             <i class="fas fa-phone"></i> Call to Pay: (504) 717-1887
-                         </button>
-                         <button onclick="emailForPayment()" style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 500;">
-                             <i class="fas fa-envelope"></i> Email for Payment
-                         </button>
-                     </div>
-                 </div>
-             `;
-         }
-     }
-     
-     // Global functions for fallback buttons
-     window.contactForPayment = function() {
-         const amount = document.getElementById('paymentAmount')?.value || '';
-         const account = document.getElementById('accountNumber')?.value || '';
-         const message = `Hi, I'd like to make a payment. Account: ${account}, Amount: $${amount}`;
-         window.open(`tel:+15047171887?body=${encodeURIComponent(message)}`);
-     };
-     
-     window.emailForPayment = function() {
-         const amount = document.getElementById('paymentAmount')?.value || '';
-         const account = document.getElementById('accountNumber')?.value || '';
-         const subject = 'Payment Request - Holliday Lawn & Garden';
-         const body = `Hello,\n\nI would like to make a payment:\n\nAccount Number: ${account}\nAmount: $${amount}\n\nPlease let me know how to proceed.\n\nThank you!`;
-         window.open(`mailto:7holliday@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
-     };
- });
- </script>
-<script src="assets/js/firebase-config.js" type="module"></script>
-<script src="assets/js/main.js" type="module"></script>
-<!-- PayPal integration is now self-contained in this page -->
-</main>
-<footer class="footer" role="contentinfo">
-<div class="footer-content">
-<div class="footer-grid">
-<div class="footer-section">
-<h3>Contact Us</h3>
-<div class="footer-contact">
-<span class="footer-owner">Karl Holliday</span>
-<a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
-<a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
-</div>
-</div>
-<div class="footer-section">
-<h3>Quick Links</h3>
-<ul><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="education.html">Education</a></li><li><a href="contact.html">Contact</a></li></ul>
-</div>
-<div class="footer-section">
-<h3>Customer Portal</h3>
-<ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li><li><a href="pay-your-bill.html">Pay Your Bill</a></li><li><a href="customer-dashboard.html">Dashboard</a></li></ul>
-</div>
-<div class="footer-section">
-<h3>Legal</h3>
-<ul>
-  <li><a href="privacy.html">Privacy Policy</a></li>
-  <li><a href="terms.html">Terms of Service</a></li>
-</ul>
-</div>
-<div class="footer-section">
-<h3>Follow Us</h3>
-<div class="social-links">
-  <a href="#" class="social-link" aria-label="Facebook">
-    <i class="fab fa-facebook"></i>
-  </a>
-  <a href="#" class="social-link" aria-label="Instagram">
-    <i class="fab fa-instagram"></i>
-  </a>
-  <a href="#" class="social-link" aria-label="Twitter">
-    <i class="fab fa-twitter"></i>
-  </a>
-  <a href="#" class="social-link" aria-label="LinkedIn">
-    <i class="fab fa-linkedin"></i>
-  </a>
-</div>
-</div>
-</div>
-</div>
-<div class="footer-bottom">
-<p>© <span id="current-year"></span> Holliday's Lawn &amp; Garden. All rights reserved.</p>
-</div>
-</footer>
-<script>
- const yearElement = document.getElementById('current-year');
-if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
-}
- </script>
-<script>
- // Enhanced loading management
- (function() {
- var loading = document.getElementById('loading');
- var error = document.getElementById('error');
- 
- // Hide loading after page load
- function hideLoading() {
- if (loading) {
- loading.classList.add('hidden');
- setTimeout(function() {
- loading.style.display = 'none';
- }, 300);
- }
- }
- 
- // Show error message
- function showError(message) {
- if (error) {
- error.textContent = message;
- error.classList.add('show');
- setTimeout(function() {
- error.classList.remove('show');
- }, 5000);
- }
- }
- 
- // Hide loading when DOM is ready
- if (document.readyState === 'loading') {
- document.addEventListener('DOMContentLoaded', hideLoading);
- } else {
- hideLoading();
- }
- 
- // Hide loading when window loads
- window.addEventListener('load', hideLoading);
- 
- // Fallback: hide loading after 3 seconds
- setTimeout(hideLoading, 3000);
- 
- // Handle errors
- window.addEventListener('error', function(e) {
-     showError('An error occurred while loading the page. Please refresh.');
- });
- })();
- </script>
- 
- <!-- Mobile Tab Bar (visible only on mobile) -->
- <nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
-   <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
-   <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
-   <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
-   <a href="pay-your-bill.html" aria-label="Pay Your Bill" class="active"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
-   <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
-   <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
-   <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
- </nav>
-</body></html>
+                            // Hide amount display
+                            if (amountDisplay) {
+                                amountDisplay.classList.remove('show');
+                            }
+                        });
+                    },
+                    onError: function(err) {
+                        console.error('PayPal Error:', err);
+                        alert('An error occurred during payment. Please try again or contact us for assistance.');
+                    },
+                }).render(container).then(() => {
+                    console.log('PayPal buttons rendered successfully');
+                }).catch((error) => {
+                    console.error('Error rendering PayPal buttons:', error);
+                    container.innerHTML = '<p style="color: #6c757d; text-align: center; padding: 15px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; margin: 10px 0; font-size: 0.9rem;"><i class="fas fa-clock"></i> PayPal is taking longer than expected. Alternative payment options are available below.</p>';
+                });
+            }
+            
+            // Initialize PayPal with retry mechanism
+            function initPayPal() {
+                if (window.paypal) {
+                    renderPayPalButtons();
+                } else {
+                    setTimeout(initPayPal, 500);
+                }
+            }
+            
+            // Start PayPal initialization
+            initPayPal();
+            
+            // Update copyright year
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</body>
+</html>
