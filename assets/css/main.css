@@ -70,6 +70,7 @@ body {
   color: #333;
   background-color: var(--background-light);
   overflow-x: hidden;
+  padding-top: 80px !important;
 }
 
 /* Ensure all buttons have consistent styling */
@@ -119,8 +120,15 @@ header {
   justify-content: space-between !important;
   background: #fff !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-  position: relative !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
   z-index: 1000 !important;
+  padding: 0 1.5rem !important;
+  min-height: 80px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 /* Ensure footer is visible and styled */
@@ -243,29 +251,34 @@ footer,
   display: block;
 }
 .hero {
-  height: 80vh;
-  min-height: 600px;
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)) center/cover,
-    url('../images/hero-garden-landscaping.jpg') center/cover;
+  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+  color: white;
+  padding: 6rem 0;
+  text-align: center;
+  min-height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  color: #fff;
-  padding-top: 80px;
+  position: relative;
+  overflow: hidden;
 }
 .hero-content {
+  position: relative;
+  z-index: 2;
   max-width: 800px;
-  padding: 4rem 2rem;
-  text-align: center;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 .hero h1 {
-  font-size: var(--font-size-3xl);
-  font-weight: 800;
+  font-size: 3rem;
+  font-weight: 700;
   margin-bottom: 1rem;
-  line-height: 1.2;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+.hero p {
+  font-size: 1.25rem;
+  opacity: 0.95;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 .hero-subtitle {
   font-size: var(--font-size-xl);
@@ -1718,24 +1731,52 @@ footer::before {
 /* Mobile tab bar: ensure it does not overlap content */
 @media (max-width: 768px) {
   .mobile-tab-bar {
+    display: flex !important;
     position: fixed;
-    left: 0;
-    right: 0;
     bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 64px;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
     z-index: 2000;
+    justify-content: space-around;
+    align-items: center;
   }
+  
+  .mobile-tab-bar a {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #2e7d32;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.25rem 0;
+    transition: color 0.2s;
+  }
+  
+  .mobile-tab-bar a.active,
+  .mobile-tab-bar a:active,
+  .mobile-tab-bar a:hover {
+    color: #1565c0;
+  }
+  
+  .mobile-tab-bar i {
+    font-size: 1.5rem;
+    margin-bottom: 0.1rem;
+  }
+  
   body, .container, main {
-    padding-bottom: 70px !important;
+    padding-bottom: 64px !important;
   }
 }
 
-/* Mobile Tab Bar - Hide on Desktop */
 @media (min-width: 768px) {
-    .mobile-tab-bar { 
-        display: none !important; 
-        visibility: hidden !important;
-        opacity: 0 !important;
-        position: absolute !important;
-        left: -9999px !important;
-    }
+  .mobile-tab-bar { 
+    display: none !important; 
+  }
 }
