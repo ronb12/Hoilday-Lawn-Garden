@@ -167,68 +167,36 @@
             padding-bottom: 0.5rem;
         }
 
-        .faq-item {
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
+        /* Bullet Format Styles */
+        .faq-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .faq-bullets li {
+            background: white;
+            padding: 1.5rem;
             margin-bottom: 1rem;
-            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: box-shadow 0.3s ease;
-            background: white;
         }
 
-        .faq-item:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        .faq-bullets li:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .faq-question {
-            padding: 1.5rem;
-            background: #f8f9fa;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.3s ease;
-        }
-
-        .faq-question:hover {
-            background: #e8f5e8;
-        }
-
-        .faq-question h3 {
-            margin: 0;
+        .faq-bullets li strong {
+            color: #2e7d32;
             font-size: 1.1rem;
-            color: #333;
-            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
         }
 
-        .toggle-icon {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #4caf50;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .toggle-icon {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            padding: 0 1.5rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .faq-item.active .faq-answer {
-            padding: 1.5rem;
-            max-height: 200px;
-        }
-
-        .faq-answer p {
-            margin: 0;
-            line-height: 1.6;
-            color: #555;
+        .faq-bullets li br {
+            margin-bottom: 0.5rem;
         }
 
         /* Contact Section Styles */
@@ -389,101 +357,37 @@
         <!-- Services Section -->
         <div class="faq-section" data-category="services">
           <h2>Services</h2>
-          
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>What services do you offer?</h3>
-              <span class="toggle-icon">+</span>
-            </div>
-            <div class="faq-answer">
-              <p>Lawn mowing, edging, trimming, fertilization, weed control, and seasonal cleanups.</p>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>Do you offer recurring services?</h3>
-              <span class="toggle-icon">+</span>
-            </div>
-            <div class="faq-answer">
-              <p>Yes! Weekly, bi-weekly, and monthly maintenance plans available.</p>
-            </div>
-          </div>
+          <ul class="faq-bullets">
+            <li><strong>What services do you offer?</strong><br>Lawn mowing, edging, trimming, fertilization, weed control, and seasonal cleanups.</li>
+            <li><strong>Do you offer recurring services?</strong><br>Yes! Weekly, bi-weekly, and monthly maintenance plans available.</li>
+          </ul>
         </div>
 
         <!-- Scheduling Section -->
         <div class="faq-section" data-category="scheduling">
           <h2>Scheduling</h2>
-          
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>How do I schedule?</h3>
-              <span class="toggle-icon">+</span>
-            </div>
-            <div class="faq-answer">
-              <p>Call (504) 717-1887 or email 7holliday@gmail.com</p>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>What are your hours?</h3>
-              <span class="toggle-icon">+</span>
-            </div>
-            <div class="faq-answer">
-              <p>Monday-Friday: 7 AM - 6 PM<br>Saturday: 8 AM - 4 PM</p>
-            </div>
-          </div>
+          <ul class="faq-bullets">
+            <li><strong>How do I schedule?</strong><br>Call (504) 717-1887 or email 7holliday@gmail.com</li>
+            <li><strong>What are your hours?</strong><br>Monday-Friday: 7 AM - 6 PM<br>Saturday: 8 AM - 4 PM</li>
+          </ul>
         </div>
 
         <!-- Pricing Section -->
         <div class="faq-section" data-category="pricing">
           <h2>Pricing</h2>
-          
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>How much does it cost?</h3>
-              <span class="toggle-icon">+</span>
-            </div>
-            <div class="faq-answer">
-              <p>Free estimates based on property size and service type.</p>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>What payment methods?</h3>
-              <span class="toggle-icon">+</span>
-            </div>
-            <div class="faq-answer">
-              <p>Cash, checks, credit cards, and online payments.</p>
-            </div>
-          </div>
+          <ul class="faq-bullets">
+            <li><strong>How much does it cost?</strong><br>Free estimates based on property size and service type.</li>
+            <li><strong>What payment methods?</strong><br>Cash, checks, credit cards, and online payments.</li>
+          </ul>
         </div>
 
         <!-- Maintenance Section -->
         <div class="faq-section" data-category="maintenance">
           <h2>Maintenance</h2>
-          
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>How often should I mow?</h3>
-              <span class="toggle-icon">+</span>
-            </div>
-            <div class="faq-answer">
-              <p>Spring/summer: Weekly<br>Fall/winter: Every 2-3 weeks</p>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>When to fertilize?</h3>
-              <span class="toggle-icon">+</span>
-            </div>
-            <div class="faq-answer">
-              <p>Late spring (May) and late summer (August/September)</p>
-            </div>
-          </div>
+          <ul class="faq-bullets">
+            <li><strong>How often should I mow?</strong><br>Spring/summer: Weekly<br>Fall/winter: Every 2-3 weeks</li>
+            <li><strong>When to fertilize?</strong><br>Late spring (May) and late summer (August/September)</li>
+          </ul>
         </div>
       </div>
 
@@ -574,33 +478,12 @@
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     
-    // FAQ Toggle Functionality
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    faqItems.forEach(item => {
-      const question = item.querySelector('.faq-question');
-      
-      question.addEventListener('click', function() {
-        const isActive = item.classList.contains('active');
-        
-        // Close all other FAQ items
-        faqItems.forEach(otherItem => {
-          otherItem.classList.remove('active');
-        });
-        
-        // Toggle current item
-        if (!isActive) {
-          item.classList.add('active');
-        }
-      });
-    });
-
     // Search Functionality
     const searchInput = document.getElementById('faqSearch');
     if (searchInput) {
       searchInput.addEventListener('input', function(e) {
         const searchTerm = e.target.value.toLowerCase().trim();
-        const faqItems = document.querySelectorAll('.faq-item');
+        const faqItems = document.querySelectorAll('.faq-bullets li');
         const faqSections = document.querySelectorAll('.faq-section');
         
         if (searchTerm === '') {
@@ -613,8 +496,8 @@
         let hasResults = false;
         
         faqItems.forEach(item => {
-          const questionText = item.querySelector('.faq-question h3').textContent.toLowerCase();
-          const answerText = item.querySelector('.faq-answer p').textContent.toLowerCase();
+          const questionText = item.querySelector('strong').textContent.toLowerCase();
+          const answerText = item.textContent.toLowerCase();
           
           if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
             item.classList.remove('hidden');
@@ -626,7 +509,7 @@
         
         // Show/hide sections based on visible items
         faqSections.forEach(section => {
-          const visibleItems = section.querySelectorAll('.faq-item:not(.hidden)');
+          const visibleItems = section.querySelectorAll('.faq-bullets li:not(.hidden)');
           if (visibleItems.length > 0) {
             section.classList.remove('hidden');
           } else {
@@ -664,7 +547,7 @@
         if (searchInput) {
           searchInput.value = '';
         }
-        document.querySelectorAll('.faq-item').forEach(item => {
+        document.querySelectorAll('.faq-bullets li').forEach(item => {
           item.classList.remove('hidden');
         });
         
