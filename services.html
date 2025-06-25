@@ -90,129 +90,128 @@
  }
  </script>
 <style>
- 
+ body {
+   padding-top: 100px;
+   margin: 0;
+   font-family: 'Montserrat', Arial, sans-serif;
+   background: #f8f9fa;
+   color: #333;
+ }
  
  .hero img {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- object-fit: cover;
- z-index: 1;
- filter: brightness(0.6);
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   z-index: 1;
+   filter: brightness(0.6);
  }
  
  .hero-content {
- position: relative;
- z-index: 2;
- text-align: center;
- color: #fff;
- padding: 2rem;
- max-width: 800px;
+   position: relative;
+   z-index: 2;
+   text-align: center;
+   color: #fff;
+   padding: 3rem 2rem;
+   max-width: 800px;
+   margin: 0 auto;
  }
  
  .hero-content h1 {
- font-size: 3rem;
- margin-bottom: 1rem;
- font-weight: 600;
- letter-spacing: 1px;
- text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+   font-size: 3.5rem;
+   margin-bottom: 1rem;
+   font-weight: 700;
+   letter-spacing: 1px;
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
  }
  
  .hero-content p {
- font-size: 1.25rem;
- font-weight: 400;
- margin-bottom: 2rem;
- text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+   font-size: 1.25rem;
+   font-weight: 400;
+   margin-bottom: 2rem;
+   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+   opacity: 0.95;
  }
  
  @media (max-width: 768px) {
- body {
-        font-family: 'Montserrat', sans-serif;
- padding-top: 80px;
- }
+   body {
+     padding-top: 80px;
+   }
  
- .main-header {
- padding: 0 1rem !important;
- }
+   .main-header {
+     padding: 0 1rem !important;
+   }
  
- .nav-links { 
- display: none !important; 
- position: absolute !important; 
- top: 100% !important; 
- left: 0 !important; 
- right: 0 !important; 
- background: var(--color-primary, #4caf50) !important; 
- padding: 1rem !important; 
- flex-direction: column !important; 
- align-items: center !important; 
- box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
- z-index: 1000 !important;
- }
+   /* Hide desktop navigation on mobile */
+   .main-header .nav-links,
+   .main-header .login-buttons {
+     display: none !important;
+   }
  
- .nav-links.active { 
- display: flex !important; 
+   /* Ensure mobile tab bar is visible */
+   .mobile-tab-bar {
+     display: flex !important;
+   }
+
+   .hero-content h1 {
+     font-size: 2.5rem;
+   }
+
+   .hero-content p {
+     font-size: 1.1rem;
+   }
  }
- 
 </style>
 
+<!-- --- Professional Mobile Tab Bar --- -->
 <style>
-    @media (max-width: 900px) {
-        .main-header .nav-links {
-            margin-top: 0 !important;
-            padding-top: 0.5em !important;
-        }
-    }
+/* --- Professional Mobile Tab Bar --- */
+@media (max-width: 768px) {
+  .mobile-tab-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 64px;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+    z-index: 2000;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .mobile-tab-bar a {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #2e7d32;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.25rem 0;
+    transition: color 0.2s;
+  }
+  .mobile-tab-bar a.active,
+  .mobile-tab-bar a:active,
+  .mobile-tab-bar a:hover {
+    color: #1565c0;
+  }
+  .mobile-tab-bar i {
+    font-size: 1.5rem;
+    margin-bottom: 0.1rem;
+  }
+}
 
-    /* --- Professional Mobile Tab Bar --- */
-    @media (max-width: 768px) {
-      .main-header .nav-links,
-      .main-header .login-buttons {
-        display: none !important;
-      }
-      .mobile-tab-bar {
-        display: flex;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100vw;
-        height: 64px;
-        background: #fff;
-        border-top: 1px solid #e0e0e0;
-        box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
-        z-index: 2000;
-        justify-content: space-around;
-        align-items: center;
-      }
-      .mobile-tab-bar a {
-        flex: 1 1 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: #2e7d32;
-        text-decoration: none;
-        font-size: 0.85rem;
-        font-weight: 600;
-        padding: 0.25rem 0;
-        transition: color 0.2s;
-      }
-      .mobile-tab-bar a.active,
-      .mobile-tab-bar a:active,
-      .mobile-tab-bar a:hover {
-        color: #1565c0;
-      }
-      .mobile-tab-bar i {
-        font-size: 1.5rem;
-        margin-bottom: 0.1rem;
-      }
-    }
-
-    @media (min-width: 769px) {
-      .mobile-tab-bar { display: none !important; }
-    }
-
+@media (min-width: 769px) {
+  .mobile-tab-bar { 
+    display: none !important; 
+  }
+}
 </style>
 </head>
 <body>
@@ -224,8 +223,8 @@
   <!-- Error Message -->
   <div id="error" class="error-message" role="alert" aria-live="polite"></div>
   
-    <!-- Header -->
-    <header class="main-header">
+  <!-- Header -->
+  <header class="main-header">
     <div class="logo">
       <a href="index.html">
         <picture>
@@ -238,7 +237,7 @@
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
+        <li><a href="services.html" class="active">Services</a></li>
         <li><a href="education.html">Education</a></li>
         <li><a href="faq.html">FAQ</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -256,79 +255,105 @@
       </div>
     </nav>
   </header>
-<!-- Main Content -->
-<main role="main">
-    <!-- Hero Section -->
 
- 
-<div class="hero">
-<div class="hero-overlay"></div>
-<img alt="Beautiful garden landscaping" loading="eager" src="assets/images/hero-garden-landscaping.jpg"/>
-<div class="hero-content">
-<h1>Our Professional Services</h1>
-<p>
- Transform your outdoor space with our expert lawn care and landscaping services. We offer
- comprehensive solutions to keep your property looking its best year-round.
- </p>
-</div>
-<section class="services" id="services">
-<div class="container">
-<h2 class="section-title">Our Services</h2>
-<div class="services-grid" id="services-container">
-<!-- Services will be loaded dynamically from cache -->
-</div>
-</div>
-</section>
-</main>
-<footer class="footer" role="contentinfo">
-<div class="footer-content">
-<div class="footer-grid">
-<div class="footer-section">
-<h3>Contact Us</h3>
-<div class="footer-contact">
-<span class="footer-owner">Karl Holliday</span>
-<a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
-<a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
-</div>
-</div>
-<div class="footer-section">
-<h3>Quick Links</h3>
-<ul><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="education.html">Education</a></li><li><a href="contact.html">Contact</a></li></ul>
-</div>
-<div class="footer-section">
-<h3>Customer Portal</h3>
-<ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li><li><a href="pay-your-bill.html">Pay Your Bill</a></li><li><a href="customer-dashboard.html">Dashboard</a></li></ul>
-</div>
-<div class="footer-section">
-<h3>Legal</h3>
-<ul>
-  <li><a href="privacy.html">Privacy Policy</a></li>
-  <li><a href="terms.html">Terms of Service</a></li>
-</ul>
-</div>
-<div class="footer-section">
-<h3>Follow Us</h3>
-<div class="social-links">
-  <a href="#" class="social-link" aria-label="Facebook">
-    <i class="fab fa-facebook"></i>
-  </a>
-  <a href="#" class="social-link" aria-label="Instagram">
-    <i class="fab fa-instagram"></i>
-  </a>
-  <a href="#" class="social-link" aria-label="Twitter">
-    <i class="fab fa-twitter"></i>
-  </a>
-  <a href="#" class="social-link" aria-label="LinkedIn">
-    <i class="fab fa-linkedin"></i>
-  </a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="footer-bottom">
-<p>© <span id="current-year"></span> Holliday's Lawn &amp; Garden. All rights reserved.</p>
-</div>
+  <!-- Mobile Tab Bar -->
+  <div class="mobile-tab-bar">
+    <a href="index.html">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    <a href="services.html" class="active">
+      <i class="fas fa-tools"></i>
+      <span>Services</span>
+    </a>
+    <a href="pay-your-bill.html">
+      <i class="fas fa-credit-card"></i>
+      <span>Pay Bill</span>
+    </a>
+    <a href="contact.html">
+      <i class="fas fa-phone"></i>
+      <span>Contact</span>
+    </a>
+    <a href="login.html">
+      <i class="fas fa-user"></i>
+      <span>Login</span>
+    </a>
+  </div>
+
+  <!-- Main Content -->
+  <main role="main">
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="hero-overlay"></div>
+      <img alt="Beautiful garden landscaping" loading="eager" src="assets/images/hero-garden-landscaping.jpg"/>
+      <div class="hero-content">
+        <h1>Our Professional Services</h1>
+        <p>
+          Transform your outdoor space with our expert lawn care and landscaping services. We offer
+          comprehensive solutions to keep your property looking its best year-round.
+        </p>
+      </div>
+    </div>
+
+    <section class="services" id="services">
+      <div class="container">
+        <h2 class="section-title">Our Services</h2>
+        <div class="services-grid" id="services-container">
+          <!-- Services will be loaded dynamically from cache -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer-content">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <div class="footer-contact">
+            <span class="footer-owner">Karl Holliday</span>
+            <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
+            <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="education.html">Education</a></li><li><a href="contact.html">Contact</a></li></ul>
+        </div>
+        <div class="footer-section">
+          <h3>Customer Portal</h3>
+          <ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li><li><a href="pay-your-bill.html">Pay Your Bill</a></li><li><a href="customer-dashboard.html">Dashboard</a></li></ul>
+        </div>
+        <div class="footer-section">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Follow Us</h3>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook">
+              <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="current-year"></span> Holliday's Lawn &amp; Garden. All rights reserved.</p>
+  </div>
 </footer>
 <!-- Scripts -->
 <script src="assets/js/firebase-config.js" type="module"></script>
@@ -456,16 +481,5 @@ if (yearElement) {
  });
  })();
  </script>
- 
- <!-- Mobile Tab Bar (visible only on mobile) -->
- <nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
-   <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
-   <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
-   <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
-   <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
-   <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
-   <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
-   <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
- </nav>
 </body>
 </html>
