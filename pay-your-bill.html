@@ -131,8 +131,8 @@
         }
         .form-group input:focus { border-color: #2e7d32; }
         .form-group input.error { border-color: #dc3545; }
-        .error-message { color: #dc3545; font-size: 0.9rem; margin-top: 0.25rem; display: none; }
-        .error-message.show { display: block; }
+        .error-message { color: #dc3545; font-size: 0.9rem; margin-top: 0.25rem; display: none !important; visibility: hidden !important; opacity: 0 !important; }
+        .error-message.show { display: block !important; visibility: visible !important; opacity: 1 !important; }
         .payment-amount-display {
             background: #f8f9fa;
             padding: 1rem;
@@ -355,6 +355,12 @@
         // Set current year in footer
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // Explicitly hide error messages on page load
+            const accountError = document.getElementById('accountError');
+            const amountError = document.getElementById('amountError');
+            if (accountError) accountError.classList.remove('show');
+            if (amountError) amountError.classList.remove('show');
         });
         // Payment form validation and amount display
         document.addEventListener('DOMContentLoaded', function() {
@@ -366,6 +372,17 @@
             const displayAmount = document.getElementById('displayAmount');
             let accountTouched = false;
             let amountTouched = false;
+            
+            // Ensure error messages start hidden
+            console.log('Initializing form validation...');
+            if (accountError) {
+                accountError.classList.remove('show');
+                console.log('Account error hidden on load');
+            }
+            if (amountError) {
+                amountError.classList.remove('show');
+                console.log('Amount error hidden on load');
+            }
             
             function validateAccount(showError) {
                 const value = accountInput.value.trim();
