@@ -82,7 +82,10 @@
         }
         
         .login-buttons {
-            display: none !important;
+            display: flex !important;
+            gap: 1rem !important;
+            align-items: center !important;
+            margin-left: 1rem !important;
         }
         
         /* Mobile Tab Bar */
@@ -91,6 +94,9 @@
         }
         
         @media (max-width: 768px) {
+            .login-buttons {
+                display: none !important;
+            }
             .mobile-tab-bar {
                 display: flex !important;
                 position: fixed !important;
@@ -105,7 +111,6 @@
                 justify-content: space-around !important;
                 align-items: center !important;
             }
-            
             .mobile-tab-bar a {
                 display: flex !important;
                 flex-direction: column !important;
@@ -115,13 +120,33 @@
                 font-size: 0.8rem !important;
                 gap: 0.25rem !important;
             }
-            
             .mobile-tab-bar a.active {
                 color: #2e7d32 !important;
             }
-            
             .mobile-tab-bar i {
                 font-size: 1.2rem !important;
+            }
+            body {
+                padding-bottom: 80px !important;
+            }
+            .faq-container {
+                padding: 1rem !important;
+            }
+            .faq-tabs {
+                justify-content: center !important;
+            }
+            .tab-btn {
+                padding: 0.5rem 1rem !important;
+                font-size: 0.9rem !important;
+            }
+            .contact-cards {
+                grid-template-columns: 1fr !important;
+            }
+            .footer-content {
+                padding: 0 0.5rem !important;
+            }
+            .footer-grid {
+                gap: 1rem !important;
             }
         }
         
