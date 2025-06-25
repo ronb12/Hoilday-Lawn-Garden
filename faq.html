@@ -14,12 +14,34 @@
             padding-top: 80px !important; 
             margin: 0 !important; 
             background: #f5f5f5 !important;
+            background-color: #f5f5f5 !important;
         }
         
         main {
             background: #f5f5f5 !important;
             padding: 2rem 0 !important;
         }
+        
+        .faq-main {
+            background: #f5f5f5 !important;
+            min-height: 100vh !important;
+        }
+        
+        /* Override any dark backgrounds */
+        .faq-page {
+            background: #f5f5f5 !important;
+        }
+        
+        .faq-page * {
+            background: inherit !important;
+        }
+        
+        /* Force light backgrounds */
+        html, body, main, .faq-main, .faq-container {
+            background: #f5f5f5 !important;
+            background-color: #f5f5f5 !important;
+        }
+        
         .hero {
             position: relative !important;
             width: 100vw !important;
@@ -293,6 +315,17 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+        /* Force light backgrounds - override any dark themes */
+        html, body, main, .faq-main, .faq-container {
+            background: #f5f5f5 !important;
+            background-color: #f5f5f5 !important;
+        }
+        
+        .faq-container {
+            background: white !important;
+            background-color: white !important;
+        }
     </style>
 </head>
 <body>
@@ -335,7 +368,7 @@
     </div>
   </section>
   <!-- Main FAQ Content -->
-  <main role="main">
+  <main role="main" class="faq-main">
     <div class="faq-container">
       <!-- Simple Search -->
       <div class="faq-search">
