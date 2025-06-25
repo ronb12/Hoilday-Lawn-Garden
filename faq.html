@@ -21,8 +21,8 @@
  padding-top: 100px;
  margin: 0;
  font-family: 'Montserrat', Arial, sans-serif;
- background: #f7f7f7;
- color: #222;
+ background: #f8f9fa;
+ color: #333;
  }
  
  .hero img {
@@ -41,14 +41,15 @@
  z-index: 2;
  text-align: center;
  color: #fff;
- padding: 2rem;
+ padding: 3rem 2rem;
  max-width: 800px;
+ margin: 0 auto;
  }
  
  .hero-content h1 {
- font-size: 3rem;
+ font-size: 3.5rem;
  margin-bottom: 1rem;
- font-weight: 600;
+ font-weight: 700;
  letter-spacing: 1px;
  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
  }
@@ -58,28 +59,354 @@
  font-weight: 400;
  margin-bottom: 2rem;
  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+ opacity: 0.95;
  }
- 
+
+ /* Professional FAQ Styling */
+ .faq-container {
+   max-width: 1200px;
+   margin: 0 auto;
+   padding: 3rem 2rem;
+   background: #fff;
+   border-radius: 12px;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+   margin-top: -50px;
+   position: relative;
+   z-index: 10;
+ }
+
+ .faq-section {
+   margin-bottom: 3rem;
+   padding: 2rem;
+   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+   border-radius: 10px;
+   border-left: 4px solid #4caf50;
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+ }
+
+ .faq-section h2 {
+   color: #2e7d32;
+   font-size: 2rem;
+   font-weight: 700;
+   margin-bottom: 2rem;
+   text-align: center;
+   position: relative;
+   padding-bottom: 1rem;
+ }
+
+ .faq-section h2::after {
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left: 50%;
+   transform: translateX(-50%);
+   width: 60px;
+   height: 3px;
+   background: linear-gradient(90deg, #4caf50, #66bb6a);
+   border-radius: 2px;
+ }
+
+ .faq-item {
+   background: #fff;
+   border-radius: 8px;
+   margin-bottom: 1rem;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+   border: 1px solid #e8f5e8;
+   transition: all 0.3s ease;
+   overflow: hidden;
+ }
+
+ .faq-item:hover {
+   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+   transform: translateY(-2px);
+   border-color: #4caf50;
+ }
+
+ .faq-question {
+   cursor: pointer;
+   padding: 1.5rem;
+   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+   border-bottom: 1px solid #e8f5e8;
+   transition: all 0.3s ease;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+ }
+
+ .faq-question:hover {
+   background: linear-gradient(135deg, #e8f5e8 0%, #f1f8f1 100%);
+ }
+
+ .faq-question h3 {
+   margin: 0;
+   font-size: 1.1rem;
+   font-weight: 600;
+   color: #2e7d32;
+   flex: 1;
+   line-height: 1.4;
+ }
+
+ .faq-question .icon {
+   font-size: 1.2rem;
+   color: #4caf50;
+   transition: transform 0.3s ease;
+   margin-left: 1rem;
+   flex-shrink: 0;
+ }
+
+ .faq-item.active .faq-question .icon {
+   transform: rotate(180deg);
+ }
+
+ .faq-answer {
+   max-height: 0;
+   overflow: hidden;
+   transition: max-height 0.3s ease, padding 0.3s ease;
+   background: #fff;
+ }
+
+ .faq-item.active .faq-answer {
+   max-height: 500px;
+   padding: 1.5rem;
+ }
+
+ .faq-answer p {
+   margin: 0;
+   color: #555;
+   line-height: 1.6;
+   font-size: 1rem;
+ }
+
+ /* Contact Section Styling */
+ .contact-section {
+   background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+   color: #fff;
+   padding: 3rem 2rem;
+   border-radius: 12px;
+   text-align: center;
+   margin-top: 3rem;
+   box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
+ }
+
+ .contact-section h2 {
+   font-size: 2.5rem;
+   margin-bottom: 1rem;
+   font-weight: 700;
+ }
+
+ .contact-section p {
+   font-size: 1.2rem;
+   margin-bottom: 2rem;
+   opacity: 0.95;
+ }
+
+ .contact-info {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   gap: 2rem;
+   margin-top: 2rem;
+ }
+
+ .contact-card {
+   background: rgba(255, 255, 255, 0.1);
+   padding: 1.5rem;
+   border-radius: 8px;
+   backdrop-filter: blur(10px);
+   border: 1px solid rgba(255, 255, 255, 0.2);
+   transition: transform 0.3s ease;
+ }
+
+ .contact-card:hover {
+   transform: translateY(-5px);
+   background: rgba(255, 255, 255, 0.15);
+ }
+
+ .contact-card i {
+   font-size: 2rem;
+   margin-bottom: 1rem;
+   display: block;
+ }
+
+ .contact-card h3 {
+   font-size: 1.2rem;
+   margin-bottom: 0.5rem;
+   font-weight: 600;
+ }
+
+ .contact-card a {
+   color: #fff;
+   text-decoration: none;
+   font-weight: 500;
+   transition: opacity 0.3s ease;
+ }
+
+ .contact-card a:hover {
+   opacity: 0.8;
+ }
+
+ /* Search Functionality */
+ .faq-search {
+   margin-bottom: 3rem;
+   text-align: center;
+ }
+
+ .search-container {
+   max-width: 500px;
+   margin: 0 auto;
+   position: relative;
+ }
+
+ .search-input {
+   width: 100%;
+   padding: 1rem 1.5rem;
+   border: 2px solid #e0e0e0;
+   border-radius: 50px;
+   font-size: 1rem;
+   background: #fff;
+   transition: all 0.3s ease;
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+ }
+
+ .search-input:focus {
+   outline: none;
+   border-color: #4caf50;
+   box-shadow: 0 4px 20px rgba(76, 175, 80, 0.2);
+ }
+
+ .search-input::placeholder {
+   color: #999;
+ }
+
+ .search-icon {
+   position: absolute;
+   right: 1.5rem;
+   top: 50%;
+   transform: translateY(-50%);
+   color: #4caf50;
+   font-size: 1.2rem;
+ }
+
+ /* Category Navigation */
+ .faq-categories {
+   display: flex;
+   justify-content: center;
+   flex-wrap: wrap;
+   gap: 1rem;
+   margin-bottom: 3rem;
+ }
+
+ .category-btn {
+   padding: 0.75rem 1.5rem;
+   background: #fff;
+   border: 2px solid #e0e0e0;
+   border-radius: 25px;
+   color: #666;
+   text-decoration: none;
+   font-weight: 600;
+   transition: all 0.3s ease;
+   cursor: pointer;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+ }
+
+ .category-btn:hover,
+ .category-btn.active {
+   background: #4caf50;
+   border-color: #4caf50;
+   color: #fff;
+   transform: translateY(-2px);
+   box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3);
+ }
+
+ /* Responsive Design */
  @media (max-width: 768px) {
- body {
- padding-top: 80px;
- }
+   body {
+     padding-top: 80px;
+   }
  
- .main-header {
- padding: 0 1rem !important;
- }
+   .main-header {
+     padding: 0 1rem !important;
+   }
  
- /* Hide desktop navigation on mobile */
- .main-header .nav-links,
- .main-header .login-buttons {
-   display: none !important;
- }
+   /* Hide desktop navigation on mobile */
+   .main-header .nav-links,
+   .main-header .login-buttons {
+     display: none !important;
+   }
  
- /* Ensure mobile tab bar is visible */
- .mobile-tab-bar {
-   display: flex !important;
+   /* Ensure mobile tab bar is visible */
+   .mobile-tab-bar {
+     display: flex !important;
+   }
+
+   .hero-content h1 {
+     font-size: 2.5rem;
+   }
+
+   .hero-content p {
+     font-size: 1.1rem;
+   }
+
+   .faq-container {
+     margin: -30px 1rem 0;
+     padding: 2rem 1rem;
+   }
+
+   .faq-section {
+     padding: 1.5rem;
+   }
+
+   .faq-section h2 {
+     font-size: 1.5rem;
+   }
+
+   .faq-question h3 {
+     font-size: 1rem;
+   }
+
+   .contact-info {
+     grid-template-columns: 1fr;
+     gap: 1rem;
+   }
+
+   .faq-categories {
+     gap: 0.5rem;
+   }
+
+   .category-btn {
+     padding: 0.5rem 1rem;
+     font-size: 0.9rem;
+   }
  }
-}
+
+ /* Hide/Show FAQ items based on search */
+ .faq-item.hidden {
+   display: none;
+ }
+
+ .faq-section.hidden {
+   display: none;
+ }
+
+ /* Loading animation for search */
+ .searching {
+   opacity: 0.7;
+   pointer-events: none;
+ }
+
+ /* No results message */
+ .no-results {
+   text-align: center;
+   padding: 3rem;
+   color: #666;
+   font-style: italic;
+ }
+
+ .no-results i {
+   font-size: 3rem;
+   color: #ccc;
+   margin-bottom: 1rem;
+   display: block;
+ }
 </style>
 
 <!-- --- Professional Mobile Tab Bar --- -->
@@ -140,38 +467,43 @@
 <!-- Error Message -->
 <div id="error" class="error-message" role="alert" aria-live="polite"></div>
 
-<!-- Header -->
-<header class="main-header">
-  <div class="logo">
-    <a href="index.html">
-      <picture>
-        <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
-        <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
-      </picture>
-    </a>
-  </div>
-  <nav id="nav-menu">
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="education.html">Education</a></li>
-      <li><a href="faq.html" class="active">FAQ</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-    </ul>
-    <div class="login-buttons">
-      <a href="login.html" class="btn-login btn-customer">
-        <i class="fas fa-user"></i>
-        Customer Login
-      </a>
-      <a href="admin-login.html" class="btn-login btn-admin">
-        <i class="fas fa-lock"></i>
-        Admin Login
+    <!-- Header -->
+  <header class="main-header">
+    <div class="logo">
+      <a href="index.html">
+        <picture>
+          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+        </picture>
       </a>
     </div>
-  </nav>
-</header>
+    <nav id="nav-menu">
+      <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+      </ul>
+      <div class="login-buttons">
+        <a href="login.html" class="btn-login btn-customer">
+          <i class="fas fa-user"></i>
+          Customer Login
+        </a>
+        <a href="admin-login.html" class="btn-login btn-admin">
+          <i class="fas fa-lock"></i>
+          Admin Login
+        </a>
+      </div>
+    </nav>
+  </header>
 
 <!-- Mobile Tab Bar -->
 <div class="mobile-tab-bar">
@@ -212,8 +544,25 @@
   </div>
 
   <div class="faq-container">
+    <!-- Search Functionality -->
+    <div class="faq-search">
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search for answers..." id="faqSearch">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+    </div>
+
+    <!-- Category Navigation -->
+    <div class="faq-categories">
+      <button class="category-btn active" data-category="all">All Questions</button>
+      <button class="category-btn" data-category="general">General</button>
+      <button class="category-btn" data-category="services">Services</button>
+      <button class="category-btn" data-category="payment">Payment</button>
+      <button class="category-btn" data-category="maintenance">Maintenance</button>
+    </div>
+
     <!-- General Questions -->
-    <div class="faq-section">
+    <div class="faq-section" data-category="general">
       <h2>🌱 General Questions</h2>
       <div class="faq-item">
         <div class="faq-question">
@@ -260,8 +609,9 @@
         </div>
       </div>
     </div>
+
     <!-- Services & Scheduling -->
-    <div class="faq-section">
+    <div class="faq-section" data-category="services">
       <h2>🛠️ Services &amp; Scheduling</h2>
       <div class="faq-item">
         <div class="faq-question">
@@ -308,8 +658,9 @@
         </div>
       </div>
     </div>
+
     <!-- Payment & Billing -->
-    <div class="faq-section">
+    <div class="faq-section" data-category="payment">
       <h2>💳 Payment &amp; Billing</h2>
       <div class="faq-item">
         <div class="faq-question">
@@ -345,8 +696,9 @@
         </div>
       </div>
     </div>
+
     <!-- Maintenance & Care -->
-    <div class="faq-section">
+    <div class="faq-section" data-category="maintenance">
       <h2>🌿 Maintenance &amp; Care</h2>
       <div class="faq-item">
         <div class="faq-question">
@@ -393,82 +745,221 @@
         </div>
       </div>
     </div>
+
     <!-- Contact Section -->
     <div class="contact-section">
       <h2>📞 Still Have Questions?</h2>
       <p>Can't find the answer you're looking for? We're here to help!</p>
       <div class="contact-info">
-        <div class="contact-item">
+        <div class="contact-card">
           <i class="fas fa-phone"></i>
-          <span>(504) 717-1887</span>
+          <h3>Call Us</h3>
+          <a href="tel:5047171887">(504) 717-1887</a>
         </div>
-        <div class="contact-item">
+        <div class="contact-card">
           <i class="fas fa-envelope"></i>
-          <span>7holliday@gmail.com</span>
+          <h3>Email Us</h3>
+          <a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
         </div>
-        <div class="contact-item">
+        <div class="contact-card">
           <i class="fas fa-user"></i>
+          <h3>Contact Person</h3>
           <span>Karl Holliday</span>
         </div>
-      </div>
-      <div>
-        <a class="btn" href="contact.html">Contact Us</a>
-        <a class="btn" href="services.html">View Services</a>
-        <a class="btn" href="pay-your-bill.html">Pay Your Bill</a>
       </div>
     </div>
   </div>
 </main>
 
-<footer class="footer" role="contentinfo">
+<!-- Footer -->
+<footer>
   <div class="footer-content">
     <div class="footer-grid">
       <div class="footer-section">
         <h3>Contact Us</h3>
-        <div class="footer-contact">
-          <span class="footer-owner">Karl Holliday</span>
-          <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
-          <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
-        </div>
-      </div>
-      <div class="footer-section">
-        <h3>Quick Links</h3>
-        <ul><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="education.html">Education</a></li><li><a href="contact.html">Contact</a></li></ul>
-      </div>
-      <div class="footer-section">
-        <h3>Customer Portal</h3>
-        <ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li><li><a href="pay-your-bill.html">Pay Your Bill</a></li><li><a href="customer-dashboard.html">Dashboard</a></li></ul>
-      </div>
-      <div class="footer-section">
-        <h3>Legal</h3>
         <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
+          <li><strong>Karl Holliday</strong></li>
+          <li><a href="tel:5047171887">(504) 717‑1887</a></li>
+          <li><a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a></li>
         </ul>
       </div>
       <div class="footer-section">
-        <h3>Follow Us</h3>
-        <div class="social-links">
-          <a href="#" class="social-link" aria-label="Facebook">
-            <i class="fab fa-facebook"></i>
-          </a>
-          <a href="#" class="social-link" aria-label="Instagram">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="#" class="social-link" aria-label="Twitter">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#" class="social-link" aria-label="LinkedIn">
-            <i class="fab fa-linkedin"></i>
-          </a>
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Customer Portal</h3>
+        <ul>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+          <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+          <li><a href="customer-dashboard.html">Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Legal</h3>
         </div>
+</div>
+    <div class="footer-bottom">
+      <div class="copyright">
+        <p>&copy; 2024 Holliday's Lawn &amp; Garden. All rights reserved.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="pay-your-bill.html">Pay Bill</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Login</a>
       </div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <p>© <span id="current-year"></span> Holliday's Lawn &amp; Garden. All rights reserved.</p>
-  </div>
 </footer>
+
+<!-- FAQ JavaScript -->
+<script>
+(function() {
+  'use strict';
+
+  // FAQ Toggle Functionality
+  function initFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all other FAQ items
+        faqItems.forEach(otherItem => {
+          otherItem.classList.remove('active');
+        });
+        
+        // Toggle current item
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+  }
+
+  // Search Functionality
+  function initSearch() {
+    const searchInput = document.getElementById('faqSearch');
+    const faqItems = document.querySelectorAll('.faq-item');
+    const faqSections = document.querySelectorAll('.faq-section');
+    
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase().trim();
+      
+      if (searchTerm === '') {
+        // Show all items when search is empty
+        faqItems.forEach(item => item.classList.remove('hidden'));
+        faqSections.forEach(section => section.classList.remove('hidden'));
+        return;
+      }
+      
+      let hasResults = false;
+      
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question h3 span').textContent.toLowerCase();
+        const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
+        
+        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+          item.classList.remove('hidden');
+          hasResults = true;
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+      
+      // Show/hide sections based on visible items
+      faqSections.forEach(section => {
+        const visibleItems = section.querySelectorAll('.faq-item:not(.hidden)');
+        if (visibleItems.length > 0) {
+          section.classList.remove('hidden');
+        } else {
+          section.classList.add('hidden');
+        }
+      });
+      
+      // Show no results message if needed
+      showNoResultsMessage(!hasResults);
+    });
+  }
+
+  // Category Filter Functionality
+  function initCategoryFilter() {
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const faqSections = document.querySelectorAll('.faq-section');
+    
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.dataset.category;
+        
+        // Update active button
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Filter sections
+        faqSections.forEach(section => {
+          if (category === 'all' || section.dataset.category === category) {
+            section.classList.remove('hidden');
+          } else {
+            section.classList.add('hidden');
+          }
+        });
+        
+        // Clear search when changing categories
+        document.getElementById('faqSearch').value = '';
+        document.querySelectorAll('.faq-item').forEach(item => {
+          item.classList.remove('hidden');
+        });
+        
+        showNoResultsMessage(false);
+      });
+    });
+  }
+
+  // Show/Hide No Results Message
+  function showNoResultsMessage(show) {
+    let noResults = document.querySelector('.no-results');
+    
+    if (show) {
+      if (!noResults) {
+        noResults = document.createElement('div');
+        noResults.className = 'no-results';
+        noResults.innerHTML = `
+          <i class="fas fa-search"></i>
+          <h3>No results found</h3>
+          <p>Try searching with different keywords or browse our categories above.</p>
+        `;
+        document.querySelector('.faq-container').appendChild(noResults);
+      }
+    } else {
+      if (noResults) {
+        noResults.remove();
+      }
+    }
+  }
+
+  // Initialize everything when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    initFAQ();
+    initSearch();
+    initCategoryFilter();
+  });
+
+})();
+</script>
 
 <script>
  const yearElement = document.getElementById('current-year');
