@@ -10,9 +10,9 @@ function loadPayPalSDK() {
             return;
         }
 
-        // Load PayPal SDK
+        // Load PayPal SDK with test client ID
         const script = document.createElement('script');
-        script.src = 'https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD';
+        script.src = 'https://www.paypal.com/sdk/js?client-id=test&currency=USD&components=buttons,funding-eligibility&disable-funding=venmo,paylater';
         script.onload = () => {
             if (window.paypal) {
                 resolve(window.paypal);

@@ -21,8 +21,9 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-<link href="assets/css/hero.css" rel="stylesheet"/>
+<link href="assets/css/hero.css?v=1.0.6" rel="stylesheet"/>
 <link href="assets/css/main.css" rel="stylesheet"/>
+<link href="assets/css/components/payment.css" rel="stylesheet"/>
 <!-- Fix for fixed header spacing -->
 <style>
  body { padding-top: 100px; margin: 0; }
@@ -410,6 +411,161 @@
 /* Hero section visibility - Professional Design Standard */
 .hero h1 { display: block !important; visibility: visible !important; opacity: 1 !important; }
 </style>
+
+<!-- Payment Form Styles -->
+<style>
+.payment-section {
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 60vh;
+}
+
+.payment-section h2 {
+    text-align: center;
+    color: #2e7d32;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.security-badges {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.security-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    color: #2e7d32;
+    font-weight: 500;
+}
+
+.security-badge i {
+    font-size: 1.2rem;
+}
+
+.payment-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
+
+.form-group input.error {
+    border-color: #dc3545;
+}
+
+.error-message {
+    display: none;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.error-message.show {
+    display: block;
+}
+
+.payment-amount-display {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 2rem;
+    border: 2px solid #2e7d32;
+}
+
+.payment-amount-display .amount {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-top: 0.5rem;
+}
+
+#paypal-button-container {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.payment-note {
+    background: #e8f5e8;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    border-left: 4px solid #2e7d32;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.payment-note i {
+    color: #2e7d32;
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+}
+
+.payment-note strong {
+    color: #2e7d32;
+}
+
+@media (max-width: 768px) {
+    .payment-section {
+        padding: 2rem 1rem;
+    }
+    
+    .payment-section h2 {
+        font-size: 2rem;
+    }
+    
+    .security-badges {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .payment-form {
+        padding: 2rem 1.5rem;
+    }
+}
+</style>
 </head>
 <body>
   <!-- Loading Spinner -->
@@ -459,7 +615,7 @@
     <!-- Hero Section -->
 
  <div class="hero">
-<img alt="Beautiful garden landscaping" loading="eager" src="assets/images/hero-garden-landscaping.jpg"/>
+<img alt="Beautiful garden landscaping" loading="eager" src="assets/images/hero-garden-landscaping.optimized-1280-320.jpg"/>
 <div class="hero-content">
 <h1>Pay Your Bill</h1>
 <p>Quick and secure online payment options for your lawn care and landscaping services.</p>
@@ -509,8 +665,6 @@
  Need help? Contact us at <a href="tel:+15047171887">(504) 717‑1887</a> or <a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
 </div>
 </section>
-<!-- PayPal SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=test&amp;currency=USD&amp;components=buttons,funding-eligibility&amp;disable-funding=venmo,paylater"></script>
 <!-- Payment Script -->
 <script>
  document.addEventListener('DOMContentLoaded', function () {
@@ -710,7 +864,7 @@ if (yearElement) {
    <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
    <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
    <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
-   <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
+   <a href="pay-your-bill.html" aria-label="Pay Your Bill" class="active"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
    <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
    <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
    <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
