@@ -727,5 +727,15 @@
 
  <!-- Scripts -->
  <script src="assets/js/main.js"></script>
+ <script>
+ // Fallback: Always hide loading spinner after 3 seconds
+ setTimeout(function() {
+   var loading = document.getElementById('loading');
+   if (loading) {
+     loading.classList.add('hidden');
+     setTimeout(function() { loading.style.display = 'none'; }, 300);
+   }
+ }, 3000);
+ </script>
 </body>
 </html>
