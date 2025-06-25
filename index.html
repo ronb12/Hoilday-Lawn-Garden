@@ -548,7 +548,15 @@
 </head>
 
 <body>
-     <!-- Header -->
+  <!-- Loading Spinner -->
+  <div id="loading" class="loading" role="status" aria-label="Loading page content">
+    <div class="spinner" aria-hidden="true"></div>
+  </div>
+  
+  <!-- Error Message -->
+  <div id="error" class="error-message" role="alert" aria-live="polite"></div>
+  
+  <!-- Header -->
   <header class="main-header">
     <div class="logo">
       <a href="index.html">
@@ -559,13 +567,8 @@
       </a>
     </div>
     <nav id="nav-menu">
-      <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html" class="active">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="education.html">Education</a></li>
@@ -585,6 +588,29 @@
       </div>
     </nav>
   </header>
+  <!-- Mobile Tab Bar -->
+  <div class="mobile-tab-bar">
+    <a href="index.html" class="active">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    <a href="services.html">
+      <i class="fas fa-tools"></i>
+      <span>Services</span>
+    </a>
+    <a href="pay-your-bill.html">
+      <i class="fas fa-credit-card"></i>
+      <span>Pay Bill</span>
+    </a>
+    <a href="contact.html">
+      <i class="fas fa-phone"></i>
+      <span>Contact</span>
+    </a>
+    <a href="login.html">
+      <i class="fas fa-user"></i>
+      <span>Login</span>
+    </a>
+  </div>
 
  <!-- Hero Section -->
  <section class="hero">
