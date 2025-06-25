@@ -10,7 +10,7 @@
     linear-gradient(135deg, rgba(56, 142, 60, 0.32) 0%, rgba(37, 96, 41, 0.32) 100%),
     url('../images/hero-garden-landscaping.jpg') center/cover no-repeat;
   overflow: hidden;
-  margin-top: 70px;
+  margin-top: 0;
 }
 
 .hero img {

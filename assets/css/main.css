@@ -990,7 +990,7 @@ footer::before {
   }
   .hero {
     height: 60vh;
-    padding-top: 60px;
+    padding-top: 0;
   }
   .hero h1 {
     font-size: 2.5rem;

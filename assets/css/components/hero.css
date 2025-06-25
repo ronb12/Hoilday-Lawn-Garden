@@ -13,7 +13,7 @@
   padding: var(--spacing-xl) var(--spacing-md);
   box-shadow: var(--shadow-lg);
   filter: brightness(1);
-  margin-top: var(--spacing-2xl);
+  margin-top: 0;
 }
 
 .hero::before {
