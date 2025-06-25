@@ -7,7 +7,7 @@
     <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="About Us Holliday's Lawn &amp; Garden" />
-    <meta name="twitter:description" content="Learn about Holliday's Lawn & Garden - your trusted partner for professional lawn care and landscaping services." /><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" /><link href="assets/css/hero.css" rel="stylesheet" /><link href="assets/css/mobile-enhancements.css" rel="stylesheet" />
+    <meta name="twitter:description" content="Learn about Holliday's Lawn & Garden - your trusted partner for professional lawn care and landscaping services." /><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" /><link href="assets/css/hero.css" rel="stylesheet" />
 <style>
 
     /* Perfect Page Structure - No Issues */
@@ -187,6 +187,11 @@
         padding: 0 !important;
     }
     
+    /* Mobile Tab Bar - Hidden by default */
+    .mobile-tab-bar {
+        display: none !important;
+    }
+    
     @media (max-width: 768px) {
         body {
             padding-top: 70px !important;
@@ -232,7 +237,7 @@
             font-size: 1rem !important;
         }
         
-        /* Mobile Tab Bar */
+        /* Mobile Tab Bar - Show on Mobile */
         .mobile-tab-bar {
             display: flex !important;
             position: fixed !important;
@@ -286,10 +291,6 @@
 
 }
 
-/* Mobile Tab Bar - Hide on Desktop */
-@media (min-width: 769px) {
-  .mobile-tab-bar { display: none !important; }
-}
 </style>
 
 <style>
