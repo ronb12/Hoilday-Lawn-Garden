@@ -22,7 +22,7 @@
     <link href="assets/css/components/payment.css" rel="stylesheet">
     
     <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?currency=USD&disable-funding=venmo,paylater"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&intent=capture&disable-funding=venmo,paylater"></script>
     
     <style>
         /* Suppress any potential warnings */
@@ -143,7 +143,16 @@
         }
         .payment-amount-display.show { display: block; }
         .amount { font-size: 1.5rem; font-weight: 600; color: #2e7d32; }
-        #paypal-button-container { margin: 2rem 0 1rem 0; text-align: center; }
+        #paypal-button-container { 
+            margin: 2rem 0 1rem 0; 
+            text-align: center;
+            min-height: 50px;
+        }
+        /* PayPal Smart Button styling */
+        #paypal-button-container .paypal-button {
+            width: 100% !important;
+            max-width: 400px !important;
+        }
         .payment-note {
             background: #e3f2fd;
             padding: 1rem;
@@ -427,34 +436,117 @@
                 if (!valid) e.preventDefault();
             });
         });
-        // PayPal button rendering (replace with your real PayPal client ID in production)
+        // PayPal Smart Button rendering
         document.addEventListener('DOMContentLoaded', function() {
             try {
                 if (window.paypal) {
                     paypal.Buttons({
-                        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+                        // Smart Payment Buttons configuration
+                        style: {
+                            layout: 'vertical',
+                            color: 'gold',
+                            shape: 'rect',
+                            label: 'pay',
+                            height: 50
+                        },
+                        
+                        // Create order
                         createOrder: function(data, actions) {
+                            const accountNumber = document.getElementById('accountNumber').value;
                             const amount = document.getElementById('paymentAmount').value;
+                            
+                            // Validate inputs
+                            if (!accountNumber || !amount) {
+                                console.log('Please fill in all required fields');
+                                return;
+                            }
+                            
+                            const paymentAmount = parseFloat(amount);
+                            if (isNaN(paymentAmount) || paymentAmount < 1) {
+                                console.log('Please enter a valid payment amount');
+                                return;
+                            }
+                            
                             return actions.order.create({
-                                purchase_units: [{ amount: { value: amount || '1.00' } }]
+                                purchase_units: [{
+                                    amount: {
+                                        value: paymentAmount.toFixed(2),
+                                        currency_code: 'USD'
+                                    },
+                                    description: `Payment for account ${accountNumber}`,
+                                    custom_id: accountNumber
+                                }],
+                                application_context: {
+                                    shipping_preference: 'NO_SHIPPING'
+                                }
                             });
                         },
+                        
+                        // Handle approval
                         onApprove: function(data, actions) {
                             return actions.order.capture().then(function(details) {
-                                console.log('Payment completed by ' + details.payer.name.given_name + '!');
-                                // You can add a success message here instead of alert
+                                // Payment completed successfully
+                                console.log('Payment completed successfully!');
+                                console.log('Transaction ID:', details.id);
+                                console.log('Payer:', details.payer.name.given_name + ' ' + details.payer.name.surname);
+                                console.log('Amount:', details.purchase_units[0].amount.value);
+                                
+                                // Show success message
+                                const container = document.getElementById('paypal-button-container');
+                                container.innerHTML = `
+                                    <div style="text-align: center; padding: 2rem; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; color: #155724;">
+                                        <i class="fas fa-check-circle" style="font-size: 3rem; color: #28a745; margin-bottom: 1rem;"></i>
+                                        <h3>Payment Successful!</h3>
+                                        <p>Thank you for your payment of $${details.purchase_units[0].amount.value}</p>
+                                        <p>Transaction ID: ${details.id}</p>
+                                        <p>We'll send you a confirmation email shortly.</p>
+                                    </div>
+                                `;
                             });
                         },
+                        
+                        // Handle errors
                         onError: function(err) {
-                            console.log('An error occurred during payment. Please try again.');
-                            // You can add an error message here instead of alert
+                            console.log('PayPal Error:', err);
+                            const container = document.getElementById('paypal-button-container');
+                            container.innerHTML = `
+                                <div style="text-align: center; padding: 2rem; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; color: #721c24;">
+                                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #dc3545; margin-bottom: 1rem;"></i>
+                                    <h3>Payment Error</h3>
+                                    <p>An error occurred during payment processing.</p>
+                                    <p>Please try again or contact us for assistance.</p>
+                                    <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Try Again</button>
+                                </div>
+                            `;
+                        },
+                        
+                        // Handle cancellation
+                        onCancel: function(data) {
+                            console.log('Payment cancelled by user');
                         }
+                        
                     }).render('#paypal-button-container');
                 } else {
                     console.log('PayPal SDK not loaded');
+                    document.getElementById('paypal-button-container').innerHTML = `
+                        <div style="text-align: center; padding: 2rem; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; color: #856404;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #ffc107; margin-bottom: 1rem;"></i>
+                            <h3>PayPal Not Available</h3>
+                            <p>PayPal payment is currently unavailable.</p>
+                            <p>Please contact us directly for payment options.</p>
+                        </div>
+                    `;
                 }
             } catch (error) {
                 console.log('PayPal integration error:', error);
+                document.getElementById('paypal-button-container').innerHTML = `
+                    <div style="text-align: center; padding: 2rem; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; color: #721c24;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #dc3545; margin-bottom: 1rem;"></i>
+                        <h3>Payment System Error</h3>
+                        <p>Unable to load payment system.</p>
+                        <p>Please contact us directly for assistance.</p>
+                    </div>
+                `;
             }
         });
     </script>
