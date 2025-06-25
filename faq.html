@@ -57,6 +57,223 @@
             line-height: 1.6 !important;
             opacity: 0.97 !important;
         }
+
+        /* FAQ Container Styles */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Search Styles */
+        .faq-search {
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #4caf50;
+        }
+
+        /* Tab Styles */
+        .faq-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #4caf50;
+            background: white;
+            color: #4caf50;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background: #4caf50;
+            color: white;
+        }
+
+        .tab-btn.active {
+            background: #4caf50;
+            color: white;
+        }
+
+        /* FAQ Content Styles */
+        .faq-content {
+            margin-bottom: 3rem;
+        }
+
+        .faq-section {
+            margin-bottom: 2rem;
+        }
+
+        .faq-section h2 {
+            color: #2e7d32;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #4caf50;
+            padding-bottom: 0.5rem;
+        }
+
+        .faq-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #e8f5e8;
+        }
+
+        .faq-question h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4caf50;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .toggle-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 200px;
+        }
+
+        .faq-answer p {
+            margin: 0;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        /* Contact Section Styles */
+        .contact-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-section p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .contact-card i {
+            font-size: 2rem;
+            color: #4caf50;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+
+        .contact-card a {
+            color: #4caf50;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hidden States */
+        .faq-section.hidden,
+        .faq-item.hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .faq-container {
+                padding: 1rem;
+            }
+            
+            .faq-tabs {
+                justify-content: center;
+            }
+            
+            .tab-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .contact-cards {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -101,209 +318,209 @@
   <!-- Main FAQ Content -->
   <main role="main">
     <div class="faq-container">
-      <!-- Search Functionality -->
+      <!-- Simple Search -->
       <div class="faq-search">
-        <div class="search-container">
-          <input type="text" id="faqSearch" class="search-input" placeholder="Search FAQs...">
-          <i class="fas fa-search search-icon"></i>
+        <input type="text" id="faqSearch" class="search-input" placeholder="Search questions...">
+      </div>
+
+      <!-- Simple Category Tabs -->
+      <div class="faq-tabs">
+        <button class="tab-btn active" data-category="all">All</button>
+        <button class="tab-btn" data-category="services">Services</button>
+        <button class="tab-btn" data-category="scheduling">Scheduling</button>
+        <button class="tab-btn" data-category="pricing">Pricing</button>
+        <button class="tab-btn" data-category="maintenance">Maintenance</button>
+      </div>
+
+      <!-- FAQ Content -->
+      <div class="faq-content">
+        <!-- Services Section -->
+        <div class="faq-section" data-category="services">
+          <h2>Services</h2>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>What lawn care services do you offer?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>We offer comprehensive lawn care including mowing, edging, trimming, fertilization, weed control, pest management, aeration, overseeding, and seasonal cleanups. We also provide landscaping design and installation.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>Do you offer one-time or recurring services?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Both! We offer one-time services and recurring maintenance plans. We can accommodate single cleanups, weekly maintenance, or seasonal services with flexible scheduling.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>What areas do you service?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>We service the greater New Orleans area and surrounding communities. Contact us to confirm service availability in your specific location.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>Do you handle residential and commercial properties?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Yes, we provide services for both residential and commercial properties. Our team is experienced with various property types and sizes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scheduling Section -->
+        <div class="faq-section" data-category="scheduling">
+          <h2>Scheduling</h2>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>How do I schedule a service?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Call us at (504) 717-1887, email 7holliday@gmail.com, or use our online booking system. We'll work with you to find a convenient time.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>What are your service hours?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Monday-Friday: 7:00 AM - 6:00 PM<br>Saturday: 8:00 AM - 4:00 PM<br>We can accommodate special scheduling needs.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>How far in advance should I schedule?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Regular maintenance: 1 week in advance<br>One-time services: 2-3 weeks notice<br>Peak seasons (spring/fall): 2-3 weeks recommended</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>What happens if it rains on my scheduled day?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>We monitor weather conditions and will reschedule if heavy rain would affect work quality. We'll contact you to reschedule.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing Section -->
+        <div class="faq-section" data-category="pricing">
+          <h2>Pricing</h2>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>How much do your services cost?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Pricing varies based on property size, service type, and frequency. We provide free estimates after assessing your property.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>Do you offer discounts or package deals?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Yes! We offer discounts for recurring maintenance plans, seasonal packages, referrals, and special pricing for commercial clients.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>What payment methods do you accept?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Cash, checks, credit cards, and online payments. We can set up automatic billing for recurring services.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>When is payment due?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Payment is typically due upon completion. For recurring plans, we offer monthly billing. Commercial clients may be eligible for net 30 terms.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Maintenance Section -->
+        <div class="faq-section" data-category="maintenance">
+          <h2>Maintenance</h2>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>How often should I have my lawn mowed?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Growing season (spring/summer): Weekly<br>Fall/winter: Every 2-3 weeks<br>We'll adjust based on your grass type and growth rate.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>What's the best time to fertilize my lawn?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>For Louisiana warm-season grasses: Late spring (May) and late summer (August/September). We'll create a customized schedule for your grass type.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>How do you handle weeds and pests?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>We use integrated pest management including pre-emergent weed control, targeted herbicide applications, and natural pest control methods when possible.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>Do you provide seasonal lawn care advice?</h3>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Yes! We provide seasonal care tips and recommendations for your specific lawn type. We'll help you understand what your lawn needs each season.</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Category Navigation -->
-      <div class="faq-categories">
-        <button class="category-btn active" data-category="all">All Questions</button>
-        <button class="category-btn" data-category="services">Services</button>
-        <button class="category-btn" data-category="scheduling">Scheduling</button>
-        <button class="category-btn" data-category="pricing">Pricing</button>
-        <button class="category-btn" data-category="maintenance">Maintenance</button>
-      </div>
-
-      <!-- Services FAQ Section -->
-      <div class="faq-section" data-category="services">
-        <h2>Services & Offerings</h2>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>What lawn care services do you offer?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>We offer comprehensive lawn care services including mowing, edging, trimming, fertilization, weed control, pest management, aeration, overseeding, and seasonal cleanups. We also provide landscaping design and installation services.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>Do you offer one-time services or only recurring maintenance?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>We offer both one-time services and recurring maintenance plans. Whether you need a single cleanup, ongoing weekly maintenance, or seasonal services, we can accommodate your needs with flexible scheduling options.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>What areas do you service?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>We service the greater New Orleans area and surrounding communities. Contact us with your specific location to confirm we service your area and to get a free estimate.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>Do you handle both residential and commercial properties?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Yes, we provide lawn care services for both residential and commercial properties. Our team is experienced in maintaining various property types and sizes, from small residential yards to large commercial landscapes.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Scheduling FAQ Section -->
-      <div class="faq-section" data-category="scheduling">
-        <h2>Scheduling & Appointments</h2>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>How do I schedule a service?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>You can schedule a service by calling us at (504) 717-1887, emailing us at 7holliday@gmail.com, or using our online booking system. We'll work with you to find a convenient time that fits your schedule.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>What are your service hours?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>We typically work Monday through Friday, 7:00 AM to 6:00 PM, and Saturdays from 8:00 AM to 4:00 PM. We can accommodate special scheduling needs for commercial clients or emergency situations.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>How far in advance should I schedule?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>For regular maintenance, we recommend scheduling at least a week in advance. For one-time services or seasonal work, 2-3 weeks notice is ideal, especially during peak seasons (spring and fall).</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>What happens if it rains on my scheduled service day?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>We monitor weather conditions and will reschedule your service if heavy rain or severe weather would affect the quality of our work. We'll contact you to reschedule for the next available time slot.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pricing FAQ Section -->
-      <div class="faq-section" data-category="pricing">
-        <h2>Pricing & Payment</h2>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>How much do your services cost?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Pricing varies based on property size, service type, and frequency. We provide free estimates after assessing your property. Contact us for a detailed quote tailored to your specific needs.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>Do you offer any discounts or package deals?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Yes, we offer discounts for recurring maintenance plans, seasonal packages, and referrals. We also provide special pricing for commercial clients and larger properties. Ask us about our current promotions!</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>What payment methods do you accept?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>We accept cash, checks, credit cards, and online payments. We can set up automatic billing for recurring services, and we offer convenient online payment options through our customer portal.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>When is payment due?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Payment is typically due upon completion of service. For recurring maintenance plans, we offer monthly billing options. Commercial clients may be eligible for net 30 payment terms.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Maintenance FAQ Section -->
-      <div class="faq-section" data-category="maintenance">
-        <h2>Lawn Care & Maintenance</h2>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>How often should I have my lawn mowed?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>During the growing season (spring and summer), most lawns benefit from weekly mowing. In fall and winter, mowing frequency can be reduced to every 2-3 weeks. We'll adjust based on your grass type and growth rate.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>What's the best time to fertilize my lawn?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>For warm-season grasses common in Louisiana, the best times to fertilize are late spring (May) and late summer (August/September). We'll create a customized fertilization schedule based on your specific grass type and soil conditions.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>How do you handle weeds and pests?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>We use integrated pest management techniques, including pre-emergent weed control, targeted herbicide applications, and natural pest control methods when possible. We'll identify specific issues and recommend the most effective treatment.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <h3><span>Do you provide seasonal lawn care advice?</span></h3>
-            <i class="fas fa-chevron-down icon"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Yes! We provide seasonal care tips and recommendations for your specific lawn type. We'll help you understand what your lawn needs during each season and can adjust our services accordingly.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Contact Section -->
+      <!-- Simple Contact Section -->
       <div class="contact-section">
         <h2>Still Have Questions?</h2>
-        <p>Can't find what you're looking for? Our expert team is here to help!</p>
+        <p>Our expert team is here to help!</p>
         
-        <div class="contact-info">
+        <div class="contact-cards">
           <div class="contact-card">
             <i class="fas fa-phone"></i>
             <h3>Call Us</h3>
@@ -316,8 +533,8 @@
           </div>
           <div class="contact-card">
             <i class="fas fa-calendar"></i>
-            <h3>Get a Quote</h3>
-            <a href="contact.html">Request Free Estimate</a>
+            <h3>Get Quote</h3>
+            <a href="contact.html">Free Estimate</a>
           </div>
         </div>
       </div>
@@ -424,7 +641,7 @@
         let hasResults = false;
         
         faqItems.forEach(item => {
-          const questionText = item.querySelector('.faq-question h3 span').textContent.toLowerCase();
+          const questionText = item.querySelector('.faq-question h3').textContent.toLowerCase();
           const answerText = item.querySelector('.faq-answer p').textContent.toLowerCase();
           
           if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
@@ -451,15 +668,15 @@
     }
 
     // Category Filter Functionality
-    const categoryBtns = document.querySelectorAll('.category-btn');
+    const tabBtns = document.querySelectorAll('.tab-btn');
     
-    categoryBtns.forEach(btn => {
+    tabBtns.forEach(btn => {
       btn.addEventListener('click', function() {
         const category = this.dataset.category;
         const faqSections = document.querySelectorAll('.faq-section');
         
         // Update active button
-        categoryBtns.forEach(b => b.classList.remove('active'));
+        tabBtns.forEach(b => b.classList.remove('active'));
         this.classList.add('active');
         
         // Filter sections
@@ -492,11 +709,13 @@
           noResults = document.createElement('div');
           noResults.className = 'no-results';
           noResults.innerHTML = `
-            <i class="fas fa-search"></i>
-            <h3>No results found</h3>
-            <p>Try searching with different keywords or browse our categories above.</p>
+            <div style="text-align: center; padding: 2rem; color: #666;">
+              <i class="fas fa-search" style="font-size: 2rem; color: #4caf50; margin-bottom: 1rem;"></i>
+              <h3>No results found</h3>
+              <p>Try searching with different keywords or browse our categories above.</p>
+            </div>
           `;
-          document.querySelector('.faq-container').appendChild(noResults);
+          document.querySelector('.faq-content').appendChild(noResults);
         }
       } else {
         if (noResults) {
