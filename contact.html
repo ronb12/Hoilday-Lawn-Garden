@@ -17,7 +17,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-<link href="assets/css/hero.css" rel="stylesheet"/>
+<link href="assets/css/hero.css?v=1.0.6" rel="stylesheet"/>
 <link href="assets/css/main.css" rel="stylesheet"/>
 <link href="assets/css/components/contact.css" rel="stylesheet"/>
 <link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
@@ -748,6 +748,59 @@ showError('An error occurred while loading the page. Please refresh.');
 .copyright p {
   color: #ccc !important;
   margin: 0 !important;
+}
+</style>
+
+<style>
+/* Ensure hero image displays correctly */
+.hero {
+  position: relative !important;
+  width: 100vw !important;
+  min-height: 60vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: 
+    linear-gradient(135deg, rgba(56, 142, 60, 0.32) 0%, rgba(37, 96, 41, 0.32) 100%),
+    url('assets/images/hero-garden-landscaping.optimized-1280-320.jpg') center/cover no-repeat !important;
+  background-color: #2e7d32 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+
+.hero-content {
+  position: relative !important;
+  z-index: 2 !important;
+  text-align: center !important;
+  color: #fff !important;
+  padding: 2rem !important;
+  background: rgba(56, 142, 60, 0.18) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(4px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem !important;
+  margin-bottom: 1rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3) !important;
+  line-height: 1.2 !important;
+}
+
+.hero-content p {
+  font-size: 1.25rem !important;
+  font-weight: 400 !important;
+  margin-bottom: 2rem !important;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1) !important;
+  line-height: 1.6 !important;
+  opacity: 0.97 !important;
 }
 </style>
 </head>
