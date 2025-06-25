@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // Import PayPal routes
-const paypalRoutes = require("./api/paypal");
+const paypalRoutes = require("./api/paypal-server");
 
 // Add PayPal routes
 app.use("/api", paypalRoutes);

@@ -5,6 +5,14 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="Pay your lawn care and landscaping services bill securely online with PayPal or credit card." name="description"/>
 <title>Pay Your Bill - Holliday's Lawn &amp; Garden</title>
+    <meta property="og:title" content="Pay Your Bill - Holliday's Lawn &amp; Garden" />
+    <meta property="og:description" content="Pay your lawn care and landscaping service bills securely online." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="./pay-your-bill.html" />
+    <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pay Your Bill - Holliday's Lawn &amp; Garden" />
+    <meta name="twitter:description" content="Pay your lawn care and landscaping service bills securely online." />
 <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
@@ -61,6 +69,13 @@
         border-radius: 4px !important;
     }
     
+
+}
+
+/* Mobile Tab Bar - Hide on Desktop */
+@media (min-width: 769px) {
+  .mobile-tab-bar { display: none !important; }
+}
 </style>
 
 <!-- --- Professional Mobile Tab Bar --- -->
@@ -112,6 +127,289 @@
   .mobile-tab-bar { display: none !important; }
 }
 </style>
+
+<style>
+
+    /* Perfect Page Structure - No Issues */
+    .main-header {
+        background: #fff !important;
+        min-height: 70px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0 2rem !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .logo {
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .logo img {
+        height: 50px !important;
+        width: auto !important;
+        display: block !important;
+    }
+    
+    #nav-menu {
+        display: flex !important;
+        align-items: center !important;
+        flex-grow: 1 !important;
+        justify-content: flex-end !important;
+    }
+    
+    .nav-links { 
+        display: flex !important;
+        align-items: center !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 2rem !important;
+        flex-wrap: nowrap !important;
+    }
+    
+    .nav-links a { 
+        padding: 0.5rem 0.75rem !important; 
+        color: #333 !important; 
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease !important;
+        white-space: nowrap !important;
+        font-size: 0.95rem !important;
+        display: block !important;
+    }
+    
+    .nav-links a:hover {
+        color: #2e7d32 !important;
+    }
+    
+    .nav-links li { 
+        display: flex !important; 
+        align-items: center !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .login-buttons {
+        display: flex !important;
+        gap: 1rem !important;
+        align-items: center !important;
+        margin-left: 1rem !important;
+    }
+    
+    .btn-login {
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        font-size: 0.9rem !important;
+        min-width: 120px !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+        white-space: nowrap !important;
+    }
+    
+    .btn-customer {
+        background: #2e7d32 !important;
+        color: white !important;
+    }
+    
+    .btn-admin {
+        background: #1565c0 !important;
+        color: white !important;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+    /* Hero Section - Perfect Spacing */
+    .hero {
+        position: relative !important;
+        width: 100vw !important;
+        min-height: 60vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #222 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        margin-top: 70px !important;
+        padding: 0 !important;
+    }
+    
+    .hero img {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        z-index: 1 !important;
+        filter: brightness(0.6) !important;
+    }
+    
+    .hero-content {
+        position: relative !important;
+        z-index: 2 !important;
+        text-align: center !important;
+        color: #fff !important;
+        padding: 2rem !important;
+        max-width: 800px !important;
+    }
+    
+    .hero-content h1 {
+        font-size: 3rem !important;
+        margin-bottom: 1rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 1px !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .hero-content p {
+        font-size: 1.25rem !important;
+        font-weight: 400 !important;
+        margin-bottom: 2rem !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Body and Main Content */
+    body {
+        padding-top: 70px !important;
+        margin: 0 !important;
+    }
+    
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    @media (max-width: 768px) {
+        body {
+            padding-top: 70px !important;
+        }
+        
+        .main-header {
+            padding: 0 1rem !important;
+        }
+        
+        #nav-menu {
+            justify-content: flex-end !important;
+        }
+        
+        .nav-links { 
+            display: none !important; 
+            position: absolute !important; 
+            top: 100% !important; 
+            left: 0 !important; 
+            right: 0 !important; 
+            background: var(--color-primary, #4caf50) !important; 
+            padding: 1rem !important; 
+            flex-direction: column !important; 
+            align-items: center !important; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+            z-index: 1000 !important;
+        }
+        
+        .nav-links.active { 
+            display: flex !important; 
+        }
+        
+        
+        
+        .login-buttons {
+            flex-direction: column !important;
+            gap: 0.5rem !important;
+            margin-left: 0 !important;
+        }
+        
+        .btn-login {
+            min-width: 140px !important;
+            font-size: 0.85rem !important;
+        }
+        
+        .hero-content h1 {
+            font-size: 2rem !important;
+        }
+        
+        .hero-content p {
+            font-size: 1rem !important;
+        }
+    }
+    
+    @media (max-width: 900px) {
+        .main-header .nav-links {
+            margin-top: 0 !important;
+            padding-top: 0.5em !important;
+        }
+    }
+
+</style>
+
+<style>
+/* Ensure hero H1 elements are always visible */
+.hero h1 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+/* Ensure hero content is visible */
+.hero-content {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Ensure hero section itself is visible */
+.hero {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+</style>
+
+<style>
+/* Ensure hero H1 elements are always visible */
+.hero h1 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+</style>
+
+<style>
+/* Hero section visibility - Professional Design Standard */
+.hero h1 { display: block !important; visibility: visible !important; opacity: 1 !important; }
+</style>
 </head>
 <body>
   <!-- Loading Spinner -->
@@ -134,11 +432,7 @@
       </a>
     </div>
     <nav id="nav-menu">
-      <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -276,69 +570,29 @@
  });
  amountInput.addEventListener('blur', validateAmount);
  
- // PayPal button rendering
+ // PayPal button rendering using the new integration
  function renderPayPalButtons() {
- if (window.paypal && window.paypal.Buttons) {
- window.paypal
- .Buttons({
- style: { 
- layout: 'vertical', 
- color: 'gold', 
- shape: 'rect', 
- label: 'paypal' 
- },
- createOrder: function (data, actions) {
- const amount = document.getElementById('paymentAmount').value;
- const account = document.getElementById('accountNumber').value;
- 
- if (!validateAccount() || !validateAmount()) {
- alert('Please fix the form errors before proceeding.');
- return;
+     if (window.PayPalIntegration) {
+         window.PayPalIntegration.renderPayPalButtons('paypal-button-container', {
+             onSuccess: function(details) {
+                 // Additional success handling if needed
+                 console.log('Payment successful:', details);
+             },
+             onError: function(err) {
+                 // Additional error handling if needed
+                 
+             }
+         });
+     } else {
+         // Fallback: try again after a short delay
+         setTimeout(renderPayPalButtons, 100);
+     }
  }
  
- return actions.order.create({
- purchase_units: [
- {
- amount: {
- value: amount || '10.00',
- },
- description: `Payment for account ${account}`,
- },
- ],
+ // Initialize PayPal buttons when the page loads
+ document.addEventListener('DOMContentLoaded', function() {
+     renderPayPalButtons();
  });
- },
- onApprove: function (data, actions) {
- return actions.order.capture().then(function (details) {
- // Show success message
- const successMessage = `
- Payment completed successfully!
- 
- Transaction ID: ${details.id}
- Payer: ${details.payer.name.given_name} ${details.payer.name.surname}
- Amount: $${details.purchase_units[0].amount.value}
- Account: ${document.getElementById('accountNumber').value}
- 
- Thank you for your payment!
- `;
- alert(successMessage);
- 
- // Reset form
- document.getElementById('payment-form').reset();
- amountDisplay.style.display = 'none';
- });
- },
- onError: function (err) {
- console.error('PayPal Error:', err);
- alert('An error occurred during payment. Please try again or contact us for assistance.');
- },
- })
- .render('#paypal-button-container');
- } else {
- setTimeout(renderPayPalButtons, 100);
- }
- }
- 
- renderPayPalButtons();
  });
  </script>
 <script src="assets/js/firebase-config.js" type="module"></script>
@@ -401,12 +655,7 @@ if (yearElement) {
 }
  </script>
 <script>
-// Single, robust hamburger menu script
-// Ensures the hamburger menu works and does not clear or overwrite the header
-// Place this after all other scripts
-
-// This script block was incomplete and has been removed to prevent JavaScript errors
-</script>
+// Single, robust 
 
  <script>
  // Enhanced loading management
@@ -450,7 +699,7 @@ if (yearElement) {
  
  // Handle errors
  window.addEventListener('error', function(e) {
- console.error('Page error:', e.error);
+ 
  showError('An error occurred while loading the page. Please refresh.');
  });
  })();

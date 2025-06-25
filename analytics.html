@@ -2,11 +2,270 @@
 
 <html lang="en">
 <head>
+
+<style>
+
+    /* Perfect Page Structure - No Issues */
+    .main-header {
+        background: #fff !important;
+        min-height: 70px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0 2rem !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .logo {
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .logo img {
+        height: 50px !important;
+        width: auto !important;
+        display: block !important;
+    }
+    
+    #nav-menu {
+        display: flex !important;
+        align-items: center !important;
+        flex-grow: 1 !important;
+        justify-content: flex-end !important;
+    }
+    
+    .nav-links { 
+        display: flex !important;
+        align-items: center !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 2rem !important;
+        flex-wrap: nowrap !important;
+    }
+    
+    .nav-links a { 
+        padding: 0.5rem 0.75rem !important; 
+        color: #333 !important; 
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease !important;
+        white-space: nowrap !important;
+        font-size: 0.95rem !important;
+        display: block !important;
+    }
+    
+    .nav-links a:hover {
+        color: #2e7d32 !important;
+    }
+    
+    .nav-links li { 
+        display: flex !important; 
+        align-items: center !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .login-buttons {
+        display: flex !important;
+        gap: 1rem !important;
+        align-items: center !important;
+        margin-left: 1rem !important;
+    }
+    
+    .btn-login {
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        font-size: 0.9rem !important;
+        min-width: 120px !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+        white-space: nowrap !important;
+    }
+    
+    .btn-customer {
+        background: #2e7d32 !important;
+        color: white !important;
+    }
+    
+    .btn-admin {
+        background: #1565c0 !important;
+        color: white !important;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+    /* Hero Section - Perfect Spacing */
+    .hero {
+        position: relative !important;
+        width: 100vw !important;
+        min-height: 60vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #222 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        margin-top: 70px !important;
+        padding: 0 !important;
+    }
+    
+    .hero img {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        z-index: 1 !important;
+        filter: brightness(0.6) !important;
+    }
+    
+    .hero-content {
+        position: relative !important;
+        z-index: 2 !important;
+        text-align: center !important;
+        color: #fff !important;
+        padding: 2rem !important;
+        max-width: 800px !important;
+    }
+    
+    .hero-content h1 {
+        font-size: 3rem !important;
+        margin-bottom: 1rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 1px !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .hero-content p {
+        font-size: 1.25rem !important;
+        font-weight: 400 !important;
+        margin-bottom: 2rem !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Body and Main Content */
+    body {
+        padding-top: 70px !important;
+        margin: 0 !important;
+    }
+    
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    @media (max-width: 768px) {
+        body {
+            padding-top: 70px !important;
+        }
+        
+        .main-header {
+            padding: 0 1rem !important;
+        }
+        
+        #nav-menu {
+            justify-content: flex-end !important;
+        }
+        
+        .nav-links { 
+            display: none !important; 
+            position: absolute !important; 
+            top: 100% !important; 
+            left: 0 !important; 
+            right: 0 !important; 
+            background: var(--color-primary, #4caf50) !important; 
+            padding: 1rem !important; 
+            flex-direction: column !important; 
+            align-items: center !important; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+            z-index: 1000 !important;
+        }
+        
+        .nav-links.active { 
+            display: flex !important; 
+        }
+        
+        
+        
+        .login-buttons {
+            flex-direction: column !important;
+            gap: 0.5rem !important;
+            margin-left: 0 !important;
+        }
+        
+        .btn-login {
+            min-width: 140px !important;
+            font-size: 0.85rem !important;
+        }
+        
+        .hero-content h1 {
+            font-size: 2rem !important;
+        }
+        
+        .hero-content p {
+            font-size: 1rem !important;
+        }
+    }
+    
+    @media (max-width: 900px) {
+        .main-header .nav-links {
+            margin-top: 0 !important;
+            padding-top: 0.5em !important;
+        }
+    }
+
+    /* Mobile Tab Bar - Hide on Desktop */
+    @media (min-width: 769px) {
+        .mobile-tab-bar {
+            display: none !important;
+        }
+    }
+
+}
+</style>
 </head>
-<body><head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<body>
+<h1 style="color: #2c5530; font-size: 2.5rem; margin: 2rem 0; text-align: center;">Analytics</h1><head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Analytics - Admin Dashboard</title>
+    <meta property="og:title" content="Analytics - Admin Dashboard" />
+    <meta property="og:description" content="Analytics and reporting for lawn care business operations." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="./analytics.html" />
+    <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Analytics - Admin Dashboard" />
+    <meta name="twitter:description" content="Analytics and reporting for lawn care business operations." />
 <meta content="Analytics and reporting for Holliday Lawn &amp; Garden" name="description"/>
 <link href="assets/css/main.css" rel="stylesheet"/>
 <link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
@@ -20,6 +279,65 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
  /* Mobile Menu Styles */
+
+        <footer class="footer" role="contentinfo">
+            <div class="footer-content">
+                <div class="footer-grid">
+                    <div class="footer-section">
+                        <h3>Contact Us</h3>
+                        <div class="footer-contact">
+                            <span class="footer-owner">Karl Holliday</span>
+                            <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
+                            <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="education.html">Education</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Customer Portal</h3>
+                        <ul>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="register.html">Register</a></li>
+                            <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                            <li><a href="customer-dashboard.html">Dashboard</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Legal</h3>
+                        <ul>
+                            <li><a href="privacy.html">Privacy Policy</a></li>
+                            <li><a href="terms.html">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+            </div>
+        </footer>
+        <script>
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+        </script>
+
+<nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
+  <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
+  <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
+  <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
+  <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
+  <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
+  <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
+</nav>
 
 </body>
 </html>

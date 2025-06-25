@@ -1,278 +1,105 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Holliday Lawn & Garden - Add Staff Member</title>
+    <meta name="description" content="Add Staff Member form for Holliday Lawn & Garden management system."/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        body {
+            font-family: 'Montserrat', -apple-system, "system-ui", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c5530;
+            font-size: 2.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Staff Member</h1>
+        <p>This page is under construction. Please check back later.</p>
+    </div>
+    
+    <!-- Mobile Tab Bar -->
+    <nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
+        <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
+        <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
+        <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
+        <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
+        <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
+        <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
+    </nav>
+    
+    <style>
+    @media (min-width: 769px) {
+      .mobile-tab-bar { display: none !important; }
+    }
+    @media (max-width: 768px) {
+      .mobile-tab-bar {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 64px;
+        background: #fff;
+        border-top: 1px solid #e0e0e0;
+        box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+        z-index: 2000;
+        justify-content: space-around;
+        align-items: center;
+      }
+    }
+    </style>
 
-<html lang="en"><head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Staff Management - Holliday's Lawn &amp; Garden</title>
-<link href="assets/css/main.css" rel="stylesheet"/>
-<link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
-<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-<style>
- .staff-container {
- max-width: 1400px;
- margin: 2rem auto;
- padding: 2rem;
- }
- .staff-header {
- display: flex;
- justify-content: space-between;
- align-items: center;
- margin-bottom: 2rem;
- }
- .staff-title {
- font-size: 2rem;
- font-weight: 700;
- color: #2c5530;
- }
- .btn-add-staff {
- background: #4caf50;
- color: white;
- padding: 0.75rem 1.5rem;
- border-radius: 5px;
- cursor: pointer;
- border: none;
- font-size: 1rem;
- display: flex;
- align-items: center;
- gap: 0.5rem;
- transition: background-color 0.3s ease;
- }
- .btn-add-staff:hover {
- background: #45a049;
- }
- .staff-form-section {
- background: white;
- padding: 2rem;
- border-radius: 8px;
- box-shadow: 0 2px 10px rgba(0,0,0,0.1);
- margin-bottom: 2rem;
- }
- .staff-list-section {
- background: white;
- padding: 2rem;
- border-radius: 8px;
- box-shadow: 0 2px 10px rgba(0,0,0,0.1);
- }
- .form-row {
- display: grid;
- grid-template-columns: 1fr 1fr;
- gap: 1rem;
- margin-bottom: 1rem;
- }
- .form-group {
- margin-bottom: 1rem;
- }
- .form-group label {
- display: block;
- margin-bottom: 0.5rem;
- font-weight: 600;
- color: #333;
- }
- .form-group input,
- .form-group select,
- .form-group textarea {
- width: 100%;
- padding: 0.75rem;
- border: 1px solid #ddd;
- border-radius: 4px;
- font-size: 1rem;
- }
- .form-group input:focus,
- .form-group select:focus,
- .form-group textarea:focus {
- outline: none;
- border-color: #4caf50;
- box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
- }
- .form-actions {
- display: flex;
- gap: 1rem;
- justify-content: flex-end;
- margin-top: 2rem;
- }
- .btn-save {
- background: #4caf50;
- color: white;
- padding: 0.75rem 1.5rem;
- border: none;
- border-radius: 4px;
- cursor: pointer;
- font-size: 1rem;
- }
- .btn-cancel {
- background: #f44336;
- color: white;
- padding: 0.75rem 1.5rem;
- border: none;
- border-radius: 4px;
- cursor: pointer;
- font-size: 1rem;
- }
- .btn-edit {
- background: #2196F3;
- color: white;
- padding: 0.5rem 1rem;
- border: none;
- border-radius: 4px;
- cursor: pointer;
- margin-right: 0.5rem;
- }
- .btn-delete {
- background: #f44336;
- color: white;
- padding: 0.5rem 1rem;
- border: none;
- border-radius: 4px;
- cursor: pointer;
- }
- .staff-table {
- width: 100%;
- border-collapse: collapse;
- margin-top: 1rem;
- }
- .staff-table th,
- .staff-table td {
- padding: 1rem;
- text-align: left;
- border-bottom: 1px solid #ddd;
- }
- .staff-table th {
- background-color: #f5f5f5;
- font-weight: 600;
- }
- .status-active {
- color: #4caf50;
- font-weight: 600;
- }
- .status-inactive {
- color: #f44336;
- font-weight: 600;
- }
- .hidden {
- display: none;
- }
- 
- /* Mobile responsive styles */
- @media (max-width: 768px) {
- .staff-container {
- padding: 1rem;
- margin: 1rem auto;
- }
- 
- .staff-header {
- flex-direction: column;
- gap: 1rem;
- text-align: center;
- }
- 
- .staff-title {
- font-size: 1.8rem;
- }
- 
- .btn-add-staff {
- width: 100%;
- justify-content: center;
- padding: 1rem;
- }
- 
- .staff-form-section,
- .staff-list-section {
- padding: 1.5rem;
- margin-bottom: 1.5rem;
- }
- 
- .form-row {
- grid-template-columns: 1fr;
- }
- 
- .form-actions {
- flex-direction: column;
- gap: 0.75rem;
- }
- 
- .btn-save,
- .btn-cancel {
- width: 100%;
- padding: 1rem;
- }
- 
- .staff-table {
- display: block;
- overflow-x: auto;
- white-space: nowrap;
- font-size: 0.9rem;
- }
- 
- .staff-table th,
- .staff-table td {
- padding: 0.75rem 0.5rem;
- min-width: 120px;
- }
- 
- .btn-edit, .btn-delete {
- padding: 0.4rem 0.8rem;
- font-size: 0.8rem;
- margin-right: 0.25rem;
- }
- }
- 
- @media (max-width: 480px) {
- .staff-container {
- padding: 0.5rem;
- }
- 
- .staff-title {
- font-size: 1.6rem;
- }
- 
- .staff-form-section,
- .staff-list-section {
- padding: 1rem;
- }
- 
- .staff-table {
- font-size: 0.8rem;
- }
- 
- .staff-table th,
- .staff-table td {
- padding: 0.5rem 0.25rem;
- min-width: 100px;
- }
- 
- .btn-edit, .btn-delete {
- padding: 0.3rem 0.6rem;
- font-size: 0.75rem;
- margin-right: 0.2rem;
- }
- }
- 
-    /* Comprehensive button styles - override any existing styles */
-    button, 
-    input[type="submit"], 
-    input[type="button"],
-    .btn,
-    .btn-primary,
-    .btn-secondary,
-    .btn-login,
-    .btn-customer,
-    .btn-admin,
-    .cta-button,
-    .cta-button.primary,
-    .cta-button.secondary {
-        font-family: 'Montserrat', sans-serif !important;
-        border-radius: 8px !important;
-        border: none !important;
-        cursor: pointer !important;
-        transition: all 0.3s ease !important;
-        box-sizing: border-box !important;
-    }
-    
-    /* Specific button types */
-    .btn-login {
-        border-radius: 4px !important;
-    }
-    
-</script>
-</body></html>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
+                    <li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Portal</h3>
+                <ul>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                    <li><a href="customer-dashboard.html">Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
