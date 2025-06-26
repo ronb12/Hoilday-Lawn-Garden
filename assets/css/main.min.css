@@ -770,8 +770,8 @@ footer::before {
 }
 @media (max-width: 768px) {
   .floating-buttons {
-    bottom: 15px;
-    right: 15px;
+    bottom: 5rem;
+    right: 1rem;
   }
   .floating-button {
     width: 45px;

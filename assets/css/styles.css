@@ -114,7 +114,7 @@ header {
   transform: scale(1.1);
 }
 
-/* Responsive design */
+/* Mobile responsive adjustments for floating buttons */
 @media (max-width: 768px) {
   .hamburger {
     display: block;
@@ -135,5 +135,15 @@ header {
 
   .nav-links.active {
     display: flex;
+  }
+
+  .floating-buttons {
+    bottom: 5rem; /* Position above mobile tab bar */
+    right: 1rem;
+  }
+  
+  .floating-button {
+    padding: 0.8rem;
+    font-size: 0.9rem;
   }
 }

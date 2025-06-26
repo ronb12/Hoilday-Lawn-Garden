@@ -120,9 +120,12 @@
   font-size: 0.875rem;
 }
 
-/* Remove any floating buttons that might appear under the footer */
+/* Floating buttons positioning to avoid conflicts */
 .floating-buttons {
-  display: none;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
 }
 
 @media (max-width: 768px) {
@@ -143,6 +146,11 @@
 
   .footer-social {
     justify-content: center;
+  }
+
+  .floating-buttons {
+    bottom: 5rem; /* Position above mobile tab bar */
+    right: 1rem;
   }
 }
 
