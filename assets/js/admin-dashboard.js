@@ -111,3 +111,41 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Admin dashboard DOM loaded, checking auth...");
   showLoading("Checking authentication...");
 });
+// Add debugging to auth state change
+console.log("Setting up auth state listener...");
+// Check authentication state
+onAuthStateChanged(auth, async (user) => {
+  console.log("Auth state changed, user:", user ? user.email : "null");
+  if (user) {
+    console.log("User is signed in, checking admin status...");
+    // User is signed in, check if they are an admin
+    try {
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      console.log("User doc exists:", userDoc.exists(), "Role:", userDoc.exists() ? userDoc.data().role : "N/A");
+      if (userDoc.exists() && userDoc.data().role === "admin") {
+        console.log("User is admin, allowing access");
+        // User is admin, allow access
+        hideLoading();
+        showSuccess("Welcome back, Admin!");
+        setTimeout(() => {
+          if (successMessage) successMessage.style.display = "none";
+        }, 3000);
+      } else {
+        console.log("User is not admin, showing error");
+        // User is not admin, show error but do not log out
+        showError("Access denied. Admin privileges required.");
+      }
+    } catch (error) {
+      console.error("Error checking admin status:", error);
+      showError("Error verifying admin status. Please try again or contact support.");
+    }
+  } else {
+    console.log("No user signed in, redirecting to login");
+    // No user is signed in, redirect to login
+    hideLoading();
+    showError("Please log in to access the admin dashboard.");
+    setTimeout(() => {
+      window.location.href = "admin-login.html";
+    }, 2000);
+  }
+});
