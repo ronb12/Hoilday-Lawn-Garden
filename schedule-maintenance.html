@@ -105,6 +105,26 @@
         gap: 1.5rem;
       }
     }
+    .back-dashboard-btn {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      background: #2e7d32;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(46,125,50,0.08);
+    }
+    .back-dashboard-btn i {
+      margin-right: 0.5rem;
+    }
+    .back-dashboard-btn:hover {
+      background: #1b5e20;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -129,6 +149,7 @@
 
   <main>
     <div class="schedule-form-container">
+      <a href="customer-dashboard.html" class="back-dashboard-btn"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
       <form class="schedule-form" id="maintenanceForm">
         <h1>Schedule Maintenance</h1>
         <div class="success-message" id="successMessage">Your request has been submitted!</div>
