@@ -37,7 +37,6 @@
  <link href="assets/css/hero.css" rel="stylesheet" />
  <link href="assets/css/main.min.css" rel="stylesheet" />
  <link href="assets/css/mobile-enhancements.css" rel="stylesheet" />
-<link href="login-styles.css" rel="stylesheet" />
 
  <!-- Favicons & Manifest -->
  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
@@ -60,7 +59,429 @@
  " />
 
  <!-- Login Page Specific Styles -->
+ <style>
+ /* Professional Lawn Care Business Responsive Design */
+ :root {
+ --primary-green: #2e7d32;
+ --light-green: #4caf50;
+ --dark-green: #1b5e20;
+ --accent-green: #8bc34a;
+ --text-dark: #333;
+ --text-light: #666;
+ --white: #ffffff;
+ --background-light: #f8f9fa;
+ --border-color: #e0e0e0;
+ --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+ --shadow-medium: 0 4px 8px rgba(0,0,0,0.15);
+ --border-radius: 8px;
+ --transition: all 0.3s ease;
+ }
 
+ /* Universal Mobile-First Responsive Design */
+ * {
+ box-sizing: border-box;
+ }
+
+ body {
+ padding-top: 80px !important;
+ margin: 0;
+ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+ line-height: 1.6;
+ color: #333;
+ background-color: var(--background-light);
+ }
+
+ /* Container System */
+ .container {
+ width: 100%;
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 0 1rem;
+ }
+
+ @media (min-width: 768px) {
+ .container {
+ padding: 0 2rem;
+ }
+ }
+
+ @media (min-width: 1024px) {
+ .container {
+ padding: 0 3rem;
+ }
+ }
+
+    /* Clean Professional Header */
+    .main-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        background: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 0 1.5rem;
+        min-height: 80px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        margin-right: 2rem;
+        flex-shrink: 0;
+    }
+
+    .logo img {
+        height: 60px;
+        width: auto;
+        display: block;
+        margin: 0;
+    }
+
+    #nav-menu {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        gap: 1.5rem;
+    }
+ 
+    .nav-links { 
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0.5rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        flex-wrap: wrap;
+    }
+    
+    .nav-links a { 
+        padding: 0.25rem 0.5rem;
+        color: #333;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        font-size: 0.9rem;
+        display: block;
+        border-radius: 6px;
+    }
+    
+    .nav-links a:hover {
+        color: #2e7d32;
+        background-color: rgba(0, 0, 0, 0.05);
+        transform: translateY(-1px);
+    }
+    
+    .nav-links li { 
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+    .login-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 0.75rem;
+        align-items: center;
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+    
+    .btn-login {
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 0.85rem;
+        min-width: 110px;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        white-space: nowrap;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-customer {
+        background: #2e7d32;
+        color: white;
+    }
+    
+    .btn-admin {
+        background: #1565c0;
+        color: white;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    
+    /* End of login page styles */
+ 
+    /* Mobile Tab Bar - Hide on Desktop */
+    @media (min-width: 769px) {
+        .mobile-tab-bar {
+            display: none !important;
+        }
+    }
+
+}
+</style>
+
+<style>
+
+    /* Perfect Page Structure - No Issues */
+    .main-header {
+        background: #fff !important;
+        min-height: 70px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0 2rem !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .logo {
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .logo img {
+        height: 50px !important;
+        width: auto !important;
+        display: block !important;
+    }
+    
+    #nav-menu {
+        display: flex !important;
+        align-items: center !important;
+        flex-grow: 1 !important;
+        justify-content: flex-end !important;
+    }
+    
+    .nav-links { 
+        display: flex !important;
+        align-items: center !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 2rem !important;
+        flex-wrap: nowrap !important;
+    }
+    
+    .nav-links a { 
+        padding: 0.5rem 0.75rem !important; 
+        color: #333 !important; 
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease !important;
+        white-space: nowrap !important;
+        font-size: 0.95rem !important;
+        display: block !important;
+    }
+    
+    .nav-links a:hover {
+        color: #2e7d32 !important;
+    }
+    
+    .nav-links li { 
+        display: flex !important; 
+        align-items: center !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .login-buttons {
+        display: flex !important;
+        gap: 1rem !important;
+        align-items: center !important;
+        margin-left: 1rem !important;
+    }
+    
+    .btn-login {
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        font-size: 0.9rem !important;
+        min-width: 120px !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+        white-space: nowrap !important;
+    }
+    
+    .btn-customer {
+        background: #2e7d32 !important;
+        color: white !important;
+    }
+    
+    .btn-admin {
+        background: #1565c0 !important;
+        color: white !important;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+    /* Hero Section - Perfect Spacing */
+    .hero {
+        position: relative !important;
+        width: 100vw !important;
+        min-height: 60vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #222 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        margin-top: 70px !important;
+        padding: 0 !important;
+    }
+    
+    .hero img {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        z-index: 1 !important;
+        filter: brightness(0.6) !important;
+    }
+    
+    .hero-content {
+        position: relative !important;
+        z-index: 2 !important;
+        text-align: center !important;
+        color: #fff !important;
+        padding: 2rem !important;
+        max-width: 800px !important;
+    }
+    
+    .hero-content h1 {
+        font-size: 3rem !important;
+        margin-bottom: 1rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 1px !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .hero-content p {
+        font-size: 1.25rem !important;
+        font-weight: 400 !important;
+        margin-bottom: 2rem !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Body and Main Content */
+    body {
+        padding-top: 70px !important;
+        margin: 0 !important;
+    }
+    
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    @media (max-width: 768px) {
+        body {
+            padding-top: 70px !important;
+        }
+        
+        .main-header {
+            padding: 0 1rem !important;
+        }
+        
+        #nav-menu {
+            justify-content: flex-end !important;
+        }
+        
+        .nav-links { 
+            display: none !important; 
+            position: absolute !important; 
+            top: 100% !important; 
+            left: 0 !important; 
+            right: 0 !important; 
+            background: var(--color-primary, #4caf50) !important; 
+            padding: 1rem !important; 
+            flex-direction: column !important; 
+            align-items: center !important; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+            z-index: 1000 !important;
+        }
+        
+        .nav-links.active { 
+            display: flex !important; 
+        }
+        
+        
+        
+        
+        
+        .btn-login {
+            min-width: 140px !important;
+            font-size: 0.85rem !important;
+        }
+        
+        .hero-content h1 {
+            font-size: 2rem !important;
+        }
+        
+        .hero-content p {
+            font-size: 1rem !important;
+        }
+    }
+    
+    @media (max-width: 900px) {
+        .main-header .nav-links {
+            margin-top: 0 !important;
+            padding-top: 0.5em !important;
+        }
+    }
+
+</style>
 </head>
 <body>
     <!-- Header -->
@@ -92,43 +513,6 @@
     </header>
     <!-- Main Content -->
     <main>
-        <!-- Login Section -->
-        <section class="login-section">
-            <div class="container">
-                <div class="login-container">
-                    <div class="login-form">
-                        <h2>Login</h2>
-                        <p>Welcome back! Please sign in to your account.</p>
-                        
-                        <form id="loginForm">
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" id="password" name="password" required>
-                            </div>
-                            
-                            <div class="form-options">
-                                <label class="checkbox-container">
-                                    <input type="checkbox" name="remember">
-                                    <span>Remember me</span>
-                                </label>
-                                <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
-                            </div>
-                            
-                            <button type="submit" class="btn-submit">Sign In</button>
-                        </form>
-                        
-                        <div class="login-footer">
-                            <p>Don't have an account? <a href="create-account.html">Sign up here</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
@@ -475,28 +859,5 @@
         }
     }
 
-    <script>
-        // Login form handling
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Basic validation
-            if (!email || !password) {
-                alert('Please fill in all fields');
-                return;
-            }
-            
-            // Here you would typically send the data to your backend
-            console.log('Login attempt:', { email, password });
-            
-            // For demo purposes, redirect to customer dashboard
-            // In a real application, you would validate credentials first
-            window.location.href = 'customer-dashboard.html';
-        });
-    </script>
-</body>
 </body>
 </html>
