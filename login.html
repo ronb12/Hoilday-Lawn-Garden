@@ -113,6 +113,43 @@
             } else {
                 console.error('Google login button not found during setup');
             }
+            
+            // Set up form submission
+            const loginForm = document.getElementById("loginForm");
+            if (loginForm) {
+                loginForm.addEventListener("submit", function(e) {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById("email").value;
+                    const password = document.getElementById("password").value;
+                    const submitButton = this.querySelector(".login-button");
+                    const buttonText = submitButton.querySelector(".button-text");
+                    const spinner = submitButton.querySelector(".fa-spinner");
+                    
+                    if (!email || !password) {
+                        alert("Please fill in all required fields.");
+                        return;
+                    }
+                    
+                    // Show loading state
+                    submitButton.disabled = true;
+                    buttonText.style.display = "none";
+                    spinner.style.display = "inline-block";
+                    
+                    // Simulate login process
+                    setTimeout(() => {
+                        alert("Login functionality will be implemented with backend integration.");
+                        this.reset();
+                        
+                        // Reset button state
+                        submitButton.disabled = false;
+                        buttonText.style.display = "inline";
+                        spinner.style.display = "none";
+                    }, 1500);
+                });
+            } else {
+                console.error('Login form not found during setup');
+            }
         });
 
         // Toggle password visibility
@@ -130,38 +167,6 @@
                 toggleButton.classList.add("fa-eye");
             }
         }
-
-        // Handle form submission
-        document.getElementById("loginForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            const submitButton = this.querySelector(".login-button");
-            const buttonText = submitButton.querySelector(".button-text");
-            const spinner = submitButton.querySelector(".fa-spinner");
-            
-            if (!email || !password) {
-                alert("Please fill in all required fields.");
-                return;
-            }
-            
-            // Show loading state
-            submitButton.disabled = true;
-            buttonText.style.display = "none";
-            spinner.style.display = "inline-block";
-            
-            // Simulate login process
-            setTimeout(() => {
-                alert("Login functionality will be implemented with backend integration.");
-                this.reset();
-                
-                // Reset button state
-                submitButton.disabled = false;
-                buttonText.style.display = "inline";
-                spinner.style.display = "none";
-            }, 1500);
-        });
 
         // Simple test function
         function testButton() {
