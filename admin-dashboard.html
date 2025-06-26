@@ -170,14 +170,54 @@
             border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
             text-decoration: none;
             text-align: center;
             display: inline-block;
+            position: relative;
+            overflow: hidden;
         }
 
         .card-btn:hover {
             background: #1b5e20;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+        }
+
+        .card-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(46, 125, 50, 0.2);
+        }
+
+        .card-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.3);
+        }
+
+        .card-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Loading state for buttons */
+        .card-btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .card-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 16px;
+            height: 16px;
+            margin: -8px 0 0 -8px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
         /* Footer Styles */
@@ -528,6 +568,9 @@
             const errorContainer = document.getElementById('error-container');
             if (errorMessage) errorMessage.textContent = message;
             if (errorContainer) errorContainer.style.display = 'block';
+            setTimeout(() => {
+                if (errorContainer) errorContainer.style.display = 'none';
+            }, 5000);
         }
 
         // Show success message
@@ -536,13 +579,81 @@
             if (successMessage) {
                 successMessage.textContent = message;
                 successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000);
             }
+        }
+
+        // Enhanced button click handler
+        function handleButtonClick(url, buttonText) {
+            showLoading(`Loading ${buttonText}...`);
+            
+            // Simulate a brief loading time for better UX
+            setTimeout(() => {
+                try {
+                    window.location.href = url;
+                } catch (error) {
+                    console.error('Navigation error:', error);
+                    hideLoading();
+                    showError(`Failed to load ${buttonText}. Please try again.`);
+                }
+            }, 500);
         }
 
         // Handle logout
         document.getElementById('logoutBtn').addEventListener('click', function() {
             showLoading('Logging out...');
             // This will be handled by the admin-dashboard.js module
+        });
+
+        // Add click handlers to all dashboard buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const cardButtons = document.querySelectorAll('.card-btn');
+            
+            cardButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = this.getAttribute('href');
+                    const buttonText = this.textContent.trim();
+                    
+                    if (url) {
+                        handleButtonClick(url, buttonText);
+                    }
+                });
+                
+                // Add hover effects
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 4px 12px rgba(46, 125, 50, 0.3)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                hideLoading();
+            }
+        });
+
+        // Handle page errors
+        window.addEventListener('error', function(e) {
+            console.error('Page error:', e);
+            hideLoading();
+            showError('An error occurred. Please refresh the page.');
+        });
+
+        // Handle unhandled promise rejections
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled promise rejection:', e);
+            hideLoading();
+            showError('An error occurred. Please refresh the page.');
         });
     </script>
 </body>
