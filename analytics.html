@@ -1,253 +1,219 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-
-<style>
-
-    /* Perfect Page Structure - No Issues */
-    .main-header {
-        background: #fff !important;
-        min-height: 70px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        padding: 0 2rem !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 9999 !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
-    
-    .logo {
-        display: flex !important;
-        align-items: center !important;
-        flex-shrink: 0 !important;
-    }
-    
-    .logo img {
-        height: 50px !important;
-        width: auto !important;
-        display: block !important;
-    }
-    
-    #nav-menu {
-        display: flex !important;
-        align-items: center !important;
-        flex-grow: 1 !important;
-        justify-content: flex-end !important;
-    }
-    
-    .nav-links { 
-        display: flex !important;
-        align-items: center !important;
-        list-style: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        gap: 2rem !important;
-        flex-wrap: nowrap !important;
-    }
-    
-    .nav-links a { 
-        padding: 0.5rem 0.75rem !important; 
-        color: #333 !important; 
-        font-weight: 500 !important;
-        text-decoration: none !important;
-        transition: color 0.3s ease !important;
-        white-space: nowrap !important;
-        font-size: 0.95rem !important;
-        display: block !important;
-    }
-    
-    .nav-links a:hover {
-        color: #2e7d32 !important;
-    }
-    
-    .nav-links li { 
-        display: flex !important; 
-        align-items: center !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    .login-buttons {
-        display: flex !important;
-        gap: 1rem !important;
-        align-items: center !important;
-        margin-left: 1rem !important;
-    }
-    
-    .btn-login {
-        padding: 0.5rem 1rem !important;
-        border-radius: 4px !important;
-        text-decoration: none !important;
-        font-weight: 500 !important;
-        transition: all 0.3s ease !important;
-        font-size: 0.9rem !important;
-        min-width: 120px !important;
-        text-align: center !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 0.5rem !important;
-        white-space: nowrap !important;
-    }
-    
-    .btn-customer {
-        background: #2e7d32 !important;
-        color: white !important;
-    }
-    
-    .btn-admin {
-        background: #1565c0 !important;
-        color: white !important;
-    }
-    
-    .btn-login:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-    }
-    
-    
-
-    
-
-    
-
-    
-
-    
-    
-    /* Hero Section - Perfect Spacing */
-    .hero {
-        position: relative !important;
-        width: 100vw !important;
-        min-height: 60vh !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        background: #222 !important;
-        overflow: hidden !important;
-        margin: 0 !important;
-        margin-top: 70px !important;
-        padding: 0 !important;
-    }
-    
-    .hero img {
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        z-index: 1 !important;
-        filter: brightness(0.6) !important;
-    }
-    
-    .hero-content {
-        position: relative !important;
-        z-index: 2 !important;
-        text-align: center !important;
-        color: #fff !important;
-        padding: 2rem !important;
-        max-width: 800px !important;
-    }
-    
-    .hero-content h1 {
-        font-size: 3rem !important;
-        margin-bottom: 1rem !important;
-        font-weight: 600 !important;
-        letter-spacing: 1px !important;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    .hero-content p {
-        font-size: 1.25rem !important;
-        font-weight: 400 !important;
-        margin-bottom: 2rem !important;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    /* Body and Main Content */
-    body {
-        padding-top: 70px !important;
-        margin: 0 !important;
-    }
-    
-    main {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    @media (max-width: 768px) {
-        body {
-            padding-top: 70px !important;
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Analytics - Admin Dashboard</title>
+    <meta content="View analytics and reports for Holliday Lawn &amp; Garden" name="description"/>
+    <link href="assets/css/main.min.css" rel="stylesheet"/>
+    <link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta content="#2e7d32" name="theme-color"/>
+    <style>
+        body { 
+            padding-top: 100px; 
+            margin: 0; 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         
-        .main-header {
-            padding: 0 1rem !important;
+        .dashboard-main { 
+            max-width: 1400px; 
+            margin: 2rem auto; 
+            padding: 0 2rem; 
         }
         
-        #nav-menu {
-            justify-content: flex-end !important;
+        .page-header { 
+            background: #fff; 
+            padding: 2rem; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07); 
+            margin-bottom: 2rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
         }
         
-        .nav-links { 
-            display: none !important; 
-            position: absolute !important; 
-            top: 100% !important; 
-            left: 0 !important; 
-            right: 0 !important; 
-            background: var(--color-primary, #4caf50) !important; 
-            padding: 1rem !important; 
-            flex-direction: column !important; 
-            align-items: center !important; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-            z-index: 1000 !important;
+        .page-title { 
+            font-size: 2rem; 
+            font-weight: 700; 
+            color: #2c5530; 
+            margin: 0; 
         }
         
-        .nav-links.active { 
-            display: flex !important; 
+        .page-subtitle { 
+            color: #666; 
+            margin: 0.5rem 0 0 0; 
         }
         
-        .login-buttons {
-            display: none !important;
+        .stats-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 1.5rem; 
+            margin-bottom: 2rem; 
         }
         
-        .btn-login {
-            min-width: 140px !important;
-            font-size: 0.85rem !important;
+        .stat-card { 
+            background: #fff; 
+            padding: 1.5rem; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07); 
+            text-align: center; 
         }
         
-        .hero-content h1 {
-            font-size: 2rem !important;
+        .stat-number { 
+            font-size: 2.5rem; 
+            font-weight: 700; 
+            color: #4caf50; 
+            margin-bottom: 0.5rem; 
         }
         
-        .hero-content p {
-            font-size: 1rem !important;
+        .stat-label { 
+            color: #666; 
+            font-weight: 600; 
         }
-    }
-    
-    @media (max-width: 900px) {
-        .main-header .nav-links {
-            margin-top: 0 !important;
-            padding-top: 0.5em !important;
+        
+        .chart-section { 
+            background: #fff; 
+            padding: 2rem; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07); 
+            margin-bottom: 2rem; 
         }
-    }
-
-    /* Mobile Tab Bar - Hide on Desktop */
-    @media (min-width: 769px) {
-        .mobile-tab-bar {
-            display: none !important;
+        
+        .chart-title { 
+            font-size: 1.5rem; 
+            font-weight: 600; 
+            color: #2c5530; 
+            margin-bottom: 1.5rem; 
         }
-    }
-
-}
-</style>
+        
+        .chart-container { 
+            height: 300px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background: #f8f9fa; 
+            border-radius: 8px; 
+            margin-bottom: 1rem; 
+        }
+        
+        .chart-placeholder { 
+            color: #666; 
+            font-size: 1.1rem; 
+            text-align: center; 
+        }
+        
+        .metrics-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 1.5rem; 
+            margin-bottom: 2rem; 
+        }
+        
+        .metric-card { 
+            background: #fff; 
+            padding: 1.5rem; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07); 
+        }
+        
+        .metric-title { 
+            font-weight: 600; 
+            color: #333; 
+            margin-bottom: 1rem; 
+        }
+        
+        .metric-value { 
+            font-size: 2rem; 
+            font-weight: 700; 
+            color: #4caf50; 
+            margin-bottom: 0.5rem; 
+        }
+        
+        .metric-change { 
+            font-size: 0.9rem; 
+            color: #666; 
+        }
+        
+        .positive { 
+            color: #4caf50; 
+        }
+        
+        .negative { 
+            color: #f44336; 
+        }
+        
+        .filters-section { 
+            background: #fff; 
+            padding: 1.5rem; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07); 
+            margin-bottom: 2rem; 
+        }
+        
+        .filters-row { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 1rem; 
+            align-items: end; 
+        }
+        
+        .filter-group { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 0.5rem; 
+        }
+        
+        .filter-group label { 
+            font-weight: 600; 
+            color: #333; 
+            font-size: 0.9rem; 
+        }
+        
+        .filter-group select, .filter-group input { 
+            padding: 0.75rem; 
+            border: 1px solid #ddd; 
+            border-radius: 6px; 
+            font-size: 1rem; 
+            background: #fff; 
+        }
+        
+        .loading { 
+            text-align: center; 
+            padding: 3rem; 
+            color: #666; 
+        }
+        
+        .error { 
+            background: #ffebee; 
+            color: #c62828; 
+            padding: 1rem; 
+            border-radius: 6px; 
+            margin-bottom: 1rem; 
+        }
+        
+        @media (max-width: 768px) { 
+            .dashboard-main { 
+                padding: 0 1rem; 
+            } 
+            .page-header { 
+                flex-direction: column; 
+                gap: 1rem; 
+                align-items: flex-start; 
+            } 
+            .filters-row { 
+                grid-template-columns: 1fr; 
+            } 
+            .stats-grid { 
+                grid-template-columns: 1fr; 
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="admin-header">
@@ -274,39 +240,123 @@
         <div class="page-header">
             <div>
                 <h1 class="page-title">Analytics Dashboard</h1>
-                <p class="page-subtitle">Key metrics and trends for your business</p>
+                <p class="page-subtitle">Track business performance and key metrics</p>
             </div>
+            <a href="generate-report.html" class="btn btn-primary">
+                <i class="fas fa-file-alt"></i>
+                Generate Report
+            </a>
         </div>
+        
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-number" id="total-revenue">$0</div>
                 <div class="stat-label">Total Revenue</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="total-customers">0</div>
-                <div class="stat-label">Total Customers</div>
+                <div class="stat-number" id="total-appointments">0</div>
+                <div class="stat-label">Appointments</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="total-appointments">0</div>
-                <div class="stat-label">Total Appointments</div>
+                <div class="stat-number" id="total-customers">0</div>
+                <div class="stat-label">Customers</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number" id="avg-rating">0.0</div>
-                <div class="stat-label">Average Rating</div>
+                <div class="stat-label">Avg Rating</div>
             </div>
         </div>
-        <div class="charts-section">
-            <div class="chart-container">
-                <h3>Revenue Over Time</h3>
-                <canvas id="revenueChart" height="100"></canvas>
+        
+        <div class="filters-section">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label for="date-range">Date Range</label>
+                    <select id="date-range">
+                        <option value="7">Last 7 Days</option>
+                        <option value="30" selected>Last 30 Days</option>
+                        <option value="90">Last 90 Days</option>
+                        <option value="365">Last Year</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="metric-type">Metric Type</label>
+                    <select id="metric-type">
+                        <option value="revenue">Revenue</option>
+                        <option value="appointments">Appointments</option>
+                        <option value="customers">Customers</option>
+                        <option value="services">Services</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="chart-type">Chart Type</label>
+                    <select id="chart-type">
+                        <option value="line">Line Chart</option>
+                        <option value="bar">Bar Chart</option>
+                        <option value="pie">Pie Chart</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <button class="btn btn-primary" onclick="refreshAnalytics()">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                </div>
             </div>
-            <div class="chart-container">
-                <h3>Appointments by Service</h3>
-                <canvas id="serviceChart" height="100"></canvas>
+        </div>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-title">Revenue Growth</div>
+                <div class="metric-value" id="revenue-growth">+12.5%</div>
+                <div class="metric-change positive">↑ 12.5% from last month</div>
             </div>
+            <div class="metric-card">
+                <div class="metric-title">Customer Acquisition</div>
+                <div class="metric-value" id="customer-acquisition">+8.2%</div>
+                <div class="metric-change positive">↑ 8.2% from last month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Appointment Completion</div>
+                <div class="metric-value" id="appointment-completion">94.7%</div>
+                <div class="metric-change positive">↑ 2.1% from last month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Customer Satisfaction</div>
+                <div class="metric-value" id="customer-satisfaction">4.8/5</div>
+                <div class="metric-change positive">↑ 0.2 from last month</div>
+            </div>
+        </div>
+        
+        <div class="chart-section">
+            <h3 class="chart-title">Revenue Trends</h3>
             <div class="chart-container">
-                <h3>Customer Growth</h3>
-                <canvas id="customerChart" height="100"></canvas>
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-line fa-3x" style="color: #ddd; margin-bottom: 1rem;"></i>
+                    <p>Revenue chart will be displayed here</p>
+                    <p>Data loading...</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chart-section">
+            <h3 class="chart-title">Service Distribution</h3>
+            <div class="chart-container">
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-pie fa-3x" style="color: #ddd; margin-bottom: 1rem;"></i>
+                    <p>Service distribution chart will be displayed here</p>
+                    <p>Data loading...</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chart-section">
+            <h3 class="chart-title">Customer Growth</h3>
+            <div class="chart-container">
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-bar fa-3x" style="color: #ddd; margin-bottom: 1rem;"></i>
+                    <p>Customer growth chart will be displayed here</p>
+                    <p>Data loading...</p>
+                </div>
             </div>
         </div>
     </main>

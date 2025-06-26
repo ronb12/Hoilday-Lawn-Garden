@@ -3,776 +3,269 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta name="description" content="Add new appointments for lawn care services." />
-<title>Add Appointment - Holliday's Lawn &amp; Garden</title>
-    <meta property="og:title" content="Add Appointment - Holliday's Lawn &amp; Garden" />
-    <meta property="og:description" content="Add new appointments for lawn care services." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="./add-appointment.html" />
-    <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Add Appointment - Holliday's Lawn &amp; Garden" />
-    <meta name="twitter:description" content="Add new appointments for lawn care services." />
-    <link href="assets/css/main.css" rel="stylesheet"/>
+    <title>Add Appointment - Admin Dashboard</title>
+    <meta content="Add new appointment for Holliday Lawn &amp; Garden" name="description"/>
+    <link href="assets/css/main.min.css" rel="stylesheet"/>
     <link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta content="#2e7d32" name="theme-color"/>
     <style>
-        .appointment-container {
-            max-width: 1400px;
-            margin: 2rem auto;
-            padding: 2rem;
-        }
-        .appointment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        .appointment-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #2c5530;
-        }
-        .appointment-form-container, .appointment-list-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
+        body { 
+            padding-top: 100px; 
+            margin: 0; 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #333;
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #4caf50;
-            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
-        }
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-            margin-top: 2rem;
-        }
-        .btn-save {
-            background: #4caf50;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-        .btn-save:hover {
-            background: #45a049;
+        .dashboard-main { 
+            max-width: 800px; 
+            margin: 2rem auto; 
+            padding: 0 2rem; 
         }
         
-        .appointment-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .appointment-table th,
-        .appointment-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        .appointment-table th {
-            background-color: #f8f9fa;
-            font-weight: 600;
-            color: #2c5530;
-        }
-        .appointment-table tr:hover {
-            background-color: #f8f9fa;
-        }
-        .btn-edit, .btn-delete {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 0.5rem;
-            font-size: 0.9rem;
-        }
-        .btn-edit {
-            background: #2196F3;
-            color: white;
-        }
-        .btn-edit:hover {
-            background: #1976D2;
-        }
-        .btn-delete {
-            background: #f44336;
-            color: white;
-        }
-        .btn-delete:hover {
-            background: #d32f2f;
+        .page-header { 
+            background: #fff; 
+            padding: 2rem; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07); 
+            margin-bottom: 2rem; 
         }
         
-        .admin-nav {
-            background: #2c5530;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+        .page-title { 
+            font-size: 2rem; 
+            font-weight: 700; 
+            color: #2c5530; 
+            margin: 0 0 0.5rem 0; 
         }
         
-        .admin-nav-left {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
+        .page-subtitle { 
+            color: #666; 
+            margin: 0; 
         }
         
-        .admin-nav-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        .form-container { 
+            background: #fff; 
+            padding: 2rem; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07); 
         }
         
-        .admin-nav a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-            font-weight: 500;
+        .form-section { 
+            margin-bottom: 2rem; 
         }
         
-        .admin-nav a:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .form-section h3 { 
+            color: #2c5530; 
+            margin-bottom: 1rem; 
+            font-size: 1.2rem; 
         }
         
-        .admin-nav a.active {
-            background: rgba(255, 255, 255, 0.2);
+        .form-row { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 1rem; 
+            margin-bottom: 1rem; 
         }
         
-        .admin-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
+        .form-group { 
+            margin-bottom: 1rem; 
         }
         
-        .back-to-dashboard {
-            background: #4caf50;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s ease;
+        .form-group label { 
+            display: block; 
+            margin-bottom: 0.5rem; 
+            font-weight: 600; 
+            color: #333; 
         }
         
-        .back-to-dashboard:hover {
-            background: #45a049;
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea { 
+            width: 100%; 
+            padding: 0.75rem; 
+            border: 1px solid #ddd; 
+            border-radius: 6px; 
+            font-size: 1rem; 
         }
         
-        @media (max-width: 768px) {
-            .appointment-container {
-                padding: 1rem;
-                margin: 1rem auto;
-            }
-            
-            .appointment-header {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-            
-            .appointment-title {
-                font-size: 1.8rem;
-            }
-            
-            .appointment-form-container, 
-            .appointment-list-container {
-                padding: 1.5rem;
-                margin-bottom: 1.5rem;
-            }
-            
-            .form-actions {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-            
-            .btn-save {
-                width: 100%;
-                padding: 1rem;
-            }
-            
-            .appointment-table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-                font-size: 0.9rem;
-            }
-            
-            .appointment-table th,
-            .appointment-table td {
-                padding: 0.75rem 0.5rem;
-                min-width: 120px;
-            }
-            
-            .btn-edit, .btn-delete {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.8rem;
-                margin-right: 0.25rem;
-            }
-            
-            .admin-nav {
-                flex-direction: column;
-                padding: 1rem;
-            }
-            
-            .admin-nav-left,
-            .admin-nav-right {
-                flex-direction: column;
-                gap: 0.5rem;
-                width: 100%;
-            }
-            
-            .admin-nav a {
-                width: 100%;
-                text-align: center;
-                padding: 0.75rem;
-            }
-        }
-    
-    /* Mobile Tab Bar - Hide on Desktop */
-    @media (min-width: 769px) {
-        .mobile-tab-bar {
-            display: none !important;
-        }
-    }
-
-}
-</style>
-
-<style>
-
-    /* Perfect Page Structure - No Issues */
-    .main-header {
-        background: #fff !important;
-        min-height: 70px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        padding: 0 2rem !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 9999 !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
-    
-    .logo {
-        display: flex !important;
-        align-items: center !important;
-        flex-shrink: 0 !important;
-    }
-    
-    .logo img {
-        height: 50px !important;
-        width: auto !important;
-        display: block !important;
-    }
-    
-    #nav-menu {
-        display: flex !important;
-        align-items: center !important;
-        flex-grow: 1 !important;
-        justify-content: flex-end !important;
-    }
-    
-    .nav-links { 
-        display: flex !important;
-        align-items: center !important;
-        list-style: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        gap: 2rem !important;
-        flex-wrap: nowrap !important;
-    }
-    
-    .nav-links a { 
-        padding: 0.5rem 0.75rem !important; 
-        color: #333 !important; 
-        font-weight: 500 !important;
-        text-decoration: none !important;
-        transition: color 0.3s ease !important;
-        white-space: nowrap !important;
-        font-size: 0.95rem !important;
-        display: block !important;
-    }
-    
-    .nav-links a:hover {
-        color: #2e7d32 !important;
-    }
-    
-    .nav-links li { 
-        display: flex !important; 
-        align-items: center !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    .login-buttons {
-        display: flex !important;
-        gap: 1rem !important;
-        align-items: center !important;
-        margin-left: 1rem !important;
-    }
-    
-    .btn-login {
-        padding: 0.5rem 1rem !important;
-        border-radius: 4px !important;
-        text-decoration: none !important;
-        font-weight: 500 !important;
-        transition: all 0.3s ease !important;
-        font-size: 0.9rem !important;
-        min-width: 120px !important;
-        text-align: center !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 0.5rem !important;
-        white-space: nowrap !important;
-    }
-    
-    .btn-customer {
-        background: #2e7d32 !important;
-        color: white !important;
-    }
-    
-    .btn-admin {
-        background: #1565c0 !important;
-        color: white !important;
-    }
-    
-    .btn-login:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-    }
-    
-    
-
-    
-
-    
-
-    
-
-    
-    
-    /* Hero Section - Perfect Spacing */
-    .hero {
-        position: relative !important;
-        width: 100vw !important;
-        min-height: 60vh !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        background: #222 !important;
-        overflow: hidden !important;
-        margin: 0 !important;
-        margin-top: 70px !important;
-        padding: 0 !important;
-    }
-    
-    .hero img {
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        z-index: 1 !important;
-        filter: brightness(0.6) !important;
-    }
-    
-    .hero-content {
-        position: relative !important;
-        z-index: 2 !important;
-        text-align: center !important;
-        color: #fff !important;
-        padding: 2rem !important;
-        max-width: 800px !important;
-    }
-    
-    .hero-content h1 {
-        font-size: 3rem !important;
-        margin-bottom: 1rem !important;
-        font-weight: 600 !important;
-        letter-spacing: 1px !important;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    .hero-content p {
-        font-size: 1.25rem !important;
-        font-weight: 400 !important;
-        margin-bottom: 2rem !important;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    /* Body and Main Content */
-    body {
-        padding-top: 70px !important;
-        margin: 0 !important;
-    }
-    
-    main {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    @media (max-width: 768px) {
-        body {
-            padding-top: 70px !important;
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus { 
+            outline: none; 
+            border-color: #4caf50; 
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2); 
         }
         
-        .main-header {
-            padding: 0 1rem !important;
+        .form-actions { 
+            display: flex; 
+            gap: 1rem; 
+            justify-content: flex-end; 
+            margin-top: 2rem; 
         }
         
-        #nav-menu {
-            justify-content: flex-end !important;
+        .btn { 
+            padding: 0.75rem 1.5rem; 
+            border-radius: 6px; 
+            border: none; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+            text-decoration: none; 
         }
         
-        .nav-links { 
-            display: none !important; 
-            position: absolute !important; 
-            top: 100% !important; 
-            left: 0 !important; 
-            right: 0 !important; 
-            background: var(--color-primary, #4caf50) !important; 
-            padding: 1rem !important; 
-            flex-direction: column !important; 
-            align-items: center !important; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-            z-index: 1000 !important;
+        .btn-primary { 
+            background: #4caf50; 
+            color: white; 
         }
         
-        .nav-links.active { 
-            display: flex !important; 
+        .btn-primary:hover { 
+            background: #388e3c; 
         }
         
-        
-        
-        .login-buttons {
-            flex-direction: column !important;
-            gap: 0.5rem !important;
-            margin-left: 0 !important;
+        .btn-secondary { 
+            background: #6c757d; 
+            color: white; 
         }
         
-        .btn-login {
-            min-width: 140px !important;
-            font-size: 0.85rem !important;
+        .btn-secondary:hover { 
+            background: #5a6268; 
         }
         
-        .hero-content h1 {
-            font-size: 2rem !important;
+        .loading { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #666; 
         }
         
-        .hero-content p {
-            font-size: 1rem !important;
+        .error { 
+            background: #ffebee; 
+            color: #c62828; 
+            padding: 1rem; 
+            border-radius: 6px; 
+            margin-bottom: 1rem; 
         }
-    }
-    
-    @media (max-width: 900px) {
-        .main-header .nav-links {
-            margin-top: 0 !important;
-            padding-top: 0.5em !important;
+        
+        .success { 
+            background: #e8f5e8; 
+            color: #2e7d32; 
+            padding: 1rem; 
+            border-radius: 6px; 
+            margin-bottom: 1rem; 
         }
-    }
-
-</style>
-
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-body {
-    font-family: 'Montserrat', -apple-system, "system-ui", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-}
-</style>
+        
+        @media (max-width: 768px) { 
+            .dashboard-main { 
+                padding: 0 1rem; 
+            } 
+            .form-row { 
+                grid-template-columns: 1fr; 
+            } 
+            .form-actions { 
+                flex-direction: column; 
+            } 
+        }
+    </style>
 </head>
 <body>
-    <!-- Admin Navigation -->
-    <nav class="admin-nav">
-        <div class="admin-nav-left">
-            <div class="admin-logo">Holliday's Admin</div>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden" />
+            <span style="font-weight: 700; color: #2c5530;">Admin Dashboard</span>
+        </div>
+        <nav class="admin-nav">
             <a href="admin-dashboard.html">Dashboard</a>
-            <a href="appointments.html" class="active">Appointments</a>
+            <a href="appointments.html">Appointments</a>
             <a href="customers.html">Customers</a>
             <a href="payments.html">Payments</a>
-            <a href="staff.html">Staff</a>
             <a href="inventory.html">Inventory</a>
+            <a href="staff.html">Staff</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="messages.html">Messages</a>
+            <button class="btn btn-danger" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </nav>
+    </header>
+    <main class="dashboard-main">
+        <div class="page-header">
+            <h1 class="page-title">Add New Appointment</h1>
+            <p class="page-subtitle">Schedule a new appointment for a customer</p>
         </div>
-        <div class="admin-nav-right">
-            <a href="admin-dashboard.html" class="back-to-dashboard">Back to Dashboard</a>
-            <a href="admin-login.html">Logout</a>
-        </div>
-    </nav>
-
-    <div class="appointment-container">
-        <div class="appointment-header">
-            <h1 class="appointment-title">Add New Appointment</h1>
-        </div>
-
-        <!-- Appointment Form -->
-        <div class="appointment-form-container">
-            <form id="appointmentForm">
-                <div class="form-group">
-                    <label for="customerName">Customer Name</label>
-                    <input type="text" id="customerName" name="customerName" required>
+        <div class="form-container">
+            <form id="appointment-form">
+                <div class="form-section">
+                    <h3>Customer Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customerName">Customer Name *</label>
+                            <input type="text" id="customerName" name="customerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerEmail">Customer Email *</label>
+                            <input type="email" id="customerEmail" name="customerEmail" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customerPhone">Customer Phone *</label>
+                            <input type="tel" id="customerPhone" name="customerPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="serviceType">Service Type *</label>
+                            <select id="serviceType" name="serviceType" required>
+                                <option value="">Select a service</option>
+                                <option value="lawn-mowing">Lawn Mowing</option>
+                                <option value="landscaping">Landscaping</option>
+                                <option value="tree-trimming">Tree Trimming</option>
+                                <option value="irrigation">Irrigation</option>
+                                <option value="fertilization">Fertilization</option>
+                                <option value="pest-control">Pest Control</option>
+                                <option value="snow-removal">Snow Removal</option>
+                                <option value="garden-maintenance">Garden Maintenance</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="customerEmail">Customer Email</label>
-                    <input type="email" id="customerEmail" name="customerEmail" required>
+                <div class="form-section">
+                    <h3>Appointment Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="appointmentDate">Appointment Date *</label>
+                            <input type="date" id="appointmentDate" name="appointmentDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentTime">Appointment Time *</label>
+                            <input type="time" id="appointmentTime" name="appointmentTime" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Service Address *</label>
+                        <textarea id="address" name="address" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" name="notes" rows="4" placeholder="Any special requirements or notes about this appointment..."></textarea>
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="customerPhone">Customer Phone</label>
-                    <input type="tel" id="customerPhone" name="customerPhone" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="serviceType">Service Type</label>
-                    <select id="serviceType" name="serviceType" required>
-                        <option value="">Select a service</option>
-                        <option value="lawn-mowing">Lawn Mowing</option>
-                        <option value="landscaping">Landscaping</option>
-                        <option value="tree-trimming">Tree Trimming</option>
-                        <option value="irrigation">Irrigation</option>
-                        <option value="fertilization">Fertilization</option>
-                        <option value="pest-control">Pest Control</option>
-                        <option value="snow-removal">Snow Removal</option>
-                        <option value="garden-maintenance">Garden Maintenance</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="appointmentDate">Appointment Date</label>
-                    <input type="date" id="appointmentDate" name="appointmentDate" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="appointmentTime">Appointment Time</label>
-                    <input type="time" id="appointmentTime" name="appointmentTime" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="address">Service Address</label>
-                    <textarea id="address" name="address" rows="3" required></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="notes">Additional Notes</label>
-                    <textarea id="notes" name="notes" rows="4"></textarea>
-                </div>
-                
                 <div class="form-actions">
-                    <button type="submit" class="btn-save">Save Appointment</button>
+                    <a href="appointments.html" class="btn btn-secondary">
+                        <i class="fas fa-times"></i>
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Add Appointment
+                    </button>
                 </div>
             </form>
         </div>
-
-        <!-- Appointments List -->
-        <div class="appointment-list-container">
-            <h2>Recent Appointments</h2>
-            <table class="appointment-table">
-                <thead>
-                    <tr>
-                        <th>Customer</th>
-                        <th>Service</th>
-                        <th>Date & Time</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="appointmentsTableBody">
-                    <!-- Appointments will be loaded here -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <script>
-        // Set minimum date to today
-        document.getElementById('appointmentDate').min = new Date().toISOString().split('T')[0];
-        
-        // Handle form submission
-        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const appointmentData = Object.fromEntries(formData);
-            
-            // Add appointment to the table
-            addAppointmentToTable(appointmentData);
-            
-            // Reset form
-            this.reset();
-            
-            // Show success message
-            alert('Appointment saved successfully!');
-        });
-        
-        // Function to add appointment to table
-        function addAppointmentToTable(appointment) {
-            const tableBody = document.getElementById('appointmentsTableBody');
-            const row = document.createElement('tr');
-            
-            row.innerHTML = `
-                <td>${appointment.customerName}</td>
-                <td>${appointment.serviceType}</td>
-                <td>${appointment.appointmentDate} at ${appointment.appointmentTime}</td>
-                <td><span style="color: #4caf50; font-weight: 600;">Scheduled</span></td>
-                <td>
-                    <button class="btn-edit" onclick="editAppointment(this)">Edit</button>
-                    <button class="btn-delete" onclick="deleteAppointment(this)">Delete</button>
-                </td>
-            `;
-            
-            tableBody.appendChild(row);
-        }
-        
-        // Function to edit appointment
-        function editAppointment(button) {
-            const row = button.closest('tr');
-            const cells = row.cells;
-            
-            // Populate form with current data
-            document.getElementById('customerName').value = cells[0].textContent;
-            document.getElementById('serviceType').value = cells[1].textContent;
-            document.getElementById('appointmentDate').value = cells[2].textContent.split(' at ')[0];
-            document.getElementById('appointmentTime').value = cells[2].textContent.split(' at ')[1];
-            
-            // Remove the row
-            row.remove();
-            
-            // Scroll to form
-            document.querySelector('.appointment-form-container').scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Function to delete appointment
-        function deleteAppointment(button) {
-            if (confirm('Are you sure you want to delete this appointment?')) {
-                button.closest('tr').remove();
-            }
-        }
-        
-        // Load demo appointments on page load
-        window.addEventListener('load', function() {
-            const demoAppointments = [
-                {
-                    customerName: 'John Smith',
-                    serviceType: 'lawn-mowing',
-                    appointmentDate: '2024-01-15',
-                    appointmentTime: '09:00'
-                },
-                {
-                    customerName: 'Sarah Johnson',
-                    serviceType: 'landscaping',
-                    appointmentDate: '2024-01-16',
-                    appointmentTime: '14:30'
-                }
-            ];
-            
-            demoAppointments.forEach(appointment => {
-                addAppointmentToTable(appointment);
-            });
-        });
-    </script>
-
-        <footer class="footer" role="contentinfo">
-            <div class="footer-content">
-                <div class="footer-grid">
-                    <div class="footer-section">
-                        <h3>Contact Us</h3>
-                        <div class="footer-contact">
-                            <span class="footer-owner">Karl Holliday</span>
-                            <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
-                            <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
-                        </div>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="education.html">Education</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Customer Portal</h3>
-                        <ul>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-                            <li><a href="customer-dashboard.html">Dashboard</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Legal</h3>
-                        <ul>
-                            <li><a href="privacy.html">Privacy Policy</a></li>
-                            <li><a href="terms.html">Terms of Service</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
-            </div>
-        </footer>
-        <script>
-            const yearElement = document.getElementById('current-year');
-            if (yearElement) {
-                yearElement.textContent = new Date().getFullYear();
-            }
-        </script>
-
-<nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
-  <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
-  <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
-  <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
-  <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
-  <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
-  <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
-  <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
-</nav>
-
+    </main>
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module" src="assets/js/add-appointment.js"></script>
 </body>
 </html>
