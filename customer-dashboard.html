@@ -1570,11 +1570,18 @@ body {
             const payNowBtn = document.getElementById('pay-now-btn');
             const closeModalBtn = document.getElementById('close-payment-modal');
             const cancelPaymentBtn = document.getElementById('cancel-payment');
-            const paymentForm = document.getElementById('payment-form');
-            const processPaymentBtn = document.getElementById('process-payment');
+
+            // Check if required elements exist
+            if (!paymentModal) {
+                console.error('Payment modal element not found');
+            }
 
             // Open payment modal
             function openPaymentModal() {
+                if (!paymentModal) {
+                    console.error('Payment modal not found');
+                    return;
+                }
                 paymentModal.classList.add('show');
                 document.body.style.overflow = 'hidden'; // Prevent background scrolling
                 
@@ -1601,6 +1608,10 @@ body {
 
             // Close payment modal
             function closePaymentModal() {
+                if (!paymentModal) {
+                    console.error('Payment modal not found');
+                    return;
+                }
                 paymentModal.classList.remove('show');
                 document.body.style.overflow = ''; // Restore scrolling
             }
@@ -1608,10 +1619,14 @@ body {
             // Event listeners for opening modal
             if (payBillBtn) {
                 payBillBtn.addEventListener('click', openPaymentModal);
+            } else {
+                console.warn('Pay Bill button not found');
             }
             
             if (payNowBtn) {
                 payNowBtn.addEventListener('click', openPaymentModal);
+            } else {
+                console.warn('Pay Now button not found');
             }
 
             // Mobile pay button event listener
@@ -1623,22 +1638,28 @@ body {
             // Event listeners for closing modal
             if (closeModalBtn) {
                 closeModalBtn.addEventListener('click', closePaymentModal);
+            } else {
+                console.warn('Close modal button not found');
             }
             
             if (cancelPaymentBtn) {
                 cancelPaymentBtn.addEventListener('click', closePaymentModal);
+            } else {
+                console.warn('Cancel payment button not found');
             }
 
             // Close modal when clicking outside
-            paymentModal.addEventListener('click', function(e) {
-                if (e.target === paymentModal) {
-                    closePaymentModal();
-                }
-            });
+            if (paymentModal) {
+                paymentModal.addEventListener('click', function(e) {
+                    if (e.target === paymentModal) {
+                        closePaymentModal();
+                    }
+                });
+            }
 
             // Close modal with Escape key
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && paymentModal.classList.contains('show')) {
+                if (e.key === 'Escape' && paymentModal && paymentModal.classList.contains('show')) {
                     closePaymentModal();
                 }
             });
