@@ -105,3 +105,9 @@ if (logoutBtn) {
   });
 }
 
+
+// Initialize on DOM load
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Admin dashboard DOM loaded, checking auth...");
+  showLoading("Checking authentication...");
+});

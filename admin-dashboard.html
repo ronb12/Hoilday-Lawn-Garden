@@ -547,18 +547,6 @@
         // Update copyright year
         document.getElementById('current-year').textContent = new Date().getFullYear();
         
-        // Enhanced button click handler
-        function handleButtonClick(url, buttonText) {
-            // Simulate a brief loading time for better UX
-            setTimeout(() => {
-                try {
-                    window.location.href = url;
-                } catch (error) {
-                    console.error('Navigation error:', error);
-                }
-            }, 500);
-        }
-
         // Add click handlers to all dashboard buttons
         document.addEventListener('DOMContentLoaded', function() {
             const cardButtons = document.querySelectorAll('.card-btn');
@@ -570,7 +558,14 @@
                     const buttonText = this.textContent.trim();
                     
                     if (url) {
-                        handleButtonClick(url, buttonText);
+                        // Simple navigation without conflicting functions
+                        setTimeout(() => {
+                            try {
+                                window.location.href = url;
+                            } catch (error) {
+                                console.error('Navigation error:', error);
+                            }
+                        }, 500);
                     }
                 });
                 
@@ -585,11 +580,6 @@
                     this.style.boxShadow = 'none';
                 });
             });
-        });
-
-        // Handle page visibility changes
-        document.addEventListener('visibilitychange', function() {
-            // Let the module handle loading states
         });
 
         // Handle page errors
