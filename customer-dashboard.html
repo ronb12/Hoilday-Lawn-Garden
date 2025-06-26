@@ -759,6 +759,288 @@ body {
         }
     }
 </style>
+
+<style>
+    /* Payment Modal Styles */
+    .payment-modal {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        animation: fadeIn 0.3s ease;
+    }
+
+    .payment-modal.show {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .payment-modal-content {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        width: 90%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+        animation: slideIn 0.3s ease;
+    }
+
+    .payment-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid #e0e0e0;
+        background: #f8f9fa;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .payment-modal-header h2 {
+        margin: 0;
+        color: #333;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .close-modal {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #666;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+        background: #e0e0e0;
+        color: #333;
+    }
+
+    .payment-modal-body {
+        padding: 1.5rem;
+    }
+
+    .payment-summary {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    .payment-summary h3 {
+        margin: 0 0 1rem 0;
+        color: #333;
+        font-size: 1.2rem;
+    }
+
+    .payment-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .payment-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .payment-item .label {
+        font-weight: 500;
+        color: #666;
+    }
+
+    .payment-item .value {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .payment-item .amount {
+        color: #2e7d32;
+        font-size: 1.1rem;
+    }
+
+    .payment-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-group label {
+        font-weight: 500;
+        color: #333;
+        font-size: 0.9rem;
+    }
+
+    .form-group input {
+        padding: 0.75rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: #2e7d32;
+        box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .payment-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .payment-actions button {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .btn-primary {
+        background: #2e7d32;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #1b5e20;
+        transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+        background: #f5f5f5;
+        color: #333;
+        border: 1px solid #ddd;
+    }
+
+    .btn-secondary:hover {
+        background: #e0e0e0;
+    }
+
+    .btn-primary:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* Loading state */
+    .loading {
+        opacity: 0.7;
+        pointer-events: none;
+    }
+
+    .loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        border: 2px solid #f3f3f3;
+        border-top: 2px solid #2e7d32;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+        from { transform: translateY(-50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 600px) {
+        .payment-modal-content {
+            width: 95%;
+            margin: 1rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .payment-actions {
+            flex-direction: column;
+        }
+    }
+
+    /* Mobile Pay Button Styles */
+    .mobile-pay-btn {
+        background: none;
+        border: none;
+        color: #333;
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        font-size: 0.8rem;
+        text-decoration: none;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .mobile-pay-btn:hover {
+        color: #2e7d32;
+    }
+
+    .mobile-pay-btn i {
+        font-size: 1.2rem;
+    }
+
+    .mobile-pay-btn span {
+        font-size: 0.7rem;
+        font-weight: 500;
+    }
+
+    /* Perfect Page Structure - No Issues */
+</style>
 </head>
 <body>
     <!-- Header -->
@@ -827,10 +1109,10 @@ body {
                     <div class="dashboard-card quick-actions">
                         <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
                         <div class="action-buttons">
-                            <a href="pay-your-bill.html" class="action-btn primary">
+                            <button class="action-btn primary" id="pay-bill-btn">
                                 <i class="fas fa-credit-card"></i>
                                 Pay Your Bill
-                            </a>
+                            </button>
                             <a href="schedule-maintenance.html" class="action-btn">
                                 <i class="fas fa-calendar-plus"></i>
                                 Schedule Service
@@ -901,7 +1183,7 @@ body {
                             </div>
                         </div>
                         <div class="billing-actions">
-                            <a href="pay-your-bill.html" class="btn-primary">Pay Now</a>
+                            <button class="btn-primary" id="pay-now-btn">Pay Now</button>
                             <a href="receipt.html" class="btn-secondary">View Receipts</a>
                         </div>
                     </div>
@@ -966,6 +1248,73 @@ body {
             </div>
         </section>
     </main>
+
+    <!-- Payment Popup Modal -->
+    <div id="payment-modal" class="payment-modal">
+        <div class="payment-modal-content">
+            <div class="payment-modal-header">
+                <h2><i class="fas fa-credit-card"></i> Pay Your Bill</h2>
+                <button class="close-modal" id="close-payment-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="payment-modal-body">
+                <div class="payment-summary">
+                    <h3>Payment Summary</h3>
+                    <div class="payment-details">
+                        <div class="payment-item">
+                            <span class="label">Current Balance:</span>
+                            <span class="value amount">$125.00</span>
+                        </div>
+                        <div class="payment-item">
+                            <span class="label">Due Date:</span>
+                            <span class="value">April 1, 2024</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <form id="payment-form" class="payment-form">
+                    <div class="form-group">
+                        <label for="payment-amount">Payment Amount ($)</label>
+                        <input type="number" id="payment-amount" name="amount" min="1" step="0.01" value="125.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" name="cardNumber" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiry-date">Expiry Date</label>
+                            <input type="text" id="expiry-date" name="expiryDate" placeholder="MM/YY" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv" placeholder="123" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="card-name">Name on Card</label>
+                        <input type="text" id="card-name" name="cardName" placeholder="John Doe" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email-receipt">Email for Receipt</label>
+                        <input type="email" id="email-receipt" name="emailReceipt" placeholder="your@email.com" required>
+                    </div>
+                    
+                    <div class="payment-actions">
+                        <button type="button" class="btn-secondary" id="cancel-payment">Cancel</button>
+                        <button type="submit" class="btn-primary" id="process-payment">
+                            <i class="fas fa-lock"></i> Pay Securely
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer" role="contentinfo">
         <div class="footer-content">
@@ -1264,6 +1613,546 @@ body {
                 }
             `;
             document.head.appendChild(style);
+
+            // Payment Modal Functionality
+            const paymentModal = document.getElementById('payment-modal');
+            const payBillBtn = document.getElementById('pay-bill-btn');
+            const payNowBtn = document.getElementById('pay-now-btn');
+            const closeModalBtn = document.getElementById('close-payment-modal');
+            const cancelPaymentBtn = document.getElementById('cancel-payment');
+            const paymentForm = document.getElementById('payment-form');
+            const processPaymentBtn = document.getElementById('process-payment');
+
+            // Open payment modal
+            function openPaymentModal() {
+                paymentModal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                
+                // Pre-fill email if user is logged in
+                const userData = localStorage.getItem('user');
+                if (userData) {
+                    try {
+                        const user = JSON.parse(userData);
+                        const emailReceipt = document.getElementById('email-receipt');
+                        if (emailReceipt && user.email) {
+                            emailReceipt.value = user.email;
+                        }
+                        
+                        // Pre-fill card name if available
+                        const cardName = document.getElementById('card-name');
+                        if (cardName && user.firstName && user.lastName) {
+                            cardName.value = `${user.firstName} ${user.lastName}`;
+                        }
+                    } catch (error) {
+                        console.log('Error loading user data for payment form:', error);
+                    }
+                }
+            }
+
+            // Close payment modal
+            function closePaymentModal() {
+                paymentModal.classList.remove('show');
+                document.body.style.overflow = ''; // Restore scrolling
+                paymentForm.reset(); // Reset form
+            }
+
+            // Event listeners for opening modal
+            if (payBillBtn) {
+                payBillBtn.addEventListener('click', openPaymentModal);
+            }
+            
+            if (payNowBtn) {
+                payNowBtn.addEventListener('click', openPaymentModal);
+            }
+
+            // Mobile pay button event listener
+            const mobilePayBtn = document.getElementById('mobile-pay-btn');
+            if (mobilePayBtn) {
+                mobilePayBtn.addEventListener('click', openPaymentModal);
+            }
+
+            // Event listeners for closing modal
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closePaymentModal);
+            }
+            
+            if (cancelPaymentBtn) {
+                cancelPaymentBtn.addEventListener('click', closePaymentModal);
+            }
+
+            // Close modal when clicking outside
+            paymentModal.addEventListener('click', function(e) {
+                if (e.target === paymentModal) {
+                    closePaymentModal();
+                }
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && paymentModal.classList.contains('show')) {
+                    closePaymentModal();
+                }
+            });
+
+            // Handle payment form submission
+            if (paymentForm) {
+                paymentForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(paymentForm);
+                    const paymentData = {
+                        amount: formData.get('amount'),
+                        cardNumber: formData.get('cardNumber'),
+                        expiryDate: formData.get('expiryDate'),
+                        cvv: formData.get('cvv'),
+                        cardName: formData.get('cardName'),
+                        emailReceipt: formData.get('emailReceipt')
+                    };
+
+                    // Validate form data
+                    if (!validatePaymentForm(paymentData)) {
+                        return;
+                    }
+
+                    // Show loading state
+                    const originalText = processPaymentBtn.innerHTML;
+                    processPaymentBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                    processPaymentBtn.disabled = true;
+
+                    try {
+                        // Simulate payment processing (replace with actual payment gateway)
+                        await processPayment(paymentData);
+                        
+                        // Show success message
+                        showNotification('Payment processed successfully! Receipt sent to your email.', 'success');
+                        
+                        // Close modal
+                        closePaymentModal();
+                        
+                        // Update billing summary (in a real app, this would come from the server)
+                        updateBillingSummary();
+                        
+                    } catch (error) {
+                        console.error('Payment error:', error);
+                        showNotification('Payment failed. Please try again.', 'error');
+                    } finally {
+                        // Restore button state
+                        processPaymentBtn.innerHTML = originalText;
+                        processPaymentBtn.disabled = false;
+                    }
+                });
+            }
+
+            // Validate payment form
+            function validatePaymentForm(data) {
+                // Basic validation
+                if (!data.amount || data.amount <= 0) {
+                    showNotification('Please enter a valid payment amount.', 'error');
+                    return false;
+                }
+
+                if (!data.cardNumber || data.cardNumber.replace(/\s/g, '').length < 13) {
+                    showNotification('Please enter a valid card number.', 'error');
+                    return false;
+                }
+
+                if (!data.expiryDate || !/^\d{2}\/\d{2}$/.test(data.expiryDate)) {
+                    showNotification('Please enter a valid expiry date (MM/YY).', 'error');
+                    return false;
+                }
+
+                if (!data.cvv || data.cvv.length < 3) {
+                    showNotification('Please enter a valid CVV.', 'error');
+                    return false;
+                }
+
+                if (!data.cardName || data.cardName.trim().length < 2) {
+                    showNotification('Please enter the name on the card.', 'error');
+                    return false;
+                }
+
+                if (!data.emailReceipt || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.emailReceipt)) {
+                    showNotification('Please enter a valid email address for receipt.', 'error');
+                    return false;
+                }
+
+                return true;
+            }
+
+            // Process payment (simulated)
+            async function processPayment(paymentData) {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Simulate payment success (90% success rate for demo)
+                const success = Math.random() > 0.1;
+                
+                if (!success) {
+                    throw new Error('Payment declined by bank');
+                }
+
+                // In a real application, you would:
+                // 1. Send payment data to your payment processor (Stripe, PayPal, etc.)
+                // 2. Handle the response
+                // 3. Update the user's billing record in Firebase
+                // 4. Send confirmation email
+                
+                console.log('Payment processed:', paymentData);
+                
+                // Store payment record in localStorage for demo
+                const payments = JSON.parse(localStorage.getItem('payments') || '[]');
+                payments.push({
+                    id: Date.now(),
+                    amount: paymentData.amount,
+                    date: new Date().toISOString(),
+                    status: 'completed',
+                    email: paymentData.emailReceipt
+                });
+                localStorage.setItem('payments', JSON.stringify(payments));
+            }
+
+            // Update billing summary after payment
+            function updateBillingSummary() {
+                const currentBalanceElement = document.querySelector('.billing-summary .amount');
+                if (currentBalanceElement) {
+                    const currentAmount = parseFloat(currentBalanceElement.textContent.replace('$', ''));
+                    const paymentAmount = parseFloat(document.getElementById('payment-amount').value);
+                    const newBalance = Math.max(0, currentAmount - paymentAmount);
+                    currentBalanceElement.textContent = `$${newBalance.toFixed(2)}`;
+                }
+                
+                // Update payment summary in modal
+                const modalAmount = document.querySelector('.payment-summary .amount');
+                if (modalAmount) {
+                    modalAmount.textContent = `$${newBalance.toFixed(2)}`;
+                }
+            }
+
+            // Format card number input
+            const cardNumberInput = document.getElementById('card-number');
+            if (cardNumberInput) {
+                cardNumberInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\s/g, '');
+                    value = value.replace(/\D/g, '');
+                    value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+                    e.target.value = value.substring(0, 19);
+                });
+            }
+
+            // Format expiry date input
+            const expiryDateInput = document.getElementById('expiry-date');
+            if (expiryDateInput) {
+                expiryDateInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length >= 2) {
+                        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                    }
+                    e.target.value = value.substring(0, 5);
+                });
+            }
+
+            // Format CVV input
+            const cvvInput = document.getElementById('cvv');
+            if (cvvInput) {
+                cvvInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    e.target.value = value.substring(0, 4);
+                });
+            }
+        });
+    </script>
+
+    <!-- Payment Modal Script -->
+    <script>
+        // Payment Modal Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const paymentModal = document.getElementById('payment-modal');
+            const payBillBtn = document.getElementById('pay-bill-btn');
+            const payNowBtn = document.getElementById('pay-now-btn');
+            const closeModalBtn = document.getElementById('close-payment-modal');
+            const cancelPaymentBtn = document.getElementById('cancel-payment');
+            const paymentForm = document.getElementById('payment-form');
+            const processPaymentBtn = document.getElementById('process-payment');
+
+            // Open payment modal
+            function openPaymentModal() {
+                paymentModal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                
+                // Pre-fill email if user is logged in
+                const userData = localStorage.getItem('user');
+                if (userData) {
+                    try {
+                        const user = JSON.parse(userData);
+                        const emailReceipt = document.getElementById('email-receipt');
+                        if (emailReceipt && user.email) {
+                            emailReceipt.value = user.email;
+                        }
+                        
+                        // Pre-fill card name if available
+                        const cardName = document.getElementById('card-name');
+                        if (cardName && user.firstName && user.lastName) {
+                            cardName.value = `${user.firstName} ${user.lastName}`;
+                        }
+                    } catch (error) {
+                        console.log('Error loading user data for payment form:', error);
+                    }
+                }
+            }
+
+            // Close payment modal
+            function closePaymentModal() {
+                paymentModal.classList.remove('show');
+                document.body.style.overflow = ''; // Restore scrolling
+                paymentForm.reset(); // Reset form
+            }
+
+            // Event listeners for opening modal
+            if (payBillBtn) {
+                payBillBtn.addEventListener('click', openPaymentModal);
+            }
+            
+            if (payNowBtn) {
+                payNowBtn.addEventListener('click', openPaymentModal);
+            }
+
+            // Mobile pay button event listener
+            const mobilePayBtn = document.getElementById('mobile-pay-btn');
+            if (mobilePayBtn) {
+                mobilePayBtn.addEventListener('click', openPaymentModal);
+            }
+
+            // Event listeners for closing modal
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closePaymentModal);
+            }
+            
+            if (cancelPaymentBtn) {
+                cancelPaymentBtn.addEventListener('click', closePaymentModal);
+            }
+
+            // Close modal when clicking outside
+            paymentModal.addEventListener('click', function(e) {
+                if (e.target === paymentModal) {
+                    closePaymentModal();
+                }
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && paymentModal.classList.contains('show')) {
+                    closePaymentModal();
+                }
+            });
+
+            // Handle payment form submission
+            if (paymentForm) {
+                paymentForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(paymentForm);
+                    const paymentData = {
+                        amount: formData.get('amount'),
+                        cardNumber: formData.get('cardNumber'),
+                        expiryDate: formData.get('expiryDate'),
+                        cvv: formData.get('cvv'),
+                        cardName: formData.get('cardName'),
+                        emailReceipt: formData.get('emailReceipt')
+                    };
+
+                    // Validate form data
+                    if (!validatePaymentForm(paymentData)) {
+                        return;
+                    }
+
+                    // Show loading state
+                    const originalText = processPaymentBtn.innerHTML;
+                    processPaymentBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                    processPaymentBtn.disabled = true;
+
+                    try {
+                        // Simulate payment processing (replace with actual payment gateway)
+                        await processPayment(paymentData);
+                        
+                        // Show success message
+                        showNotification('Payment processed successfully! Receipt sent to your email.', 'success');
+                        
+                        // Close modal
+                        closePaymentModal();
+                        
+                        // Update billing summary (in a real app, this would come from the server)
+                        updateBillingSummary();
+                        
+                    } catch (error) {
+                        console.error('Payment error:', error);
+                        showNotification('Payment failed. Please try again.', 'error');
+                    } finally {
+                        // Restore button state
+                        processPaymentBtn.innerHTML = originalText;
+                        processPaymentBtn.disabled = false;
+                    }
+                });
+            }
+
+            // Validate payment form
+            function validatePaymentForm(data) {
+                // Basic validation
+                if (!data.amount || data.amount <= 0) {
+                    showNotification('Please enter a valid payment amount.', 'error');
+                    return false;
+                }
+
+                if (!data.cardNumber || data.cardNumber.replace(/\s/g, '').length < 13) {
+                    showNotification('Please enter a valid card number.', 'error');
+                    return false;
+                }
+
+                if (!data.expiryDate || !/^\d{2}\/\d{2}$/.test(data.expiryDate)) {
+                    showNotification('Please enter a valid expiry date (MM/YY).', 'error');
+                    return false;
+                }
+
+                if (!data.cvv || data.cvv.length < 3) {
+                    showNotification('Please enter a valid CVV.', 'error');
+                    return false;
+                }
+
+                if (!data.cardName || data.cardName.trim().length < 2) {
+                    showNotification('Please enter the name on the card.', 'error');
+                    return false;
+                }
+
+                if (!data.emailReceipt || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.emailReceipt)) {
+                    showNotification('Please enter a valid email address for receipt.', 'error');
+                    return false;
+                }
+
+                return true;
+            }
+
+            // Process payment (simulated)
+            async function processPayment(paymentData) {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Simulate payment success (90% success rate for demo)
+                const success = Math.random() > 0.1;
+                
+                if (!success) {
+                    throw new Error('Payment declined by bank');
+                }
+
+                // In a real application, you would:
+                // 1. Send payment data to your payment processor (Stripe, PayPal, etc.)
+                // 2. Handle the response
+                // 3. Update the user's billing record in Firebase
+                // 4. Send confirmation email
+                
+                console.log('Payment processed:', paymentData);
+                
+                // Store payment record in localStorage for demo
+                const payments = JSON.parse(localStorage.getItem('payments') || '[]');
+                payments.push({
+                    id: Date.now(),
+                    amount: paymentData.amount,
+                    date: new Date().toISOString(),
+                    status: 'completed',
+                    email: paymentData.emailReceipt
+                });
+                localStorage.setItem('payments', JSON.stringify(payments));
+            }
+
+            // Update billing summary after payment
+            function updateBillingSummary() {
+                const currentBalanceElement = document.querySelector('.billing-summary .amount');
+                if (currentBalanceElement) {
+                    const currentAmount = parseFloat(currentBalanceElement.textContent.replace('$', ''));
+                    const paymentAmount = parseFloat(document.getElementById('payment-amount').value);
+                    const newBalance = Math.max(0, currentAmount - paymentAmount);
+                    currentBalanceElement.textContent = `$${newBalance.toFixed(2)}`;
+                }
+                
+                // Update payment summary in modal
+                const modalAmount = document.querySelector('.payment-summary .amount');
+                if (modalAmount) {
+                    modalAmount.textContent = `$${newBalance.toFixed(2)}`;
+                }
+            }
+
+            // Format card number input
+            const cardNumberInput = document.getElementById('card-number');
+            if (cardNumberInput) {
+                cardNumberInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\s/g, '');
+                    value = value.replace(/\D/g, '');
+                    value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+                    e.target.value = value.substring(0, 19);
+                });
+            }
+
+            // Format expiry date input
+            const expiryDateInput = document.getElementById('expiry-date');
+            if (expiryDateInput) {
+                expiryDateInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length >= 2) {
+                        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                    }
+                    e.target.value = value.substring(0, 5);
+                });
+            }
+
+            // Format CVV input
+            const cvvInput = document.getElementById('cvv');
+            if (cvvInput) {
+                cvvInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    e.target.value = value.substring(0, 4);
+                });
+            }
+
+            // Global notification function (if not already defined)
+            if (typeof showNotification === 'undefined') {
+                window.showNotification = function(message, type = 'info') {
+                    const notification = document.createElement('div');
+                    notification.className = `notification notification-${type}`;
+                    notification.innerHTML = `
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                        <span>${message}</span>
+                    `;
+                    
+                    // Add styles
+                    notification.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+                        color: white;
+                        padding: 1rem 1.5rem;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                        z-index: 10000;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        animation: slideIn 0.3s ease;
+                    `;
+                    
+                    document.body.appendChild(notification);
+                    
+                    // Remove after 3 seconds
+                    setTimeout(() => {
+                        notification.style.animation = 'slideOut 0.3s ease';
+                        setTimeout(() => {
+                            if (notification.parentNode) {
+                                notification.parentNode.removeChild(notification);
+                            }
+                        }, 300);
+                    }, 3000);
+                };
+            }
         });
     </script>
 
@@ -1271,7 +2160,7 @@ body {
   <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
   <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
   <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
-  <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
+  <button class="mobile-pay-btn" id="mobile-pay-btn" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></button>
   <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
   <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
   <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
