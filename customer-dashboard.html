@@ -1879,4 +1879,63 @@ body {
                     paypalButtons.render(paypalContainer);
                 } else {
                     // Fallback if PayPal SDK is not loaded
-                    paypalContainer.innerHTML = `
+                    paypalContainer.innerHTML = '<div style="text-align:center;padding:2rem;">PayPal is not available.</div>';
+                }
+            }
+
+            // Update openPaymentModal function to initialize PayPal
+            const originalOpenPaymentModal = openPaymentModal;
+            openPaymentModal = function() {
+                originalOpenPaymentModal();
+                
+                // Initialize PayPal buttons after modal is shown
+                setTimeout(() => {
+                    initializePayPalButtons();
+                }, 100);
+            };
+
+            // Update closePaymentModal function to clean up PayPal
+            const originalClosePaymentModal = closePaymentModal;
+            closePaymentModal = function() {
+                originalClosePaymentModal();
+                
+                // Clean up PayPal buttons
+                if (paypalButtons) {
+                    paypalButtons.close();
+                    paypalButtons = null;
+                }
+            };
+
+            // Handle payment amount changes
+            const amountInput = document.getElementById('payment-amount');
+            if (amountInput) {
+                amountInput.addEventListener('input', function() {
+                    // Re-initialize PayPal buttons with new amount
+                    if (document.getElementById('payment-modal').classList.contains('show')) {
+                        setTimeout(() => {
+                            initializePayPalButtons();
+                        }, 100);
+                    }
+                });
+            }
+
+            // Update billing summary after payment
+            function updateBillingSummary() {
+                const currentBalanceElement = document.querySelector('.billing-summary .amount');
+                if (currentBalanceElement) {
+                    const currentAmount = parseFloat(currentBalanceElement.textContent.replace('$', ''));
+                    const paymentAmount = parseFloat(document.getElementById('payment-amount').value);
+                    const newBalance = Math.max(0, currentAmount - paymentAmount);
+                    currentBalanceElement.textContent = `$${newBalance.toFixed(2)}`;
+                }
+                
+                // Update payment summary in modal
+                const modalAmount = document.querySelector('.payment-summary .amount');
+                if (modalAmount) {
+                    modalAmount.textContent = `$${newBalance.toFixed(2)}`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
