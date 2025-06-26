@@ -1,450 +1,116 @@
 <!DOCTYPE html>
-
-<html lang="en"><head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Schedule Maintenance - Holliday's Lawn &amp; Garden</title>
-<link href="assets/css/main.css" rel="stylesheet"/>
-<link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
-<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-<style>
- .maintenance-container {
- max-width: 1400px;
- margin: 2rem auto;
- padding: 2rem;
- }
- .maintenance-header {
- display: flex;
- justify-content: space-between;
- align-items: center;
- margin-bottom: 2rem;
- }
- .maintenance-title {
- font-size: 2rem;
- font-weight: 700;
- color: #2c5530;
- }
- .btn-add-maintenance {
- background: #4caf50;
- color: white;
- padding: 0.75rem 1.5rem;
- border-radius: 5px;
- cursor: pointer;
- border: none;
- font-weight: 600;
- display: flex;
- align-items: center;
- gap: 0.5rem;
- transition: background-color 0.3s ease;
- }
- .btn-add-maintenance:hover {
- background: #45a049;
- }
- .maintenance-calendar,
- .maintenance-list {
- background: white;
- border-radius: 8px;
- box-shadow: 0 2px 4px rgba(0,0,0,0.1);
- padding: 1.5rem;
- margin-bottom: 1.5rem;
- }
- 
- /* Calendar Styles */
- .calendar-header {
- display: flex;
- justify-content: space-between;
- align-items: center;
- margin-bottom: 1.5rem;
- flex-wrap: wrap;
- gap: 1rem;
- }
-
- .calendar-controls {
- display: flex;
- align-items: center;
- gap: 1rem;
- }
-
- .btn-calendar-nav {
- background: #4caf50;
- color: white;
- border: none;
- border-radius: 50%;
- width: 40px;
- height: 40px;
- cursor: pointer;
- display: flex;
- align-items: center;
- justify-content: center;
- transition: background-color 0.2s;
- }
-
- .btn-calendar-nav:hover {
- background: #45a049;
- }
-
- .current-month {
- font-size: 1.2rem;
- font-weight: 600;
- color: #2c5530;
- min-width: 120px;
- text-align: center;
- }
-
- .calendar-container {
- border: 1px solid #e0e0e0;
- border-radius: 8px;
- overflow: hidden;
- }
-
- .calendar-weekdays {
- display: grid;
- grid-template-columns: repeat(7, 1fr);
- background: #f5f5f5;
- border-bottom: 1px solid #e0e0e0;
- }
-
- .weekday {
- padding: 0.75rem;
- text-align: center;
- font-weight: 600;
- color: #666;
- font-size: 0.9rem;
- }
-
- .calendar-grid {
- display: grid;
- grid-template-columns: repeat(7, 1fr);
- }
-
- .calendar-day {
- min-height: 80px;
- border-right: 1px solid #e0e0e0;
- border-bottom: 1px solid #e0e0e0;
- padding: 0.5rem;
- position: relative;
- background: white;
- transition: background-color 0.2s;
- }
-
- .calendar-day:hover {
- background: #f9f9f9;
- }
-
- .calendar-day.other-month {
- background: #fafafa;
- color: #ccc;
- }
-
- .calendar-day.today {
- background: #e8f5e8;
- border: 2px solid #4caf50;
- }
-
- .day-number {
- font-weight: 600;
- margin-bottom: 0.25rem;
- color: #333;
- }
-
- .calendar-day.other-month .day-number {
- color: #ccc;
- }
-
- .maintenance-tasks {
- display: flex;
- flex-direction: column;
- gap: 0.25rem;
- }
-
- .task-indicator {
- font-size: 0.7rem;
- padding: 0.1rem 0.3rem;
- border-radius: 3px;
- color: white;
- font-weight: 500;
- cursor: pointer;
- white-space: nowrap;
- overflow: hidden;
- text-overflow: ellipsis;
- max-width: 100%;
- }
-
- .task-indicator.scheduled {
- background: #2196f3;
- }
-
- .task-indicator.in-progress {
- background: #ff9800;
- }
-
- .task-indicator.completed {
- background: #4caf50;
- }
-
- .calendar-legend {
- display: flex;
- justify-content: center;
- gap: 2rem;
- margin-top: 1rem;
- flex-wrap: wrap;
- }
-
- .legend-item {
- display: flex;
- align-items: center;
- gap: 0.5rem;
- font-size: 0.9rem;
- }
-
- .legend-color {
- width: 16px;
- height: 16px;
- border-radius: 3px;
- }
-
- .legend-color.scheduled {
- background: #2196f3;
- }
-
- .legend-color.in-progress {
- background: #ff9800;
- }
-
- .legend-color.completed {
- background: #4caf50;
- }
-
- /* Task Details Modal */
- .task-details-modal {
- display: none;
- position: fixed;
- z-index: 1000;
- left: 0;
- top: 0;
- width: 100%;
- height: 100%;
- background-color: rgba(0,0,0,0.5);
- }
-
- .task-details-content {
- background-color: white;
- margin: 5% auto;
- padding: 2rem;
- border-radius: 8px;
- width: 90%;
- max-width: 500px;
- position: relative;
- }
-
- .task-details-header {
- display: flex;
- justify-content: space-between;
- align-items: center;
- margin-bottom: 1rem;
- }
-
- .close-task-details {
- font-size: 1.5rem;
- cursor: pointer;
- color: #666;
- }
-
- .close-task-details:hover {
- color: #333;
- }
-
- .task-detail-item {
- margin-bottom: 0.75rem;
- }
-
- .task-detail-label {
- font-weight: 600;
- color: #666;
- margin-bottom: 0.25rem;
- }
-
- .task-detail-value {
- color: #333;
- }
-
- .task-actions {
- display: flex;
- gap: 0.5rem;
- margin-top: 1rem;
- }
-
- .btn-task-action {
- padding: 0.5rem 1rem;
- border: none;
- border-radius: 4px;
- cursor: pointer;
- font-size: 0.9rem;
- transition: background-color 0.2s;
- }
-
- .btn-edit-task {
- background: #2196f3;
- color: white;
- }
-
- .btn-edit-task:hover {
- background: #1976d2;
- }
-
- .btn-delete-task {
- background: #f44336;
- color: white;
- }
-
- .btn-delete-task:hover {
- background: #d32f2f;
- }
- 
- /* Mobile responsive styles */
- @media (max-width: 768px) {
- .maintenance-container {
- padding: 1rem;
- }
- 
- .maintenance-title {
- font-size: 1.8rem;
- }
- 
- .maintenance-calendar,
- .maintenance-list {
- padding: 1.5rem;
- margin-bottom: 1.5rem;
- }
-
- /* Mobile Calendar Styles */
- .calendar-header {
- flex-direction: column;
- align-items: flex-start;
- gap: 1rem;
- }
-
- .calendar-controls {
- width: 100%;
- justify-content: space-between;
- }
-
- .current-month {
- font-size: 1.1rem;
- min-width: auto;
- }
-
- .calendar-day {
- min-height: 60px;
- padding: 0.25rem;
- }
-
- .day-number {
- font-size: 0.9rem;
- }
-
- .task-indicator {
- font-size: 0.6rem;
- padding: 0.05rem 0.2rem;
- }
-
- .calendar-legend {
- gap: 1rem;
- }
-
- .legend-item {
- font-size: 0.8rem;
- }
-
- .task-details-content {
- margin: 10% auto;
- padding: 1.5rem;
- width: 95%;
- }
- }
- 
- @media (max-width: 480px) {
- .maintenance-container {
- padding: 0.5rem;
- }
- 
- .maintenance-title {
- font-size: 1.6rem;
- }
- 
- .maintenance-calendar,
- .maintenance-list {
- padding: 1rem;
- }
-
- /* Small Mobile Calendar Styles */
- .calendar-day {
- min-height: 50px;
- padding: 0.2rem;
- }
-
- .day-number {
- font-size: 0.8rem;
- }
-
- .task-indicator {
- font-size: 0.5rem;
- padding: 0.05rem 0.15rem;
- }
-
- .weekday {
- padding: 0.5rem 0.25rem;
- font-size: 0.8rem;
- }
-
- .calendar-legend {
- flex-direction: column;
- align-items: center;
- gap: 0.5rem;
- }
-
- .task-details-content {
- margin: 5% auto;
- padding: 1rem;
- width: 98%;
- }
-
- .task-actions {
- flex-direction: column;
- gap: 0.5rem;
- }
-
- .btn-task-action {
- width: 100%;
- }
- }
- 
-    /* Comprehensive button styles - override any existing styles */
-    button, 
-    input[type="submit"], 
-    input[type="button"],
-    .btn,
-    .btn-primary,
-    .btn-secondary,
-    .btn-login,
-    .btn-customer,
-    .btn-admin,
-    .cta-button,
-    .cta-button.primary,
-    .cta-button.secondary {
-        font-family: 'Montserrat', sans-serif !important;
-        border-radius: 8px !important;
-        border: none !important;
-        cursor: pointer !important;
-        transition: all 0.3s ease !important;
-        box-sizing: border-box !important;
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Schedule Maintenance - Holliday's Lawn & Garden</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/main.min.css">
+  <link rel="stylesheet" href="assets/css/customer-dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    .schedule-form-container {
+      max-width: 500px;
+      margin: 3rem auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      padding: 2rem;
     }
-    
-    /* Specific button types */
-    .btn-login {
-        border-radius: 4px !important;
+    .schedule-form h1 {
+      text-align: center;
+      color: #2e7d32;
+      margin-bottom: 1.5rem;
     }
-    
-</script>
-</body></html>
+    .schedule-form label {
+      font-weight: 500;
+      margin-top: 1rem;
+      display: block;
+      color: #333;
+    }
+    .schedule-form input, .schedule-form select, .schedule-form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .schedule-form button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #2e7d32;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .schedule-form button:hover {
+      background: #1b5e20;
+    }
+    .success-message {
+      color: #4caf50;
+      text-align: center;
+      margin-bottom: 1rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header (reuse your site header here) -->
+  <header class="main-header">
+    <!-- ...header content... -->
+  </header>
+
+  <main>
+    <div class="schedule-form-container">
+      <form class="schedule-form" id="maintenanceForm">
+        <h1>Schedule Maintenance</h1>
+        <div class="success-message" id="successMessage">Your request has been submitted!</div>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="service">Service Type</label>
+        <select id="service" name="service" required>
+          <option value="">Select a service</option>
+          <option value="lawn-mowing">Lawn Mowing</option>
+          <option value="fertilization">Fertilization</option>
+          <option value="spring-cleanup">Spring Cleanup</option>
+          <option value="other">Other</option>
+        </select>
+
+        <label for="date">Preferred Date</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="details">Additional Details</label>
+        <textarea id="details" name="details" rows="3" placeholder="Let us know anything special..."></textarea>
+
+        <button type="submit">Submit Request</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer (reuse your site footer here) -->
+  <footer class="footer" role="contentinfo">
+    <!-- ...footer content... -->
+  </footer>
+
+  <script>
+    // Simple form handler (replace with real backend integration as needed)
+    document.getElementById('maintenanceForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('successMessage').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('successMessage').style.display = 'none';
+        e.target.reset();
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
