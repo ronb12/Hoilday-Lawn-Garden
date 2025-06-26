@@ -67,8 +67,13 @@ function createInstallButton() {
   // Check if we're on mobile
   const isMobile = window.innerWidth <= 768;
   
-  // Only show install button on mobile
-  if (!isMobile) {
+  // Check if we're on the index page
+  const isIndexPage = window.location.pathname.endsWith('index.html') || 
+                     window.location.pathname.endsWith('/') || 
+                     window.location.pathname === '';
+  
+  // Only show install button on mobile and index page
+  if (!isMobile || !isIndexPage) {
     return;
   }
 
