@@ -1009,60 +1009,165 @@ body {
             <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
         </div>
     </footer>
-    <script>
-        const yearElement = document.getElementById('current-year');
-        if (yearElement) {
-            yearElement.textContent = new Date().getFullYear();
-        }
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+        import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: 'AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw',
+            authDomain: 'holiday-lawn-and-garden.firebaseapp.com',
+            projectId: 'holiday-lawn-and-garden',
+            storageBucket: 'holiday-lawn-and-garden.firebasestorage.app',
+            messagingSenderId: '135322230444',
+            appId: '1:135322230444:web:1a487b25a48aae07368909',
+            measurementId: 'G-KD6TBWR4ZT',
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
 
         // Dashboard functionality
         document.addEventListener('DOMContentLoaded', function() {
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+
+            // Check authentication state
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    // User is signed in, load their data from Firebase
+                    await loadUserDataFromFirebase(user.uid);
+                } else {
+                    // User is not signed in, try localStorage as fallback
+                    loadUserDataFromLocalStorage();
+                }
+            });
+
             // Logout functionality
             const logoutBtn = document.getElementById('logout-btn');
             if (logoutBtn) {
-                logoutBtn.addEventListener('click', function() {
+                logoutBtn.addEventListener('click', async function() {
                     if (confirm('Are you sure you want to logout?')) {
-                        // Clear any stored user data
-                        localStorage.removeItem('user');
-                        localStorage.removeItem('userToken');
-                        sessionStorage.clear();
-                        
-                        // Redirect to login page
-                        window.location.href = 'login.html';
+                        try {
+                            await signOut(auth);
+                            // Clear any stored user data
+                            localStorage.removeItem('user');
+                            localStorage.removeItem('userToken');
+                            sessionStorage.clear();
+                            
+                            // Redirect to login page
+                            window.location.href = 'login.html';
+                        } catch (error) {
+                            console.error('Error signing out:', error);
+                            // Fallback logout
+                            localStorage.removeItem('user');
+                            localStorage.removeItem('userToken');
+                            sessionStorage.clear();
+                            window.location.href = 'login.html';
+                        }
                     }
                 });
             }
 
-            // Load user data from localStorage if available
-            const userData = localStorage.getItem('user');
-            if (userData) {
+            // Load user data from Firebase
+            async function loadUserDataFromFirebase(userId) {
                 try {
-                    const user = JSON.parse(userData);
-                    const customerName = document.getElementById('customer-name');
-                    const customerEmail = document.getElementById('customer-email');
+                    const userDocRef = doc(db, 'users', userId);
+                    const userDoc = await getDoc(userDocRef);
                     
-                    // Display full name from firstName and lastName
-                    if (customerName && user.firstName && user.lastName) {
-                        customerName.textContent = `${user.firstName} ${user.lastName}`;
-                    } else if (customerName && user.firstName) {
-                        customerName.textContent = user.firstName;
-                    } else if (customerName && user.name) {
-                        customerName.textContent = user.name;
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        displayUserData(userData);
+                        
+                        // Also load service history and billing data
+                        await loadServiceHistory(userId);
+                        await loadBillingData(userId);
+                    } else {
+                        console.log('No user document found, using localStorage fallback');
+                        loadUserDataFromLocalStorage();
                     }
-                    
-                    // Display email
-                    if (customerEmail && user.email) {
-                        customerEmail.textContent = user.email;
-                    }
-                    
-                    // Show welcome message with user's name
-                    const welcomeTitle = document.querySelector('.welcome-section h1');
-                    if (welcomeTitle && user.firstName) {
-                        welcomeTitle.textContent = `Welcome, ${user.firstName}!`;
-                    }
-                    
                 } catch (error) {
-                    console.log('Error loading user data:', error);
+                    console.error('Error loading user data from Firebase:', error);
+                    loadUserDataFromLocalStorage();
+                }
+            }
+
+            // Load user data from localStorage (fallback)
+            function loadUserDataFromLocalStorage() {
+                const userData = localStorage.getItem('user');
+                if (userData) {
+                    try {
+                        const user = JSON.parse(userData);
+                        displayUserData(user);
+                    } catch (error) {
+                        console.log('Error loading user data from localStorage:', error);
+                    }
+                }
+            }
+
+            // Display user data in the dashboard
+            function displayUserData(user) {
+                const customerName = document.getElementById('customer-name');
+                const customerEmail = document.getElementById('customer-email');
+                
+                // Display full name from firstName and lastName
+                if (customerName && user.firstName && user.lastName) {
+                    customerName.textContent = `${user.firstName} ${user.lastName}`;
+                } else if (customerName && user.firstName) {
+                    customerName.textContent = user.firstName;
+                } else if (customerName && user.name) {
+                    customerName.textContent = user.name;
+                }
+                
+                // Display email
+                if (customerEmail && user.email) {
+                    customerEmail.textContent = user.email;
+                }
+                
+                // Show welcome message with user's name
+                const welcomeTitle = document.querySelector('.welcome-section h1');
+                if (welcomeTitle && user.firstName) {
+                    welcomeTitle.textContent = `Welcome, ${user.firstName}!`;
+                }
+            }
+
+            // Load service history from Firebase
+            async function loadServiceHistory(userId) {
+                try {
+                    const servicesRef = collection(db, 'services');
+                    const q = query(servicesRef, where('userId', '==', userId));
+                    const querySnapshot = await getDocs(q);
+                    
+                    const serviceList = document.querySelector('.service-list');
+                    if (serviceList && !querySnapshot.empty) {
+                        // Update service list with real data
+                        // This would replace the static service items
+                        console.log('Service history loaded from Firebase');
+                    }
+                } catch (error) {
+                    console.error('Error loading service history:', error);
+                }
+            }
+
+            // Load billing data from Firebase
+            async function loadBillingData(userId) {
+                try {
+                    const billingRef = collection(db, 'billing');
+                    const q = query(billingRef, where('userId', '==', userId));
+                    const querySnapshot = await getDocs(q);
+                    
+                    if (!querySnapshot.empty) {
+                        // Update billing summary with real data
+                        console.log('Billing data loaded from Firebase');
+                    }
+                } catch (error) {
+                    console.error('Error loading billing data:', error);
                 }
             }
 
@@ -1159,9 +1264,6 @@ body {
                 }
             `;
             document.head.appendChild(style);
-
-            // Example usage of notification
-            // showNotification('Welcome to your dashboard!', 'success');
         });
     </script>
 
