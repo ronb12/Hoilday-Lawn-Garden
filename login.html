@@ -1,502 +1,230 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
- <meta charset="utf-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Login - Holliday's Lawn & Garden</title><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" /><link href="assets/css/hero.css" rel="stylesheet" /><link href="assets/css/main.min.css" rel="stylesheet" /><link href="assets/css/mobile-enhancements.css" rel="stylesheet" /><link href="assets/css/components/footer.css" rel="stylesheet" />
+<style>
+/* Login Form Styles */
+.login-section {
+    padding: 4rem 0;
+    background: #f8f9fa;
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+}
 
- <!-- SEO Meta Tags -->
- <title>Login - Holliday's Lawn &amp; Garden</title>
- <meta name="description" content="Sign in to your Holliday's Lawn &amp; Garden account to access your services, schedule appointments, and manage your account." />
- <meta name="keywords" content="login, customer portal, lawn care login, garden services login" />
- <meta name="author" content="Holliday's Lawn &amp; Garden" />
- <meta name="robots" content="index, follow" />
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+}
 
- <!-- Open Graph / Twitter -->
- <meta property="og:type" content="website" />
- <meta property="og:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/login.html" />
- <meta property="og:title" content="Login - Holliday's Lawn &amp; Garden" />
- <meta property="og:description" content="Sign in to your account to access your services and manage your account." />
- <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
- <meta property="og:site_name" content="Holliday's Lawn &amp; Garden" />
+.login-form {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
+}
 
- <meta name="twitter:card" content="summary_large_image" />
- <meta name="twitter:url" content="https://ronb12.github.io/Holliday-Lawn-Garden/login.html" />
- <meta name="twitter:title" content="Login - Holliday's Lawn &amp; Garden" />
- <meta name="twitter:description" content="Sign in to your account to access your services and manage your account." />
- <meta name="twitter:image" content="assets/images/hollidays-logo.optimized-1280.png" />
+.login-form h2 {
+    color: #2e7d32;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
 
- <!-- Performance & Fonts -->
- <link rel="preconnect" href="https://fonts.googleapis.com" />
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
- <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+.login-form > p {
+    color: #666;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
 
- <!-- Icon Stylesheet -->
- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+.form-group {
+    margin-bottom: 1.5rem;
+}
 
- <!-- Stylesheets -->
- <link href="assets/css/hero.css" rel="stylesheet" />
- <link href="assets/css/main.min.css" rel="stylesheet" />
- <link href="assets/css/mobile-enhancements.css" rel="stylesheet" />
-<link href="login-styles.css" rel="stylesheet" />
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
 
- <!-- Favicons & Manifest -->
- <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
- <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
- <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
- <link rel="manifest" href="manifest.json" />
- <link rel="mask-icon" color="#5bbad5" href="assets/images/favicon/safari-pinned-tab.svg" />
- <meta name="msapplication-TileColor" content="#2e7d32" />
- <meta name="theme-color" content="#2e7d32" />
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
 
- <!-- Updated CSP -->
- <meta http-equiv="Content-Security-Policy" content="
- default-src 'self';
- script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.gstatic.com https://www.googletagmanager.com https://apis.google.com;
- style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
- font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
- img-src 'self' data: https:;
- connect-src 'self' https://www.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://firebase.googleapis.com https://firebaseinstallations.googleapis.com https://analytics.google.com https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://stats.g.doubleclick.net https://accounts.google.com;
- frame-src 'self' https://accounts.google.com https://holiday-lawn-and-garden.firebaseapp.com;
- " />
+.form-group input:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
 
- <!-- Login Page Specific Styles -->
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
 
-</head>
-<body>
-    <!-- Header -->
-    <header class="main-header" role="banner">
-        <div class="logo">
-            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" />
-        </div>
-        <nav id="nav-menu" role="navigation">
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="education.html">Education</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-            </ul>
-            <div class="login-buttons">
-                <a href="login.html" class="btn-login btn-customer">
-                    <i class="fas fa-user"></i>
-                    Customer Login
-                </a>
-                <a href="admin-login.html" class="btn-login btn-admin">
-                    <i class="fas fa-cog"></i>
-                    Admin Login
-                </a>
-            </div>
-        </nav>
-    </header>
-    <!-- Main Content -->
-    <main>
-        <!-- Login Section -->
-        <section class="login-section">
-            <div class="container">
-                <div class="login-container">
-                    <div class="login-form">
-                        <h2>Login</h2>
-                        <p>Welcome back! Please sign in to your account.</p>
-                        
-                        <form id="loginForm">
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" id="password" name="password" required>
-                            </div>
-                            
-                            <div class="form-options">
-                                <label class="checkbox-container">
-                                    <input type="checkbox" name="remember">
-                                    <span>Remember me</span>
-                                </label>
-                                <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
-                            </div>
-                            
-                            <button type="submit" class="btn-submit">Sign In</button>
-                        </form>
-                        
-                        <div class="login-footer">
-                            <p>Don't have an account? <a href="create-account.html">Sign up here</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Login</h1>
-                <p>Access your account to manage your lawn care services</p>
-            </div>
-        </section>
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+    cursor: pointer;
+}
 
-        <!-- Login Form Section -->
-        <section class="login-section">
-            <div class="container">
-                <div class="login-container">
-                    <div class="login-form">
-                        <h2>Sign In</h2>
-                        <p>Welcome back! Please sign in to your account.</p>
-                        
-                        <form id="loginForm" class="form">
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" required placeholder="Enter your email">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" id="password" name="password" required placeholder="Enter your password">
-                            </div>
-                            
-                            <div class="form-options">
-                                <label class="checkbox-container">
-                                    <input type="checkbox" name="remember">
-                                    <span class="checkmark"></span>
-                                    Remember me
-                                </label>
-                                <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
-                            </div>
-                            
-                            <button type="submit" class="btn-submit">Sign In</button>
-                        </form>
-                        
-                        <div class="login-footer">
-                            <p>Don't have an account? <a href="register.html">Sign up here</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+.checkbox-container input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
 
-    <footer class="footer" role="contentinfo">
-        <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h3>Contact Us</h3>
-                    <div class="footer-contact">
-                        <span class="footer-owner">Karl Holliday</span>
-                        <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
-                        <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="education.html">Education</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Customer Portal</h3>
-                    <ul>
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="register.html">Register</a></li>
-                        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-                        <li><a href="customer-dashboard.html">Dashboard</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Legal</h3>
-                    <ul>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms.html">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
-        </div>
-    </footer>
-    <script>
-        const yearElement = document.getElementById('current-year');
-        if (yearElement) {
-            yearElement.textContent = new Date().getFullYear();
-        }
+.forgot-link {
+    color: #2e7d32;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
 
-        // Handle login form submission
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Basic validation
-            if (!email || !password) {
-                alert('Please fill in all required fields.');
-                return;
-            }
-            
-            // Show success message (replace with actual authentication)
-            alert('Login functionality will be implemented with backend integration.');
-            
-            // Reset form
-            this.reset();
-        });
-    </script>
+.forgot-link:hover {
+    text-decoration: underline;
+}
 
-<nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
-  <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
-  <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
-  <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
-  <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
-  <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
-  <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
-  <a href="login.html" aria-label="Login" class="active"><i class="fas fa-user"></i><span>Login</span></a>
-</nav>
+.btn-submit {
+    width: 100%;
+    padding: 0.875rem;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-    /* Mobile Tab Bar - Hide on Desktop */
-    @media (min-width: 769px) {
-        .mobile-tab-bar {
-            display: none !important;
-        }
-    }
+.btn-submit:hover {
+    background: #1b5e20;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
 
-    /* Mobile Tab Bar Styles */
-    .mobile-tab-bar {
-        display: none;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #fff;
-        border-top: 1px solid #ddd;
-        padding: 0.5rem 0;
-        z-index: 1000;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
-    }
+.login-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e0e0e0;
+}
 
-    .mobile-tab-bar a {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-decoration: none;
-        color: #666;
-        font-size: 0.8rem;
-        padding: 0.5rem;
-        border-radius: 8px;
-        transition: all 0.2s;
-        flex: 1;
-    }
+.login-footer p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
 
-    .mobile-tab-bar a.active, .mobile-tab-bar a:hover {
-        color: #2e7d32;
-        background: #e8f5e9;
-    }
+.login-footer a {
+    color: #2e7d32;
+    text-decoration: none;
+    font-weight: 500;
+}
 
-    .mobile-tab-bar i {
-        font-size: 1.2rem;
-        margin-bottom: 0.2rem;
-    }
+.login-footer a:hover {
+    text-decoration: underline;
+}
 
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-        .nav-links {
-            display: none !important;
-        }
-        
-        .mobile-tab-bar {
-            display: flex !important;
-            justify-content: space-around;
-        }
-        
-        body {
-            padding-bottom: 70px;
-        }
-    }
+/* Footer fixes */
+.footer {
+    background-color: #2e7d32 !important;
+    color: #fff !important;
+    padding: 2rem 0 !important;
+    margin-top: 3rem !important;
+}
 
-    /* Login Form Styles */
+.footer-content {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 1rem !important;
+}
+
+.footer-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+    gap: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+.footer-section h3 {
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 1rem !important;
+}
+
+.footer-section ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem !important;
+}
+
+.footer-section ul li a,
+.footer-section ul li i {
+    color: #fff !important;
+    text-decoration: none !important;
+    opacity: 0.9 !important;
+    transition: opacity 0.3s ease !important;
+}
+
+.footer-section ul li a:hover {
+    opacity: 1 !important;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    padding-top: 1.5rem !important;
+    text-align: center !important;
+}
+
+.footer-bottom p {
+    color: #fff !important;
+    opacity: 0.7 !important;
+    margin: 0 !important;
+    font-size: 0.875rem !important;
+}
+
+@media (max-width: 768px) {
     .login-section {
-        padding: 4rem 0;
-        background: #f8f9fa;
-        min-height: calc(100vh - 70px);
-        display: flex;
-        align-items: center;
+        padding: 2rem 1rem;
     }
-
-    .login-container {
-        max-width: 400px;
-        margin: 0 auto;
-        width: 100%;
-    }
-
+    
     .login-form {
-        background: white;
-        padding: 2.5rem;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        border: 1px solid #e0e0e0;
+        padding: 2rem;
     }
-
-    .login-form h2 {
-        color: #2e7d32;
-        font-size: 1.8rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        text-align: center;
-    }
-
-    .login-form > p {
-        color: #666;
-        text-align: center;
-        margin-bottom: 2rem;
-        font-size: 0.95rem;
-    }
-
-    .form-group {
-        margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: #333;
-        font-weight: 500;
-        font-size: 0.9rem;
-    }
-
-    .form-group input {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        font-size: 1rem;
-        transition: border-color 0.3s ease;
-        box-sizing: border-box;
-    }
-
-    .form-group input:focus {
-        outline: none;
-        border-color: #2e7d32;
-        box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
-    }
-
+    
     .form-options {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-        flex-wrap: wrap;
-        gap: 0.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
     }
-
-    .checkbox-container {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.9rem;
-        color: #666;
-        cursor: pointer;
+    
+    .footer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+        text-align: center !important;
     }
-
-    .checkbox-container input[type="checkbox"] {
-        width: auto;
-        margin: 0;
-    }
-
-    .forgot-link {
-        color: #2e7d32;
-        text-decoration: none;
-        font-size: 0.9rem;
-        font-weight: 500;
-    }
-
-    .forgot-link:hover {
-        text-decoration: underline;
-    }
-
-    .btn-submit {
-        width: 100%;
-        padding: 0.875rem;
-        background: #2e7d32;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .btn-submit:hover {
-        background: #1b5e20;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
-    }
-
-    .login-footer {
-        text-align: center;
-        margin-top: 1.5rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid #e0e0e0;
-    }
-
-    .login-footer p {
-        color: #666;
-        font-size: 0.9rem;
-        margin: 0;
-    }
-
-    .login-footer a {
-        color: #2e7d32;
-        text-decoration: none;
-        font-weight: 500;
-    }
-
-    .login-footer a:hover {
-        text-decoration: underline;
-    }
-
-    /* Mobile responsive adjustments */
-    @media (max-width: 768px) {
-        .login-section {
-            padding: 2rem 1rem;
-        }
-
-        .login-form {
-            padding: 2rem;
-        }
-
-        .form-options {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-    }
-
-    <script>
-        // Login form handling
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Basic validation
-            if (!email || !password) {
-                alert('Please fill in all fields');
-                return;
-            }
-            
-            // Here you would typically send the data to your backend
-            console.log('Login attempt:', { email, password });
-            
-            // For demo purposes, redirect to customer dashboard
-            // In a real application, you would validate credentials first
-            window.location.href = 'customer-dashboard.html';
-        });
-    </script>
-</body>
-</body>
-</html>
+}
+</style>
+</head><body><header class="main-header"><div class="logo"><img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" /></div><nav id="nav-menu"><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="education.html">Education</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li><li><a href="pay-your-bill.html">Pay Your Bill</a></li></ul><div class="login-buttons"><a href="login.html" class="btn-login btn-customer"><i class="fas fa-user"></i>Customer Login</a><a href="admin-login.html" class="btn-login btn-admin"><i class="fas fa-cog"></i>Admin Login</a></div></nav></header><main><section class="login-section"><div class="container"><div class="login-container"><div class="login-form"><h2>Login</h2><p>Welcome back! Please sign in to your account.</p><form id="loginForm"><div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" required placeholder="Enter your email"></div><div class="form-group"><label for="password">Password</label><input type="password" id="password" name="password" required placeholder="Enter your password"></div><div class="form-options"><label class="checkbox-container"><input type="checkbox" name="remember"><span>Remember me</span></label><a href="forgot-password.html" class="forgot-link">Forgot Password?</a></div><button type="submit" class="btn-submit">Sign In</button></form><div class="login-footer"><p>Don't have an account? <a href="register.html">Sign up here</a></p></div></div></div></div></section></main><footer class="footer"><div class="footer-content"><div class="footer-grid"><div class="footer-section"><h3>Contact Us</h3><div class="footer-contact"><span class="footer-owner">Karl Holliday</span><a href="tel:+15047171887"><i class="fas fa-phone"></i> (504) 717‑1887</a><a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope"></i> 7holliday@gmail.com</a></div></div><div class="footer-section"><h3>Quick Links</h3><ul><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="education.html">Education</a></li><li><a href="contact.html">Contact</a></li></ul></div><div class="footer-section"><h3>Customer Portal</h3><ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li><li><a href="pay-your-bill.html">Pay Your Bill</a></li><li><a href="customer-dashboard.html">Dashboard</a></li></ul></div><div class="footer-section"><h3>Legal</h3><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li></ul></div></div></div><div class="footer-bottom"><p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p></div></footer><script src="assets/js/main.js"></script><script>const yearElement = document.getElementById("current-year");if(yearElement){yearElement.textContent = new Date().getFullYear();}document.getElementById("loginForm").addEventListener("submit", function(e) {e.preventDefault();const email = document.getElementById("email").value;const password = document.getElementById("password").value;if (!email || !password) {alert("Please fill in all required fields.");return;}alert("Login functionality will be implemented with backend integration.");this.reset();});</script></body></html>
