@@ -17,8 +17,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <!-- Styles -->
-    <link href="assets/css/hero.css?v=1.0.7" rel="stylesheet">
-    <link href="assets/css/components/payment.css" rel="stylesheet">
+    <link href="assets/css/hero.css?v=1.0.8" rel="stylesheet">
+    <link href="assets/css/components/payment.css?v=1.0.1" rel="stylesheet">
     
     <!-- PayPal SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&intent=capture&disable-funding=venmo,paylater"></script>
@@ -37,6 +37,13 @@
             color: #222;
         }
         body { padding-top: 80px; }
+        
+        /* Hide mobile tab bar by default (desktop) */
+        .mobile-tab-bar {
+            display: flex !important; /* Temporary: always show for testing */
+            background: red !important; /* Temporary: bright red for visibility */
+        }
+        
         @media (max-width: 768px) {
             .nav-links { 
                 display: none !important; 
@@ -46,19 +53,20 @@
                 padding-bottom: 70px !important; 
             }
             
-            /* Show mobile tab bar on mobile */
-            .mobile-tab-bar {
+            /* Show mobile tab bar on mobile - with higher specificity */
+            body .mobile-tab-bar,
+            html body .mobile-tab-bar {
                 display: flex !important;
                 justify-content: space-around !important;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: #fff;
-                border-top: 1px solid #ddd;
-                padding: 0.5rem 0;
-                z-index: 1000;
-                box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                background: #fff !important;
+                border-top: 1px solid #ddd !important;
+                padding: 0.5rem 0 !important;
+                z-index: 1000 !important;
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.08) !important;
             }
             
             .mobile-tab-bar a {
@@ -230,11 +238,6 @@
         .social-link { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; transition: background 0.2s; }
         .social-link:hover { background: rgba(255,255,255,0.2); }
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem; text-align: center; }
-        
-        /* Hide mobile tab bar by default (desktop) */
-        .mobile-tab-bar {
-            display: none !important;
-        }
     </style>
 </head>
 <body>
