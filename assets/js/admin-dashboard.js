@@ -149,3 +149,34 @@ onAuthStateChanged(auth, async (user) => {
     }, 2000);
   }
 });
+// Debug loading functions
+console.log("DOM Elements - loadingOverlay:", loadingOverlay, "successMessage:", successMessage);
+// Show loading overlay
+function showLoading(message = "Loading...") {
+  console.log("showLoading called with:", message);
+  if (loadingMessage) loadingMessage.textContent = message;
+  if (loadingOverlay) loadingOverlay.style.display = "flex";
+}
+
+// Hide loading overlay
+function hideLoading() {
+  console.log("hideLoading called");
+  if (loadingOverlay) {
+    console.log("Setting loadingOverlay display to none");
+    loadingOverlay.style.display = "none";
+  } else {
+    console.log("loadingOverlay element not found");
+  }
+}
+
+// Show success message
+function showSuccess(message) {
+  console.log("showSuccess called with:", message);
+  if (successMessage) {
+    console.log("Setting successMessage text and display");
+    successMessage.textContent = message;
+    successMessage.style.display = "block";
+  } else {
+    console.log("successMessage element not found");
+  }
+}
