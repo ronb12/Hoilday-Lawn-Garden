@@ -64,6 +64,14 @@ function createInstallButton() {
     existingBtn.remove();
   }
 
+  // Check if we're on mobile
+  const isMobile = window.innerWidth <= 768;
+  
+  // Only show install button on mobile
+  if (!isMobile) {
+    return;
+  }
+
   // Create the install button
   const installBtn = document.createElement('button');
   installBtn.id = 'installBtn';
@@ -71,38 +79,41 @@ function createInstallButton() {
   installBtn.innerHTML = '<i class="fas fa-download"></i> Install App';
   installBtn.title = 'Install Holliday\'s Lawn & Garden App';
   
-  // Add styles to the button
+  // Add styles to the button - positioned at top for mobile
   installBtn.style.cssText = `
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
     background: #4caf50;
     color: white;
     border: none;
     border-radius: 50px;
-    padding: 12px 20px;
-    font-size: 14px;
+    padding: 10px 16px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     z-index: 10000;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     transition: all 0.3s ease;
     font-family: 'Montserrat', sans-serif;
+    max-width: 200px;
+    white-space: nowrap;
   `;
 
   // Add hover effect
   installBtn.addEventListener('mouseenter', () => {
     installBtn.style.background = '#45a049';
-    installBtn.style.transform = 'translateY(-2px)';
+    installBtn.style.transform = 'translateX(-50%) translateY(-1px)';
     installBtn.style.boxShadow = '0 6px 16px rgba(0,0,0,0.2)';
   });
 
   installBtn.addEventListener('mouseleave', () => {
     installBtn.style.background = '#4caf50';
-    installBtn.style.transform = 'translateY(0)';
+    installBtn.style.transform = 'translateX(-50%) translateY(0)';
     installBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
   });
 
@@ -142,13 +153,13 @@ function createInstallButton() {
   // Add the button to the body
   document.body.appendChild(installBtn);
 
-  // Auto-hide the button after 15 seconds if not clicked
+  // Auto-hide the button after 10 seconds if not clicked (shorter for mobile)
   setTimeout(() => {
     if (installBtn && installBtn.style.display !== 'none') {
       installBtn.style.opacity = '0.7';
-      installBtn.style.transform = 'scale(0.95)';
+      installBtn.style.transform = 'translateX(-50%) scale(0.95)';
     }
-  }, 15000);
+  }, 10000);
 }
 
 // Show notification function
