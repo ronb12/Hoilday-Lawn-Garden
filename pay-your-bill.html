@@ -40,8 +40,7 @@
         
         /* Hide mobile tab bar by default (desktop) */
         .mobile-tab-bar {
-            display: flex !important; /* Temporary: always show for testing */
-            background: red !important; /* Temporary: bright red for visibility */
+            display: none !important;
         }
         
         @media (max-width: 768px) {
@@ -53,9 +52,8 @@
                 padding-bottom: 70px !important; 
             }
             
-            /* Show mobile tab bar on mobile - with higher specificity */
-            body .mobile-tab-bar,
-            html body .mobile-tab-bar {
+            /* Show mobile tab bar on mobile */
+            .mobile-tab-bar {
                 display: flex !important;
                 justify-content: space-around !important;
                 position: fixed !important;
