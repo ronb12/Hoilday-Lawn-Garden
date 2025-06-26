@@ -512,57 +512,123 @@
         </nav>
     </header>
     <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Login</h1>
+                <p>Access your account to manage your lawn care services</p>
+            </div>
+        </section>
 
-    <h1 style="color: #2c5530; font-size: 2.5rem; margin: 2rem 0; text-align: center;">Login</h1>
-
-        <footer class="footer" role="contentinfo">
-            <div class="footer-content">
-                <div class="footer-grid">
-                    <div class="footer-section">
-                        <h3>Contact Us</h3>
-                        <div class="footer-contact">
-                            <span class="footer-owner">Karl Holliday</span>
-                            <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
-                            <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+        <!-- Login Form Section -->
+        <section class="login-section">
+            <div class="container">
+                <div class="login-container">
+                    <div class="login-form">
+                        <h2>Sign In</h2>
+                        <p>Welcome back! Please sign in to your account.</p>
+                        
+                        <form id="loginForm" class="form">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                            </div>
+                            
+                            <div class="form-options">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" name="remember">
+                                    <span class="checkmark"></span>
+                                    Remember me
+                                </label>
+                                <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
+                            </div>
+                            
+                            <button type="submit" class="btn-submit">Sign In</button>
+                        </form>
+                        
+                        <div class="login-footer">
+                            <p>Don't have an account? <a href="register.html">Sign up here</a></p>
                         </div>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="education.html">Education</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Customer Portal</h3>
-                        <ul>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-                            <li><a href="customer-dashboard.html">Dashboard</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Legal</h3>
-                        <ul>
-                            <li><a href="privacy.html">Privacy Policy</a></li>
-                            <li><a href="terms.html">Terms of Service</a></li>
-                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+        </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="footer-contact">
+                        <span class="footer-owner">Karl Holliday</span>
+                        <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
+                        <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Portal</h3>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                        <li><a href="customer-dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
             </div>
-        </footer>
-        <script>
-            const yearElement = document.getElementById('current-year');
-            if (yearElement) {
-                yearElement.textContent = new Date().getFullYear();
+        </div>
+        <div class="footer-bottom">
+            <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        const yearElement = document.getElementById('current-year');
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
+
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Basic validation
+            if (!email || !password) {
+                alert('Please fill in all required fields.');
+                return;
             }
-        </script>
+            
+            // Show success message (replace with actual authentication)
+            alert('Login functionality will be implemented with backend integration.');
+            
+            // Reset form
+            this.reset();
+        });
+    </script>
 
 <nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
   <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
@@ -571,8 +637,227 @@
   <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
   <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
   <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
-  <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
+  <a href="login.html" aria-label="Login" class="active"><i class="fas fa-user"></i><span>Login</span></a>
 </nav>
+
+    /* Mobile Tab Bar - Hide on Desktop */
+    @media (min-width: 769px) {
+        .mobile-tab-bar {
+            display: none !important;
+        }
+    }
+
+    /* Mobile Tab Bar Styles */
+    .mobile-tab-bar {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border-top: 1px solid #ddd;
+        padding: 0.5rem 0;
+        z-index: 1000;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+    }
+
+    .mobile-tab-bar a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: #666;
+        font-size: 0.8rem;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.2s;
+        flex: 1;
+    }
+
+    .mobile-tab-bar a.active, .mobile-tab-bar a:hover {
+        color: #2e7d32;
+        background: #e8f5e9;
+    }
+
+    .mobile-tab-bar i {
+        font-size: 1.2rem;
+        margin-bottom: 0.2rem;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none !important;
+        }
+        
+        .mobile-tab-bar {
+            display: flex !important;
+            justify-content: space-around;
+        }
+        
+        body {
+            padding-bottom: 70px;
+        }
+    }
+
+    /* Login Form Styles */
+    .login-section {
+        padding: 4rem 0;
+        background: #f8f9fa;
+        min-height: calc(100vh - 70px);
+        display: flex;
+        align-items: center;
+    }
+
+    .login-container {
+        max-width: 400px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .login-form {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        border: 1px solid #e0e0e0;
+    }
+
+    .login-form h2 {
+        color: #2e7d32;
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+
+    .login-form > p {
+        color: #666;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #333;
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: #2e7d32;
+        box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+    }
+
+    .form-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: #666;
+        cursor: pointer;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+        width: auto;
+        margin: 0;
+    }
+
+    .forgot-link {
+        color: #2e7d32;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .forgot-link:hover {
+        text-decoration: underline;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 0.875rem;
+        background: #2e7d32;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background: #1b5e20;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    }
+
+    .login-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .login-footer p {
+        color: #666;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .login-footer a {
+        color: #2e7d32;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .login-footer a:hover {
+        text-decoration: underline;
+    }
+
+    /* Mobile responsive adjustments */
+    @media (max-width: 768px) {
+        .login-section {
+            padding: 2rem 1rem;
+        }
+
+        .login-form {
+            padding: 2rem;
+        }
+
+        .form-options {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+    }
 
 </body>
 </html>
