@@ -458,8 +458,8 @@
                 <div class="divider">
                     <span>or</span>
                 </div>
-                <button class="google-login-btn" onclick="handleGoogleLogin()">
-                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo">
+                <button class="google-login-btn" onclick="alert('Google button clicked!'); handleGoogleLogin();">
+                    <i class="fab fa-google" style="color: #4285f4; font-size: 18px;"></i>
                     Continue with Google
                 </button>
             </div>
@@ -572,24 +572,64 @@
             }, 1500);
         });
 
+        // Simple test function
+        function testButton() {
+            alert('Button test - JavaScript is working!');
+        }
+
         // Handle Google login
         function handleGoogleLogin() {
-            const googleBtn = document.querySelector(".google-login-btn");
-            const originalText = googleBtn.innerHTML;
+            console.log('Google login button clicked'); // Debug log
+            alert('Google login button clicked! This is working.'); // Immediate feedback
             
-            // Show loading state
-            googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting to Google...';
-            googleBtn.disabled = true;
-            
-            // Simulate Google login process
-            setTimeout(() => {
-                alert("Google login functionality will be implemented with Google OAuth integration.");
+            try {
+                const googleBtn = document.querySelector(".google-login-btn");
+                if (!googleBtn) {
+                    console.error('Google login button not found');
+                    alert('Error: Google login button not found');
+                    return;
+                }
                 
-                // Reset button state
-                googleBtn.innerHTML = originalText;
-                googleBtn.disabled = false;
-            }, 1500);
+                const originalText = googleBtn.innerHTML;
+                
+                // Show loading state
+                googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting to Google...';
+                googleBtn.disabled = true;
+                
+                console.log('Google login process started'); // Debug log
+                
+                // Simulate Google login process
+                setTimeout(() => {
+                    console.log('Google login simulation complete'); // Debug log
+                    alert("Google login functionality will be implemented with Google OAuth integration.");
+                    
+                    // Reset button state
+                    googleBtn.innerHTML = originalText;
+                    googleBtn.disabled = false;
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Error in handleGoogleLogin:', error);
+                alert('An error occurred while processing Google login. Please try again.');
+            }
         }
+
+        // Add event listener as backup in case onclick doesn't work
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, setting up Google login button...'); // Debug log
+            
+            const googleBtn = document.querySelector(".google-login-btn");
+            if (googleBtn) {
+                console.log('Google login button found and event listener added'); // Debug log
+                googleBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Google login button clicked via event listener');
+                    handleGoogleLogin();
+                });
+            } else {
+                console.error('Google login button not found during setup');
+            }
+        });
     </script>
 </body>
 </html> 
