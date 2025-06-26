@@ -144,29 +144,19 @@
             
             console.log('Authorization code received:', code);
             
-            // For demo purposes, simulate successful login
-            // In a real implementation, you would exchange the code for tokens
-            setTimeout(() => {
-                // Create mock user data (in real app, this would come from Google's API)
-                const userInfo = {
-                    email: 'user@example.com',
-                    name: 'Google User',
-                    picture: 'https://via.placeholder.com/150',
-                    sub: 'google_user_' + Date.now()
-                };
-                
-                // Store user info in localStorage
-                localStorage.setItem('googleUser', JSON.stringify(userInfo));
-                localStorage.setItem('isLoggedIn', 'true');
-                
-                showSuccess();
-                
-                // Close the popup after a short delay
-                setTimeout(() => {
-                    window.close();
-                }, 2000);
-                
-            }, 1500);
+            // Exchange authorization code for tokens
+            // In a real implementation, you would send this code to your backend
+            // to exchange it for access tokens and user information
+            
+            // For now, we'll show an error indicating backend integration is needed
+            showError('Backend integration required. Please contact the administrator to complete Google OAuth setup.');
+            
+            // TODO: Implement backend token exchange
+            // The backend should:
+            // 1. Exchange the authorization code for access tokens
+            // 2. Use the access token to get user information from Google
+            // 3. Create or authenticate the user in your system
+            // 4. Return user data to store in localStorage
         }
         
         function showSuccess() {

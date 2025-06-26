@@ -8,11 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     
-    <!-- Google OAuth SDK -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Google OAuth Configuration -->
     <script>
-        // Google OAuth Configuration
-        const GOOGLE_CLIENT_ID = '1234567890-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com'; // Replace with your actual Google Client ID
+        // Google OAuth Configuration - Replace with your real Google Client ID
+        const GOOGLE_CLIENT_ID = 'YOUR_REAL_GOOGLE_CLIENT_ID.apps.googleusercontent.com'; // TODO: Replace with actual Client ID
         const REDIRECT_URI = window.location.origin + '/google-oauth-callback.html';
         
         // Handle Google login button click
