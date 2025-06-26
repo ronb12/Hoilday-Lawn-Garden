@@ -28,15 +28,25 @@ const errorContainer = document.getElementById("error-container");
 const errorMessage = document.getElementById("errorMessage");
 const successMessage = document.getElementById("successMessage");
 
+// Debug loading functions
+console.log("DOM Elements - loadingOverlay:", loadingOverlay, "successMessage:", successMessage);
+
 // Show loading overlay
 function showLoading(message = "Loading...") {
+  console.log("showLoading called with:", message);
   if (loadingMessage) loadingMessage.textContent = message;
   if (loadingOverlay) loadingOverlay.style.display = "flex";
 }
 
 // Hide loading overlay
 function hideLoading() {
-  if (loadingOverlay) loadingOverlay.style.display = "none";
+  console.log("hideLoading called");
+  if (loadingOverlay) {
+    console.log("Setting loadingOverlay display to none");
+    loadingOverlay.style.display = "none";
+  } else {
+    console.log("loadingOverlay element not found");
+  }
 }
 
 // Show error message
@@ -49,70 +59,25 @@ function showError(message) {
 
 // Show success message
 function showSuccess(message) {
+  console.log("showSuccess called with:", message);
   if (successMessage) {
+    console.log("Setting successMessage text and display");
     successMessage.textContent = message;
     successMessage.style.display = "block";
-  }
-  if (errorContainer) errorContainer.style.display = "none";
-}
-
-// Check authentication state
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    // User is signed in, check if they're an admin
-    try {
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      if (userDoc.exists() && userDoc.data().role === "admin") {
-        // User is admin, allow access
-        hideLoading();
-        showSuccess('Welcome back, Admin!');
-        setTimeout(() => {
-          if (successMessage) successMessage.style.display = 'none';
-        }, 3000);
-      } else {
-        // User is not admin, show error but do not log out
-        showError('Access denied. Admin privileges required.');
-      }
-    } catch (error) {
-      console.error('Error checking admin status:', error);
-      showError('Error verifying admin status. Please try again or contact support.');
-    }
   } else {
-    // No user is signed in, redirect to login
-    hideLoading();
-    showError('Please log in to access the admin dashboard.');
-    setTimeout(() => {
-      window.location.href = 'admin-login.html';
-    }, 2000);
+    console.log("successMessage element not found");
   }
-});
-
-// Handle logout
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", async () => {
-    showLoading("Logging out...");
-    try {
-      await signOut(auth);
-      showSuccess("Logged out successfully!");
-      setTimeout(() => {
-        window.location.href = "admin-login.html";
-      }, 1500);
-    } catch (error) {
-      console.error("Logout error:", error);
-      showError("Error logging out. Please try again.");
-      hideLoading();
-    }
-  });
 }
-
 
 // Initialize on DOM load
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Admin dashboard DOM loaded, checking auth...");
   showLoading("Checking authentication...");
 });
+
 // Add debugging to auth state change
 console.log("Setting up auth state listener...");
+
 // Check authentication state
 onAuthStateChanged(auth, async (user) => {
   console.log("Auth state changed, user:", user ? user.email : "null");
@@ -149,34 +114,21 @@ onAuthStateChanged(auth, async (user) => {
     }, 2000);
   }
 });
-// Debug loading functions
-console.log("DOM Elements - loadingOverlay:", loadingOverlay, "successMessage:", successMessage);
-// Show loading overlay
-function showLoading(message = "Loading...") {
-  console.log("showLoading called with:", message);
-  if (loadingMessage) loadingMessage.textContent = message;
-  if (loadingOverlay) loadingOverlay.style.display = "flex";
-}
 
-// Hide loading overlay
-function hideLoading() {
-  console.log("hideLoading called");
-  if (loadingOverlay) {
-    console.log("Setting loadingOverlay display to none");
-    loadingOverlay.style.display = "none";
-  } else {
-    console.log("loadingOverlay element not found");
-  }
-}
-
-// Show success message
-function showSuccess(message) {
-  console.log("showSuccess called with:", message);
-  if (successMessage) {
-    console.log("Setting successMessage text and display");
-    successMessage.textContent = message;
-    successMessage.style.display = "block";
-  } else {
-    console.log("successMessage element not found");
-  }
+// Handle logout
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    showLoading("Logging out...");
+    try {
+      await signOut(auth);
+      showSuccess("Logged out successfully!");
+      setTimeout(() => {
+        window.location.href = "admin-login.html";
+      }, 1500);
+    } catch (error) {
+      console.error("Logout error:", error);
+      showError("Error logging out. Please try again.");
+      hideLoading();
+    }
+  });
 }
