@@ -11,6 +11,7 @@
     <!-- Google OAuth Configuration -->
     <script>
         // Google OAuth Configuration - Direct popup to Google login
+        const GOOGLE_CLIENT_ID = '1234567890-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com'; // Demo Client ID
         const REDIRECT_URI = window.location.origin + '/google-oauth-callback.html';
         
         // Handle Google login button click
@@ -29,13 +30,16 @@
                 googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening Google Login...';
                 googleBtn.disabled = true;
                 
-                // Create Google OAuth URL - no Client ID required
+                // Create Google OAuth URL with Client ID
                 const googleOAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+                    `client_id=${GOOGLE_CLIENT_ID}&` +
                     `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
                     `response_type=code&` +
                     `scope=openid%20email%20profile&` +
                     `access_type=offline&` +
                     `prompt=consent`;
+                
+                console.log('Opening Google OAuth URL:', googleOAuthUrl);
                 
                 // Open Google login popup
                 const popup = window.open(
@@ -52,10 +56,13 @@
                     return;
                 }
                 
+                console.log('Google login popup opened successfully');
+                
                 // Monitor popup for completion
                 const checkClosed = setInterval(() => {
                     if (popup.closed) {
                         clearInterval(checkClosed);
+                        console.log('Google login popup closed');
                         
                         // Check if we have user data from the popup
                         const userData = localStorage.getItem('googleUser');
