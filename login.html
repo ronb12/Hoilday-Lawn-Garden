@@ -250,6 +250,62 @@
             text-decoration: underline;
         }
 
+        /* Social Login Styles */
+        .social-login {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .social-login .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .social-login .divider::before,
+        .social-login .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .social-login .divider span {
+            padding: 0 1rem;
+        }
+
+        .google-login-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0.875rem;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .google-login-btn:hover {
+            background: #f8f9fa;
+            border-color: #d0d0d0;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .google-login-btn img {
+            width: 18px;
+            height: 18px;
+        }
+
         /* Footer Styles */
         .footer {
             background: #2e7d32;
@@ -398,6 +454,16 @@
                 </button>
             </form>
             
+            <div class="social-login">
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                <button class="google-login-btn" onclick="handleGoogleLogin()">
+                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo">
+                    Continue with Google
+                </button>
+            </div>
+            
             <div class="forgot-password">
                 <a href="forgot-password.html">Forgot Password?</a>
             </div>
@@ -505,6 +571,25 @@
                 spinner.style.display = "none";
             }, 1500);
         });
+
+        // Handle Google login
+        function handleGoogleLogin() {
+            const googleBtn = document.querySelector(".google-login-btn");
+            const originalText = googleBtn.innerHTML;
+            
+            // Show loading state
+            googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting to Google...';
+            googleBtn.disabled = true;
+            
+            // Simulate Google login process
+            setTimeout(() => {
+                alert("Google login functionality will be implemented with Google OAuth integration.");
+                
+                // Reset button state
+                googleBtn.innerHTML = originalText;
+                googleBtn.disabled = false;
+            }, 1500);
+        }
     </script>
 </body>
 </html> 
