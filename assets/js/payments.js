@@ -6,10 +6,10 @@ import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/fi
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyBxGUOlJv6XqJGvHhJhHhJhHhJhHhJhHhJh",
-    authDomain: "holliday-lawn-garden.firebaseapp.com",
-    projectId: "holliday-lawn-garden",
-    storageBucket: "holliday-lawn-garden.appspot.com",
+    apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+    authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+    projectId: "holiday-lawn-and-garden",
+    storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
     messagingSenderId: "123456789",
     appId: "1:123456789:web:abcdefghijklmnop"
 };
