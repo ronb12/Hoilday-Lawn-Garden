@@ -1041,12 +1041,26 @@ body {
                     const customerName = document.getElementById('customer-name');
                     const customerEmail = document.getElementById('customer-email');
                     
-                    if (customerName && user.name) {
+                    // Display full name from firstName and lastName
+                    if (customerName && user.firstName && user.lastName) {
+                        customerName.textContent = `${user.firstName} ${user.lastName}`;
+                    } else if (customerName && user.firstName) {
+                        customerName.textContent = user.firstName;
+                    } else if (customerName && user.name) {
                         customerName.textContent = user.name;
                     }
+                    
+                    // Display email
                     if (customerEmail && user.email) {
                         customerEmail.textContent = user.email;
                     }
+                    
+                    // Show welcome message with user's name
+                    const welcomeTitle = document.querySelector('.welcome-section h1');
+                    if (welcomeTitle && user.firstName) {
+                        welcomeTitle.textContent = `Welcome, ${user.firstName}!`;
+                    }
+                    
                 } catch (error) {
                     console.log('Error loading user data:', error);
                 }
