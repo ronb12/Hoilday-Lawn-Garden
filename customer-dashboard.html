@@ -1603,7 +1603,6 @@ body {
             function closePaymentModal() {
                 paymentModal.classList.remove('show');
                 document.body.style.overflow = ''; // Restore scrolling
-                paymentForm.reset(); // Reset form
             }
 
             // Event listeners for opening modal
@@ -1710,154 +1709,6 @@ body {
                 }
 
                 // Render PayPal buttons
-                paypalButtons = paypal.Buttons({
-                    createOrder: createOrder,
-                    onApprove: onApprove,
-                    onError: onError,
-                    style: {
-                        layout: 'vertical',
-                        color: 'blue',
-                        shape: 'rect',
-                        label: 'pay'
-                    }
-                });
-
-                paypalButtons.render(paypalContainer);
-            }
-
-            // Update openPaymentModal function to initialize PayPal
-            const originalOpenPaymentModal = openPaymentModal;
-            openPaymentModal = function() {
-                originalOpenPaymentModal();
-                
-                // Initialize PayPal buttons after modal is shown
-                setTimeout(() => {
-                    initializePayPalButtons();
-                }, 100);
-            };
-
-            // Update closePaymentModal function to clean up PayPal
-            const originalClosePaymentModal = closePaymentModal;
-            closePaymentModal = function() {
-                originalClosePaymentModal();
-                
-                // Clean up PayPal buttons
-                if (paypalButtons) {
-                    paypalButtons.close();
-                    paypalButtons = null;
-                }
-            };
-
-            // Handle payment amount changes
-            const amountInput = document.getElementById('payment-amount');
-            if (amountInput) {
-                amountInput.addEventListener('input', function() {
-                    // Re-initialize PayPal buttons with new amount
-                    if (paymentModal.classList.contains('show')) {
-                        setTimeout(() => {
-                            initializePayPalButtons();
-                        }, 100);
-                    }
-                });
-            }
-
-            // Update billing summary after payment
-            function updateBillingSummary() {
-                const currentBalanceElement = document.querySelector('.billing-summary .amount');
-                if (currentBalanceElement) {
-                    const currentAmount = parseFloat(currentBalanceElement.textContent.replace('$', ''));
-                    const paymentAmount = parseFloat(document.getElementById('payment-amount').value);
-                    const newBalance = Math.max(0, currentAmount - paymentAmount);
-                    currentBalanceElement.textContent = `$${newBalance.toFixed(2)}`;
-                }
-                
-                // Update payment summary in modal
-                const modalAmount = document.querySelector('.payment-summary .amount');
-                if (modalAmount) {
-                    modalAmount.textContent = `$${newBalance.toFixed(2)}`;
-                }
-            }
-        });
-    </script>
-
-    <!-- PayPal Smart Payment Buttons Script -->
-    <script>
-        // PayPal Smart Payment Buttons functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            let paypalButtons = null;
-
-            // Initialize PayPal buttons when modal opens
-            function initializePayPalButtons() {
-                const paypalContainer = document.getElementById('paypal-button-container');
-                if (!paypalContainer) return;
-
-                // Clear existing buttons
-                paypalContainer.innerHTML = '';
-
-                // Get payment amount
-                const amountInput = document.getElementById('payment-amount');
-                const amount = amountInput ? parseFloat(amountInput.value) : 125.00;
-
-                // Create PayPal order
-                function createOrder(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: { value: parseFloat(amount).toFixed(2), currency_code: 'USD' },
-                            description: 'Customer Dashboard Payment'
-                        }],
-                        application_context: { shipping_preference: 'NO_SHIPPING' }
-                    });
-                }
-
-                // Handle PayPal approval
-                function onApprove(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        // Payment successful
-                        console.log('Payment completed:', details);
-                        
-                        // Show success message
-                        if (typeof showNotification === 'function') {
-                            showNotification('Payment completed successfully! Receipt sent to your email.', 'success');
-                        } else {
-                            alert('Payment completed successfully!');
-                        }
-                        
-                        // Store payment record
-                        const payments = JSON.parse(localStorage.getItem('payments') || '[]');
-                        payments.push({
-                            id: Date.now(),
-                            amount: amount,
-                            date: new Date().toISOString(),
-                            status: 'completed',
-                            paypal_order_id: data.orderID,
-                            payer_id: details.payer.payer_id,
-                            email: details.payer.email_address
-                        });
-                        localStorage.setItem('payments', JSON.stringify(payments));
-                        
-                        // Update billing summary
-                        updateBillingSummary();
-                        
-                        // Close modal
-                        const paymentModal = document.getElementById('payment-modal');
-                        if (paymentModal) {
-                            paymentModal.classList.remove('show');
-                            document.body.style.overflow = '';
-                        }
-                    });
-                }
-
-                // Handle PayPal errors
-                function onError(err) {
-                    console.error('PayPal error:', err);
-                    if (typeof showNotification === 'function') {
-                        showNotification('Payment failed. Please try again.', 'error');
-                    } else {
-                        alert('Payment failed. Please try again.');
-                    }
-                }
-
-                // Render PayPal buttons
                 if (typeof paypal !== 'undefined') {
                     paypalButtons = paypal.Buttons({
                         createOrder: createOrder,
@@ -1906,7 +1757,7 @@ body {
             if (amountInput) {
                 amountInput.addEventListener('input', function() {
                     // Re-initialize PayPal buttons with new amount
-                    if (document.getElementById('payment-modal').classList.contains('show')) {
+                    if (paymentModal.classList.contains('show')) {
                         setTimeout(() => {
                             initializePayPalButtons();
                         }, 100);
