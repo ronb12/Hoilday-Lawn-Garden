@@ -564,5 +564,30 @@
 
     <!-- Add the Firebase config and admin-login.js as a module -->
     <script type="module" src="assets/js/admin-login.js"></script>
+    
+    <!-- Password toggle function -->
+    <script>
+        // Toggle password visibility for admin login
+        function toggleAdminPassword() {
+            const passwordInput = document.getElementById("admin-password");
+            const toggleButton = document.querySelector(".toggle-password i");
+            
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleButton.classList.remove("fa-eye");
+                toggleButton.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                toggleButton.classList.remove("fa-eye-slash");
+                toggleButton.classList.add("fa-eye");
+            }
+        }
+        
+        // Update copyright year
+        const yearElement = document.getElementById("current-year");
+        if(yearElement){
+            yearElement.textContent = new Date().getFullYear();
+        }
+    </script>
 </body>
 </html> 

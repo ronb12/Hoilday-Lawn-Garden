@@ -1,437 +1,127 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getFirestore, collection, getDocs, updateDoc, deleteDoc, doc, serverTimestamp, query, where, orderBy, limit, addDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, signOut, updateProfile, deleteUser } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
-import { app } from "./firebase-config.js";
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-const db = getFirestore(app);
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+  authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+  projectId: "holiday-lawn-and-garden",
+  storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+  messagingSenderId: "135322230444",
+  appId: "1:135322230444:web:1a487b25a48aae07368909",
+  measurementId: "G-KD6TBWR4ZT"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const storage = getStorage(app);
+const db = getFirestore(app);
 
-async function checkAdminAccess(user) {
-  if (!user) return false;
-  try {
-    const userDoc = await getDoc(doc(db, "users", user.uid));
-    if (!userDoc.exists()) {
-      console.log('No user document found for:', user.uid);
-      return false;
-    }
-    
-    const userData = userDoc.data();
-    console.log('User data for admin check:', userData);
-    
-    // Check for both possible admin fields
-    const isAdmin = userData.isAdmin === true || userData.role === 'admin';
-    console.log('Is user admin?', isAdmin);
-    return isAdmin;
-  } catch (error) {
-    console.error("Error checking admin access:", error);
-    return false;
-  }
+// DOM Elements
+const logoutBtn = document.getElementById('logoutBtn');
+const loadingOverlay = document.getElementById('loading-overlay');
+const loadingMessage = document.getElementById('loading-message');
+const errorContainer = document.getElementById('error-container');
+const errorMessage = document.getElementById('errorMessage');
+const successMessage = document.getElementById('successMessage');
+
+// Show loading overlay
+function showLoading(message = 'Loading...') {
+  if (loadingMessage) loadingMessage.textContent = message;
+  if (loadingOverlay) loadingOverlay.style.display = 'flex';
 }
 
+// Hide loading overlay
+function hideLoading() {
+  if (loadingOverlay) loadingOverlay.style.display = 'none';
+}
+
+// Show error message
+function showError(message) {
+  if (errorMessage) errorMessage.textContent = message;
+  if (errorContainer) errorContainer.style.display = 'block';
+  if (successMessage) successMessage.style.display = 'none';
+}
+
+// Show success message
+function showSuccess(message) {
+  if (successMessage) {
+    successMessage.textContent = message;
+    successMessage.style.display = 'block';
+  }
+  if (errorContainer) errorContainer.style.display = 'none';
+}
+
+// Check authentication state
 onAuthStateChanged(auth, async (user) => {
-  console.log("Auth state changed:", user ? 'User logged in' : 'No user');
-  
-  if (!user) {
-    window.location.href = "admin-login.html";
-    return;
+  if (user) {
+    // User is signed in, check if they're an admin
+    try {
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists() && userDoc.data().role === "admin") {
+        // User is admin, allow access
+        hideLoading();
+        showSuccess('Welcome back, Admin!');
+        setTimeout(() => {
+          if (successMessage) successMessage.style.display = 'none';
+        }, 3000);
+      } else {
+        // User is not admin, redirect to login
+        await signOut(auth);
+        showError('Access denied. Admin privileges required.');
+        setTimeout(() => {
+          window.location.href = 'admin-login.html';
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('Error checking admin status:', error);
+      showError('Error verifying admin status.');
+      setTimeout(() => {
+        window.location.href = 'admin-login.html';
+      }, 2000);
+    }
+  } else {
+    // No user is signed in, redirect to login
+    hideLoading();
+    showError('Please log in to access the admin dashboard.');
+    setTimeout(() => {
+      window.location.href = 'admin-login.html';
+    }, 2000);
   }
-  
-  const isAdmin = await checkAdminAccess(user);
-  if (!isAdmin) {
-    console.error("Unauthorized access attempt by non-admin user:", user.email);
-    showNotification("Unauthorized access. Admin privileges required.", "error");
-    await signOut(auth);
-    window.location.href = "login.html";
-    return;
-  }
-  
-  initializeDashboard(user);
 });
 
-async function initializeDashboard(user) {
-  try {
-    console.log("Initializing admin dashboard for user:", user.email);
-    await loadAdminOverview();
-    await loadUsers();
-    await loadServices();
-    await loadPayments();
-    await loadMessages();
-    await loadDocuments();
-    initializeEventListeners();
+// Handle logout
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', async () => {
+    showLoading('Logging out...');
     
-    const greeting = document.querySelector(".greeting");
-    if (greeting) {
-      greeting.textContent = `Welcome, ${user.displayName || "Admin"}!`;
-    }
-  } catch (error) {
-    console.error("Error initializing dashboard:", error);
-    showNotification("Error loading dashboard data", "error");
-  }
-}
-
-async function loadAdminOverview() {
-  try {
-    const usersCount = (await getDocs(collection(db, "users"))).size;
-    const servicesCount = (await getDocs(collection(db, "services"))).size;
-    const paymentsCount = (await getDocs(collection(db, "payments"))).size;
-    const messagesCount = (await getDocs(collection(db, "messages"))).size;
-    
-    const overviewElement = document.getElementById("admin-overview");
-    if (overviewElement) {
-      overviewElement.innerHTML = `
-        <div class="stats-grid">
-          <div class="stat-card">
-            <h3>Total Users</h3>
-            <p>${usersCount}</p>
-          </div>
-          <div class="stat-card">
-            <h3>Total Services</h3>
-            <p>${servicesCount}</p>
-          </div>
-          <div class="stat-card">
-            <h3>Total Payments</h3>
-            <p>${paymentsCount}</p>
-          </div>
-          <div class="stat-card">
-            <h3>Total Messages</h3>
-            <p>${messagesCount}</p>
-          </div>
-        </div>
-      `;
-    }
-  } catch (error) {
-    console.error("Error loading admin overview:", error);
-    showNotification("Error loading overview data", "error");
-  }
-}
-
-async function loadUsers() {
-  try {
-    const usersQuery = query(collection(db, "users"), orderBy("createdAt", "desc"));
-    const usersSnapshot = await getDocs(usersQuery);
-    const usersContainer = document.getElementById("users-container");
-    if (usersContainer) {
-      if (usersSnapshot.empty) {
-        usersContainer.innerHTML = "<p>No users found</p>";
-      } else {
-        usersContainer.innerHTML = `<div class="table-container"><table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Created</th><th>Actions</th></tr></thead><tbody>${usersSnapshot.docs.map(doc => { const userData = doc.data(); return `<tr><td>${userData.displayName || "N/A"}</td><td>${userData.email || "N/A"}</td><td>${userData.role || "customer"}</td><td>${userData.createdAt?.toDate().toLocaleDateString() || "N/A"}</td><td><button class="btn-primary" onclick="editUser(\"${doc.id}\")">Edit</button><button class="btn-danger" onclick="deleteUser(\"${doc.id}\")">Delete</button></td></tr>`; }).join("")}</tbody></table></div>`;
-      }
-    }
-  } catch (error) {
-    console.error("Error loading users:", error);
-    showNotification("Error loading users", "error");
-  }
-}
-
-async function loadServices() {
-  try {
-    const servicesQuery = query(collection(db, "services"), orderBy("date", "desc"));
-    const servicesSnapshot = await getDocs(servicesQuery);
-    const servicesContainer = document.getElementById("admin-services-container");
-    if (servicesContainer) {
-      if (servicesSnapshot.empty) {
-        servicesContainer.innerHTML = "<p>No services found</p>";
-      } else {
-        servicesContainer.innerHTML = `<div class="table-container"><table class="data-table"><thead><tr><th>Service Type</th><th>Customer</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>${servicesSnapshot.docs.map(doc => { const serviceData = doc.data(); return `<tr><td>${serviceData.type || "N/A"}</td><td>${serviceData.customerName || "N/A"}</td><td>${serviceData.date?.toDate().toLocaleDateString() || "N/A"}</td><td>${serviceData.status || "pending"}</td><td><button class="btn-primary" onclick="editService(\"${doc.id}\")">Edit</button><button class="btn-danger" onclick="deleteService(\"${doc.id}\")">Delete</button></td></tr>`; }).join("")}</tbody></table></div>`;
-      }
-    }
-  } catch (error) {
-    console.error("Error loading services:", error);
-    showNotification("Error loading services", "error");
-  }
-}
-
-async function loadPayments() {
-  try {
-    const paymentsQuery = query(collection(db, "payments"), orderBy("date", "desc"));
-    const paymentsSnapshot = await getDocs(paymentsQuery);
-    const paymentsContainer = document.getElementById("admin-payments-container");
-    if (paymentsContainer) {
-      if (paymentsSnapshot.empty) {
-        paymentsContainer.innerHTML = "<p>No payments found</p>";
-      } else {
-        paymentsContainer.innerHTML = `<div class="table-container"><table class="data-table"><thead><tr><th>Amount</th><th>Customer</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>${paymentsSnapshot.docs.map(doc => { const paymentData = doc.data(); return `<tr><td>$${paymentData.amount || "0.00"}</td><td>${paymentData.customerName || "N/A"}</td><td>${paymentData.date?.toDate().toLocaleDateString() || "N/A"}</td><td>${paymentData.status || "pending"}</td><td><button class="btn-primary" onclick="viewPayment(\"${doc.id}\")">View</button><button class="btn-danger" onclick="deletePayment(\"${doc.id}\")">Delete</button></td></tr>`; }).join("")}</tbody></table></div>`;
-      }
-    }
-  } catch (error) {
-    console.error("Error loading payments:", error);
-    showNotification("Error loading payments", "error");
-  }
-}
-
-async function loadMessages() {
-  try {
-    const messagesQuery = query(collection(db, "messages"), orderBy("timestamp", "desc"));
-    const messagesSnapshot = await getDocs(messagesQuery);
-    const messagesContainer = document.getElementById("admin-messages-container");
-    if (messagesContainer) {
-      if (messagesSnapshot.empty) {
-        messagesContainer.innerHTML = "<p>No messages found</p>";
-      } else {
-        messagesContainer.innerHTML = `<div class="table-container"><table class="data-table"><thead><tr><th>From</th><th>Subject</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>${messagesSnapshot.docs.map(doc => { const messageData = doc.data(); return `<tr><td>${messageData.from || "N/A"}</td><td>${messageData.subject || "N/A"}</td><td>${messageData.timestamp?.toDate().toLocaleDateString() || "N/A"}</td><td>${messageData.read ? "Read" : "Unread"}</td><td><button class="btn-primary" onclick="viewMessage(\"${doc.id}\")">View</button><button class="btn-danger" onclick="deleteMessage(\"${doc.id}\")">Delete</button></td></tr>`; }).join("")}</tbody></table></div>`;
-      }
-    }
-  } catch (error) {
-    console.error("Error loading messages:", error);
-    showNotification("Error loading messages", "error");
-  }
-}
-
-async function loadDocuments() {
-  try {
-    const documentsQuery = query(collection(db, "documents"), orderBy("uploadDate", "desc"));
-    const documentsSnapshot = await getDocs(documentsQuery);
-    const documentsContainer = document.getElementById("admin-documents-container");
-    if (documentsContainer) {
-      if (documentsSnapshot.empty) {
-        documentsContainer.innerHTML = "<p>No documents found</p>";
-      } else {
-        documentsContainer.innerHTML = `<div class="table-container"><table class="data-table"><thead><tr><th>Name</th><th>Type</th><th>Size</th><th>Upload Date</th><th>Actions</th></tr></thead><tbody>${documentsSnapshot.docs.map(doc => { const documentData = doc.data(); return `<tr><td>${documentData.name || "N/A"}</td><td>${documentData.type || "N/A"}</td><td>${formatFileSize(documentData.size) || "N/A"}</td><td>${documentData.uploadDate?.toDate().toLocaleDateString() || "N/A"}</td><td><button class="btn-primary" onclick="downloadDocument(\"${doc.id}\")">Download</button><button class="btn-danger" onclick="deleteDocument(\"${doc.id}\")">Delete</button></td></tr>`; }).join("")}</tbody></table></div>`;
-      }
-    }
-  } catch (error) {
-    console.error("Error loading documents:", error);
-    showNotification("Error loading documents", "error");
-  }
-}
-
-function initializeEventListeners() {
-  document.querySelectorAll(".sidebar nav a").forEach(link => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const targetId = e.target.getAttribute("href").substring(1);
-      showSection(targetId);
-    });
-  });
-
-  document.getElementById("uploadDocumentForm")?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const file = document.getElementById("documentFile").files[0];
-    if (!file) {
-      showNotification("Please select a file to upload", "error");
-      return;
-    }
-    try {
-      const storageRef = ref(storage, `documents/${file.name}`);
-      await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
-      const documentData = { name: file.name, type: file.type, size: file.size, url: downloadURL, uploadDate: serverTimestamp() };
-      await addDoc(collection(db, "documents"), documentData);
-      closeModal("uploadDocumentModal");
-      loadDocuments();
-      showNotification("Document uploaded successfully", "success");
-    } catch (error) {
-      console.error("Error uploading document:", error);
-      showNotification("Error uploading document", "error");
-    }
-  });
-
-  document.querySelector(".logout-btn")?.addEventListener("click", async () => {
     try {
       await signOut(auth);
-      window.location.href = "admin-login.html";
+      showSuccess('Logged out successfully!');
+      setTimeout(() => {
+        window.location.href = 'admin-login.html';
+      }, 1500);
     } catch (error) {
-      console.error("Error signing out:", error);
-      showNotification("Error signing out", "error");
-    }
-  });
-
-  // Mobile navigation buttons
-  const mobileButtons = [
-    { id: 'mobileAppointmentsBtn', url: 'appointments.html' },
-    { id: 'mobileCustomersBtn', url: 'customers.html' },
-    { id: 'mobilePaymentsBtn', url: 'payments.html' },
-    { id: 'mobileAnalyticsBtn', url: 'analytics.html' },
-    { id: 'mobileInventoryBtn', url: 'inventory.html' },
-    { id: 'mobileStaffBtn', url: 'staff.html' },
-    { id: 'mobileMessagesBtn', url: 'messages.html' }
-  ];
-  
-  mobileButtons.forEach(button => {
-    const element = document.getElementById(button.id);
-    if (element) {
-      element.addEventListener('click', () => {
-        window.location.href = button.url;
-      });
+      console.error('Logout error:', error);
+      showError('Error logging out. Please try again.');
+      hideLoading();
     }
   });
 }
 
-function showModal(modalId) {
-  document.getElementById(modalId).style.display = "block";
-}
+// Handle page refresh
+window.addEventListener('beforeunload', () => {
+  showLoading('Refreshing...');
+});
 
-function closeModal(modalId) {
-  document.getElementById(modalId).style.display = "none";
-}
+// Handle page load
+window.addEventListener('load', () => {
+  hideLoading();
+});
 
-function showSection(sectionId) {
-  document.querySelectorAll(".feature-section").forEach(section => {
-    section.style.display = "none";
-  });
-  document.getElementById(sectionId).style.display = "block";
-}
-
-function showNotification(message, type = "info") {
-  const notification = document.createElement("div");
-  notification.className = `notification ${type}`;
-  notification.textContent = message;
-  document.body.appendChild(notification);
-  setTimeout(() => {
-    notification.remove();
-  }, 3000);
-}
-
-function formatFileSize(bytes) {
-  if (!bytes) return "0 Bytes";
-  const k = 1024;
-  const sizes = ["Bytes", "KB", "MB", "GB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
-}
-
-window.editUser = async (userId) => {
-  try {
-    const userDoc = await getDoc(doc(db, "users", userId));
-    if (userDoc.exists()) {
-      const userData = userDoc.data();
-      showNotification("Edit user functionality coming soon", "info");
-    }
-  } catch (error) {
-    console.error("Error editing user:", error);
-    showNotification("Error editing user", "error");
-  }
-};
-
-window.deleteUser = async (userId) => {
-  if (confirm("Are you sure you want to delete this user?")) {
-    try {
-      await deleteDoc(doc(db, "users", userId));
-      loadUsers();
-      showNotification("User deleted successfully", "success");
-    } catch (error) {
-      console.error("Error deleting user:", error);
-      showNotification("Error deleting user", "error");
-    }
-  }
-};
-
-window.editService = async (serviceId) => {
-  try {
-    const serviceDoc = await getDoc(doc(db, "services", serviceId));
-    if (serviceDoc.exists()) {
-      const serviceData = serviceDoc.data();
-      showNotification("Edit service functionality coming soon", "info");
-    }
-  } catch (error) {
-    console.error("Error editing service:", error);
-    showNotification("Error editing service", "error");
-  }
-};
-
-window.deleteService = async (serviceId) => {
-  if (confirm("Are you sure you want to delete this service?")) {
-    try {
-      await deleteDoc(doc(db, "services", serviceId));
-      loadServices();
-      showNotification("Service deleted successfully", "success");
-    } catch (error) {
-      console.error("Error deleting service:", error);
-      showNotification("Error deleting service", "error");
-    }
-  }
-};
-
-window.viewPayment = async (paymentId) => {
-  try {
-    const paymentDoc = await getDoc(doc(db, "payments", paymentId));
-    if (paymentDoc.exists()) {
-      const paymentData = paymentDoc.data();
-      showNotification("View payment functionality coming soon", "info");
-    }
-  } catch (error) {
-    console.error("Error viewing payment:", error);
-    showNotification("Error viewing payment", "error");
-  }
-};
-
-window.deletePayment = async (paymentId) => {
-  if (confirm("Are you sure you want to delete this payment?")) {
-    try {
-      await deleteDoc(doc(db, "payments", paymentId));
-      loadPayments();
-      showNotification("Payment deleted successfully", "success");
-    } catch (error) {
-      console.error("Error deleting payment:", error);
-      showNotification("Error deleting payment", "error");
-    }
-  }
-};
-
-window.viewMessage = async (messageId) => {
-  try {
-    const messageDoc = await getDoc(doc(db, "messages", messageId));
-    if (messageDoc.exists()) {
-      const messageData = messageDoc.data();
-      showNotification("View message functionality coming soon", "info");
-    }
-  } catch (error) {
-    console.error("Error viewing message:", error);
-    showNotification("Error viewing message", "error");
-  }
-};
-
-window.deleteMessage = async (messageId) => {
-  if (confirm("Are you sure you want to delete this message?")) {
-    try {
-      await deleteDoc(doc(db, "messages", messageId));
-      loadMessages();
-      showNotification("Message deleted successfully", "success");
-    } catch (error) {
-      console.error("Error deleting message:", error);
-      showNotification("Error deleting message", "error");
-    }
-  }
-};
-
-window.downloadDocument = async (documentId) => {
-  try {
-    const docRef = doc(db, "documents", documentId);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      const docData = docSnap.data();
-      if (docData.url) {
-        window.open(docData.url, "_blank");
-      } else {
-        throw new Error("Document URL not found");
-      }
-    }
-  } catch (error) {
-    console.error("Error downloading document:", error);
-    showNotification("Error downloading document", "error");
-  }
-};
-
-window.deleteDocument = async (documentId) => {
-  if (confirm("Are you sure you want to delete this document?")) {
-    try {
-      const docRef = doc(db, "documents", documentId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const docData = docSnap.data();
-        if (docData.url) {
-          const storageRef = ref(storage, docData.url);
-          await deleteObject(storageRef);
-        }
-        await deleteDoc(docRef);
-        loadDocuments();
-        showNotification("Document deleted successfully", "success");
-      }
-    } catch (error) {
-      console.error("Error deleting document:", error);
-      showNotification("Error deleting document", "error");
-    }
-  }
-};
+// Handle errors
+window.addEventListener('error', (e) => {
+  console.error('Page error:', e);
+  showError('An error occurred. Please refresh the page.');
+});
