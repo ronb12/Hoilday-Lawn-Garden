@@ -11,6 +11,104 @@
     <meta name="twitter:description" content="Learn about Holliday's Lawn & Garden - your trusted partner for professional lawn care and landscaping services." /><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" /><link href="assets/css/hero.css" rel="stylesheet" /><link href="assets/css/components/footer.css" rel="stylesheet" />
 <style>
 
+    /* CSS Variables for footer styling */
+    :root {
+      --color-primary-dark: #2e7d32;
+      --color-primary-light: #4caf50;
+      --color-border-dark: rgba(255,255,255,0.1);
+      --container-max-width: 1200px;
+      --container-padding: 1rem;
+      --font-weight-semibold: 600;
+    }
+
+    /* Footer specific fixes */
+    .footer {
+      background-color: #2e7d32 !important;
+      color: #fff !important;
+      padding: 2rem 0 !important;
+      margin-top: 3rem !important;
+    }
+
+    .footer-content {
+      max-width: 1200px !important;
+      margin: 0 auto !important;
+      padding: 0 1rem !important;
+    }
+
+    .footer-grid {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+      gap: 2rem !important;
+      margin-bottom: 2rem !important;
+    }
+
+    .footer-section h3 {
+      color: #fff !important;
+      font-size: 1.1rem !important;
+      font-weight: 600 !important;
+      margin-bottom: 1rem !important;
+    }
+
+    .footer-section ul {
+      list-style: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.5rem !important;
+    }
+
+    .footer-section ul li a,
+    .footer-section ul li i {
+      color: #fff !important;
+      text-decoration: none !important;
+      opacity: 0.9 !important;
+      transition: opacity 0.3s ease !important;
+    }
+
+    .footer-section ul li a:hover {
+      opacity: 1 !important;
+    }
+
+    .social-links {
+      display: flex !important;
+      gap: 1rem !important;
+      margin-top: 0.5rem !important;
+    }
+
+    .social-link {
+      color: #fff !important;
+      opacity: 0.9 !important;
+      transition: opacity 0.3s ease !important;
+      font-size: 1.25rem !important;
+    }
+
+    .social-link:hover {
+      opacity: 1 !important;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1) !important;
+      padding-top: 1.5rem !important;
+      text-align: center !important;
+    }
+
+    .copyright p {
+      color: #fff !important;
+      opacity: 0.7 !important;
+      margin: 0 !important;
+      font-size: 0.875rem !important;
+    }
+
+    @media (max-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+        text-align: center !important;
+      }
+    }
+
     /* Perfect Page Structure - No Issues */
     .main-header {
         background: #fff !important;
@@ -333,6 +431,96 @@
 <style>
 /* Hero section visibility - Professional Design Standard */
 .hero h1 { display: block !important; visibility: visible !important; opacity: 1 !important; }
+</style>
+
+<style>
+/* Footer fixes for about.html */
+.footer {
+  background-color: #2e7d32 !important;
+  color: #fff !important;
+  padding: 2rem 0 !important;
+  margin-top: 3rem !important;
+}
+
+.footer-content {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 1rem !important;
+}
+
+.footer-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+  gap: 2rem !important;
+  margin-bottom: 2rem !important;
+}
+
+.footer-section h3 {
+  color: #fff !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 1rem !important;
+}
+
+.footer-section ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem !important;
+}
+
+.footer-section ul li a,
+.footer-section ul li i {
+  color: #fff !important;
+  text-decoration: none !important;
+  opacity: 0.9 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+.footer-section ul li a:hover {
+  opacity: 1 !important;
+}
+
+.social-links {
+  display: flex !important;
+  gap: 1rem !important;
+  margin-top: 0.5rem !important;
+}
+
+.social-link {
+  color: #fff !important;
+  opacity: 0.9 !important;
+  transition: opacity 0.3s ease !important;
+  font-size: 1.25rem !important;
+}
+
+.social-link:hover {
+  opacity: 1 !important;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1) !important;
+  padding-top: 1.5rem !important;
+  text-align: center !important;
+}
+
+.copyright p {
+  color: #fff !important;
+  opacity: 0.7 !important;
+  margin: 0 !important;
+  font-size: 0.875rem !important;
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    text-align: center !important;
+  }
+}
 </style>
 </head><body><header class="main-header"><div class="logo"><a href="index.html"><picture><source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp"><img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy"></picture></a></div><nav id="nav-menu"><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="education.html">Education</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li><li><a href="pay-your-bill.html">Pay Your Bill</a></li></ul><div class="login-buttons"><a href="login.html" class="btn-login btn-customer"><i class="fas fa-user"></i>Customer Login</a><a href="admin-login.html" class="btn-login btn-admin"><i class="fas fa-lock"></i>Admin Login</a></div></nav></header><div class="mobile-tab-bar"><a href="index.html"><i class="fas fa-home"></i><span>Home</span></a><a href="about.html" class="active"><i class="fas fa-leaf"></i><span>About</span></a><a href="services.html"><i class="fas fa-tools"></i><span>Services</span></a><a href="pay-your-bill.html"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a><a href="contact.html"><i class="fas fa-phone"></i><span>Contact</span></a><a href="login.html"><i class="fas fa-user"></i><span>Login</span></a></div><main role="main"><section class="hero">
     <img alt="Beautiful garden landscaping" loading="eager" src="assets/images/hero-garden-landscaping-1280.jpg"/>
