@@ -10,8 +10,7 @@
     
     <!-- Google OAuth Configuration -->
     <script>
-        // Google OAuth Configuration - Replace with your real Google Client ID
-        const GOOGLE_CLIENT_ID = 'YOUR_REAL_GOOGLE_CLIENT_ID.apps.googleusercontent.com'; // TODO: Replace with actual Client ID
+        // Google OAuth Configuration - Direct popup to Google login
         const REDIRECT_URI = window.location.origin + '/google-oauth-callback.html';
         
         // Handle Google login button click
@@ -30,9 +29,8 @@
                 googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening Google Login...';
                 googleBtn.disabled = true;
                 
-                // Create Google OAuth URL
+                // Create Google OAuth URL - no Client ID required
                 const googleOAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
-                    `client_id=${GOOGLE_CLIENT_ID}&` +
                     `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
                     `response_type=code&` +
                     `scope=openid%20email%20profile&` +
