@@ -77,7 +77,7 @@ self.addEventListener('install', event => {
         const essentialAssets = [
           '/',
           '/index.html',
-          '/assets/css/main.css',
+          '/assets/css/main.min.css',
           '/assets/images/hollidays-logo.optimized-1280.png',
           '/manifest.json',
           '/offline.html'
