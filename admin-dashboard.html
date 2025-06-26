@@ -540,7 +540,6 @@
     </footer>
 
     <!-- Firebase and Admin Dashboard Scripts -->
-    <script src="firebase-config.js"></script>
     <script type="module" src="assets/js/admin-dashboard.js"></script>
     
     <!-- Utility Scripts -->
@@ -548,64 +547,17 @@
         // Update copyright year
         document.getElementById('current-year').textContent = new Date().getFullYear();
         
-        // Show loading overlay
-        function showLoading(message = 'Loading...') {
-            const loadingMessage = document.getElementById('loading-message');
-            const loadingOverlay = document.getElementById('loading-overlay');
-            if (loadingMessage) loadingMessage.textContent = message;
-            if (loadingOverlay) loadingOverlay.style.display = 'flex';
-        }
-
-        // Hide loading overlay
-        function hideLoading() {
-            const loadingOverlay = document.getElementById('loading-overlay');
-            if (loadingOverlay) loadingOverlay.style.display = 'none';
-        }
-
-        // Show error message
-        function showError(message) {
-            const errorMessage = document.getElementById('errorMessage');
-            const errorContainer = document.getElementById('error-container');
-            if (errorMessage) errorMessage.textContent = message;
-            if (errorContainer) errorContainer.style.display = 'block';
-            setTimeout(() => {
-                if (errorContainer) errorContainer.style.display = 'none';
-            }, 5000);
-        }
-
-        // Show success message
-        function showSuccess(message) {
-            const successMessage = document.getElementById('successMessage');
-            if (successMessage) {
-                successMessage.textContent = message;
-                successMessage.style.display = 'block';
-                setTimeout(() => {
-                    successMessage.style.display = 'none';
-                }, 3000);
-            }
-        }
-
         // Enhanced button click handler
         function handleButtonClick(url, buttonText) {
-            showLoading(`Loading ${buttonText}...`);
-            
             // Simulate a brief loading time for better UX
             setTimeout(() => {
                 try {
                     window.location.href = url;
                 } catch (error) {
                     console.error('Navigation error:', error);
-                    hideLoading();
-                    showError(`Failed to load ${buttonText}. Please try again.`);
                 }
             }, 500);
         }
-
-        // Handle logout
-        document.getElementById('logoutBtn').addEventListener('click', function() {
-            showLoading('Logging out...');
-            // This will be handled by the admin-dashboard.js module
-        });
 
         // Add click handlers to all dashboard buttons
         document.addEventListener('DOMContentLoaded', function() {
@@ -637,23 +589,17 @@
 
         // Handle page visibility changes
         document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState === 'visible') {
-                hideLoading();
-            }
+            // Let the module handle loading states
         });
 
         // Handle page errors
         window.addEventListener('error', function(e) {
             console.error('Page error:', e);
-            hideLoading();
-            showError('An error occurred. Please refresh the page.');
         });
 
         // Handle unhandled promise rejections
         window.addEventListener('unhandledrejection', function(e) {
             console.error('Unhandled promise rejection:', e);
-            hideLoading();
-            showError('An error occurred. Please refresh the page.');
         });
     </script>
 </body>

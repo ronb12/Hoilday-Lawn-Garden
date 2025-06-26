@@ -69,3 +69,37 @@ onAuthStateChanged(auth, async (user) => {
     }, 2000);
   }
 });
+
+// Show error message
+function showError(message) {
+  if (errorMessage) errorMessage.textContent = message;
+  if (errorContainer) errorContainer.style.display = "block";
+  if (successMessage) successMessage.style.display = "none";
+}
+
+// Show success message
+function showSuccess(message) {
+  if (successMessage) {
+    successMessage.textContent = message;
+    successMessage.style.display = "block";
+  }
+  if (errorContainer) errorContainer.style.display = "none";
+}
+
+// Handle logout
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    showLoading("Logging out...");
+    try {
+      await signOut(auth);
+      showSuccess("Logged out successfully!");
+      setTimeout(() => {
+        window.location.href = "admin-login.html";
+      }, 1500);
+    } catch (error) {
+      console.error("Logout error:", error);
+      showError("Error logging out. Please try again.");
+      hideLoading();
+    }
+  });
+}
