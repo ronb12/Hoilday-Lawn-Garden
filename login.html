@@ -14,25 +14,28 @@
     <link href="assets/css/mobile-enhancements.css" rel="stylesheet" />
     <link href="assets/css/components/footer.css" rel="stylesheet" />
     <style>
-        /* Override conflicting styles for login page */
-        body {
+        /* Login page specific overrides - using !important to ensure precedence */
+        body.login-page {
             font-family: 'Montserrat', sans-serif !important;
             background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e9 100%) !important;
             min-height: 100vh !important;
             margin: 0 !important;
             padding: 0 !important;
+            display: block !important;
+            overflow-x: visible !important;
         }
 
-        .login-container {
+        body.login-page .login-container {
             min-height: 100vh !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             padding: 2rem !important;
             background: transparent !important;
+            margin-top: 0 !important;
         }
 
-        .login-card {
+        body.login-page .login-card {
             background: white !important;
             border-radius: 12px !important;
             box-shadow: 0 8px 32px rgba(46, 125, 50, 0.15) !important;
@@ -42,67 +45,72 @@
             border: 1px solid #e0e0e0 !important;
         }
 
-        .login-header {
+        body.login-page .login-header {
             text-align: center !important;
             margin-bottom: 2rem !important;
         }
 
-        .login-header .logo {
+        body.login-page .login-header .logo {
             width: 120px !important;
             height: auto !important;
             margin-bottom: 1.5rem !important;
         }
 
-        .login-header h1 {
+        body.login-page .login-header h1 {
             color: #2e7d32 !important;
             font-size: 2rem !important;
             font-weight: 600 !important;
             margin-bottom: 0.5rem !important;
         }
 
-        .login-header p {
+        body.login-page .login-header p {
             color: #666 !important;
             font-size: 0.95rem !important;
         }
 
-        .login-form {
+        body.login-page .login-form {
             display: flex !important;
             flex-direction: column !important;
             gap: 1.5rem !important;
         }
 
-        .form-group {
+        body.login-page .form-group {
             display: flex !important;
             flex-direction: column !important;
             gap: 0.5rem !important;
+            margin-bottom: 0 !important;
         }
 
-        .form-group label {
+        body.login-page .form-group label {
             color: #333 !important;
             font-weight: 500 !important;
             font-size: 0.9rem !important;
+            display: block !important;
+            margin-bottom: 0.5rem !important;
         }
 
-        .form-group input {
+        body.login-page .form-group input {
             padding: 0.875rem !important;
             border: 1px solid #ddd !important;
             border-radius: 6px !important;
             font-size: 1rem !important;
             transition: border-color 0.3s ease !important;
             background: white !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
         }
 
-        .form-group input:focus {
+        body.login-page .form-group input:focus {
             outline: none !important;
             border-color: #2e7d32 !important;
             box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1) !important;
         }
 
-        .password-input {
+        body.login-page .password-input {
             position: relative !important;
         }
 
-        .toggle-password {
+        body.login-page .toggle-password {
             position: absolute !important;
             right: 1rem !important;
             top: 50% !important;
@@ -114,7 +122,7 @@
             padding: 0.25rem !important;
         }
 
-        .login-button {
+        body.login-page .login-button {
             background: #2e7d32 !important;
             color: white !important;
             padding: 0.875rem !important;
@@ -127,113 +135,113 @@
             width: 100% !important;
         }
 
-        .login-button:hover {
+        body.login-page .login-button:hover {
             background: #1b5e20 !important;
             transform: translateY(-1px) !important;
             box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3) !important;
         }
 
-        .login-button:disabled {
+        body.login-page .login-button:disabled {
             opacity: 0.7 !important;
             cursor: not-allowed !important;
         }
 
-        .forgot-password {
+        body.login-page .forgot-password {
             text-align: center !important;
             margin-top: 1rem !important;
         }
 
-        .forgot-password a {
+        body.login-page .forgot-password a {
             color: #2e7d32 !important;
             text-decoration: none !important;
             font-size: 0.9rem !important;
             font-weight: 500 !important;
         }
 
-        .forgot-password a:hover {
+        body.login-page .forgot-password a:hover {
             text-decoration: underline !important;
         }
 
-        .register-link {
+        body.login-page .register-link {
             text-align: center !important;
             margin-top: 1.5rem !important;
             padding-top: 1.5rem !important;
             border-top: 1px solid #e0e0e0 !important;
         }
 
-        .register-link p {
+        body.login-page .register-link p {
             color: #666 !important;
             font-size: 0.9rem !important;
             margin: 0 !important;
         }
 
-        .register-link a {
+        body.login-page .register-link a {
             color: #2e7d32 !important;
             text-decoration: none !important;
             font-weight: 500 !important;
         }
 
-        .register-link a:hover {
+        body.login-page .register-link a:hover {
             text-decoration: underline !important;
         }
 
-        /* Footer styling */
-        .footer {
+        /* Footer styling for login page */
+        body.login-page .footer {
             background: #2e7d32 !important;
             color: white !important;
             padding: 2rem 0 !important;
             margin-top: 3rem !important;
         }
 
-        .footer-content {
+        body.login-page .footer-content {
             max-width: 1200px !important;
             margin: 0 auto !important;
             padding: 0 1rem !important;
         }
 
-        .footer-grid {
+        body.login-page .footer-grid {
             display: grid !important;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
             gap: 2rem !important;
             margin-bottom: 2rem !important;
         }
 
-        .footer-section h3 {
+        body.login-page .footer-section h3 {
             color: white !important;
             font-size: 1.1rem !important;
             font-weight: 600 !important;
             margin-bottom: 1rem !important;
         }
 
-        .footer-section ul {
+        body.login-page .footer-section ul {
             list-style: none !important;
             padding: 0 !important;
             margin: 0 !important;
         }
 
-        .footer-section ul li {
+        body.login-page .footer-section ul li {
             margin-bottom: 0.5rem !important;
         }
 
-        .footer-section ul li a,
-        .footer-section ul li i {
+        body.login-page .footer-section ul li a,
+        body.login-page .footer-section ul li i {
             color: white !important;
             text-decoration: none !important;
             opacity: 0.9 !important;
             transition: opacity 0.3s ease !important;
         }
 
-        .footer-section ul li a:hover {
+        body.login-page .footer-section ul li a:hover {
             opacity: 1 !important;
         }
 
-        .footer-bottom {
+        body.login-page .footer-bottom {
             border-top: 1px solid rgba(255,255,255,0.1) !important;
             padding-top: 1.5rem !important;
             text-align: center !important;
         }
 
-        .footer-bottom p {
+        body.login-page .footer-bottom p {
             color: white !important;
             opacity: 0.7 !important;
             margin: 0 !important;
@@ -242,15 +250,15 @@
 
         /* Mobile responsiveness */
         @media (max-width: 768px) {
-            .login-container {
+            body.login-page .login-container {
                 padding: 1rem !important;
             }
             
-            .login-card {
+            body.login-page .login-card {
                 padding: 2rem !important;
             }
             
-            .footer-grid {
+            body.login-page .footer-grid {
                 grid-template-columns: 1fr !important;
                 gap: 1.5rem !important;
                 text-align: center !important;
@@ -258,7 +266,7 @@
         }
     </style>
 </head>
-<body>
+<body class="login-page">
     <header class="main-header">
         <div class="logo">
             <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" />
