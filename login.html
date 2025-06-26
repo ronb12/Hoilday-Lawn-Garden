@@ -13,82 +13,8 @@
     <script>
         // Google OAuth Configuration
         const GOOGLE_CLIENT_ID = '1234567890-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com'; // Replace with your actual Google Client ID
+        const REDIRECT_URI = window.location.origin + '/google-oauth-callback.html';
         
-        // Initialize Google OAuth
-        function initializeGoogleOAuth() {
-            // Check if Google OAuth is available
-            if (typeof google !== 'undefined' && google.accounts) {
-                try {
-                    google.accounts.id.initialize({
-                        client_id: GOOGLE_CLIENT_ID,
-                        callback: handleGoogleCredentialResponse,
-                        auto_select: false,
-                        cancel_on_tap_outside: true
-                    });
-                    
-                    console.log('Google OAuth initialized successfully');
-                    return true;
-                } catch (error) {
-                    console.error('Error initializing Google OAuth:', error);
-                    return false;
-                }
-            } else {
-                console.log('Google OAuth SDK not loaded');
-                return false;
-            }
-        }
-
-        // Handle Google OAuth response
-        function handleGoogleCredentialResponse(response) {
-            console.log('Google OAuth response received:', response);
-            
-            try {
-                // Decode the JWT token to get user info
-                const payload = JSON.parse(atob(response.credential.split('.')[1]));
-                console.log('User info:', payload);
-                
-                // Extract user information
-                const userInfo = {
-                    email: payload.email,
-                    name: payload.name,
-                    picture: payload.picture,
-                    sub: payload.sub // Google's unique user ID
-                };
-                
-                // Show success message
-                const googleBtn = document.querySelector(".google-login-btn");
-                if (googleBtn) {
-                    googleBtn.innerHTML = '<i class="fas fa-check"></i> Login Successful!';
-                    googleBtn.style.background = '#4caf50';
-                    googleBtn.style.color = 'white';
-                }
-                
-                // Store user info in localStorage (for demo purposes)
-                localStorage.setItem('googleUser', JSON.stringify(userInfo));
-                localStorage.setItem('isLoggedIn', 'true');
-                
-                // Show welcome message
-                setTimeout(() => {
-                    alert(`Welcome, ${userInfo.name}! You have successfully logged in with Google. Redirecting to customer dashboard...`);
-                    
-                    // Redirect to customer dashboard
-                    window.location.href = 'customer-dashboard.html';
-                }, 1000);
-                
-            } catch (error) {
-                console.error('Error processing Google OAuth response:', error);
-                alert('Error processing Google login. Please try again.');
-                
-                // Reset button state
-                const googleBtn = document.querySelector(".google-login-btn");
-                if (googleBtn) {
-                    googleBtn.innerHTML = '<i class="fab fa-google" style="color: #4285f4; font-size: 18px;"></i> Continue with Google';
-                    googleBtn.style.background = '';
-                    googleBtn.style.color = '';
-                }
-            }
-        }
-
         // Handle Google login button click
         function handleGoogleLogin() {
             console.log('Google login button clicked');
@@ -102,30 +28,58 @@
                 }
                 
                 // Show loading state
-                googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting to Google...';
+                googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening Google Login...';
                 googleBtn.disabled = true;
                 
-                // Check if Google OAuth is available
-                if (typeof google !== 'undefined' && google.accounts) {
-                    // Prompt for Google login - this shows the Google One Tap popup
-                    google.accounts.id.prompt((notification) => {
-                        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                            console.log('Google OAuth prompt not displayed or skipped');
-                            alert('Google login prompt not available. Please try again or use email login.');
+                // Create Google OAuth URL
+                const googleOAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+                    `client_id=${GOOGLE_CLIENT_ID}&` +
+                    `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
+                    `response_type=code&` +
+                    `scope=openid%20email%20profile&` +
+                    `access_type=offline&` +
+                    `prompt=consent`;
+                
+                // Open Google login popup
+                const popup = window.open(
+                    googleOAuthUrl,
+                    'googleLogin',
+                    'width=500,height=600,scrollbars=yes,resizable=yes'
+                );
+                
+                // Check if popup was blocked
+                if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+                    alert('Popup was blocked. Please allow popups for this site and try again.');
+                    googleBtn.innerHTML = '<i class="fab fa-google" style="color: #4285f4; font-size: 18px;"></i> Continue with Google';
+                    googleBtn.disabled = false;
+                    return;
+                }
+                
+                // Monitor popup for completion
+                const checkClosed = setInterval(() => {
+                    if (popup.closed) {
+                        clearInterval(checkClosed);
+                        
+                        // Check if we have user data from the popup
+                        const userData = localStorage.getItem('googleUser');
+                        if (userData) {
+                            // Success - user logged in
+                            googleBtn.innerHTML = '<i class="fas fa-check"></i> Login Successful!';
+                            googleBtn.style.background = '#4caf50';
+                            googleBtn.style.color = 'white';
                             
-                            // Reset button state
+                            setTimeout(() => {
+                                const user = JSON.parse(userData);
+                                alert(`Welcome, ${user.name}! You have successfully logged in with Google. Redirecting to customer dashboard...`);
+                                window.location.href = 'customer-dashboard.html';
+                            }, 1000);
+                        } else {
+                            // User cancelled or failed
                             googleBtn.innerHTML = '<i class="fab fa-google" style="color: #4285f4; font-size: 18px;"></i> Continue with Google';
                             googleBtn.disabled = false;
                         }
-                    });
-                } else {
-                    console.log('Google OAuth SDK not loaded');
-                    alert('Google login is not available. Please use email login or try again later.');
-                    
-                    // Reset button state
-                    googleBtn.innerHTML = '<i class="fab fa-google" style="color: #4285f4; font-size: 18px;"></i> Continue with Google';
-                    googleBtn.disabled = false;
-                }
+                    }
+                }, 1000);
                 
             } catch (error) {
                 console.error('Error in handleGoogleLogin:', error);
@@ -139,19 +93,16 @@
                 }
             }
         }
-
+        
         // Initialize everything when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Page loaded, initializing Google OAuth...');
+            console.log('Page loaded, setting up Google login popup...');
             
             // Update copyright year
             const yearElement = document.getElementById("current-year");
             if(yearElement){
                 yearElement.textContent = new Date().getFullYear();
             }
-            
-            // Initialize Google OAuth immediately
-            initializeGoogleOAuth();
             
             // Set up Google login button
             const googleBtn = document.querySelector(".google-login-btn");
@@ -729,216 +680,5 @@
             <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
         </div>
     </footer>
-
-    <script>
-        // Google OAuth Configuration
-        const GOOGLE_CLIENT_ID = '1234567890-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com'; // Replace with your actual Google Client ID
-        
-        // Initialize Google OAuth
-        function initializeGoogleOAuth() {
-            // Check if Google OAuth is available
-            if (typeof google !== 'undefined' && google.accounts) {
-                try {
-                    google.accounts.id.initialize({
-                        client_id: GOOGLE_CLIENT_ID,
-                        callback: handleGoogleCredentialResponse,
-                        auto_select: false,
-                        cancel_on_tap_outside: true
-                    });
-                    
-                    console.log('Google OAuth initialized successfully');
-                    return true;
-                } catch (error) {
-                    console.error('Error initializing Google OAuth:', error);
-                    return false;
-                }
-            } else {
-                console.log('Google OAuth SDK not loaded');
-                return false;
-            }
-        }
-
-        // Handle Google OAuth response
-        function handleGoogleCredentialResponse(response) {
-            console.log('Google OAuth response received:', response);
-            
-            try {
-                // Decode the JWT token to get user info
-                const payload = JSON.parse(atob(response.credential.split('.')[1]));
-                console.log('User info:', payload);
-                
-                // Extract user information
-                const userInfo = {
-                    email: payload.email,
-                    name: payload.name,
-                    picture: payload.picture,
-                    sub: payload.sub // Google's unique user ID
-                };
-                
-                // Show success message
-                const googleBtn = document.querySelector(".google-login-btn");
-                if (googleBtn) {
-                    googleBtn.innerHTML = '<i class="fas fa-check"></i> Login Successful!';
-                    googleBtn.style.background = '#4caf50';
-                    googleBtn.style.color = 'white';
-                }
-                
-                // Store user info in localStorage (for demo purposes)
-                localStorage.setItem('googleUser', JSON.stringify(userInfo));
-                localStorage.setItem('isLoggedIn', 'true');
-                
-                // Show welcome message
-                setTimeout(() => {
-                    alert(`Welcome, ${userInfo.name}! You have successfully logged in with Google. Redirecting to customer dashboard...`);
-                    
-                    // Redirect to customer dashboard
-                    window.location.href = 'customer-dashboard.html';
-                }, 1000);
-                
-            } catch (error) {
-                console.error('Error processing Google OAuth response:', error);
-                alert('Error processing Google login. Please try again.');
-                
-                // Reset button state
-                const googleBtn = document.querySelector(".google-login-btn");
-                if (googleBtn) {
-                    googleBtn.innerHTML = '<i class="fab fa-google" style="color: #4285f4; font-size: 18px;"></i> Continue with Google';
-                    googleBtn.style.background = '';
-                    googleBtn.style.color = '';
-                }
-            }
-        }
-
-        // Handle Google login button click
-        function handleGoogleLogin() {
-            console.log('Google login button clicked');
-            
-            try {
-                const googleBtn = document.querySelector(".google-login-btn");
-                if (!googleBtn) {
-                    console.error('Google login button not found');
-                    alert('Error: Google login button not found');
-                    return;
-                }
-                
-                // Show loading state
-                googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting to Google...';
-                googleBtn.disabled = true;
-                
-                // Check if Google OAuth is available
-                if (typeof google !== 'undefined' && google.accounts) {
-                    // Prompt for Google login - this shows the Google One Tap popup
-                    google.accounts.id.prompt((notification) => {
-                        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                            console.log('Google OAuth prompt not displayed or skipped');
-                            alert('Google login prompt not available. Please try again or use email login.');
-                            
-                            // Reset button state
-                            googleBtn.innerHTML = '<i class="fab fa-google" style="color: #4285f4; font-size: 18px;"></i> Continue with Google';
-                            googleBtn.disabled = false;
-                        }
-                    });
-                } else {
-                    console.log('Google OAuth SDK not loaded');
-                    alert('Google login is not available. Please use email login or try again later.');
-                    
-                    // Reset button state
-                    googleBtn.innerHTML = '<i class="fab fa-google" style="color: #4285f4; font-size: 18px;"></i> Continue with Google';
-                    googleBtn.disabled = false;
-                }
-                
-            } catch (error) {
-                console.error('Error in handleGoogleLogin:', error);
-                alert('An error occurred while processing Google login. Please try again.');
-                
-                // Reset button state
-                const googleBtn = document.querySelector(".google-login-btn");
-                if (googleBtn) {
-                    googleBtn.innerHTML = '<i class="fab fa-google" style="color: #4285f4; font-size: 18px;"></i> Continue with Google';
-                    googleBtn.disabled = false;
-                }
-            }
-        }
-
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Page loaded, initializing Google OAuth...');
-            
-            // Update copyright year
-            const yearElement = document.getElementById("current-year");
-            if(yearElement){
-                yearElement.textContent = new Date().getFullYear();
-            }
-            
-            // Initialize Google OAuth immediately
-            initializeGoogleOAuth();
-            
-            // Set up Google login button
-            const googleBtn = document.querySelector(".google-login-btn");
-            if (googleBtn) {
-                console.log('Google login button found and event listener added');
-                googleBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    console.log('Google login button clicked via event listener');
-                    handleGoogleLogin();
-                });
-            } else {
-                console.error('Google login button not found during setup');
-            }
-        });
-
-        // Toggle password visibility
-        function togglePassword() {
-            const passwordInput = document.getElementById("password");
-            const toggleButton = document.querySelector(".toggle-password i");
-            
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                toggleButton.classList.remove("fa-eye");
-                toggleButton.classList.add("fa-eye-slash");
-            } else {
-                passwordInput.type = "password";
-                toggleButton.classList.remove("fa-eye-slash");
-                toggleButton.classList.add("fa-eye");
-            }
-        }
-
-        // Handle form submission
-        document.getElementById("loginForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            const submitButton = this.querySelector(".login-button");
-            const buttonText = submitButton.querySelector(".button-text");
-            const spinner = submitButton.querySelector(".fa-spinner");
-            
-            if (!email || !password) {
-                alert("Please fill in all required fields.");
-                return;
-            }
-            
-            // Show loading state
-            submitButton.disabled = true;
-            buttonText.style.display = "none";
-            spinner.style.display = "inline-block";
-            
-            // Simulate login process
-            setTimeout(() => {
-                alert("Login functionality will be implemented with backend integration.");
-                this.reset();
-                
-                // Reset button state
-                submitButton.disabled = false;
-                buttonText.style.display = "inline";
-                spinner.style.display = "none";
-            }, 1500);
-        });
-
-        // Simple test function
-        function testButton() {
-            alert('Button test - JavaScript is working!');
-        }
-    </script>
 </body>
 </html> 
