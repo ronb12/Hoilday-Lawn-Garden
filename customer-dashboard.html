@@ -139,6 +139,36 @@
         display: none !important;
     }
     
+    .user-actions {
+        display: flex !important;
+        align-items: center !important;
+        margin-left: 2rem !important;
+    }
+    
+    .btn-logout {
+        padding: 0.5rem 1rem !important;
+        background: #f44336 !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 4px !important;
+        font-weight: 500 !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        font-size: 0.9rem !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+    }
+    
+    .btn-logout:hover {
+        background: #d32f2f !important;
+        transform: translateY(-1px) !important;
+    }
+    
+    .btn-logout i {
+        font-size: 1rem !important;
+    }
+    
     .btn-login {
         padding: 0.5rem 1rem !important;
         border-radius: 4px !important;
@@ -309,59 +339,817 @@ body {
     font-family: 'Montserrat', -apple-system, "system-ui", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 </style>
+
+<style>
+    /* Dashboard Styles */
+    .dashboard-main {
+        background: #f8f9fa;
+        min-height: calc(100vh - 70px);
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+        background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+        color: white;
+        padding: 3rem 0;
+        text-align: center;
+    }
+
+    .welcome-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .welcome-section p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    /* Dashboard Content */
+    .dashboard-content {
+        padding: 3rem 0;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+    }
+
+    /* Dashboard Cards */
+    .dashboard-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e0e0e0;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .dashboard-card h2 {
+        color: #2e7d32;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .dashboard-card h2 i {
+        color: #4caf50;
+    }
+
+    /* Account Overview */
+    .account-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    .info-item .label {
+        font-weight: 500;
+        color: #666;
+    }
+
+    .info-item .value {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .status-active {
+        color: #4caf50 !important;
+        font-weight: 600;
+    }
+
+    /* Quick Actions */
+    .action-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .action-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 1rem;
+        background: #f8f9fa;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #333;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .action-btn:hover {
+        background: #2e7d32;
+        color: white;
+        border-color: #2e7d32;
+        transform: translateY(-2px);
+    }
+
+    .action-btn.primary {
+        background: #2e7d32;
+        color: white;
+        border-color: #2e7d32;
+    }
+
+    .action-btn.primary:hover {
+        background: #1b5e20;
+        border-color: #1b5e20;
+    }
+
+    .action-btn i {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Recent Services */
+    .service-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .service-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #4caf50;
+    }
+
+    .service-icon {
+        width: 50px;
+        height: 50px;
+        background: #4caf50;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+    }
+
+    .service-details h3 {
+        margin: 0 0 0.25rem 0;
+        color: #333;
+        font-size: 1.1rem;
+    }
+
+    .service-details p {
+        margin: 0 0 0.5rem 0;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .service-status {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .service-status.completed {
+        background: #e8f5e8;
+        color: #2e7d32;
+    }
+
+    .service-status.scheduled {
+        background: #fff3e0;
+        color: #f57c00;
+    }
+
+    /* Billing Summary */
+    .billing-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .billing-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .billing-item:last-child {
+        border-bottom: none;
+    }
+
+    .billing-item .label {
+        font-weight: 500;
+        color: #666;
+    }
+
+    .billing-item .value {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .amount {
+        color: #2e7d32 !important;
+        font-size: 1.2rem;
+    }
+
+    .billing-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        flex: 1;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background: #2e7d32;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #1b5e20;
+    }
+
+    .btn-secondary {
+        background: #f8f9fa;
+        color: #333;
+        border: 1px solid #e0e0e0;
+    }
+
+    .btn-secondary:hover {
+        background: #e9ecef;
+    }
+
+    /* Service Schedule */
+    .schedule-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .schedule-item {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #2196f3;
+    }
+
+    .schedule-date {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-width: 60px;
+        padding: 0.5rem;
+        background: #2196f3;
+        color: white;
+        border-radius: 6px;
+        text-align: center;
+    }
+
+    .schedule-date .day {
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .schedule-date .month {
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .schedule-details h3 {
+        margin: 0 0 0.25rem 0;
+        color: #333;
+        font-size: 1.1rem;
+    }
+
+    .schedule-details p {
+        margin: 0 0 0.5rem 0;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .schedule-time {
+        color: #2196f3;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    /* Contact Information */
+    .contact-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .contact-item i {
+        width: 40px;
+        height: 40px;
+        background: #4caf50;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1rem;
+    }
+
+    .contact-item div {
+        flex: 1;
+    }
+
+    .contact-item strong {
+        display: block;
+        color: #333;
+        margin-bottom: 0.25rem;
+    }
+
+    .contact-item a {
+        color: #2e7d32;
+        text-decoration: none;
+    }
+
+    .contact-item a:hover {
+        text-decoration: underline;
+    }
+
+    .contact-item span {
+        color: #666;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            padding: 0 1rem;
+        }
+
+        .welcome-section h1 {
+            font-size: 2rem;
+        }
+
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .action-buttons {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .billing-actions {
+            flex-direction: column;
+        }
+
+        .service-item, .schedule-item, .contact-item {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .service-icon, .contact-item i {
+            align-self: center;
+        }
+    }
+</style>
 </head>
 <body>
-<h1 style="color: #2c5530; font-size: 2.5rem; margin: 2rem 0; text-align: center;">Customer Dashboard</h1>
-    <!-- Rest of the file remains unchanged -->
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo">
+            </div>
+            <nav id="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="pay-your-bill.html">Pay Bill</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="user-actions">
+                    <button id="logout-btn" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-        <footer class="footer" role="contentinfo">
-            <div class="footer-content">
-                <div class="footer-grid">
-                    <div class="footer-section">
-                        <h3>Contact Us</h3>
-                        <div class="footer-contact">
-                            <span class="footer-owner">Karl Holliday</span>
-                            <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
-                            <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="container">
+                <h1>Welcome to Your Customer Dashboard</h1>
+                <p>Manage your lawn care services, view service history, and handle payments all in one place.</p>
+            </div>
+        </section>
+
+        <!-- Dashboard Content -->
+        <section class="dashboard-content">
+            <div class="container">
+                <div class="dashboard-grid">
+                    <!-- Account Overview -->
+                    <div class="dashboard-card account-overview">
+                        <h2><i class="fas fa-user-circle"></i> Account Overview</h2>
+                        <div class="account-info">
+                            <div class="info-item">
+                                <span class="label">Name:</span>
+                                <span class="value" id="customer-name">John Doe</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Email:</span>
+                                <span class="value" id="customer-email">john.doe@example.com</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Account Status:</span>
+                                <span class="value status-active">Active</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Member Since:</span>
+                                <span class="value">January 2024</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="footer-section">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="education.html">Education</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
+
+                    <!-- Quick Actions -->
+                    <div class="dashboard-card quick-actions">
+                        <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                        <div class="action-buttons">
+                            <a href="pay-your-bill.html" class="action-btn primary">
+                                <i class="fas fa-credit-card"></i>
+                                Pay Your Bill
+                            </a>
+                            <a href="schedule-maintenance.html" class="action-btn">
+                                <i class="fas fa-calendar-plus"></i>
+                                Schedule Service
+                            </a>
+                            <a href="contact.html" class="action-btn">
+                                <i class="fas fa-phone"></i>
+                                Contact Support
+                            </a>
+                            <a href="profile.html" class="action-btn">
+                                <i class="fas fa-cog"></i>
+                                Update Profile
+                            </a>
+                        </div>
                     </div>
-                    <div class="footer-section">
-                        <h3>Customer Portal</h3>
-                        <ul>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-                            <li><a href="customer-dashboard.html">Dashboard</a></li>
-                        </ul>
+
+                    <!-- Recent Services -->
+                    <div class="dashboard-card recent-services">
+                        <h2><i class="fas fa-history"></i> Recent Services</h2>
+                        <div class="service-list">
+                            <div class="service-item">
+                                <div class="service-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="service-details">
+                                    <h3>Lawn Mowing</h3>
+                                    <p>Completed on March 15, 2024</p>
+                                    <span class="service-status completed">Completed</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-icon">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <div class="service-details">
+                                    <h3>Fertilization</h3>
+                                    <p>Completed on March 1, 2024</p>
+                                    <span class="service-status completed">Completed</span>
+                                </div>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="service-details">
+                                    <h3>Spring Cleanup</h3>
+                                    <p>Scheduled for March 30, 2024</p>
+                                    <span class="service-status scheduled">Scheduled</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="footer-section">
-                        <h3>Legal</h3>
-                        <ul>
-                            <li><a href="privacy.html">Privacy Policy</a></li>
-                            <li><a href="terms.html">Terms of Service</a></li>
-                        </ul>
+
+                    <!-- Billing Summary -->
+                    <div class="dashboard-card billing-summary">
+                        <h2><i class="fas fa-receipt"></i> Billing Summary</h2>
+                        <div class="billing-info">
+                            <div class="billing-item">
+                                <span class="label">Current Balance:</span>
+                                <span class="value amount">$125.00</span>
+                            </div>
+                            <div class="billing-item">
+                                <span class="label">Last Payment:</span>
+                                <span class="value">March 1, 2024</span>
+                            </div>
+                            <div class="billing-item">
+                                <span class="label">Next Due Date:</span>
+                                <span class="value">April 1, 2024</span>
+                            </div>
+                        </div>
+                        <div class="billing-actions">
+                            <a href="pay-your-bill.html" class="btn-primary">Pay Now</a>
+                            <a href="receipt.html" class="btn-secondary">View Receipts</a>
+                        </div>
+                    </div>
+
+                    <!-- Service Schedule -->
+                    <div class="dashboard-card service-schedule">
+                        <h2><i class="fas fa-calendar-alt"></i> Upcoming Services</h2>
+                        <div class="schedule-list">
+                            <div class="schedule-item">
+                                <div class="schedule-date">
+                                    <span class="day">30</span>
+                                    <span class="month">MAR</span>
+                                </div>
+                                <div class="schedule-details">
+                                    <h3>Spring Cleanup</h3>
+                                    <p>Comprehensive yard cleanup and preparation</p>
+                                    <span class="schedule-time">9:00 AM - 12:00 PM</span>
+                                </div>
+                            </div>
+                            <div class="schedule-item">
+                                <div class="schedule-date">
+                                    <span class="day">15</span>
+                                    <span class="month">APR</span>
+                                </div>
+                                <div class="schedule-details">
+                                    <h3>Lawn Mowing</h3>
+                                    <p>Regular lawn maintenance service</p>
+                                    <span class="schedule-time">10:00 AM - 11:00 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="dashboard-card contact-info">
+                        <h2><i class="fas fa-address-book"></i> Contact Information</h2>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <strong>Phone:</strong>
+                                    <a href="tel:+15047171887">(504) 717-1887</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <strong>Email:</strong>
+                                    <a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <strong>Business Hours:</strong>
+                                    <span>Mon-Fri: 8:00 AM - 6:00 PM</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+        </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="footer-contact">
+                        <span class="footer-owner">Karl Holliday</span>
+                        <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
+                        <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Portal</h3>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                        <li><a href="customer-dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
             </div>
-        </footer>
-        <script>
-            const yearElement = document.getElementById('current-year');
-            if (yearElement) {
-                yearElement.textContent = new Date().getFullYear();
+        </div>
+        <div class="footer-bottom">
+            <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        const yearElement = document.getElementById('current-year');
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
+
+        // Dashboard functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logout functionality
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to logout?')) {
+                        // Clear any stored user data
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('userToken');
+                        sessionStorage.clear();
+                        
+                        // Redirect to login page
+                        window.location.href = 'login.html';
+                    }
+                });
             }
-        </script>
+
+            // Load user data from localStorage if available
+            const userData = localStorage.getItem('user');
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    const customerName = document.getElementById('customer-name');
+                    const customerEmail = document.getElementById('customer-email');
+                    
+                    if (customerName && user.name) {
+                        customerName.textContent = user.name;
+                    }
+                    if (customerEmail && user.email) {
+                        customerEmail.textContent = user.email;
+                    }
+                } catch (error) {
+                    console.log('Error loading user data:', error);
+                }
+            }
+
+            // Add click handlers for service items
+            const serviceItems = document.querySelectorAll('.service-item');
+            serviceItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Add visual feedback
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+
+            // Add click handlers for schedule items
+            const scheduleItems = document.querySelectorAll('.schedule-item');
+            scheduleItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Add visual feedback
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+
+            // Add loading states to action buttons
+            const actionButtons = document.querySelectorAll('.action-btn');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Add loading state
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                    this.style.pointerEvents = 'none';
+                    
+                    // Simulate loading (remove this in production)
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.style.pointerEvents = 'auto';
+                    }, 1000);
+                });
+            });
+
+            // Add notification system
+            function showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                `;
+                
+                // Add styles
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    animation: slideIn 0.3s ease;
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }, 3000);
+            }
+
+            // Add CSS animations
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Example usage of notification
+            // showNotification('Welcome to your dashboard!', 'success');
+        });
+    </script>
 
 <nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
   <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
