@@ -516,10 +516,6 @@
                             <input type="tel" id="phone" name="phone" required>
                         </div>
                         <div class="form-group">
-                            <label for="dateOfBirth">Date of Birth</label>
-                            <input type="date" id="dateOfBirth" name="dateOfBirth">
-                        </div>
-                        <div class="form-group">
                             <label for="emergencyContact">Emergency Contact</label>
                             <input type="text" id="emergencyContact" name="emergencyContact">
                         </div>
@@ -729,8 +725,7 @@
 
             function populateForm(user) {
                 // Populate form fields with user data
-                const fields = ['firstName', 'lastName', 'email', 'phone', 'dateOfBirth', 
-                               'emergencyContact', 'streetAddress', 'city', 'state', 'zipCode'];
+                const fields = ['firstName', 'lastName', 'email', 'phone', 'emergencyContact', 'streetAddress', 'city', 'state', 'zipCode'];
                 
                 fields.forEach(field => {
                     const element = document.getElementById(field);
