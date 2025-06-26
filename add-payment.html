@@ -2,104 +2,139 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Holliday Lawn & Garden - Add Payment</title>
-    <meta name="description" content="Add Payment form for Holliday Lawn & Garden management system."/>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Add Payment - Admin Dashboard</title>
+    <meta content="Add new payment for Holliday Lawn &amp; Garden" name="description"/>
+    <link href="assets/css/main.min.css" rel="stylesheet"/>
+    <link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta content="#2e7d32" name="theme-color"/>
     <style>
-        body {
-            font-family: 'Montserrat', -apple-system, "system-ui", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1 {
-            color: #2c5530;
-            font-size: 2.5rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
+        body { padding-top: 100px; margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .dashboard-main { max-width: 800px; margin: 2rem auto; padding: 0 2rem; }
+        .page-header { background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 2rem; }
+        .page-title { font-size: 2rem; font-weight: 700; color: #2c5530; margin: 0 0 0.5rem 0; }
+        .page-subtitle { color: #666; margin: 0; }
+        .form-container { background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+        .form-section { margin-bottom: 2rem; }
+        .form-section h3 { color: #2c5530; margin-bottom: 1rem; font-size: 1.2rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #4caf50; box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2); }
+        .form-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem; }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .btn-primary { background: #4caf50; color: white; }
+        .btn-primary:hover { background: #388e3c; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #5a6268; }
+        .loading { text-align: center; padding: 2rem; color: #666; }
+        .error { background: #ffebee; color: #c62828; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; }
+        .success { background: #e8f5e8; color: #2e7d32; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; }
+        @media (max-width: 768px) { .dashboard-main { padding: 0 1rem; } .form-row { grid-template-columns: 1fr; } .form-actions { flex-direction: column; } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Add Payment</h1>
-        <p>This page is under construction. Please check back later.</p>
-    </div>
-    
-    <!-- Mobile Tab Bar -->
-    <nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
-        <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
-        <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
-        <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
-        <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
-        <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
-        <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
-    </nav>
-    
-    <style>
-    @media (min-width: 769px) {
-      .mobile-tab-bar { display: none !important; }
-    }
-    @media (max-width: 768px) {
-      .mobile-tab-bar {
-        display: flex;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100vw;
-        height: 64px;
-        background: #fff;
-        border-top: 1px solid #e0e0e0;
-        box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
-        z-index: 2000;
-        justify-content: space-around;
-        align-items: center;
-      }
-    }
-    </style>
-
-<footer class="footer">
-    <div class="footer-content">
-        <div class="footer-grid">
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <ul>
-                    <li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
-                    <li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="education.html">Education</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Customer Portal</h3>
-                <ul>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="register.html">Register</a></li>
-                    <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-                    <li><a href="customer-dashboard.html">Dashboard</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Legal</h3>
-                <ul>
-                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                    <li><a href="terms.html">Terms of Service</a></li>
-                </ul>
-            </div>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden" />
+            <span style="font-weight: 700; color: #2c5530;">Admin Dashboard</span>
         </div>
-    </div>
-</footer>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="customers.html">Customers</a>
+            <a href="payments.html">Payments</a>
+            <a href="inventory.html">Inventory</a>
+            <a href="staff.html">Staff</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="messages.html">Messages</a>
+            <button class="btn btn-danger" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </nav>
+    </header>
+    <main class="dashboard-main">
+        <div class="page-header">
+            <h1 class="page-title">Add New Payment</h1>
+            <p class="page-subtitle">Record a new payment for a customer</p>
+        </div>
+        <div class="form-container">
+            <form id="payment-form">
+                <div class="form-section">
+                    <h3>Customer Information</h3>
+                    <div class="form-group">
+                        <label for="customerSelect">Select Customer *</label>
+                        <select id="customerSelect" name="customerId" required>
+                            <option value="">Choose a customer...</option>
+                            <!-- Customer options will be populated here -->
+                        </select>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h3>Payment Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="amount">Amount *</label>
+                            <input type="number" id="amount" name="amount" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="paymentMethod">Payment Method *</label>
+                            <select id="paymentMethod" name="method" required>
+                                <option value="">Select method...</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="card">Credit/Debit Card</option>
+                                <option value="cash">Cash</option>
+                                <option value="check">Check</option>
+                                <option value="bank-transfer">Bank Transfer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="paymentDate">Payment Date *</label>
+                            <input type="date" id="paymentDate" name="paymentDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status *</label>
+                            <select id="status" name="status" required>
+                                <option value="paid">Paid</option>
+                                <option value="pending">Pending</option>
+                                <option value="failed">Failed</option>
+                                <option value="refunded">Refunded</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h3>Additional Information</h3>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" rows="3" placeholder="What is this payment for? (e.g., Lawn mowing service, Monthly maintenance..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reference">Reference Number</label>
+                        <input type="text" id="reference" name="reference" placeholder="Transaction ID, check number, etc.">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a href="payments.html" class="btn btn-secondary">
+                        <i class="fas fa-times"></i>
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Add Payment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module" src="assets/js/add-payment.js"></script>
 </body>
 </html>

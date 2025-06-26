@@ -250,90 +250,67 @@
 </style>
 </head>
 <body>
-<h1 style="color: #2c5530; font-size: 2.5rem; margin: 2rem 0; text-align: center;">Analytics</h1><head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Analytics - Admin Dashboard</title>
-    <meta property="og:title" content="Analytics - Admin Dashboard" />
-    <meta property="og:description" content="Analytics and reporting for lawn care business operations." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="./analytics.html" />
-    <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Analytics - Admin Dashboard" />
-    <meta name="twitter:description" content="Analytics and reporting for lawn care business operations." />
-<meta content="Analytics and reporting for Holliday Lawn &amp; Garden" name="description"/>
-<link href="assets/css/main.css" rel="stylesheet"/>
-<link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
-<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
-<link rel="manifest" href="manifest.json" />
-<meta content="#2e7d32" name="theme-color"/>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
- /* Mobile Menu Styles */
-
-        <footer class="footer" role="contentinfo">
-            <div class="footer-content">
-                <div class="footer-grid">
-                    <div class="footer-section">
-                        <h3>Contact Us</h3>
-                        <div class="footer-contact">
-                            <span class="footer-owner">Karl Holliday</span>
-                            <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
-                            <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
-                        </div>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="education.html">Education</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Customer Portal</h3>
-                        <ul>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
-                            <li><a href="customer-dashboard.html">Dashboard</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Legal</h3>
-                        <ul>
-                            <li><a href="privacy.html">Privacy Policy</a></li>
-                            <li><a href="terms.html">Terms of Service</a></li>
-                        </ul>
-                    </div>
-                </div>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden" />
+            <span style="font-weight: 700; color: #2c5530;">Admin Dashboard</span>
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="customers.html">Customers</a>
+            <a href="payments.html">Payments</a>
+            <a href="inventory.html">Inventory</a>
+            <a href="staff.html">Staff</a>
+            <a href="analytics.html" class="active">Analytics</a>
+            <a href="messages.html">Messages</a>
+            <button class="btn btn-danger" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </nav>
+    </header>
+    <main class="dashboard-main">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Analytics Dashboard</h1>
+                <p class="page-subtitle">Key metrics and trends for your business</p>
             </div>
-            <div class="footer-bottom">
-                <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="total-revenue">$0</div>
+                <div class="stat-label">Total Revenue</div>
             </div>
-        </footer>
-        <script>
-            const yearElement = document.getElementById('current-year');
-            if (yearElement) {
-                yearElement.textContent = new Date().getFullYear();
-            }
-        </script>
-
-<nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
-  <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
-  <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
-  <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
-  <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
-  <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
-  <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
-  <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
-</nav>
-
+            <div class="stat-card">
+                <div class="stat-number" id="total-customers">0</div>
+                <div class="stat-label">Total Customers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-appointments">0</div>
+                <div class="stat-label">Total Appointments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avg-rating">0.0</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+        </div>
+        <div class="charts-section">
+            <div class="chart-container">
+                <h3>Revenue Over Time</h3>
+                <canvas id="revenueChart" height="100"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Appointments by Service</h3>
+                <canvas id="serviceChart" height="100"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Customer Growth</h3>
+                <canvas id="customerChart" height="100"></canvas>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module" src="assets/js/analytics.js"></script>
 </body>
 </html>
