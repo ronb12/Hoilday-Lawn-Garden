@@ -127,7 +127,7 @@ function filterCustomers() {
         
         const matchesStatus = !statusFilterValue || customer.status === statusFilterValue;
         const matchesService = !serviceFilterValue || 
-            customer.services?.some(service => service.type === serviceFilterValue);
+            (Array.isArray(customer.services) && customer.services.some(service => service.type === serviceFilterValue));
 
         return matchesSearch && matchesStatus && matchesService;
     });
@@ -196,9 +196,9 @@ function renderCustomers() {
             </td>
             <td>
                 <div>
-                    ${customer.services?.map(service => 
+                    ${Array.isArray(customer.services) ? customer.services.map(service => 
                         `<span style="background: #e3f2fd; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; margin: 0.1rem;">${service.type}</span>`
-                    ).join(' ') || 'No services'}
+                    ).join(' ') : 'No services'}
                 </div>
             </td>
             <td>
