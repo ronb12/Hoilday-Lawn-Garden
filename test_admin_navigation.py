@@ -1,155 +1,164 @@
 #!/usr/bin/env python3
 """
-Automated test for admin dashboard navigation and authentication
-Tests if clicking "View All" buttons works without authentication issues
+Test script to check admin dashboard navigation for logout issues
 """
 
 import requests
 import time
 from urllib.parse import urljoin
-import re
 
-def test_admin_navigation():
-    base_url = "https://ronb12.github.io/Holliday-Lawn-Garden/"
-    
-    # Test pages to check
-    test_pages = [
-        "admin-dashboard.html",
-        "appointments.html", 
-        "customers.html",
-        "payments.html",
-        "analytics.html",
-        "inventory.html",
-        "staff.html",
-        "messages.html"
-    ]
-    
-    print("🔍 Testing Admin Dashboard Navigation")
-    print("=" * 50)
-    
-    results = []
-    
-    for page in test_pages:
-        url = urljoin(base_url, page)
-        print(f"\n📄 Testing: {page}")
+# Base URL
+BASE_URL = "https://ronb12.github.io/Holliday-Lawn-Garden"
+
+# Admin dashboard sections to test
+ADMIN_SECTIONS = [
+    "appointments.html",
+    "customers.html", 
+    "payments.html",
+    "analytics.html",
+    "inventory.html",
+    "staff.html",
+    "messages.html"
+]
+
+def test_page_access(url, page_name):
+    """Test if a page is accessible and check for authentication issues"""
+    try:
+        print(f"\n🔍 Testing {page_name}...")
+        response = requests.get(url, timeout=10)
         
-        try:
-            # Get the page content
-            response = requests.get(url, timeout=10)
-            response.raise_for_status()
-            
+        if response.status_code == 200:
             content = response.text
             
-            # Check for authentication issues
-            auth_issues = []
-            
-            # Check for loading overlays
-            if 'loading-overlay' in content:
-                auth_issues.append("Loading overlay found")
-            
-            # Check for authentication scripts
-            if 'admin-auth.js' in content:
-                auth_issues.append("Admin auth script found")
-            
-            # Check for "Checking authentication" text
-            if 'Checking authentication' in content:
-                auth_issues.append("Authentication checking text found")
-            
-            # Check for Firebase auth scripts
-            firebase_auth_patterns = [
-                'onAuthStateChanged',
-                'getAuth',
-                'signOut'
+            # Check for loading overlays that might cause issues
+            loading_indicators = [
+                "Loading...",
+                "loading-overlay",
+                "loading-content",
+                "spinner"
             ]
             
-            for pattern in firebase_auth_patterns:
-                if pattern in content:
-                    auth_issues.append(f"Firebase auth pattern: {pattern}")
+            loading_found = []
+            for indicator in loading_indicators:
+                if indicator in content:
+                    loading_found.append(indicator)
             
-            # Check for redirects to login
-            if 'admin-login.html' in content:
-                auth_issues.append("Login redirect found")
+            # Check for hide-loading.js script
+            has_hide_loading = "hide-loading.js" in content
             
-            # Check if page has proper admin header
-            has_admin_header = 'admin-header' in content
-            has_admin_nav = 'admin-nav' in content
+            # Check for Firebase config issues
+            firebase_issues = []
+            if "1:123456789:web:abcdefghijklmnop" in content:
+                firebase_issues.append("Wrong appId found")
+            if "messagingSenderId: \"123456789\"" in content:
+                firebase_issues.append("Wrong messagingSenderId found")
             
-            # Check for loading elements
-            loading_elements = re.findall(r'id="loading[^"]*"', content)
-            if loading_elements:
-                auth_issues.append(f"Loading elements: {loading_elements}")
+            # Check for admin header
+            has_admin_header = "admin-header" in content
             
-            # Determine status
-            if auth_issues:
-                status = "❌ AUTHENTICATION ISSUES"
-                print(f"   Status: {status}")
-                print(f"   Issues: {', '.join(auth_issues)}")
+            # Check for proper script includes
+            script_issues = []
+            if page_name != "appointments.html" and "appointments.js" not in content:
+                # Check if page has its own JS file
+                js_file = page_name.replace(".html", ".js")
+                if js_file not in content:
+                    script_issues.append(f"Missing {js_file} script")
+            
+            print(f"  ✅ Status: {response.status_code}")
+            print(f"  📄 Content length: {len(content)} characters")
+            print(f"  🎯 Admin header: {'✅' if has_admin_header else '❌'}")
+            print(f"  🚫 Hide loading script: {'✅' if has_hide_loading else '❌'}")
+            
+            if loading_found:
+                print(f"  ⚠️  Loading indicators found: {', '.join(loading_found)}")
             else:
-                status = "✅ NO AUTHENTICATION ISSUES"
-                print(f"   Status: {status}")
-            
-            # Check page structure
-            if has_admin_header and has_admin_nav:
-                structure = "✅ Proper admin structure"
+                print(f"  ✅ No problematic loading indicators")
+                
+            if firebase_issues:
+                print(f"  ❌ Firebase issues: {', '.join(firebase_issues)}")
             else:
-                structure = "⚠️  Missing admin structure"
+                print(f"  ✅ Firebase config looks correct")
+                
+            if script_issues:
+                print(f"  ❌ Script issues: {', '.join(script_issues)}")
+            else:
+                print(f"  ✅ Scripts look good")
             
-            print(f"   Structure: {structure}")
+            return {
+                "status": "success",
+                "has_loading": bool(loading_found),
+                "has_hide_loading": has_hide_loading,
+                "firebase_issues": firebase_issues,
+                "script_issues": script_issues,
+                "has_admin_header": has_admin_header
+            }
+        else:
+            print(f"  ❌ Status: {response.status_code}")
+            return {"status": "error", "code": response.status_code}
             
-            results.append({
-                'page': page,
-                'status': status,
-                'issues': auth_issues,
-                'has_admin_header': has_admin_header,
-                'has_admin_nav': has_admin_nav
-            })
-            
-        except requests.RequestException as e:
-            print(f"   ❌ Error accessing page: {e}")
-            results.append({
-                'page': page,
-                'status': "❌ ACCESS ERROR",
-                'issues': [str(e)],
-                'has_admin_header': False,
-                'has_admin_nav': False
-            })
+    except Exception as e:
+        print(f"  ❌ Error: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
+def main():
+    """Main test function"""
+    print("🚀 Starting Admin Dashboard Navigation Test")
+    print("=" * 50)
+    
+    results = {}
+    issues_found = []
+    
+    # Test main admin dashboard
+    print("\n📊 Testing Main Admin Dashboard...")
+    dashboard_result = test_page_access(f"{BASE_URL}/admin-dashboard.html", "admin-dashboard.html")
+    results["admin-dashboard.html"] = dashboard_result
+    
+    # Test all admin sections
+    for section in ADMIN_SECTIONS:
+        url = f"{BASE_URL}/{section}"
+        result = test_page_access(url, section)
+        results[section] = result
+        
+        # Check for potential issues
+        if result.get("status") == "success":
+            if result.get("has_loading") and not result.get("has_hide_loading"):
+                issues_found.append(f"{section}: Has loading overlay but no hide-loading.js")
+            if result.get("firebase_issues"):
+                issues_found.append(f"{section}: {', '.join(result['firebase_issues'])}")
+            if result.get("script_issues"):
+                issues_found.append(f"{section}: {', '.join(result['script_issues'])}")
+        else:
+            issues_found.append(f"{section}: {result.get('message', 'Access failed')}")
     
     # Summary
     print("\n" + "=" * 50)
-    print("📊 TEST SUMMARY")
+    print("📋 TEST SUMMARY")
     print("=" * 50)
     
-    successful_pages = [r for r in results if "NO AUTHENTICATION ISSUES" in r['status']]
-    problematic_pages = [r for r in results if "AUTHENTICATION ISSUES" in r['status']]
-    error_pages = [r for r in results if "ACCESS ERROR" in r['status']]
+    successful_tests = sum(1 for r in results.values() if r.get("status") == "success")
+    total_tests = len(results)
     
-    print(f"✅ Successful pages: {len(successful_pages)}/{len(test_pages)}")
-    print(f"❌ Pages with auth issues: {len(problematic_pages)}/{len(test_pages)}")
-    print(f"🚫 Pages with access errors: {len(error_pages)}/{len(test_pages)}")
+    print(f"✅ Successful tests: {successful_tests}/{total_tests}")
+    print(f"❌ Failed tests: {total_tests - successful_tests}")
     
-    if successful_pages:
-        print(f"\n✅ Pages working correctly:")
-        for page in successful_pages:
-            print(f"   - {page['page']}")
-    
-    if problematic_pages:
-        print(f"\n❌ Pages with authentication issues:")
-        for page in problematic_pages:
-            print(f"   - {page['page']}: {', '.join(page['issues'])}")
-    
-    if error_pages:
-        print(f"\n🚫 Pages with access errors:")
-        for page in error_pages:
-            print(f"   - {page['page']}: {', '.join(page['issues'])}")
-    
-    # Overall result
-    if len(problematic_pages) == 0 and len(error_pages) == 0:
-        print(f"\n🎉 SUCCESS: All admin pages are working correctly!")
-        return True
+    if issues_found:
+        print(f"\n⚠️  ISSUES FOUND ({len(issues_found)}):")
+        for issue in issues_found:
+            print(f"  • {issue}")
     else:
-        print(f"\n⚠️  ISSUES FOUND: Some pages have authentication problems")
-        return False
+        print("\n🎉 No issues found! All pages should work correctly.")
+    
+    # Specific recommendations
+    print(f"\n💡 RECOMMENDATIONS:")
+    if any(r.get("has_loading") and not r.get("has_hide_loading") for r in results.values()):
+        print("  • Add hide-loading.js to pages with loading overlays")
+    if any(r.get("firebase_issues") for r in results.values()):
+        print("  • Fix Firebase configuration in affected JS files")
+    if any(r.get("script_issues") for r in results.values()):
+        print("  • Add missing script includes")
+    
+    return len(issues_found) == 0
 
 if __name__ == "__main__":
-    success = test_admin_navigation()
+    success = main()
     exit(0 if success else 1)
