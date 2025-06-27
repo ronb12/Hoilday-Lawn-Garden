@@ -57,48 +57,31 @@ function isOnLoginPage() {
   return window.location.pathname.includes('admin-login.html');
 }
 
-// Check if we came from admin dashboard (referrer check)
-function cameFromAdminDashboard() {
-  return document.referrer.includes('admin-dashboard.html');
-}
-
 // Check authentication state
 onAuthStateChanged(auth, async (user) => {
   console.log("Admin auth check - user:", user ? user.email : "null");
   console.log("Current page:", window.location.pathname);
-  console.log("Referrer:", document.referrer);
-  console.log("Came from admin dashboard:", cameFromAdminDashboard());
   
   if (user) {
-    // User is signed in, check if they're an admin
+    // User is signed in - immediately hide loading and check admin status
+    console.log("User is signed in, checking admin status...");
+    hideLoading(); // Hide loading immediately for authenticated users
+    
     try {
-      console.log("Checking admin status for user:", user.email);
       const userDoc = await getDoc(doc(db, "users", user.uid));
-      console.log("User doc exists:", userDoc.exists());
-      
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        console.log("User role:", userData.role);
-        
-        if (userData.role === "admin") {
-          // User is admin, allow access
-          console.log("Admin access granted for:", user.email);
-          hideLoading();
-          return; // Success - don't redirect
-        } else {
-          console.log("User is not admin, role is:", userData.role);
-        }
+      if (userDoc.exists() && userDoc.data().role === "admin") {
+        // User is admin, allow access
+        console.log("Admin access confirmed for:", user.email);
+        return; // Success - page is ready
       } else {
-        console.log("User document does not exist");
-      }
-      
-      // User is not admin or document doesn't exist
-      if (!isOnLoginPage()) {
-        console.log("Access denied - redirecting to login");
-        showError("Access denied. Admin privileges required.");
-        setTimeout(() => {
-          window.location.href = "admin-login.html";
-        }, 2000);
+        // User is not admin
+        console.log("Access denied - user is not admin");
+        if (!isOnLoginPage()) {
+          showError("Access denied. Admin privileges required.");
+          setTimeout(() => {
+            window.location.href = "admin-login.html";
+          }, 2000);
+        }
       }
     } catch (error) {
       console.error("Error checking admin status:", error);
@@ -110,30 +93,10 @@ onAuthStateChanged(auth, async (user) => {
       }
     }
   } else {
-    // No user is signed in
-    console.log("No user signed in");
-    
-    // If we came from admin dashboard, the user was likely logged in there
-    // This might be a temporary auth state issue, so let's wait a bit
-    if (cameFromAdminDashboard()) {
-      console.log("Came from admin dashboard, waiting for auth state to settle...");
-      setTimeout(() => {
-        // Check auth state again after a short delay
-        const currentUser = auth.currentUser;
-        if (currentUser) {
-          console.log("Auth state recovered, user:", currentUser.email);
-          hideLoading();
-        } else {
-          console.log("Still no user, redirecting to login");
-          showError("Please log in to access the admin dashboard.");
-          setTimeout(() => {
-            window.location.href = "admin-login.html";
-          }, 2000);
-        }
-      }, 1000);
-    } else if (!isOnLoginPage()) {
-      console.log("Redirecting to login page");
-      showError("Please log in to access the admin dashboard.");
+    // No user is signed in - show loading and redirect
+    console.log("No user signed in, redirecting to login");
+    showLoading("Please log in to access the admin dashboard.");
+    if (!isOnLoginPage()) {
       setTimeout(() => {
         window.location.href = "admin-login.html";
       }, 2000);
@@ -141,10 +104,14 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// Initialize on DOM load
+// Initialize on DOM load - don't show loading by default
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Admin auth DOM loaded, checking authentication...");
-  showLoading("Checking authentication...");
+  console.log("Admin auth DOM loaded");
+  // Only show loading if we don't have a user yet
+  const currentUser = auth.currentUser;
+  if (!currentUser) {
+    showLoading("Checking authentication...");
+  }
 });
 
 // Export for use in other modules
