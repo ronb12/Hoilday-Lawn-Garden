@@ -38,6 +38,202 @@
             }
         }
         
+        /* Professional Header Styles */
+        .main-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 1rem;
+            min-height: 80px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            flex-shrink: 0;
+            margin-right: 2rem;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            display: block;
+            margin: 0;
+        }
+
+        #nav-menu {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            flex: 1;
+            gap: 1rem;
+        }
+     
+        .nav-links { 
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 1.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            flex: 1;
+        }
+        
+        .nav-links a { 
+            padding: 0.5rem 1rem;
+            color: #333;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            display: block;
+            border-radius: 6px;
+        }
+        
+        .nav-links a:hover {
+            color: #2e7d32;
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: translateY(-1px);
+        }
+        
+        .nav-links li { 
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .login-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-left: 1rem;
+        }
+        
+        .btn-login {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            min-width: 120px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        
+        .btn-customer {
+            background: #2e7d32;
+            color: white;
+        }
+        
+        .btn-admin {
+            background: #1565c0;
+            color: white;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            z-index: 1000;
+            position: relative;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            margin-left: 1rem;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #2e7d32;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 0 1rem;
+            }
+            
+            #nav-menu {
+                justify-content: flex-end;
+            }
+            
+            .nav-links { 
+                display: none; 
+                position: absolute; 
+                top: 100%; 
+                left: 0; 
+                right: 0; 
+                background: #4caf50; 
+                padding: 1rem; 
+                flex-direction: column; 
+                align-items: center; 
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
+            
+            .nav-links.active { 
+                display: flex; 
+            }
+            
+            .hamburger { 
+                display: block; 
+            }
+            
+            .login-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+                margin-left: 0;
+            }
+            
+            .btn-login {
+                min-width: 140px;
+                font-size: 0.85rem;
+            }
+        }
+        
         .privacy-content {
             max-width: 800px;
             margin: 0 auto;
