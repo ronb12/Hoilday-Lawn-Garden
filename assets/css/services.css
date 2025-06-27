@@ -81,6 +81,25 @@
   left: 0;
 }
 
+/* Service card button styles */
+.service-card .btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-primary, #2e7d32);
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.service-card .btn:hover {
+  background-color: var(--color-primary-dark, #1b5e20);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
 /* CTA Section */
 .cta-section {
   background:
@@ -134,11 +153,30 @@
     padding: var(--spacing-md);
   }
 
+  /* Mobile-specific button styles - make Get Quote buttons smaller */
+  .service-card .btn {
+    width: auto;
+    min-width: 120px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    margin: 0.5rem auto;
+    display: inline-block;
+  }
+
   .cta-section {
     padding: var(--spacing-lg) var(--spacing-md);
   }
 
   .cta-section h2 {
     font-size: 1.75rem;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .service-card .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    min-width: 100px;
   }
 }
