@@ -1,26 +1,83 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, where, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, where, orderBy, onSnapshot, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-// Check authentication
-onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        try {
-            // Check if user is admin by looking up their role in Firestore
-            const userDoc = await getDoc(doc(db, "users", user.uid));
-            if (userDoc.exists() && userDoc.data().role === "admin") {
-                loadMessages();
-                setupEventListeners();
-            } else {
+
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+    authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+    projectId: "holiday-lawn-and-garden",
+    storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+    messagingSenderId: "135322230444",
+    appId: "1:135322230444:web:1a487b25a48aae07368909",
+    measurementId: "G-KD6TBWR4ZT"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+// Global variables
+let messages = [];
+let filteredMessages = [];
+let loadingDiv, messagesTable, errorDiv, searchInput, typeFilter, statusFilter, sortBySelect, messagesTbody;
+let totalMessagesEl, unreadMessagesEl, urgentMessagesEl, responseRateEl;
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing messages page...');
+    
+    // DOM elements
+    loadingDiv = document.getElementById('loading');
+    messagesTable = document.getElementById('messages-table');
+    errorDiv = document.getElementById('error');
+    searchInput = document.getElementById('search-message');
+    typeFilter = document.getElementById('recipient-filter');
+    statusFilter = document.getElementById('status-filter');
+    sortBySelect = document.getElementById('sort-by');
+    messagesTbody = document.getElementById('messages-tbody');
+    totalMessagesEl = document.getElementById('total-messages');
+    unreadMessagesEl = document.getElementById('sent-messages');
+    urgentMessagesEl = document.getElementById('failed-messages');
+    responseRateEl = document.getElementById('pending-messages');
+
+    console.log('DOM elements found:', {
+        loadingDiv: !!loadingDiv,
+        messagesTable: !!messagesTable,
+        errorDiv: !!errorDiv,
+        searchInput: !!searchInput,
+        typeFilter: !!typeFilter,
+        statusFilter: !!statusFilter,
+        sortBySelect: !!sortBySelect,
+        messagesTbody: !!messagesTbody,
+        totalMessagesEl: !!totalMessagesEl,
+        unreadMessagesEl: !!unreadMessagesEl,
+        urgentMessagesEl: !!urgentMessagesEl,
+        responseRateEl: !!responseRateEl
+    });
+
+    // Check authentication
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            try {
+                // Check if user is admin by looking up their role in Firestore
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists() && userDoc.data().role === "admin") {
+                    loadMessages();
+                    setupEventListeners();
+                } else {
+                    window.location.href = 'admin-login.html';
+                }
+            } catch (error) {
+                console.error('Error checking admin role:', error);
                 window.location.href = 'admin-login.html';
             }
-        } catch (error) {
-            console.error('Error checking admin role:', error);
+        } else {
             window.location.href = 'admin-login.html';
         }
-    } else {
-        window.location.href = 'admin-login.html';
-    }
+    });
 });
+
 // Load messages from Firebase
 async function loadMessages() {
     try {
