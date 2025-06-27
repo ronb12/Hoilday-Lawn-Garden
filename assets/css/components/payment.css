@@ -145,6 +145,43 @@
   .amount-wrapper input {
     font-size: var(--font-size-base);
   }
+
+  /* Mobile-specific help text formatting */
+  .help-text {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    text-align: left;
+  }
+
+  .help-text i {
+    margin-top: 0;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .help-text a {
+    display: block;
+    margin-top: 0.25rem;
+    padding: 0.5rem 0;
+  }
+
+  /* Stack contact information vertically on mobile */
+  .help-text br {
+    display: block;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .help-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .help-text a {
+    font-size: 0.9rem;
+    padding: 0.4rem 0;
+  }
 }
 
 /* Payment Styles - Green Theme */
