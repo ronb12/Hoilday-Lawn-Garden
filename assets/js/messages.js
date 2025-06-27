@@ -1,55 +1,25 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, where, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
-    authDomain: "holiday-lawn-and-garden.firebaseapp.com",
-    projectId: "holiday-lawn-and-garden",
-    storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
-    messagingSenderId: "135322230444",
-    appId: "1:135322230444:web:1a487b25a48aae07368909"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
-// DOM elements
-const messagesTable = document.getElementById('messages-table');
-const messagesTbody = document.getElementById('messages-tbody');
-const loadingDiv = document.getElementById('loading');
-const errorDiv = document.getElementById('error');
-const searchInput = document.getElementById('search-message');
-const typeFilter = document.getElementById('type-filter');
-const statusFilter = document.getElementById('status-filter');
-const sortBySelect = document.getElementById('sort-by');
-
-// Stats elements
-const totalMessagesEl = document.getElementById('total-messages');
-const unreadMessagesEl = document.getElementById('unread-messages');
-const urgentMessagesEl = document.getElementById('urgent-messages');
-const responseRateEl = document.getElementById('response-rate');
-
-let messages = [];
-let filteredMessages = [];
-
 // Check authentication
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     if (user) {
-        if (user.email && user.email.includes('admin')) {
-            loadMessages();
-            setupEventListeners();
-        } else {
+        try {
+            // Check if user is admin by looking up their role in Firestore
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (userDoc.exists() && userDoc.data().role === "admin") {
+                loadMessages();
+                setupEventListeners();
+            } else {
+                window.location.href = 'admin-login.html';
+            }
+        } catch (error) {
+            console.error('Error checking admin role:', error);
             window.location.href = 'admin-login.html';
         }
     } else {
         window.location.href = 'admin-login.html';
     }
 });
-
 // Load messages from Firebase
 async function loadMessages() {
     try {
