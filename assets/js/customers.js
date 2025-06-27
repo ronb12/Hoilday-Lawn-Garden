@@ -22,7 +22,7 @@ const customersTable = document.getElementById('customers-table');
 const customersTbody = document.getElementById('customers-tbody');
 const loadingDiv = document.getElementById('loading');
 const errorDiv = document.getElementById('error');
-const searchInput = document.getElementById('search-input');
+const searchInput = document.getElementById('search-customer');
 const statusFilter = document.getElementById('status-filter');
 const serviceFilter = document.getElementById('service-filter');
 const sortBySelect = document.getElementById('sort-by');
@@ -46,13 +46,16 @@ onAuthStateChanged(auth, async (user) => {
                 loadCustomers();
                 setupEventListeners();
             } else {
+                console.log('User is not admin, redirecting to login');
                 window.location.href = 'admin-login.html';
             }
         } catch (error) {
             console.error('Error checking admin role:', error);
-            window.location.href = 'admin-login.html';
+            // Don't immediately redirect on error, show error message instead
+            showError('Error verifying admin status. Please refresh the page or contact support.');
         }
     } else {
+        console.log('No user signed in, redirecting to login');
         window.location.href = 'admin-login.html';
     }
 });
@@ -111,10 +114,10 @@ function updateStats() {
 
 // Filter customers based on search and filters
 function filterCustomers() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const statusFilterValue = statusFilter.value;
-    const serviceFilterValue = serviceFilter.value;
-    const sortBy = sortBySelect.value;
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+    const statusFilterValue = statusFilter ? statusFilter.value : '';
+    const serviceFilterValue = serviceFilter ? serviceFilter.value : '';
+    const sortBy = sortBySelect ? sortBySelect.value : 'name';
 
     filteredCustomers = customers.filter(customer => {
         const matchesSearch = !searchTerm || 
@@ -232,10 +235,18 @@ function renderCustomers() {
 
 // Setup event listeners
 function setupEventListeners() {
-    searchInput.addEventListener('input', filterCustomers);
-    statusFilter.addEventListener('change', filterCustomers);
-    serviceFilter.addEventListener('change', filterCustomers);
-    sortBySelect.addEventListener('change', filterCustomers);
+    if (searchInput) {
+        searchInput.addEventListener('input', filterCustomers);
+    }
+    if (statusFilter) {
+        statusFilter.addEventListener('change', filterCustomers);
+    }
+    if (serviceFilter) {
+        serviceFilter.addEventListener('change', filterCustomers);
+    }
+    if (sortBySelect) {
+        sortBySelect.addEventListener('change', filterCustomers);
+    }
 }
 
 // Utility functions
