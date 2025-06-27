@@ -1,8 +1,22 @@
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 
-const auth = getAuth();
-const db = getFirestore();
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyACm0j7I8RX4ExIQRoejfk1HZMOQRGigBw",
+    authDomain: "holiday-lawn-and-garden.firebaseapp.com",
+    projectId: "holiday-lawn-and-garden",
+    storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
+    messagingSenderId: "135322230444",
+    appId: "1:135322230444:web:1a487b25a48aae07368909",
+    measurementId: "G-KD6TBWR4ZT"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
 document.addEventListener('DOMContentLoaded', () => {
   onAuthStateChanged(auth, async (user) => {
@@ -10,7 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = 'admin-login.html';
       return;
     }
-    // Optionally, check for admin role here
+    // Check if user is admin
+    try {
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (!userDoc.exists() || userDoc.data().role !== "admin") {
+        window.location.href = 'admin-login.html';
+        return;
+      }
+    } catch (error) {
+      console.error('Error checking admin role:', error);
+      window.location.href = 'admin-login.html';
+      return;
+    }
   });
 
   // Logout button
@@ -37,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Staff member added successfully!');
         form.reset();
       } catch (err) {
-        alert('Error adding staff: ' + err.message);
+        alert('Error adding staff member: ' + err.message);
       }
     });
   }
-}); 
+});
