@@ -3,12 +3,12 @@
   "short_name": "Holliday's",
   "lang": "en",
   "dir": "ltr",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2e7d32",
   "orientation": "portrait",
-  "scope": "/",
+  "scope": "./",
   "description": "Professional landscaping and garden services",
   "icons": [
     {
@@ -46,21 +46,21 @@
       "name": "Book Service",
       "short_name": "Book",
       "description": "Book a lawn care service",
-      "url": "/services.html",
+      "url": "./services.html",
       "icons": [{ "src": "assets/images/favicon/android-chrome-192x192.png", "sizes": "192x192" }]
     },
     {
       "name": "Pay Bill",
       "short_name": "Pay",
       "description": "Pay your lawn care bill",
-      "url": "/pay-your-bill.html",
+      "url": "./pay-your-bill.html",
       "icons": [{ "src": "assets/images/favicon/android-chrome-192x192.png", "sizes": "192x192" }]
     },
     {
       "name": "Contact",
       "short_name": "Contact",
       "description": "Contact Holliday's Lawn & Garden",
-      "url": "/contact.html",
+      "url": "./contact.html",
       "icons": [{ "src": "assets/images/favicon/android-chrome-192x192.png", "sizes": "192x192" }]
     }
   ],

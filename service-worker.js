@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v14';
+const CACHE_VERSION = 'v15';
 const CACHE_NAME = `holliday-cache-${CACHE_VERSION}`;
 const MAX_CACHE_SIZE = 25 * 1024 * 1024; // Reduced to 25MB limit
 const MAX_CACHE_ENTRIES = 10; // Reduced to 10 entries
@@ -73,14 +73,14 @@ self.addEventListener('install', event => {
       return caches.open(CACHE_NAME).then(cache => {
         console.log('Opened cache:', CACHE_NAME);
         
-        // Cache only essential assets
+        // Cache only essential assets with relative paths
         const essentialAssets = [
-          '/',
-          '/index.html',
-          '/assets/css/main.min.css',
-          '/assets/images/hollidays-logo.optimized-1280.png',
-          '/manifest.json',
-          '/offline.html'
+          './',
+          './index.html',
+          './assets/css/main.min.css',
+          './assets/images/hollidays-logo.optimized-1280.png',
+          './manifest.json',
+          './offline.html'
         ];
         
         const cachePromises = essentialAssets.map(asset => {
@@ -179,7 +179,7 @@ self.addEventListener('fetch', event => {
           
           // Return offline page for HTML requests
           if (event.request.headers.get('accept')?.includes('text/html')) {
-            return caches.match('/offline.html');
+            return caches.match('./offline.html');
           }
           
           return new Response('Network error', {
