@@ -1,1 +1,348 @@
-<!DOCTYPE html><html><head><title>Setup Inventory Collections</title></head><body><h1>Inventory Collections Setup</h1><p>This page is under construction. Please check back later.</p><a href="admin-dashboard.html">Back to Dashboard</a></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Setup Inventory Collections - Holliday's Lawn & Garden</title>
+    <link href="assets/css/main.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #4caf50;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: #45a049;
+        }
+        
+        .setup-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .setup-section h3 {
+            color: #2c5530;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .setup-section h3 i {
+            color: #4caf50;
+        }
+        
+        .btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 1rem 0;
+            width: 100%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-secondary {
+            background: #2196f3;
+        }
+        
+        .btn-secondary:hover {
+            background: #1976d2;
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+        }
+        
+        .btn-danger {
+            background: #f44336;
+        }
+        
+        .btn-danger:hover {
+            background: #d32f2f;
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+        }
+        
+        .status {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 1rem;
+            border-radius: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .log-entry {
+            margin-bottom: 0.5rem;
+            padding: 0.25rem 0;
+        }
+        
+        .log-entry.success {
+            color: #155724;
+        }
+        
+        .log-entry.error {
+            color: #721c24;
+        }
+        
+        .log-entry.info {
+            color: #0c5460;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #4caf50;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4caf50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <a href="admin-dashboard.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Admin Dashboard
+            </a>
+            
+            <div class="header">
+                <h1><i class="fas fa-boxes"></i> Inventory Collections Setup</h1>
+                <p>Initialize and configure inventory management system for Holliday's Lawn & Garden</p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalItems">0</div>
+                    <div class="stat-label">Total Items</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="categories">0</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="lowStock">0</div>
+                    <div class="stat-label">Low Stock</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalValue">$0</div>
+                    <div class="stat-label">Total Value</div>
+                </div>
+            </div>
+            
+            <div class="setup-section">
+                <h3><i class="fas fa-database"></i> Database Initialization</h3>
+                <p>Set up the initial inventory collections and sample data in Firebase Firestore.</p>
+                <button class="btn" id="initCollections">
+                    <i class="fas fa-play"></i>
+                    Initialize Collections
+                </button>
+                <div id="initStatus"></div>
+            </div>
+            
+            <div class="setup-section">
+                <h3><i class="fas fa-seedling"></i> Sample Data</h3>
+                <p>Add sample inventory items to get started with the system.</p>
+                <button class="btn btn-secondary" id="addSampleData">
+                    <i class="fas fa-plus"></i>
+                    Add Sample Data
+                </button>
+                <div id="sampleDataStatus"></div>
+            </div>
+            
+            <div class="setup-section">
+                <h3><i class="fas fa-tools"></i> System Configuration</h3>
+                <p>Configure inventory categories, units, and default settings.</p>
+                <button class="btn btn-secondary" id="configureSystem">
+                    <i class="fas fa-cog"></i>
+                    Configure System
+                </button>
+                <div id="configStatus"></div>
+            </div>
+            
+            <div class="setup-section">
+                <h3><i class="fas fa-trash"></i> Reset System</h3>
+                <p>Clear all inventory data and reset to initial state. <strong>Warning: This will delete all existing data!</strong></p>
+                <button class="btn btn-danger" id="resetSystem">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Reset All Data
+                </button>
+                <div id="resetStatus"></div>
+            </div>
+            
+            <div class="progress-bar" id="progressBar" style="display: none;">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="setup-section">
+                <h3><i class="fas fa-list"></i> Setup Log</h3>
+                <p>View detailed logs of the setup process.</p>
+                <div class="log" id="setupLog">
+                    <div class="log-entry info">System ready. Click "Initialize Collections" to begin setup.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="assets/js/setup-inventory-collections.js"></script>
+</body>
+</html>
