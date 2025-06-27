@@ -8,8 +8,8 @@ const firebaseConfig = {
     authDomain: "holiday-lawn-and-garden.firebaseapp.com",
     projectId: "holiday-lawn-and-garden",
     storageBucket: "holiday-lawn-and-garden.firebasestorage.app",
-    messagingSenderId: "123456789",
-    appId: "1:123456789:web:abcdefghijklmnop"
+    messagingSenderId: "135322230444",
+    appId: "1:135322230444:web:1a487b25a48aae07368909"
 };
 
 // Initialize Firebase
