@@ -385,6 +385,39 @@
             color: rgba(255, 255, 255, 0.8);
         }
         
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .footer-section ul li i {
+            margin-right: 0.5rem;
+            width: 16px;
+        }
+        
+        .copyright {
+            text-align: center;
+        }
+        
         /* Mobile Responsive for Hero and Footer */
         @media (max-width: 768px) {
             .hero-content h1 {
@@ -409,15 +442,19 @@
 <body>
     <header class="main-header">
         <div class="logo">
-            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden" />
+            <a href="index.html">
+                <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden" />
+            </a>
         </div>
         <nav id="nav-menu">
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Services</a></li>
                 <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="faq.html">FAQ</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
             </ul>
             <div class="login-buttons">
                 <a href="login.html" class="btn-login btn-customer">
@@ -425,7 +462,7 @@
                     Customer Login
                 </a>
                 <a href="admin-login.html" class="btn-login btn-admin">
-                    <i class="fas fa-cog"></i>
+                    <i class="fas fa-lock"></i>
                     Admin Login
                 </a>
             </div>
@@ -539,16 +576,28 @@
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h3>Holliday's Lawn & Garden</h3>
-                <p>Professional lawn care and garden services for your home and business.</p>
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
+                    <li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
+                </ul>
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
                     <li><a href="services.html">Services</a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li><a href="education.html">Education</a></li>
                     <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Portal</h3>
+                <ul>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                    <li><a href="customer-dashboard.html">Dashboard</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -559,13 +608,27 @@
                 </ul>
             </div>
             <div class="footer-section">
-                <h3>Contact Info</h3>
-                <p>Phone: (555) 123-4567</p>
-                <p>Email: info@hollidayslawn.com</p>
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Holliday's Lawn & Garden. All rights reserved.</p>
+            <div class="copyright">
+                <p>© 2024 Holliday's Lawn & Garden. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
