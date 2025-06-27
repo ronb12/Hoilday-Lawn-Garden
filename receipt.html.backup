@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<title>Payment Receipt - Holliday's Lawn &amp; Garden</title>
+<!-- Meta Tags -->
+<meta content="View your payment receipt from Holliday's Lawn &amp; Garden" name="description"/>
+<meta content="#2e7d32" name="theme-color"/>
+<!-- Stylesheets -->
+<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<!-- Favicon -->
+<link href="assets/images/favicon/favicon-32x32.png" rel="icon" type="image/png"/>
+<style>
+        /* Mobile Menu Styles */

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Test - Holliday's Lawn & Garden</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-content {
+            padding: 100px 20px 20px;
+            min-height: 200vh;
+        }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    
+@media (max-width: 600px) { body { font-size: 16px; } }
+</style>
+</head>
+<body>
+    <div class="test-content">
+        <h1>Header Functionality Test</h1>
+        
+        <div class="test-section">
+            <h2>Test Results</h2>
+            <div id="test-results"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Manual Tests</h2>
+            <p><strong>1. Header Visibility:</strong> The header should be visible at the top of the page</p>
+            <p><strong>2. Fixed Position:</strong> The header should stay at the top when scrolling</p>
+            <p><strong>3. Logo:</strong> The logo should be visible and clickable</p>
+            <p><strong>4. Navigation:</strong> All navigation links should be visible on desktop</p>
+            <p><strong>5. Login Buttons:</strong> Customer and Admin login buttons should be visible</p>
+            <p><strong>6. Mobile Menu:</strong> On mobile, hamburger menu should appear and work</p>
+        </div>
+        
+        <div class="test-section">
+            <h2>Responsive Test</h2>
+            <p>Current window width: <span id="window-width"></span>px</p>
+            <p>Header height: <span id="header-height"></span>px</p>
+            <p>Body padding-top: <span id="body-padding"></span>px</p>
+        </div>
+    </div>
+
+    <script>
+        function addResult(message, type = 'info') {
+            const results = document.getElementById('test-results');
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.textContent = message;
+            results.appendChild(div);
+        }
+
+        function testHeader() {
+            const header = document.querySelector('.main-header');
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            const logo = document.querySelector('.logo img');
+            
+            // Test header existence
+            if (header) {
+                addResult('✅ Header element found', 'success');
+                
+                // Test header positioning
+                const position = window.getComputedStyle(header).position;
+                if (position === 'fixed') {
+                    addResult('✅ Header is fixed positioned', 'success');
+                } else {
+                    addResult(`❌ Header position is ${position}, should be fixed`, 'error');
+                }
+                
+                // Test header z-index
+                const zIndex = window.getComputedStyle(header).zIndex;
+                if (parseInt(zIndex) >= 1000) {
+                    addResult('✅ Header has high z-index', 'success');
+                } else {
+                    addResult(`❌ Header z-index is ${zIndex}, should be >= 1000`, 'error');
+                }
+            } else {
+                addResult('❌ Header element not found', 'error');
+            }
+            
+            // Test navigation
+            if (navLinks) {
+                addResult('✅ Navigation links found', 'success');
+            } else {
+                addResult('❌ Navigation links not found', 'error');
+            }
+            
+            // Test hamburger menu
+            if (hamburger) {
+                addResult('✅ Hamburger menu found', 'success');
+            } else {
+                addResult('❌ Hamburger menu not found', 'error');
+            }
+            
+            // Test logo
+            if (logo) {
+                addResult('✅ Logo found', 'success');
+            } else {
+                addResult('❌ Logo not found', 'error');
+            }
+            
+            // Test body padding
+            const bodyPadding = window.getComputedStyle(document.body).paddingTop;
+            if (parseInt(bodyPadding) >= 80) {
+                addResult('✅ Body has proper top padding', 'success');
+            } else {
+                addResult(`❌ Body padding-top is ${bodyPadding}, should be >= 80px`, 'error');
+            }
+        }
+
+        function updateResponsiveInfo() {
+            document.getElementById('window-width').textContent = window.innerWidth;
+            
+            const header = document.querySelector('.main-header');
+            if (header) {
+                document.getElementById('header-height').textContent = header.offsetHeight;
+            }
+            
+            const bodyPadding = window.getComputedStyle(document.body).paddingTop;
+            document.getElementById('body-padding').textContent = bodyPadding;
+        }
+
+        // Run tests when page loads
+        window.addEventListener('load', function() {
+            setTimeout(testHeader, 100);
+            updateResponsiveInfo();
+        });
+
+        // Update responsive info on resize
+        window.addEventListener('resize', updateResponsiveInfo);
+    </script>
+</body>
+</html> 

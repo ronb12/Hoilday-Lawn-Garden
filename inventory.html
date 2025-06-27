@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Inventory - Admin Dashboard</title>
+    <meta content="Manage inventory for Holliday Lawn &amp; Garden" name="description"/>
+    <link href="assets/css/main.min.css" rel="stylesheet"/>
+    <link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta content="#2e7d32" name="theme-color"/>
+    <style>
+        .dashboard-main { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .page-header { background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .page-title { font-size: 2rem; font-weight: 700; color: #2c5530; margin: 0; }
+        .page-subtitle { color: #666; margin: 0.5rem 0 0 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-card { background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: 700; color: #4caf50; margin-bottom: 0.5rem; }
+        .stat-label { color: #666; font-weight: 600; }
+        .filters-section { background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 2rem; }
+        .filters-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; align-items: end; }
+        .filter-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .filter-group label { font-weight: 600; color: #333; font-size: 0.9rem; }
+        .filter-group select, .filter-group input { padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; background: #fff; }
+        .inventory-table { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); overflow: hidden; }
+        .table-header { background: #f8f9fa; padding: 1rem 1.5rem; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; }
+        .table-title { font-weight: 600; color: #333; margin: 0; }
+        .table-actions { display: flex; gap: 0.5rem; }
+        .table-container { overflow-x: auto; }
+        .inventory-table table { width: 100%; border-collapse: collapse; }
+        .inventory-table th, .inventory-table td { padding: 1rem 1.5rem; text-align: left; border-bottom: 1px solid #e0e0e0; }
+        .inventory-table th { background: #f8f9fa; font-weight: 600; color: #333; font-size: 0.9rem; }
+        .inventory-table tr:hover { background: #f8f9fa; }
+        .item-status { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .status-instock { background: #e8f5e8; color: #2e7d32; }
+        .status-low { background: #fff3e0; color: #ef6c00; }
+        .status-out { background: #ffebee; color: #c62828; }
+        .action-buttons { display: flex; gap: 0.5rem; }
+        .btn-small { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+        .loading { text-align: center; padding: 3rem; color: #666; }
+        .error { background: #ffebee; color: #c62828; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; }
+        @media (max-width: 768px) { .dashboard-main { padding: 0 1rem; } .page-header { flex-direction: column; gap: 1rem; align-items: flex-start; } .filters-row { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: 1fr; } .table-container { font-size: 0.9rem; } .inventory-table th, .inventory-table td { padding: 0.75rem; } }
+    </style>
+</head>
+<body>
+    <div id="error-container" style="display: none; position: fixed; top: 20px; right: 20px; background: #ffebee; color: #c62828; padding: 1rem; border-radius: 6px; z-index: 10000; max-width: 400px;">
+        <div id="errorMessage"></div>
+    </div>
+    <header class="admin-header">
+        <div class="container header-content">
+            <div class="logo">
+                <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden" />
+                <span style="font-weight: 700; color: #2c5530;">Admin Dashboard</span>
+            </div>
+            <nav class="admin-nav">
+                <a href="admin-dashboard.html">Dashboard</a>
+                <a href="appointments.html">Appointments</a>
+                <a href="customers.html">Customers</a>
+                <a href="payments.html">Payments</a>
+                <a href="inventory.html" class="active">Inventory</a>
+                <a href="staff.html">Staff</a>
+                <a href="analytics.html">Analytics</a>
+                <a href="messages.html">Messages</a>
+                <button class="btn btn-danger" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </nav>
+        </div>
+    </header>
+    <main class="dashboard-main">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Inventory Management</h1>
+                <p class="page-subtitle">Track, add, and manage your inventory</p>
+            </div>
+            <a href="setup-inventory-collections.html" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Add Item
+            </a>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="total-items">0</div>
+                <div class="stat-label">Total Items</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="instock-items">0</div>
+                <div class="stat-label">In Stock</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="lowstock-items">0</div>
+                <div class="stat-label">Low Stock</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="outofstock-items">0</div>
+                <div class="stat-label">Out of Stock</div>
+            </div>
+        </div>
+        <div class="filters-section">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label for="search-item">Search Inventory</label>
+                    <input type="text" id="search-item" placeholder="Search by name, SKU, or category..." />
+                </div>
+                <div class="filter-group">
+                    <label for="status-filter">Status</label>
+                    <select id="status-filter">
+                        <option value="">All Statuses</option>
+                        <option value="instock">In Stock</option>
+                        <option value="low">Low Stock</option>
+                        <option value="out">Out of Stock</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="category-filter">Category</label>
+                    <select id="category-filter">
+                        <option value="">All Categories</option>
+                        <option value="equipment">Equipment</option>
+                        <option value="supplies">Supplies</option>
+                        <option value="fertilizer">Fertilizer</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="sort-by">Sort By</label>
+                    <select id="sort-by">
+                        <option value="name">Name</option>
+                        <option value="quantity">Quantity</option>
+                        <option value="category">Category</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="inventory-table">
+            <div class="table-header">
+                <h3 class="table-title">Inventory List</h3>
+                <div class="table-actions">
+                    <button class="btn btn-secondary btn-small" onclick="exportInventory()">
+                        <i class="fas fa-download"></i>
+                        Export
+                    </button>
+                    <button class="btn btn-primary btn-small" onclick="refreshInventory()">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+            <div class="table-container">
+                <div id="loading" class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Loading inventory...
+                </div>
+                <div id="error" class="error" style="display: none;"></div>
+                <table id="inventory-table" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>SKU</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Status</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-tbody">
+                        <!-- Inventory rows will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    
+    <script type="module" src="assets/js/inventory.js"></script>
+<script src="assets/js/hide-loading.js"></script>
+</body>
+</html>

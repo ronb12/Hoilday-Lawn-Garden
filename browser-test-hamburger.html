@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamburger Menu Browser Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .test-button {
+            background: #2e7d32;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .test-button:hover {
+            background: #1b5e20;
+        }
+        .test-results {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .status-pass {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .status-fail {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .status-info {
+            color: #17a2b8;
+            font-weight: bold;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .device-selector {
+            margin: 10px 0;
+        }
+        .device-button {
+            background: #6c757d;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 2px;
+        }
+        .device-button.active {
+            background: #2e7d32;
+        }
+    
+@media (max-width: 600px) { body { font-size: 16px; } }
+</style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🍔 Hamburger Menu Browser Test</h1>
+        
+        <div class="test-section">
+            <h2>Device Simulation</h2>
+            <div class="device-selector">
+                <button class="device-button active" onclick="setDevice('desktop')">Desktop (1200px)</button>
+                <button class="device-button" onclick="setDevice('tablet')">Tablet (768px)</button>
+                <button class="device-button" onclick="setDevice('mobile')">Mobile (375px)</button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>Test Controls</h3>
+            <button class="test-button" onclick="runAllTests()">Run All Tests</button>
+            <button class="test-button" onclick="testDesktop()">Test Desktop</button>
+            <button class="test-button" onclick="testMobile()">Test Mobile</button>
+            <button class="test-button" onclick="testHamburgerClick()">Test Hamburger Click</button>
+            <button class="test-button" onclick="clearResults()">Clear Results</button>
+        </div>
+        
+        <div class="test-section">
+            <h3>Live Preview</h3>
+            <iframe id="preview" src="index.html"></iframe>
+        </div>
+        
+        <div class="test-section">
+            <h3>Test Results</h3>
+            <div class="test-results" id="results">Test results will appear here...</div>
+        </div>
+    </div>
+
+    <script>
+        const results = document.getElementById('results');
+        const preview = document.getElementById('preview');
+        let currentDevice = 'desktop';
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const statusClass = type === 'pass' ? 'status-pass' : type === 'fail' ? 'status-fail' : 'status-info';
+            results.innerHTML += `<span class="${statusClass}">[${timestamp}] ${message}</span>\n`;
+            results.scrollTop = results.scrollHeight;
+        }
+        
+        function clearResults() {
+            results.innerHTML = '';
+        }
+        
+        function setDevice(device) {
+            currentDevice = device;
+            
+            // Update active button
+            document.querySelectorAll('.device-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Set iframe width
+            const widths = {
+                desktop: '1200px',
+                tablet: '768px',
+                mobile: '375px'
+            };
+            
+            preview.style.width = widths[device];
+            log(`Switched to ${device} view (${widths[device]})`);
+        }
+        
+        function testDesktop() {
+            log('Testing Desktop View...');
+            setDevice('desktop');
+            
+            setTimeout(() => {
+                try {
+                    const iframeDoc = preview.contentDocument || preview.contentWindow.document;
+                    const hamburger = iframeDoc.querySelector('.hamburger');
+                    
+                    if (hamburger) {
+                        const display = window.getComputedStyle(hamburger).display;
+                        if (display === 'none') {
+                            log('✅ Hamburger menu correctly hidden on desktop', 'pass');
+                        } else {
+                            log('❌ Hamburger menu should be hidden on desktop', 'fail');
+                        }
+                    } else {
+                        log('❌ Hamburger button not found', 'fail');
+                    }
+                } catch (error) {
+                    log(`❌ Error testing desktop: ${error.message}`, 'fail');
+                }
+            }, 1000);
+        }
+        
+        function testMobile() {
+            log('Testing Mobile View...');
+            setDevice('mobile');
+            
+            setTimeout(() => {
+                try {
+                    const iframeDoc = preview.contentDocument || preview.contentWindow.document;
+                    const hamburger = iframeDoc.querySelector('.hamburger');
+                    
+                    if (hamburger) {
+                        const display = window.getComputedStyle(hamburger).display;
+                        if (display === 'block') {
+                            log('✅ Hamburger menu correctly visible on mobile', 'pass');
+                        } else {
+                            log('❌ Hamburger menu should be visible on mobile', 'fail');
+                        }
+                    } else {
+                        log('❌ Hamburger button not found', 'fail');
+                    }
+                } catch (error) {
+                    log(`❌ Error testing mobile: ${error.message}`, 'fail');
+                }
+            }, 1000);
+        }
+        
+        function testHamburgerClick() {
+            log('Testing Hamburger Click Functionality...');
+            setDevice('mobile');
+            
+            setTimeout(() => {
+                try {
+                    const iframeDoc = preview.contentDocument || preview.contentWindow.document;
+                    const hamburger = iframeDoc.querySelector('.hamburger');
+                    const navLinks = iframeDoc.querySelector('.nav-links');
+                    
+                    if (hamburger && navLinks) {
+                        // Check initial state
+                        const initialDisplay = window.getComputedStyle(navLinks).display;
+                        log(`Initial nav-links display: ${initialDisplay}`);
+                        
+                        // Click hamburger
+                        hamburger.click();
+                        
+                        setTimeout(() => {
+                            const afterClickDisplay = window.getComputedStyle(navLinks).display;
+                            const hasActiveClass = navLinks.classList.contains('active');
+                            
+                            log(`After click nav-links display: ${afterClickDisplay}`);
+                            log(`Nav-links has active class: ${hasActiveClass}`);
+                            
+                            if (afterClickDisplay === 'flex' || hasActiveClass) {
+                                log('✅ Hamburger click successfully toggled menu', 'pass');
+                            } else {
+                                log('❌ Hamburger click did not toggle menu', 'fail');
+                            }
+                        }, 500);
+                    } else {
+                        log('❌ Required elements not found for click test', 'fail');
+                    }
+                } catch (error) {
+                    log(`❌ Error testing hamburger click: ${error.message}`, 'fail');
+                }
+            }, 1000);
+        }
+        
+        function runAllTests() {
+            clearResults();
+            log('🚀 Starting comprehensive hamburger menu tests...');
+            
+            setTimeout(() => testDesktop(), 500);
+            setTimeout(() => testMobile(), 2000);
+            setTimeout(() => testHamburgerClick(), 3500);
+            
+            setTimeout(() => {
+                log('🎉 All tests completed!');
+                log('Check the results above for any issues.');
+            }, 6000);
+        }
+        
+        // Auto-run tests on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                log('📱 Hamburger Menu Browser Test Ready');
+                log('Click "Run All Tests" to begin testing');
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

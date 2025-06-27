@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile - Holliday's Lawn & Garden</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Update your profile information, contact details, and preferences for Holliday's Lawn & Garden services.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png?v=1.0.1" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png?v=1.0.1" sizes="16x16">
+    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico?v=1.0.1">
+    <link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.png?v=1.0.1">
+    <link rel="manifest" href="manifest.json?v=1.0.1">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/mobile-enhancements.css">
+    <link rel="stylesheet" href="assets/css/main.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Montserrat', -apple-system, "system-ui", "Segoe UI", Roboto, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding-top: 70px;
+        }
+
+        .profile-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .profile-header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .profile-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-section h2 {
+            color: #2e7d32;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-section h2 i {
+            color: #4caf50;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .address-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .address-grid .form-group:first-child {
+            grid-column: 1 / -1;
+        }
+
+        .preferences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #2e7d32;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1b5e20;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .notification.success {
+            background: #4caf50;
+        }
+
+        .notification.error {
+            background: #f44336;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Header Styles */
+        .main-header {
+            background: #fff !important;
+            min-height: 70px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 0 2rem !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 9999 !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .header-content {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            max-width: 1200px !important;
+            margin: 0 auto !important;
+        }
+
+        .logo {
+            display: flex !important;
+            align-items: center !important;
+            flex-shrink: 0 !important;
+        }
+
+        .logo img {
+            height: 50px !important;
+            width: auto !important;
+            display: block !important;
+        }
+
+        #nav-menu {
+            display: flex !important;
+            align-items: center !important;
+            flex-grow: 1 !important;
+            justify-content: flex-end !important;
+        }
+
+        .nav-links { 
+            display: flex !important;
+            align-items: center !important;
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            gap: 2rem !important;
+            flex-wrap: nowrap !important;
+        }
+
+        .nav-links a { 
+            padding: 0.5rem 0.75rem !important; 
+            color: #333 !important; 
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            transition: color 0.3s ease !important;
+            white-space: nowrap !important;
+            font-size: 0.95rem !important;
+            display: block !important;
+        }
+
+        .nav-links a:hover {
+            color: #2e7d32 !important;
+        }
+
+        .nav-links li { 
+            display: flex !important; 
+            align-items: center !important; 
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .user-actions {
+            display: flex !important;
+            align-items: center !important;
+            margin-left: 2rem !important;
+        }
+
+        .btn-logout {
+            padding: 0.5rem 1rem !important;
+            background: #f44336 !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 4px !important;
+            font-weight: 500 !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            font-size: 0.9rem !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+        }
+
+        .btn-logout:hover {
+            background: #d32f2f !important;
+            transform: translateY(-1px) !important;
+        }
+
+        .btn-logout i {
+            font-size: 1rem !important;
+        }
+
+        /* Mobile Tab Bar */
+        .mobile-tab-bar {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+
+            .profile-header {
+                padding: 1.5rem;
+            }
+
+            .back-button {
+                position: static;
+                margin-bottom: 1rem;
+                justify-content: center;
+            }
+
+            .profile-header h1 {
+                font-size: 2rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .address-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .address-grid .form-group:first-child {
+                grid-column: 1;
+            }
+
+            .preferences-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+
+            .main-header {
+                padding: 0 1rem !important;
+            }
+
+            .nav-links { 
+                display: none !important; 
+            }
+
+            .mobile-tab-bar {
+                display: flex !important;
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                background: white !important;
+                border-top: 1px solid #e0e0e0 !important;
+                z-index: 1000 !important;
+                padding: 0.5rem 0 !important;
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.1) !important;
+            }
+
+            .mobile-tab-bar a {
+                flex: 1 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                padding: 0.5rem !important;
+                color: #666 !important;
+                text-decoration: none !important;
+                font-size: 0.8rem !important;
+                transition: color 0.3s ease !important;
+            }
+
+            .mobile-tab-bar a:hover,
+            .mobile-tab-bar a.active {
+                color: #2e7d32 !important;
+            }
+
+            .mobile-tab-bar i {
+                font-size: 1.2rem !important;
+                margin-bottom: 0.25rem !important;
+            }
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: #2e7d32;
+            color: white;
+            padding: 3rem 0 1rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-owner {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-contact a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-contact a:hover {
+            color: white;
+        }
+
+        .footer-contact i {
+            width: 16px;
+            text-align: center;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 1rem;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                padding: 2rem 0 1rem 0;
+            }
+
+            .footer-content {
+                padding: 0 1rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+        }
+    </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo">
+            </div>
+            <nav id="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="pay-your-bill.html">Pay Bill</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="user-actions">
+                    <button id="logout-btn" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="profile-container">
+        <div class="profile-header">
+            <a href="customer-dashboard.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
+            <h1><i class="fas fa-user-edit"></i> Edit Profile</h1>
+            <p>Update your personal information, contact details, and service preferences</p>
+        </div>
+
+        <div class="profile-content">
+            <form id="profile-form">
+                <!-- Personal Information -->
+                <div class="form-section">
+                    <h2><i class="fas fa-user"></i> Personal Information</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Information -->
+                <div class="form-section">
+                    <h2><i class="fas fa-map-marker-alt"></i> Address Information</h2>
+                    <div class="address-grid">
+                        <div class="form-group">
+                            <label for="streetAddress">Street Address *</label>
+                            <input type="text" id="streetAddress" name="streetAddress" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State *</label>
+                            <select id="state" name="state" required>
+                                <option value="">Select State</option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode">ZIP Code *</label>
+                            <input type="text" id="zipCode" name="zipCode" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Preferences -->
+                <div class="form-section">
+                    <h2><i class="fas fa-cog"></i> Service Preferences</h2>
+                    <div class="preferences-grid">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="lawnMaintenance" name="services" value="lawnMaintenance">
+                            <label for="lawnMaintenance">Lawn Maintenance</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="landscaping" name="services" value="landscaping">
+                            <label for="landscaping">Landscaping</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="gardenCare" name="services" value="gardenCare">
+                            <label for="gardenCare">Garden Care</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="commercialServices" name="services" value="commercialServices">
+                            <label for="commercialServices">Commercial Services</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="pressureWashing" name="services" value="pressureWashing">
+                            <label for="pressureWashing">Pressure Washing</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Communication Preferences -->
+                <div class="form-section">
+                    <h2><i class="fas fa-bell"></i> Communication Preferences</h2>
+                    <div class="preferences-grid">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="emailNotifications" name="notifications" value="email">
+                            <label for="emailNotifications">Email Notifications</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="smsNotifications" name="notifications" value="sms">
+                            <label for="smsNotifications">SMS Notifications</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="serviceReminders" name="notifications" value="reminders">
+                            <label for="serviceReminders">Service Reminders</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="billingNotifications" name="notifications" value="billing">
+                            <label for="billingNotifications">Billing Notifications</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-btn">
+                        <i class="fas fa-times"></i>
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="save-btn">
+                        <i class="fas fa-save"></i>
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="footer-contact">
+                        <span class="footer-owner">Karl Holliday</span>
+                        <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
+                        <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Portal</h3>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                        <li><a href="customer-dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Tab Bar -->
+    <nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
+        <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
+        <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
+        <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
+        <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
+        <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
+        <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
+    </nav>
+
+    <script>
+        // Profile page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+
+            // Load user data from localStorage
+            const userData = localStorage.getItem('user');
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    populateForm(user);
+                } catch (error) {
+                    console.log('Error loading user data:', error);
+                }
+            }
+
+            // Form submission
+            const profileForm = document.getElementById('profile-form');
+            if (profileForm) {
+                profileForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    saveProfile();
+                });
+            }
+
+            // Cancel button
+            const cancelBtn = document.getElementById('cancel-btn');
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to cancel? Any unsaved changes will be lost.')) {
+                        window.location.href = 'customer-dashboard.html';
+                    }
+                });
+            }
+
+            // Logout functionality
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to logout?')) {
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('userToken');
+                        sessionStorage.clear();
+                        window.location.href = 'login.html';
+                    }
+                });
+            }
+
+            function populateForm(user) {
+                // Populate form fields with user data
+                const fields = ['firstName', 'lastName', 'email', 'phone', 'streetAddress', 'city', 'state', 'zipCode'];
+                
+                fields.forEach(field => {
+                    const element = document.getElementById(field);
+                    if (element && user[field]) {
+                        element.value = user[field];
+                    }
+                });
+
+                // Populate checkboxes
+                if (user.services) {
+                    user.services.forEach(service => {
+                        const checkbox = document.getElementById(service);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+
+                if (user.notifications) {
+                    user.notifications.forEach(notification => {
+                        const checkbox = document.getElementById(notification + 'Notifications');
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+            }
+
+            function saveProfile() {
+                const saveBtn = document.getElementById('save-btn');
+                const originalText = saveBtn.innerHTML;
+                
+                // Show loading state
+                saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+                saveBtn.disabled = true;
+
+                // Collect form data
+                const formData = new FormData(profileForm);
+                const userData = {};
+
+                // Process form data
+                for (let [key, value] of formData.entries()) {
+                    if (key === 'services' || key === 'notifications') {
+                        if (!userData[key]) userData[key] = [];
+                        userData[key].push(value);
+                    } else {
+                        userData[key] = value;
+                    }
+                }
+
+                // Simulate API call (replace with actual API call)
+                setTimeout(() => {
+                    // Save to localStorage
+                    localStorage.setItem('user', JSON.stringify(userData));
+                    
+                    // Show success message
+                    showNotification('Profile updated successfully!', 'success');
+                    
+                    // Reset button
+                    saveBtn.innerHTML = originalText;
+                    saveBtn.disabled = false;
+                    
+                    // Redirect to dashboard after a short delay
+                    setTimeout(() => {
+                        window.location.href = 'customer-dashboard.html';
+                    }, 1500);
+                }, 1000);
+            }
+
+            function showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html> 

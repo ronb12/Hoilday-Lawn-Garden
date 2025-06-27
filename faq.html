@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frequently Asked Questions | Holliday's Lawn & Garden</title>
+    <meta name="description" content="Find answers to common questions about our lawn care and landscaping services. Get expert advice on maintenance, scheduling, and more." />
+    <link href="assets/css/hero.css?v=1.0.5" rel="stylesheet" />
+    <link href="assets/css/mobile-enhancements.css" rel="stylesheet" />
+    <link href="assets/css/components/footer.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+    <style>
+        /* Header Styles */
+        .main-header {
+            background: #fff !important;
+            min-height: 70px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 0 2rem !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 9999 !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        
+        .logo {
+            display: flex !important;
+            align-items: center !important;
+            flex-shrink: 0 !important;
+        }
+        
+        .logo img {
+            height: 50px !important;
+            width: auto !important;
+            display: block !important;
+        }
+        
+        #nav-menu {
+            display: flex !important;
+            align-items: center !important;
+            flex-grow: 1 !important;
+            justify-content: flex-end !important;
+        }
+        
+        .nav-links { 
+            display: flex !important;
+            align-items: center !important;
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            gap: 2rem !important;
+            flex-wrap: nowrap !important;
+        }
+        
+        .nav-links a { 
+            padding: 0.5rem 0.75rem !important; 
+            color: #333 !important; 
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            transition: color 0.3s ease !important;
+            white-space: nowrap !important;
+            font-size: 0.95rem !important;
+            display: block !important;
+        }
+        
+        .nav-links a:hover {
+            color: #2e7d32 !important;
+        }
+        
+        .nav-links li { 
+            display: flex !important; 
+            align-items: center !important; 
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        .login-buttons {
+            display: flex !important;
+            gap: 1rem !important;
+            align-items: center !important;
+            margin-left: 1rem !important;
+        }
+        
+        .btn-login {
+            padding: 0.5rem 1rem !important;
+            border-radius: 4px !important;
+            text-decoration: none !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+            font-size: 0.9rem !important;
+            min-width: 120px !important;
+            text-align: center !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.5rem !important;
+            white-space: nowrap !important;
+        }
+        
+        .btn-customer {
+            background: #2e7d32 !important;
+            color: white !important;
+        }
+        
+        .btn-admin {
+            background: #1565c0 !important;
+            color: white !important;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+        }
+        
+        /* Mobile Tab Bar */
+        .mobile-tab-bar {
+            display: none !important;
+        }
+        
+        @media (max-width: 768px) {
+            
+            .mobile-tab-bar {
+                display: flex !important;
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 64px !important;
+                background: #fff !important;
+                border-top: 1px solid #e0e0e0 !important;
+                box-shadow: 0 -2px 8px rgba(0,0,0,0.06) !important;
+                z-index: 2000 !important;
+                justify-content: space-around !important;
+                align-items: center !important;
+            }
+            .mobile-tab-bar a {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-decoration: none !important;
+                color: #666 !important;
+                font-size: 0.8rem !important;
+                gap: 0.25rem !important;
+            }
+            .mobile-tab-bar a.active {
+                color: #2e7d32 !important;
+            }
+            .mobile-tab-bar i {
+                font-size: 1.2rem !important;
+            }
+            body {
+                padding-bottom: 80px !important;
+            }
+            .faq-container {
+                padding: 1rem !important;
+            }
+            .faq-tabs {
+                justify-content: center !important;
+            }
+            .tab-btn {
+                padding: 0.5rem 1rem !important;
+                font-size: 0.9rem !important;
+            }
+            .contact-cards {
+                grid-template-columns: 1fr !important;
+            }
+            .footer-content {
+                padding: 0 0.5rem !important;
+            }
+            .footer-grid {
+                gap: 1rem !important;
+            }
+        }
+        
+        body { 
+            padding-top: 80px !important; 
+            margin: 0 !important; 
+            background: #f5f5f5 !important;
+            background-color: #f5f5f5 !important;
+        }
+        
+        main {
+            background: #f5f5f5 !important;
+            padding: 2rem 0 !important;
+        }
+        
+        .faq-main {
+            background: #f5f5f5 !important;
+            min-height: 100vh !important;
+        }
+        
+        /* Override any dark backgrounds */
+        .faq-page {
+            background: #f5f5f5 !important;
+        }
+        
+        .faq-page * {
+            background: inherit !important;
+        }
+        
+        /* Force light backgrounds */
+        html, body, main, .faq-main, .faq-container {
+            background: #f5f5f5 !important;
+            background-color: #f5f5f5 !important;
+        }
+        
+        .hero {
+            position: relative !important;
+            width: 100vw !important;
+            min-height: 60vh !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: 
+                linear-gradient(135deg, rgba(56, 142, 60, 0.32) 0%, rgba(37, 96, 41, 0.32) 100%),
+                url('assets/images/hero-garden-landscaping-1280.jpg') center/cover no-repeat !important;
+            background-color: #2e7d32 !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+            margin-top: 0 !important;
+            padding: 0 !important;
+        }
+        .hero-content {
+            position: relative !important;
+            z-index: 2 !important;
+            text-align: center !important;
+            color: #fff !important;
+            padding: 2rem !important;
+            background: rgba(56, 142, 60, 0.18) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+            backdrop-filter: blur(4px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            max-width: 800px !important;
+            margin: 0 auto !important;
+        }
+        .hero-content h1 {
+            font-size: 3.5rem !important;
+            margin-bottom: 1rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 1px !important;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3) !important;
+            line-height: 1.2 !important;
+        }
+        .hero-content p {
+            font-size: 1.25rem !important;
+            font-weight: 400 !important;
+            margin-bottom: 2rem !important;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1) !important;
+            line-height: 1.6 !important;
+            opacity: 0.97 !important;
+        }
+
+        /* FAQ Container Styles */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Search Styles */
+        .faq-search {
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            color: #333;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        /* Tab Styles */
+        .faq-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #4caf50;
+            background: white;
+            color: #4caf50;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background: #4caf50;
+            color: white;
+        }
+
+        .tab-btn.active {
+            background: #4caf50;
+            color: white;
+        }
+
+        /* FAQ Content Styles */
+        .faq-content {
+            margin-bottom: 3rem;
+        }
+
+        .faq-section {
+            margin-bottom: 2rem;
+        }
+
+        .faq-section h2 {
+            color: #2e7d32;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #4caf50;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Bullet Format Styles */
+        .faq-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .faq-bullets li {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .faq-bullets li:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .faq-bullets li strong {
+            color: #2e7d32;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-bullets li br {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section Styles */
+        .contact-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        .contact-section h2 {
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-section p {
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .contact-card i {
+            font-size: 2rem;
+            color: #4caf50;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+
+        .contact-card a {
+            color: #4caf50;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hidden States */
+        .faq-section.hidden,
+        .faq-item.hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .faq-container {
+                padding: 1rem;
+            }
+            
+            .faq-tabs {
+                justify-content: center;
+            }
+            
+            .tab-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .contact-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Force light backgrounds - override any dark themes */
+        html, body, main, .faq-main, .faq-container {
+            background: #f5f5f5 !important;
+            background-color: #f5f5f5 !important;
+        }
+        
+        .faq-container {
+            background: white !important;
+            background-color: white !important;
+        }
+    </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="main-header">
+    <div class="logo">
+      <a href="index.html">
+        <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo" loading="lazy">
+      </a>
+    </div>
+    <nav id="nav-menu">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+      </ul>
+      <div class="login-buttons">
+        <a href="login.html" class="btn-login btn-customer"><i class="fas fa-user"></i> Customer Login</a>
+        <a href="admin-login.html" class="btn-login btn-admin"><i class="fas fa-lock"></i> Admin Login</a>
+      </div>
+    </nav>
+  </header>
+  <!-- Mobile Tab Bar -->
+  <div class="mobile-tab-bar">
+    <a href="index.html">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    <a href="services.html">
+      <i class="fas fa-tools"></i>
+      <span>Services</span>
+    </a>
+    <a href="pay-your-bill.html">
+      <i class="fas fa-credit-card"></i>
+      <span>Pay Bill</span>
+    </a>
+    <a href="contact.html">
+      <i class="fas fa-phone"></i>
+      <span>Contact</span>
+    </a>
+    <a href="login.html">
+      <i class="fas fa-user"></i>
+      <span>Login</span>
+    </a>
+  </div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Frequently Asked Questions</h1>
+      <p>Find answers to common questions about our lawn care and landscaping services. Get expert advice on maintenance, scheduling, and more.</p>
+    </div>
+  </section>
+  <!-- Main FAQ Content -->
+  <main role="main" class="faq-main">
+    <div class="faq-container">
+      <!-- Simple Search -->
+      <div class="faq-search">
+        <input type="text" id="faqSearch" class="search-input" placeholder="Search questions...">
+      </div>
+
+      <!-- Simple Category Tabs -->
+      <div class="faq-tabs">
+        <button class="tab-btn active" data-category="all">All</button>
+        <button class="tab-btn" data-category="services">Services</button>
+        <button class="tab-btn" data-category="scheduling">Scheduling</button>
+        <button class="tab-btn" data-category="pricing">Pricing</button>
+        <button class="tab-btn" data-category="maintenance">Maintenance</button>
+      </div>
+
+      <!-- FAQ Content -->
+      <div class="faq-content">
+        <!-- Services Section -->
+        <div class="faq-section" data-category="services">
+          <h2>Services</h2>
+          <ul class="faq-bullets">
+            <li><strong>What services do you offer?</strong><br>Lawn mowing, edging, trimming, fertilization, weed control, and seasonal cleanups.</li>
+            <li><strong>Do you offer recurring services?</strong><br>Yes! Weekly, bi-weekly, and monthly maintenance plans available.</li>
+          </ul>
+        </div>
+
+        <!-- Scheduling Section -->
+        <div class="faq-section" data-category="scheduling">
+          <h2>Scheduling</h2>
+          <ul class="faq-bullets">
+            <li><strong>How do I schedule?</strong><br>Call (504) 717-1887 or email 7holliday@gmail.com</li>
+            <li><strong>What are your hours?</strong><br>Monday-Friday: 7 AM - 6 PM<br>Saturday: 8 AM - 4 PM</li>
+          </ul>
+        </div>
+
+        <!-- Pricing Section -->
+        <div class="faq-section" data-category="pricing">
+          <h2>Pricing</h2>
+          <ul class="faq-bullets">
+            <li><strong>How much does it cost?</strong><br>Free estimates based on property size and service type.</li>
+            <li><strong>What payment methods?</strong><br>Cash, checks, credit cards, and online payments.</li>
+          </ul>
+        </div>
+
+        <!-- Maintenance Section -->
+        <div class="faq-section" data-category="maintenance">
+          <h2>Maintenance</h2>
+          <ul class="faq-bullets">
+            <li><strong>How often should I mow?</strong><br>Spring/summer: Weekly<br>Fall/winter: Every 2-3 weeks</li>
+            <li><strong>When to fertilize?</strong><br>Late spring (May) and late summer (August/September)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Simple Contact Section -->
+      <div class="contact-section">
+        <h2>Still Have Questions?</h2>
+        <p>Our expert team is here to help!</p>
+        
+        <div class="contact-cards">
+          <div class="contact-card">
+            <i class="fas fa-phone"></i>
+            <h3>Call Us</h3>
+            <a href="tel:+15047171887">(504) 717-1887</a>
+          </div>
+          <div class="contact-card">
+            <i class="fas fa-envelope"></i>
+            <h3>Email Us</h3>
+            <a href="mailto:7holliday@gmail.com">7holliday@gmail.com</a>
+          </div>
+          <div class="contact-card">
+            <i class="fas fa-calendar"></i>
+            <h3>Get Quote</h3>
+            <a href="contact.html">Free Estimate</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" style="background: #2e7d32; color: white; padding: 3rem 0 1rem;">
+    <div class="footer-content" style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+      <div class="footer-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+        <div class="footer-section">
+          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: white;">Contact Us</h3>
+          <div class="footer-contact" style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <span style="font-weight: 600; color: white;">Karl Holliday</span>
+            <a href="tel:+15047171887" style="color: rgba(255,255,255,0.8); text-decoration: none; display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-phone"></i>(504) 717‑1887</a>
+            <a href="mailto:7holliday@gmail.com" style="color: rgba(255,255,255,0.8); text-decoration: none; display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-envelope"></i>7holliday@gmail.com</a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: white;">Quick Links</h3>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="margin-bottom: 0.5rem;"><a href="about.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">About Us</a></li>
+            <li style="margin-bottom: 0.5rem;"><a href="services.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Services</a></li>
+            <li style="margin-bottom: 0.5rem;"><a href="education.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Education</a></li>
+            <li style="margin-bottom: 0.5rem;"><a href="contact.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: white;">Customer Portal</h3>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="margin-bottom: 0.5rem;"><a href="login.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Login</a></li>
+            <li style="margin-bottom: 0.5rem;"><a href="register.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Register</a></li>
+            <li style="margin-bottom: 0.5rem;"><a href="pay-your-bill.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Pay Your Bill</a></li>
+            <li style="margin-bottom: 0.5rem;"><a href="customer-dashboard.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: white;">Legal</h3>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="margin-bottom: 0.5rem;"><a href="privacy.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Privacy Policy</a></li>
+            <li style="margin-bottom: 0.5rem;"><a href="terms.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; text-align: center;">
+      <p style="color: rgba(255,255,255,0.7); margin: 0;">© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/firebase-config.js" type="module"></script>
+  <script src="assets/js/main.js" type="module"></script>
+
+  <!-- FAQ JavaScript -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // Search Functionality
+    const searchInput = document.getElementById('faqSearch');
+    if (searchInput) {
+      searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        const faqItems = document.querySelectorAll('.faq-bullets li');
+        const faqSections = document.querySelectorAll('.faq-section');
+        
+        if (searchTerm === '') {
+          // Show all items when search is empty
+          faqItems.forEach(item => item.classList.remove('hidden'));
+          faqSections.forEach(section => section.classList.remove('hidden'));
+          return;
+        }
+        
+        let hasResults = false;
+        
+        faqItems.forEach(item => {
+          const questionText = item.querySelector('strong').textContent.toLowerCase();
+          const answerText = item.textContent.toLowerCase();
+          
+          if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+            item.classList.remove('hidden');
+            hasResults = true;
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+        
+        // Show/hide sections based on visible items
+        faqSections.forEach(section => {
+          const visibleItems = section.querySelectorAll('.faq-bullets li:not(.hidden)');
+          if (visibleItems.length > 0) {
+            section.classList.remove('hidden');
+          } else {
+            section.classList.add('hidden');
+          }
+        });
+        
+        // Show no results message if needed
+        showNoResultsMessage(!hasResults);
+      });
+    }
+
+    // Category Filter Functionality
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const category = this.dataset.category;
+        const faqSections = document.querySelectorAll('.faq-section');
+        
+        // Update active button
+        tabBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Filter sections
+        faqSections.forEach(section => {
+          if (category === 'all' || section.dataset.category === category) {
+            section.classList.remove('hidden');
+          } else {
+            section.classList.add('hidden');
+          }
+        });
+        
+        // Clear search when changing categories
+        if (searchInput) {
+          searchInput.value = '';
+        }
+        document.querySelectorAll('.faq-bullets li').forEach(item => {
+          item.classList.remove('hidden');
+        });
+        
+        showNoResultsMessage(false);
+      });
+    });
+
+    // Show/Hide No Results Message
+    function showNoResultsMessage(show) {
+      let noResults = document.querySelector('.no-results');
+      
+      if (show) {
+        if (!noResults) {
+          noResults = document.createElement('div');
+          noResults.className = 'no-results';
+          noResults.innerHTML = `
+            <div style="text-align: center; padding: 2rem; color: #666;">
+              <i class="fas fa-search" style="font-size: 2rem; color: #4caf50; margin-bottom: 1rem;"></i>
+              <h3>No results found</h3>
+              <p>Try searching with different keywords or browse our categories above.</p>
+            </div>
+          `;
+          document.querySelector('.faq-content').appendChild(noResults);
+        }
+      } else {
+        if (noResults) {
+          noResults.remove();
+        }
+      }
+    }
+
+    // Update copyright year
+    const yearElement = document.getElementById('current-year');
+    if (yearElement) {
+      yearElement.textContent = new Date().getFullYear();
+    }
+  });
+  </script>
+</body>
+</html> 

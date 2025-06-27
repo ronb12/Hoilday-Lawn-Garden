@@ -1,0 +1,352 @@
+// Add to DOM Elements section
+const viewAnalyticsBtn = document.getElementById("viewAnalytics");
+
+// Add to setupEventListeners function
+if (viewAnalyticsBtn) {
+    viewAnalyticsBtn.addEventListener("click", viewAnalytics);
+}
+
+async function viewAnalytics() {
+    try {
+        showLoading("Loading analytics...");
+        
+        // Fetch all required data
+        const [revenueData, serviceData, customerData, staffData] = await Promise.all([
+            getRevenueAnalytics(),
+            getServiceAnalytics(),
+            getCustomerAnalytics(),
+            getStaffAnalytics()
+        ]);
+
+        showModal(`
+            <h2>Business Analytics Dashboard</h2>
+            <div class="analytics-container">
+                <div class="analytics-header">
+                    <div class="date-range">
+                        <select id="analyticsPeriod" onchange="adminDashboard.updateAnalytics()">
+                            <option value="week">This Week</option>
+                            <option value="month" selected>This Month</option>
+                            <option value="quarter">This Quarter</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+                    <div class="export-options">
+                        <button onclick="adminDashboard.exportReport('pdf')" class="btn btn-secondary">
+                            <i class="fas fa-file-pdf"></i> Export PDF
+                        </button>
+                        <button onclick="adminDashboard.exportReport('excel')" class="btn btn-secondary">
+                            <i class="fas fa-file-excel"></i> Export Excel
+                        </button>
+                    </div>
+                </div>
+
+                <div class="analytics-grid">
+                    <!-- Revenue Section -->
+                    <div class="analytics-card revenue">
+                        <h3>Revenue Overview</h3>
+                        <div class="metric-grid">
+                            <div class="metric">
+                                <h4>Total Revenue</h4>
+                                <p class="value">$${revenueData.total.toFixed(2)}</p>
+                                <p class="trend ${revenueData.trend > 0 ? 'positive' : 'negative'}">
+                                    ${revenueData.trend > 0 ? '↑' : '↓'} ${Math.abs(revenueData.trend)}%
+                                </p>
+                            </div>
+                            <div class="metric">
+                                <h4>Average Transaction</h4>
+                                <p class="value">$${revenueData.averageTransaction.toFixed(2)}</p>
+                            </div>
+                            <div class="metric">
+                                <h4>Projected Revenue</h4>
+                                <p class="value">$${revenueData.projected.toFixed(2)}</p>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Services Section -->
+                    <div class="analytics-card services">
+                        <h3>Service Performance</h3>
+                        <div class="service-metrics">
+                            ${serviceData.topServices.map(service => `
+                                <div class="service-metric">
+                                    <h4>${service.name}</h4>
+                                    <p class="value">${service.count} jobs</p>
+                                    <p class="revenue">$${service.revenue.toFixed(2)}</p>
+                                </div>
+                            `).join("")}
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="servicesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Customer Section -->
+                    <div class="analytics-card customers">
+                        <h3>Customer Insights</h3>
+                        <div class="metric-grid">
+                            <div class="metric">
+                                <h4>Total Customers</h4>
+                                <p class="value">${customerData.total}</p>
+                            </div>
+                            <div class="metric">
+                                <h4>New Customers</h4>
+                                <p class="value">${customerData.new}</p>
+                            </div>
+                            <div class="metric">
+                                <h4>Retention Rate</h4>
+                                <p class="value">${customerData.retentionRate}%</p>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="customersChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Staff Section -->
+                    <div class="analytics-card staff">
+                        <h3>Staff Performance</h3>
+                        <div class="staff-metrics">
+                            ${staffData.performance.map(staff => `
+                                <div class="staff-metric">
+                                    <h4>${staff.name}</h4>
+                                    <p class="value">${staff.completedJobs} jobs</p>
+                                    <p class="rating">${staff.rating}/5.0</p>
+                                </div>
+                            `).join("")}
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="staffChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+
+        // Initialize charts
+        initializeCharts(revenueData, serviceData, customerData, staffData);
+
+    } catch (error) {
+        console.error("Error loading analytics:", error);
+        showNotification("Error loading analytics", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+async function getRevenueAnalytics() {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+    const [currentMonthPayments, lastMonthPayments] = await Promise.all([
+        getDocs(query(
+            collection(db, "payments"),
+            where("date", ">=", startOfMonth),
+            where("status", "==", "completed")
+        )),
+        getDocs(query(
+            collection(db, "payments"),
+            where("date", ">=", startOfLastMonth),
+            where("date", "<=", endOfLastMonth),
+            where("status", "==", "completed")
+        ))
+    ]);
+
+    const currentRevenue = currentMonthPayments.docs.reduce((sum, doc) => sum + doc.data().amount, 0);
+    const lastRevenue = lastMonthPayments.docs.reduce((sum, doc) => sum + doc.data().amount, 0);
+    const trend = lastRevenue ? ((currentRevenue - lastRevenue) / lastRevenue) * 100 : 0;
+
+    return {
+        total: currentRevenue,
+        trend: trend,
+        averageTransaction: currentRevenue / currentMonthPayments.docs.length || 0,
+        projected: currentRevenue * 1.1, // Simple projection
+        history: currentMonthPayments.docs.map(doc => ({
+            date: doc.data().date.toDate(),
+            amount: doc.data().amount
+        }))
+    };
+}
+
+async function getServiceAnalytics() {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const appointmentsSnapshot = await getDocs(query(
+        collection(db, "appointments"),
+        where("date", ">=", startOfMonth)
+    ));
+
+    const serviceCounts = {};
+    const serviceRevenue = {};
+
+    appointmentsSnapshot.docs.forEach(doc => {
+        const data = doc.data();
+        const serviceType = data.serviceType;
+        
+        serviceCounts[serviceType] = (serviceCounts[serviceType] || 0) + 1;
+        serviceRevenue[serviceType] = (serviceRevenue[serviceType] || 0) + (data.amount || 0);
+    });
+
+    const topServices = Object.entries(serviceCounts)
+        .map(([name, count]) => ({
+            name,
+            count,
+            revenue: serviceRevenue[name] || 0
+        }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 5);
+
+    return {
+        topServices,
+        totalServices: appointmentsSnapshot.size,
+        serviceDistribution: serviceCounts
+    };
+}
+
+async function getCustomerAnalytics() {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
+    const [allCustomers, newCustomers, activeCustomers] = await Promise.all([
+        getDocs(collection(db, "users")),
+        getDocs(query(
+            collection(db, "users"),
+            where("createdAt", ">=", startOfMonth)
+        )),
+        getDocs(query(
+            collection(db, "appointments"),
+            where("date", ">=", startOfLastMonth)
+        ))
+    ]);
+
+    const uniqueActiveCustomers = new Set(activeCustomers.docs.map(doc => doc.data().customerId));
+
+    return {
+        total: allCustomers.size,
+        new: newCustomers.size,
+        active: uniqueActiveCustomers.size,
+        retentionRate: allCustomers.size ? (uniqueActiveCustomers.size / allCustomers.size) * 100 : 0
+    };
+}
+
+async function getStaffAnalytics() {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const [staffSnapshot, appointmentsSnapshot, ratingsSnapshot] = await Promise.all([
+        getDocs(collection(db, "staff")),
+        getDocs(query(
+            collection(db, "appointments"),
+            where("date", ">=", startOfMonth)
+        )),
+        getDocs(collection(db, "ratings"))
+    ]);
+
+    const staffPerformance = staffSnapshot.docs.map(doc => {
+        const staffId = doc.id;
+        const staffData = doc.data();
+        const completedJobs = appointmentsSnapshot.docs.filter(
+            apt => apt.data().staffId === staffId && apt.data().status === "completed"
+        ).length;
+        const ratings = ratingsSnapshot.docs
+            .filter(rating => rating.data().staffId === staffId)
+            .map(rating => rating.data().rating);
+        const averageRating = ratings.length ? ratings.reduce((a, b) => a + b, 0) / ratings.length : 0;
+
+        return {
+            id: staffId,
+            name: staffData.name,
+            completedJobs,
+            rating: averageRating.toFixed(1)
+        };
+    });
+
+    return {
+        performance: staffPerformance,
+        totalStaff: staffSnapshot.size,
+        averageRating: staffPerformance.reduce((sum, staff) => sum + parseFloat(staff.rating), 0) / staffPerformance.length
+    };
+}
+
+function initializeCharts(revenueData, serviceData, customerData, staffData) {
+    // Revenue Chart
+    const revenueCtx = document.getElementById("revenueChart").getContext("2d");
+    new Chart(revenueCtx, {
+        type: "line",
+        data: {
+            labels: revenueData.history.map(h => formatDate(h.date)),
+            datasets: [{
+                label: "Revenue",
+                data: revenueData.history.map(h => h.amount),
+                borderColor: "#4CAF50",
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Services Chart
+    const servicesCtx = document.getElementById("servicesChart").getContext("2d");
+    new Chart(servicesCtx, {
+        type: "doughnut",
+        data: {
+            labels: Object.keys(serviceData.serviceDistribution),
+            datasets: [{
+                data: Object.values(serviceData.serviceDistribution),
+                backgroundColor: ["#4CAF50", "#2196F3", "#FFC107", "#9C27B0", "#FF5722"]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Staff Chart
+    const staffCtx = document.getElementById("staffChart").getContext("2d");
+    new Chart(staffCtx, {
+        type: "bar",
+        data: {
+            labels: staffData.performance.map(s => s.name),
+            datasets: [{
+                label: "Completed Jobs",
+                data: staffData.performance.map(s => s.completedJobs),
+                backgroundColor: "#4CAF50"
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
+async function exportReport(format) {
+    try {
+        showLoading("Generating report...");
+        // Implementation for PDF/Excel export
+        showNotification("Report export functionality coming soon!", "info");
+    } catch (error) {
+        console.error("Error exporting report:", error);
+        showNotification("Error exporting report", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+// Add to window.adminDashboard export
+window.adminDashboard = {
+    // ... existing exports ...
+    viewAnalytics,
+    updateAnalytics: () => viewAnalytics(),
+    exportReport
+};

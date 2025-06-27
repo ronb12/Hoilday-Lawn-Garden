@@ -1,0 +1,383 @@
+// Add to DOM Elements section
+const manageInventoryBtn = document.getElementById("manageInventory");
+
+// Add to setupEventListeners function
+if (manageInventoryBtn) {
+    manageInventoryBtn.addEventListener("click", manageInventory);
+}
+
+async function manageInventory() {
+    try {
+        showLoading("Loading inventory...");
+        
+        const [equipmentSnapshot, suppliesSnapshot, maintenanceSnapshot] = await Promise.all([
+            getDocs(collection(db, "equipment")),
+            getDocs(collection(db, "supplies")),
+            getDocs(query(
+                collection(db, "maintenance"),
+                where("status", "==", "pending")
+            ))
+        ]);
+
+        const equipment = equipmentSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        const supplies = suppliesSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        const pendingMaintenance = maintenanceSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        showModal(`
+            <h2>Inventory Management</h2>
+            <div class="inventory-container">
+                <div class="inventory-tabs">
+                    <button class="tab-btn active" onclick="adminDashboard.switchInventoryTab('equipment')">
+                        Equipment
+                    </button>
+                    <button class="tab-btn" onclick="adminDashboard.switchInventoryTab('supplies')">
+                        Supplies
+                    </button>
+                    <button class="tab-btn" onclick="adminDashboard.switchInventoryTab('maintenance')">
+                        Maintenance
+                    </button>
+                </div>
+
+                <div class="inventory-content">
+                    <!-- Equipment Section -->
+                    <div id="equipmentTab" class="inventory-tab active">
+                        <div class="inventory-header">
+                            <h3>Equipment</h3>
+                            <button onclick="adminDashboard.addEquipment()" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Add Equipment
+                            </button>
+                        </div>
+                        <div class="equipment-grid">
+                            ${equipment.map(item => `
+                                <div class="equipment-card">
+                                    <div class="equipment-info">
+                                        <h4>${item.name}</h4>
+                                        <p><i class="fas fa-tag"></i> ${item.type}</p>
+                                        <p><i class="fas fa-info-circle"></i> ${item.description}</p>
+                                        <p><i class="fas fa-calendar"></i> Last Maintenance: ${formatDate(item.lastMaintenance)}</p>
+                                        <p><i class="fas fa-tools"></i> Status: <span class="status ${item.status}">${item.status}</span></p>
+                                    </div>
+                                    <div class="equipment-actions">
+                                        <button onclick="adminDashboard.scheduleMaintenance('${item.id}')" class="btn btn-warning">
+                                            <i class="fas fa-tools"></i> Schedule Maintenance
+                                        </button>
+                                        <button onclick="adminDashboard.assignEquipment('${item.id}')" class="btn btn-info">
+                                            <i class="fas fa-user"></i> Assign
+                                        </button>
+                                        <button onclick="adminDashboard.editEquipment('${item.id}')" class="btn btn-secondary">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join("")}
+                        </div>
+                    </div>
+
+                    <!-- Supplies Section -->
+                    <div id="suppliesTab" class="inventory-tab">
+                        <div class="inventory-header">
+                            <h3>Supplies</h3>
+                            <button onclick="adminDashboard.addSupply()" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Add Supply
+                            </button>
+                        </div>
+                        <div class="supplies-grid">
+                            ${supplies.map(item => `
+                                <div class="supply-card">
+                                    <div class="supply-info">
+                                        <h4>${item.name}</h4>
+                                        <p><i class="fas fa-box"></i> Quantity: ${item.quantity}</p>
+                                        <p><i class="fas fa-exclamation-triangle"></i> Reorder Level: ${item.reorderLevel}</p>
+                                        <p><i class="fas fa-dollar-sign"></i> Unit Cost: $${item.unitCost.toFixed(2)}</p>
+                                    </div>
+                                    <div class="supply-actions">
+                                        <button onclick="adminDashboard.reorderSupply('${item.id}')" class="btn btn-warning">
+                                            <i class="fas fa-shopping-cart"></i> Reorder
+                                        </button>
+                                        <button onclick="adminDashboard.editSupply('${item.id}')" class="btn btn-secondary">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join("")}
+                        </div>
+                    </div>
+
+                    <!-- Maintenance Section -->
+                    <div id="maintenanceTab" class="inventory-tab">
+                        <div class="inventory-header">
+                            <h3>Maintenance Schedule</h3>
+                            <button onclick="adminDashboard.scheduleMaintenance()" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Schedule Maintenance
+                            </button>
+                        </div>
+                        <div class="maintenance-list">
+                            ${pendingMaintenance.map(item => `
+                                <div class="maintenance-card">
+                                    <div class="maintenance-info">
+                                        <h4>${item.equipmentName}</h4>
+                                        <p><i class="fas fa-calendar"></i> Due Date: ${formatDate(item.dueDate)}</p>
+                                        <p><i class="fas fa-tools"></i> Type: ${item.type}</p>
+                                        <p><i class="fas fa-info-circle"></i> ${item.description}</p>
+                                    </div>
+                                    <div class="maintenance-actions">
+                                        <button onclick="adminDashboard.completeMaintenance('${item.id}')" class="btn btn-success">
+                                            <i class="fas fa-check"></i> Complete
+                                        </button>
+                                        <button onclick="adminDashboard.editMaintenance('${item.id}')" class="btn btn-secondary">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join("")}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+
+    } catch (error) {
+        console.error("Error loading inventory:", error);
+        showNotification("Error loading inventory", "error");
+    } finally {
+        hideLoading();
+    }
+}
+
+async function addEquipment() {
+    showModal(`
+        <h2>Add New Equipment</h2>
+        <form id="addEquipmentForm" class="form">
+            <div class="form-group">
+                <label for="equipmentName">Name</label>
+                <input type="text" id="equipmentName" required>
+            </div>
+            <div class="form-group">
+                <label for="equipmentType">Type</label>
+                <select id="equipmentType" required>
+                    <option value="mower">Lawn Mower</option>
+                    <option value="trimmer">Trimmer</option>
+                    <option value="blower">Blower</option>
+                    <option value="truck">Truck</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="equipmentDescription">Description</label>
+                <textarea id="equipmentDescription" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="maintenanceInterval">Maintenance Interval (days)</label>
+                <input type="number" id="maintenanceInterval" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Add Equipment</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </form>
+    `);
+
+    const form = document.getElementById("addEquipmentForm");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        try {
+            showLoading("Adding equipment...");
+            const equipmentData = {
+                name: document.getElementById("equipmentName").value,
+                type: document.getElementById("equipmentType").value,
+                description: document.getElementById("equipmentDescription").value,
+                maintenanceInterval: parseInt(document.getElementById("maintenanceInterval").value),
+                status: "available",
+                lastMaintenance: serverTimestamp(),
+                createdAt: serverTimestamp()
+            };
+
+            await addDoc(collection(db, "equipment"), equipmentData);
+            showNotification("Equipment added successfully", "success");
+            closeModal();
+            manageInventory();
+        } catch (error) {
+            console.error("Error adding equipment:", error);
+            showNotification("Error adding equipment", "error");
+        } finally {
+            hideLoading();
+        }
+    });
+}
+
+async function addSupply() {
+    showModal(`
+        <h2>Add New Supply</h2>
+        <form id="addSupplyForm" class="form">
+            <div class="form-group">
+                <label for="supplyName">Name</label>
+                <input type="text" id="supplyName" required>
+            </div>
+            <div class="form-group">
+                <label for="supplyQuantity">Quantity</label>
+                <input type="number" id="supplyQuantity" required>
+            </div>
+            <div class="form-group">
+                <label for="supplyUnit">Unit</label>
+                <select id="supplyUnit" required>
+                    <option value="piece">Piece</option>
+                    <option value="box">Box</option>
+                    <option value="gallon">Gallon</option>
+                    <option value="pound">Pound</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="supplyReorderLevel">Reorder Level</label>
+                <input type="number" id="supplyReorderLevel" required>
+            </div>
+            <div class="form-group">
+                <label for="supplyUnitCost">Unit Cost</label>
+                <input type="number" id="supplyUnitCost" step="0.01" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Add Supply</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </form>
+    `);
+
+    const form = document.getElementById("addSupplyForm");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        try {
+            showLoading("Adding supply...");
+            const supplyData = {
+                name: document.getElementById("supplyName").value,
+                quantity: parseInt(document.getElementById("supplyQuantity").value),
+                unit: document.getElementById("supplyUnit").value,
+                reorderLevel: parseInt(document.getElementById("supplyReorderLevel").value),
+                unitCost: parseFloat(document.getElementById("supplyUnitCost").value),
+                createdAt: serverTimestamp()
+            };
+
+            await addDoc(collection(db, "supplies"), supplyData);
+            showNotification("Supply added successfully", "success");
+            closeModal();
+            manageInventory();
+        } catch (error) {
+            console.error("Error adding supply:", error);
+            showNotification("Error adding supply", "error");
+        } finally {
+            hideLoading();
+        }
+    });
+}
+
+async function scheduleMaintenance(equipmentId = null) {
+    try {
+        let equipment = null;
+        if (equipmentId) {
+            const equipmentDoc = await getDoc(doc(db, "equipment", equipmentId));
+            if (equipmentDoc.exists()) {
+                equipment = { id: equipmentId, ...equipmentDoc.data() };
+            }
+        }
+
+        showModal(`
+            <h2>Schedule Maintenance</h2>
+            <form id="maintenanceForm" class="form">
+                ${!equipment ? `
+                    <div class="form-group">
+                        <label for="maintenanceEquipment">Equipment</label>
+                        <select id="maintenanceEquipment" required>
+                            <option value="">Select Equipment...</option>
+                            ${(await getDocs(collection(db, "equipment"))).docs.map(doc => `
+                                <option value="${doc.id}">${doc.data().name}</option>
+                            `).join("")}
+                        </select>
+                    </div>
+                ` : ''}
+                <div class="form-group">
+                    <label for="maintenanceType">Type</label>
+                    <select id="maintenanceType" required>
+                        <option value="routine">Routine Maintenance</option>
+                        <option value="repair">Repair</option>
+                        <option value="inspection">Inspection</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="maintenanceDate">Due Date</label>
+                    <input type="date" id="maintenanceDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="maintenanceDescription">Description</label>
+                    <textarea id="maintenanceDescription" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Schedule Maintenance</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        `);
+
+        const form = document.getElementById("maintenanceForm");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            try {
+                showLoading("Scheduling maintenance...");
+                const equipmentId = equipment ? equipment.id : document.getElementById("maintenanceEquipment").value;
+                const equipmentDoc = await getDoc(doc(db, "equipment", equipmentId));
+                
+                const maintenanceData = {
+                    equipmentId,
+                    equipmentName: equipmentDoc.data().name,
+                    type: document.getElementById("maintenanceType").value,
+                    dueDate: new Date(document.getElementById("maintenanceDate").value),
+                    description: document.getElementById("maintenanceDescription").value,
+                    status: "pending",
+                    createdAt: serverTimestamp()
+                };
+
+                await addDoc(collection(db, "maintenance"), maintenanceData);
+                showNotification("Maintenance scheduled successfully", "success");
+                closeModal();
+                manageInventory();
+            } catch (error) {
+                console.error("Error scheduling maintenance:", error);
+                showNotification("Error scheduling maintenance", "error");
+            } finally {
+                hideLoading();
+            }
+        });
+    } catch (error) {
+        console.error("Error loading maintenance form:", error);
+        showNotification("Error loading maintenance form", "error");
+    }
+}
+
+function switchInventoryTab(tab) {
+    const tabs = document.querySelectorAll(".inventory-tab");
+    const buttons = document.querySelectorAll(".tab-btn");
+    
+    tabs.forEach(t => t.classList.remove("active"));
+    buttons.forEach(b => b.classList.remove("active"));
+    
+    document.getElementById(`${tab}Tab`).classList.add("active");
+    event.target.classList.add("active");
+}
+
+// Add to window.adminDashboard export
+window.adminDashboard = {
+    // ... existing exports ...
+    manageInventory,
+    addEquipment,
+    addSupply,
+    scheduleMaintenance,
+    switchInventoryTab
+};

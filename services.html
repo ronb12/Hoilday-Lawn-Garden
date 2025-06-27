@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Professional lawn care and landscaping services including lawn maintenance, landscaping, garden care, and commercial services. Get a free quote today!" name="description"/>
+<meta content="lawn care, landscaping, garden services, commercial landscaping, lawn maintenance" name="keywords"/>
+<meta content="Karl Holliday" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="Our Services Holliday's Lawn &amp; Garden" property="og:title"/>
+<meta content="Professional lawn care and landscaping services including lawn maintenance, landscaping, garden care, and commercial services." property="og:description"/>
+<meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
+<meta content="./services.html" property="og:url"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="./services.html" rel="canonical"/>
+<title>Our Services Holliday's Lawn &amp; Garden</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="assets/css/hero.css?v=1.0.5" rel="stylesheet"/>
+<link href="assets/css/services.css" rel="stylesheet"/>
+<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="manifest.json" />
+<script type="application/ld+json">
+ {
+ "@context": "https://schema.org",
+ "@type": "Service",
+ "name": "Holliday's Lawn & Garden Services",
+ "description": "Professional lawn care and landscaping services including lawn maintenance, landscaping, garden care, commercial services, and pressure washing.",
+ "provider": {
+ "@type": "Organization",
+ "name": "Holliday's Lawn & Garden",
+ "logo": {
+ "@type": "ImageObject",
+ "url": "assets/images/hollidays-logo.optimized-1280.png"
+ }
+ },
+ "serviceType": ["Lawn Maintenance", "Landscaping", "Garden Care", "Commercial Services", "Pressure Washing"],
+ "areaServed": "Local Community",
+ "hasOfferCatalog": {
+ "@type": "OfferCatalog",
+ "name": "Lawn Care Services",
+ "itemListElement": [
+ {
+ "@type": "Offer",
+ "itemOffered": {
+ "@type": "Service",
+ "name": "Lawn Maintenance",
+ "description": "Keep your lawn looking its best with our comprehensive maintenance services."
+ }
+ },
+ {
+ "@type": "Offer",
+ "itemOffered": {
+ "@type": "Service",
+ "name": "Landscaping",
+ "description": "Transform your outdoor space with our professional landscaping services."
+ }
+ },
+ {
+ "@type": "Offer",
+ "itemOffered": {
+ "@type": "Service",
+ "name": "Garden Care",
+ "description": "Expert care for your garden to ensure healthy, beautiful plants year-round."
+ }
+ },
+ {
+ "@type": "Offer",
+ "itemOffered": {
+ "@type": "Service",
+ "name": "Commercial Services",
+ "description": "Professional landscaping and maintenance solutions for businesses and commercial properties."
+ }
+ },
+ {
+ "@type": "Offer",
+ "itemOffered": {
+ "@type": "Service",
+ "name": "Pressure Washing",
+ "description": "Restore the beauty of your property with our professional pressure washing services."
+ }
+ }
+ ]
+ }
+ }
+ </script>
+<style>
+ body {
+   padding-top: 80px;
+   margin: 0;
+   font-family: 'Montserrat', Arial, sans-serif;
+   background: #f8f9fa;
+   color: #333;
+ }
+ 
+ .hero img {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   z-index: 1;
+   filter: brightness(0.6);
+ }
+ 
+ .hero-content {
+   position: relative;
+   z-index: 2;
+   text-align: center;
+   color: #fff;
+   padding: 3rem 2rem;
+   max-width: 800px;
+   margin: 0 auto;
+ }
+ 
+ .hero-content h1 {
+   font-size: 3.5rem;
+   margin-bottom: 1rem;
+   font-weight: 800;
+   letter-spacing: 1px;
+   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+   line-height: 1.2;
+ }
+ 
+ .hero-content p {
+   font-size: 1.25rem;
+   font-weight: 400;
+   margin-bottom: 2rem;
+   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+   line-height: 1.6;
+   opacity: 0.97;
+ }
+ 
+ @media (max-width: 768px) {
+   body {
+     padding-top: 80px;
+   }
+ 
+   .main-header {
+     padding: 0 1rem !important;
+   }
+ 
+   /* Hide desktop navigation on mobile */
+   .main-header .nav-links {
+     display: none !important;
+   }
+   
+   
+ 
+   /* Ensure mobile tab bar is visible */
+   .mobile-tab-bar {
+     display: flex !important;
+   }
+
+   .hero-content h1 {
+     font-size: 2.5rem;
+   }
+
+   .hero-content p {
+     font-size: 1.1rem;
+   }
+ }
+
+}
+
+/* Mobile Tab Bar - Hide on Desktop */
+@media (min-width: 769px) {
+  .mobile-tab-bar { display: none !important; }
+}
+
+.login-buttons {
+  display: flex !important;
+  gap: 1rem !important;
+  align-items: center !important;
+  margin-left: 1rem !important;
+}
+
+.btn-login {
+  padding: 0.5rem 1rem !important;
+  border-radius: 4px !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  font-size: 0.9rem !important;
+  min-width: 120px !important;
+  text-align: center !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  white-space: nowrap !important;
+}
+
+.btn-customer {
+  background: #2e7d32 !important;
+  color: white !important;
+}
+
+.btn-admin {
+  background: #1565c0 !important;
+  color: white !important;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+</style>
+
+<!-- --- Professional Mobile Tab Bar --- -->
+<style>
+/* --- Professional Mobile Tab Bar --- */
+@media (max-width: 768px) {
+  .mobile-tab-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 64px;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+    z-index: 2000;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .mobile-tab-bar a {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #2e7d32;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.25rem 0;
+    transition: color 0.2s;
+  }
+  .mobile-tab-bar a.active,
+  .mobile-tab-bar a:active,
+  .mobile-tab-bar a:hover {
+    color: #1565c0;
+  }
+  .mobile-tab-bar i {
+    font-size: 1.5rem;
+    margin-bottom: 0.1rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-tab-bar { 
+    display: none !important; 
+  }
+}
+</style>
+
+<style>
+
+    /* Perfect Page Structure - No Issues */
+    .main-header {
+        background: #fff !important;
+        min-height: 70px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0 2rem !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .logo {
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .logo img {
+        height: 50px !important;
+        width: auto !important;
+        display: block !important;
+    }
+    
+    #nav-menu {
+        display: flex !important;
+        align-items: center !important;
+        flex-grow: 1 !important;
+        justify-content: flex-end !important;
+    }
+    
+    .nav-links { 
+        display: flex !important;
+        align-items: center !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 2rem !important;
+        flex-wrap: nowrap !important;
+    }
+    
+    .nav-links a { 
+        padding: 0.5rem 0.75rem !important; 
+        color: #333 !important; 
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease !important;
+        white-space: nowrap !important;
+        font-size: 0.95rem !important;
+        display: block !important;
+    }
+    
+    .nav-links a:hover {
+        color: #2e7d32 !important;
+    }
+    
+    .nav-links li { 
+        display: flex !important; 
+        align-items: center !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    
+    
+    .btn-login {
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        font-size: 0.9rem !important;
+        min-width: 120px !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+        white-space: nowrap !important;
+    }
+    
+    .btn-customer {
+        background: #2e7d32 !important;
+        color: white !important;
+    }
+    
+    .btn-admin {
+        background: #1565c0 !important;
+        color: white !important;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+    /* Hero Section - Perfect Spacing */
+    .hero {
+        position: relative !important;
+        width: 100vw !important;
+        min-height: 60vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: 
+            linear-gradient(135deg, rgba(56, 142, 60, 0.32) 0%, rgba(37, 96, 41, 0.32) 100%),
+            url('assets/images/hero-garden-landscaping-1280.jpg') center/cover no-repeat !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        margin-top: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .hero img {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        z-index: 1 !important;
+        filter: brightness(0.6) !important;
+    }
+    
+    .hero-content {
+        position: relative !important;
+        z-index: 2 !important;
+        text-align: center !important;
+        color: #fff !important;
+        padding: 2rem !important;
+        background: rgba(56, 142, 60, 0.18) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+        backdrop-filter: blur(4px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        max-width: 800px !important;
+        margin: 0 auto !important;
+    }
+    
+    .hero-content h1 {
+        font-size: 3.5rem !important;
+        margin-bottom: 1rem !important;
+        font-weight: 800 !important;
+        letter-spacing: 1px !important;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3) !important;
+        line-height: 1.2 !important;
+    }
+    
+    .hero-content p {
+        font-size: 1.25rem !important;
+        font-weight: 400 !important;
+        margin-bottom: 2rem !important;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1) !important;
+        line-height: 1.6 !important;
+        opacity: 0.97 !important;
+    }
+    
+    /* Body and Main Content */
+    body {
+        padding-top: 80px !important;
+        margin: 0 !important;
+    }
+    
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    @media (max-width: 768px) {
+        body {
+            padding-top: 70px !important;
+        }
+        
+        .main-header {
+            padding: 0 1rem !important;
+        }
+        
+        #nav-menu {
+            justify-content: flex-end !important;
+        }
+        
+        .nav-links { 
+            display: none !important; 
+            position: absolute !important; 
+            top: 100% !important; 
+            left: 0 !important; 
+            right: 0 !important; 
+            background: var(--color-primary, #4caf50) !important; 
+            padding: 1rem !important; 
+            flex-direction: column !important; 
+            align-items: center !important; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+            z-index: 1000 !important;
+        }
+        
+        .nav-links.active { 
+            display: flex !important; 
+        }
+        
+        
+        
+        
+        
+        .btn-login {
+            min-width: 140px !important;
+            font-size: 0.85rem !important;
+        }
+        
+        .hero-content h1 {
+            font-size: 2rem !important;
+        }
+        
+        .hero-content p {
+            font-size: 1rem !important;
+        }
+    }
+    
+    @media (max-width: 900px) {
+        .main-header .nav-links {
+            margin-top: 0 !important;
+            padding-top: 0.5em !important;
+        }
+    }
+
+</style>
+
+<style>
+/* Ensure hero H1 elements are always visible */
+.hero h1 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+/* Ensure hero content is visible */
+.hero-content {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Ensure hero section itself is visible */
+.hero {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+</style>
+
+<style>
+/* Ensure hero H1 elements are always visible */
+.hero h1 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+</style>
+
+<style>
+/* Hero section visibility - Professional Design Standard */
+.hero h1 { display: block !important; visibility: visible !important; opacity: 1 !important; }
+</style>
+
+<style>
+/* Footer Styles */
+.footer {
+  background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+  color: white;
+  padding: 3rem 0 1rem 0;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.footer-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: #4caf50;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: white;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-owner {
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.footer-contact a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.footer-contact a:hover {
+  color: white;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: #4caf50;
+  transform: translateY(-2px);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.footer-bottom p {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem 0 1rem 0;
+  }
+  
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .footer-section h3 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Service Card Styles */
+.service-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.service-icon {
+  margin-bottom: 1rem;
+}
+
+.service-emoji {
+  font-size: 3rem;
+  display: block;
+}
+
+.service-card h3 {
+  color: #2e7d32;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.service-card p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.service-features {
+  margin-bottom: 1.5rem;
+}
+
+.service-features ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.service-features li {
+  color: #666;
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.service-features li:before {
+  content: '✓';
+  color: #2e7d32;
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #2e7d32;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1b5e20;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
+</style>
+</head>
+<body>
+  <!-- Loading Spinner -->
+  <div id="loading" class="loading" role="status" aria-label="Loading page content">
+    <div class="spinner" aria-hidden="true"></div>
+  </div>
+  
+  <!-- Error Message -->
+  <div id="error" class="error-message" role="alert" aria-live="polite"></div>
+  
+      <!-- Header -->
+  <header class="main-header">
+    <div class="logo">
+      <a href="index.html">
+        <picture>
+          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+        </picture>
+      </a>
+    </div>
+    <nav id="nav-menu">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+      </ul>
+      <div class="login-buttons">
+        <a href="login.html" class="btn-login btn-customer">
+          <i class="fas fa-user"></i>
+          Customer Login
+        </a>
+        <a href="admin-login.html" class="btn-login btn-admin">
+          <i class="fas fa-lock"></i>
+          Admin Login
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Tab Bar -->
+  <div class="mobile-tab-bar">
+    <a href="index.html">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    <a href="services.html" class="active">
+      <i class="fas fa-tools"></i>
+      <span>Services</span>
+    </a>
+    <a href="pay-your-bill.html">
+      <i class="fas fa-credit-card"></i>
+      <span>Pay Bill</span>
+    </a>
+    <a href="contact.html">
+      <i class="fas fa-phone"></i>
+      <span>Contact</span>
+    </a>
+    <a href="login.html">
+      <i class="fas fa-user"></i>
+      <span>Login</span>
+    </a>
+  </div>
+
+  <!-- Main Content -->
+  <main role="main">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Our Professional Services</h1>
+        <p>Transform your outdoor space with our expert lawn care and landscaping services. We offer comprehensive solutions to keep your property looking its best year-round.</p>
+      </div>
+    </section>
+    <section class="services" id="services" style="background:#fff;padding:3rem 0 2rem 0;">
+      <div class="container" style="max-width:1200px;margin:0 auto;padding:0 1rem;">
+        <h2 class="section-title" style="text-align:center;font-size:2rem;color:#2e7d32;font-weight:700;margin-bottom:2.5rem;">Our Services</h2>
+        <div class="services-grid" id="services-container" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;">
+          <!-- Services will be loaded dynamically from cache -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer-content">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <div class="footer-contact">
+            <span class="footer-owner">Karl Holliday</span>
+            <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
+            <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="education.html">Education</a></li><li><a href="contact.html">Contact</a></li></ul>
+        </div>
+        <div class="footer-section">
+          <h3>Customer Portal</h3>
+          <ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li><li><a href="pay-your-bill.html">Pay Your Bill</a></li><li><a href="customer-dashboard.html">Dashboard</a></li></ul>
+        </div>
+        <div class="footer-section">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Follow Us</h3>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook">
+              <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="current-year"></span> Holliday's Lawn &amp; Garden. All rights reserved.</p>
+    </div>
+  </footer>
+<!-- Scripts -->
+<script src="assets/js/firebase-config.js" type="module"></script>
+<script src="assets/js/main.js" type="module"></script>
+<!-- Test script to load services directly -->
+<script>
+ // Test if we can load services directly
+ setTimeout(() => {
+ const servicesGrid = document.querySelector('.services-grid');
+ if (servicesGrid && servicesGrid.children.length === 0) {
+ // Load test services directly
+ const testServices = {
+ 'lawn-maintenance': {
+ title: 'Lawn Maintenance',
+ icon: '🌱',
+ description: 'Keep your lawn looking its best with our comprehensive maintenance services.',
+ features: ['Regular mowing and edging', 'Lawn fertilization', 'Weed control', 'Leaf removal', 'Seasonal clean-up']
+ },
+ 'landscaping': {
+ title: 'Landscaping',
+ icon: '🏡',
+ description: 'Transform your outdoor space with our professional landscaping services.',
+ features: ['Custom landscape design', 'Garden installation', 'Hardscaping', 'Mulching', 'Plant selection and installation']
+ },
+ 'garden-care': {
+ title: 'Garden Care',
+ icon: '🌸',
+ description: 'Expert care for your garden to ensure healthy, beautiful plants year-round.',
+ features: ['Garden maintenance', 'Plant care and pruning', 'Flower bed maintenance', 'Seasonal planting', 'Garden clean-up']
+ },
+ 'commercial': {
+ title: 'Commercial Services',
+ icon: '🏢',
+ description: 'Professional landscaping and maintenance solutions for businesses and commercial properties.',
+ features: ['Commercial property maintenance', 'Business landscape design', 'Regular maintenance schedules', 'Seasonal commercial services', 'Property enhancement']
+ },
+ 'pressure-washing': {
+ title: 'Pressure Washing',
+ icon: '🚿',
+ description: 'Restore the beauty of your property with our professional pressure washing services.',
+ features: ['House washing', 'Driveway and sidewalk cleaning', 'Deck and patio cleaning', 'Fence cleaning', 'Commercial building cleaning']
+ }
+ };
+ 
+ // Render test services
+ servicesGrid.innerHTML = Object.values(testServices).map(service => `
+ <div class="service-card">
+ <div class="service-icon">
+ <span class="service-emoji">${service.icon}</span>
+ </div>
+ <h3>${service.title}</h3>
+ <p>${service.description}</p>
+ <div class="service-features">
+ <ul>
+ ${service.features.map(feature => `<li>${feature}</li>`).join('')}
+ </ul>
+ </div>
+ <a href="contact.html" class="btn btn-primary">Get Quote</a>
+ </div>
+ `).join('');
+ 
+ }
+ }, 500);
+ </script>
+<!-- Mobile Menu Script -->
+<script>
+// Single, robust mobile menu handler
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu functionality can be added here if needed
+    console.log('Mobile menu script loaded');
+});
+</script>
+
+<!-- Update Copyright Year -->
+<script>
+const yearElement = document.getElementById('current-year');
+if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+}
+</script>
+
+<script>
+ // Enhanced loading management
+ (function() {
+ var loading = document.getElementById('loading');
+ var error = document.getElementById('error');
+ 
+ // Hide loading after page load
+ function hideLoading() {
+ if (loading) {
+ loading.classList.add('hidden');
+ setTimeout(function() {
+ loading.style.display = 'none';
+ }, 300);
+ }
+ }
+ 
+ // Show error message
+ function showError(message) {
+ if (error) {
+ error.textContent = message;
+ error.classList.add('show');
+ setTimeout(function() {
+ error.classList.remove('show');
+ }, 5000);
+ }
+ }
+ 
+ // Hide loading when DOM is ready
+ if (document.readyState === 'loading') {
+ document.addEventListener('DOMContentLoaded', hideLoading);
+ } else {
+ hideLoading();
+ }
+ 
+ // Hide loading when window loads
+ window.addEventListener('load', hideLoading);
+ 
+ // Fallback: hide loading after 3 seconds
+ setTimeout(hideLoading, 3000);
+ 
+ // Handle errors
+ window.addEventListener('error', function(e) {
+ 
+ showError('An error occurred while loading the page. Please refresh.');
+ });
+ })();
+ </script>
+</body>
+</html>

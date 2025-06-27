@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile-Only Hamburger Menu Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .test-button {
+            background: #2e7d32;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .test-button:hover {
+            background: #1b5e20;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .device-frame {
+            border: 3px solid #333;
+            border-radius: 10px;
+            padding: 10px;
+            background: #333;
+            margin: 10px auto;
+            text-align: center;
+        }
+        .device-frame.desktop {
+            width: 100%;
+            max-width: 1200px;
+        }
+        .device-frame.mobile {
+            width: 375px;
+        }
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 5px;
+        }
+        .test-results {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>📱 Mobile-Only Hamburger Menu Test</h1>
+        <p>This test verifies that the hamburger menu ONLY appears and works on mobile devices (≤768px).</p>
+        
+        <div class="test-section">
+            <h3>Test Instructions</h3>
+            <div class="status info">
+                <strong>Desktop (>768px):</strong> Hamburger menu should be HIDDEN, full navigation visible<br>
+                <strong>Mobile (≤768px):</strong> Hamburger menu should be VISIBLE, navigation hidden until clicked
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Desktop View Test (>768px)</h3>
+            <div class="device-frame desktop">
+                <iframe id="desktop-frame" src="index.html"></iframe>
+            </div>
+            <div class="status warning">
+                <strong>Expected:</strong> Hamburger menu should be completely hidden, all navigation links visible in header
+            </div>
+            <button class="test-button" onclick="testDesktop()">Test Desktop View</button>
+        </div>
+
+        <div class="test-section">
+            <h3>Mobile View Test (≤768px)</h3>
+            <div class="device-frame mobile">
+                <iframe id="mobile-frame" src="index.html"></iframe>
+            </div>
+            <div class="status warning">
+                <strong>Expected:</strong> Hamburger menu should be visible, navigation hidden until hamburger is clicked
+            </div>
+            <button class="test-button" onclick="testMobile()">Test Mobile View</button>
+            <button class="test-button" onclick="testHamburgerClick()">Test Hamburger Click</button>
+        </div>
+
+        <div class="test-section">
+            <h3>Test Results</h3>
+            <div class="test-results" id="results">Click test buttons to verify hamburger menu behavior...</div>
+            <button class="test-button" onclick="runAllTests()">Run All Tests</button>
+            <button class="test-button" onclick="clearResults()">Clear Results</button>
+        </div>
+
+        <div class="test-section">
+            <h3>Manual Testing Guide</h3>
+            <div class="status info">
+                <strong>Step 1:</strong> Open index.html in your browser<br>
+                <strong>Step 2:</strong> Resize browser window to desktop size (>768px) - hamburger should be hidden<br>
+                <strong>Step 3:</strong> Resize browser window to mobile size (≤768px) - hamburger should appear<br>
+                <strong>Step 4:</strong> Click hamburger on mobile - menu should toggle open/close<br>
+                <strong>Step 5:</strong> Test clicking outside menu and pressing Escape to close
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const results = document.getElementById('results');
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const statusClass = type === 'success' ? 'success' : type === 'error' ? 'error' : type === 'warning' ? 'warning' : 'info';
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status ${statusClass}`;
+            statusDiv.innerHTML = `<strong>[${timestamp}]</strong> ${message}`;
+            results.appendChild(statusDiv);
+            results.scrollTop = results.scrollHeight;
+        }
+        
+        function clearResults() {
+            results.innerHTML = 'Click test buttons to verify hamburger menu behavior...';
+        }
+        
+        function testFrame(frameId, deviceName, expectedDisplay) {
+            try {
+                const frame = document.getElementById(frameId);
+                const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                const hamburger = frameDoc.querySelector('.hamburger');
+                const navLinks = frameDoc.querySelector('.nav-links');
+                
+                if (hamburger) {
+                    const display = window.getComputedStyle(hamburger).display;
+                    const navDisplay = navLinks ? window.getComputedStyle(navLinks).display : 'not found';
+                    
+                    if (display === expectedDisplay) {
+                        log(`✅ ${deviceName}: Hamburger correctly ${expectedDisplay === 'none' ? 'hidden' : 'visible'}`, 'success');
+                        
+                        if (expectedDisplay === 'none') {
+                            if (navDisplay === 'flex') {
+                                log(`✅ ${deviceName}: Navigation correctly visible (${navDisplay})`, 'success');
+                            } else {
+                                log(`⚠️ ${deviceName}: Navigation display is ${navDisplay}`, 'warning');
+                            }
+                        } else {
+                            if (navDisplay === 'none') {
+                                log(`✅ ${deviceName}: Navigation correctly hidden until hamburger clicked`, 'success');
+                            } else {
+                                log(`⚠️ ${deviceName}: Navigation should be hidden but is ${navDisplay}`, 'warning');
+                            }
+                        }
+                    } else {
+                        log(`❌ ${deviceName}: Hamburger should be ${expectedDisplay === 'none' ? 'hidden' : 'visible'} but is ${display}`, 'error');
+                    }
+                } else {
+                    log(`❌ ${deviceName}: Hamburger button not found`, 'error');
+                }
+            } catch (error) {
+                log(`❌ ${deviceName}: Error testing frame - ${error.message}`, 'error');
+            }
+        }
+        
+        function testDesktop() {
+            log('Testing Desktop View (>768px)...', 'info');
+            setTimeout(() => testFrame('desktop-frame', 'Desktop', 'none'), 1000);
+        }
+        
+        function testMobile() {
+            log('Testing Mobile View (≤768px)...', 'info');
+            setTimeout(() => testFrame('mobile-frame', 'Mobile', 'block'), 1000);
+        }
+        
+        function testHamburgerClick() {
+            log('Testing Hamburger Click on Mobile...', 'info');
+            
+            setTimeout(() => {
+                try {
+                    const frame = document.getElementById('mobile-frame');
+                    const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                    const hamburger = frameDoc.querySelector('.hamburger');
+                    const navLinks = frameDoc.querySelector('.nav-links');
+                    
+                    if (hamburger && navLinks) {
+                        const initialDisplay = window.getComputedStyle(navLinks).display;
+                        log(`Initial nav-links display: ${initialDisplay}`);
+                        
+                        hamburger.click();
+                        
+                        setTimeout(() => {
+                            const afterDisplay = window.getComputedStyle(navLinks).display;
+                            const hasActive = navLinks.classList.contains('active');
+                            
+                            log(`After click - Display: ${afterDisplay}, Active class: ${hasActive}`);
+                            
+                            if (afterDisplay === 'flex' || hasActive) {
+                                log('✅ Hamburger click successfully toggled menu', 'success');
+                            } else {
+                                log('❌ Hamburger click did not toggle menu', 'error');
+                            }
+                        }, 500);
+                    } else {
+                        log('❌ Cannot test click - hamburger or nav-links not found', 'error');
+                    }
+                } catch (error) {
+                    log(`❌ Error testing hamburger click: ${error.message}`, 'error');
+                }
+            }, 1000);
+        }
+        
+        function runAllTests() {
+            clearResults();
+            log('🚀 Running comprehensive mobile-only hamburger menu tests...', 'info');
+            
+            setTimeout(() => testDesktop(), 500);
+            setTimeout(() => testMobile(), 2000);
+            setTimeout(() => testHamburgerClick(), 3500);
+            
+            setTimeout(() => {
+                log('🎉 All tests completed!', 'success');
+                log('Summary: Hamburger menu should ONLY work on mobile (≤768px)', 'info');
+            }, 6000);
+        }
+        
+        // Auto-run tests after page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                log('📱 Mobile-only hamburger menu test ready', 'info');
+                log('Click "Run All Tests" to verify hamburger menu only works on mobile', 'info');
+            }, 2000);
+        });
+    </script>
+</body>
+</html> 

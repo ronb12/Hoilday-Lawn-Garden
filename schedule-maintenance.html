@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Schedule Maintenance - Holliday's Lawn & Garden</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/main.min.css">
+  <link rel="stylesheet" href="assets/css/customer-dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      padding-top: 70px;
+      background: #f6faef;
+    }
+    .main-header {
+      background: #388e3c;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .logo img {
+      height: 50px;
+      width: auto;
+      display: block;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 2rem;
+    }
+    .nav-links a {
+      color: #fff;
+      font-weight: 500;
+      text-decoration: none;
+      font-size: 1rem;
+      padding: 0.5rem 0.75rem;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: #c8e6c9;
+    }
+    .schedule-form-container {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 70vh;
+    }
+    .schedule-form {
+      width: 100%;
+      max-width: 370px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      padding: 2rem 1.5rem;
+      box-sizing: border-box;
+    }
+    .schedule-form h1 {
+      text-align: center;
+      color: #2e7d32;
+      margin-bottom: 1.5rem;
+    }
+    .schedule-form label {
+      font-weight: 500;
+      margin-top: 1rem;
+      display: block;
+      color: #333;
+    }
+    .schedule-form input, .schedule-form select, .schedule-form textarea {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      box-sizing: border-box;
+    }
+    .schedule-form button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #2e7d32;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .schedule-form button:hover {
+      background: #1b5e20;
+    }
+    .success-message {
+      color: #4caf50;
+      text-align: center;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    /* Footer styles */
+    .footer {
+      background: #222;
+      color: #fff;
+      padding: 2rem 0 1rem 0;
+      font-size: 1rem;
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    .footer-section {
+      flex: 1 1 200px;
+      min-width: 180px;
+    }
+    .footer-section h3 {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      color: #4caf50;
+    }
+    .footer-contact a, .footer-section a {
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .footer-contact a:hover, .footer-section a:hover {
+      color: #4caf50;
+    }
+    .footer-bottom {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      color: #bbb;
+    }
+    @media (max-width: 700px) {
+      .footer-grid {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+    }
+    .back-dashboard-btn {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      background: #2e7d32;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(46,125,50,0.08);
+    }
+    .back-dashboard-btn i {
+      margin-right: 0.5rem;
+    }
+    .back-dashboard-btn:hover {
+      background: #1b5e20;
+      color: #fff;
+    }
+    .mobile-tab-bar {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #388e3c;
+      color: #fff;
+      z-index: 10000;
+      height: 60px;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+    }
+    .mobile-tab-bar a {
+      flex: 1;
+      text-align: center;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.95rem;
+      padding: 0.5rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    .mobile-tab-bar a.active, .mobile-tab-bar a:hover {
+      background: #2e7d32;
+      color: #c8e6c9;
+    }
+    .mobile-tab-bar i {
+      font-size: 1.2rem;
+      margin-bottom: 0.1rem;
+    }
+    @media (min-width: 769px) {
+      .mobile-tab-bar {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-content">
+      <div class="logo">
+        <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden Logo">
+      </div>
+      <nav id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pay-your-bill.html">Pay Bill</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="schedule-form-container">
+      <a href="customer-dashboard.html" class="back-dashboard-btn"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+      <form class="schedule-form" id="maintenanceForm">
+        <h1>Schedule Maintenance</h1>
+        <div class="success-message" id="successMessage">Your request has been submitted!</div>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="service">Service Type</label>
+        <select id="service" name="service" required>
+          <option value="">Select a service</option>
+          <option value="lawn-maintenance">Lawn Maintenance</option>
+          <option value="landscaping">Landscaping</option>
+          <option value="garden-care">Garden Care</option>
+          <option value="commercial">Commercial Services</option>
+          <option value="pressure-washing">Pressure Washing</option>
+          <option value="hedge-trimming">Hedge Trimming</option>
+          <option value="irrigation">Irrigation</option>
+          <option value="other">Other</option>
+        </select>
+
+        <label for="date">Preferred Date</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="details">Additional Details</label>
+        <textarea id="details" name="details" rows="3" placeholder="Let us know anything special..."></textarea>
+
+        <button type="submit">Submit Request</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Mobile Tab Bar -->
+  <div class="mobile-tab-bar">
+    <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="services.html"><i class="fas fa-tools"></i><span>Services</span></a>
+    <a href="pay-your-bill.html"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
+    <a href="contact.html"><i class="fas fa-phone"></i><span>Contact</span></a>
+    <a href="customer-dashboard.html"><i class="fas fa-user"></i><span>Dashboard</span></a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-content">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <div class="footer-contact">
+            <span class="footer-owner">Karl Holliday</span>
+            <a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
+            <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="education.html">Education</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Customer Portal</h3>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+            <li><a href="customer-dashboard.html">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    // Auto-update year
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    // Simple form handler (replace with real backend integration as needed)
+    document.getElementById('maintenanceForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('successMessage').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('successMessage').style.display = 'none';
+        e.target.reset();
+      }, 3000);
+    });
+  </script>
+</body>
+</html>

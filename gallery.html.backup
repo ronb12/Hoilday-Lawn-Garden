@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Our Work - Holliday Lawn &amp; Garden</title>
+<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<!-- Fix for fixed header spacing -->
+<style>
+ body {
+ padding-top: 100px; /* Increased padding to account for fixed header height */
+ margin: 0;
+ }
+ 
+ @media (max-width: 768px) {
+ body {
+ padding-top: 80px; /* Smaller padding for mobile */
+ }
+ }
+ 
+    /* Comprehensive button styles - override any existing styles */
+    button, 
+    input[type="submit"], 
+    input[type="button"],
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-login,
+    .btn-customer,
+    .btn-admin,
+    .cta-button,
+    .cta-button.primary,
+    .cta-button.secondary {
+        font-family: 'Montserrat', sans-serif !important;
+        border-radius: 8px !important;
+        border: none !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Specific button types */
+    .btn-login {
+        border-radius: 4px !important;
+    }
+    
+ 
+ // Mobile menu functionality
+ document.addEventListener('DOMContentLoaded', function() {

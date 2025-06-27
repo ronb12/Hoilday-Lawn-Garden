@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Contact Holliday's Lawn & Garden for professional lawn care and landscaping services." />
+<title>Contact Us Holliday's Lawn &amp; Garden</title>
+    <meta property="og:title" content="Contact Us Holliday's Lawn &amp; Garden" />
+    <meta property="og:description" content="Contact Holliday's Lawn & Garden for professional lawn care and landscaping services." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="./contact.html" />
+    <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Contact Us Holliday's Lawn &amp; Garden" />
+    <meta name="twitter:description" content="Contact Holliday's Lawn & Garden for professional lawn care and landscaping services." />
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="assets/css/hero.css?v=1.0.6" rel="stylesheet"/>
+<link href="assets/css/components/contact.css" rel="stylesheet"/>
+<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="manifest.json" />
+<!-- Fix for fixed header spacing -->
+<style>
+ body {
+ padding-top: 100px; /* Increased padding to account for fixed header height */
+ margin: 0;
+ }
+ 
+ .login-buttons {
+   display: flex !important;
+   gap: 1rem !important;
+   align-items: center !important;
+   margin-left: 1rem !important;
+ }
+ 
+ .btn-login {
+   padding: 0.5rem 1rem !important;
+   border-radius: 4px !important;
+   text-decoration: none !important;
+   font-weight: 500 !important;
+   transition: all 0.3s ease !important;
+   font-size: 0.9rem !important;
+   min-width: 120px !important;
+   text-align: center !important;
+   display: inline-flex !important;
+   align-items: center !important;
+   justify-content: center !important;
+   gap: 0.5rem !important;
+   white-space: nowrap !important;
+ }
+ 
+ .btn-customer {
+   background: #2e7d32 !important;
+   color: white !important;
+ }
+ 
+ .btn-admin {
+   background: #1565c0 !important;
+   color: white !important;
+ }
+ 
+ .btn-login:hover {
+   transform: translateY(-2px) !important;
+   box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+ }
+ 
+ @media (max-width: 768px) {
+ body {
+ padding-top: 80px; /* Smaller padding for mobile */
+ }
+ 
+ 
+ }
+ 
+    /* Comprehensive button styles - override any existing styles */
+    button, 
+    input[type="submit"], 
+    input[type="button"],
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-login,
+    .btn-customer,
+    .btn-admin,
+    .cta-button,
+    .cta-button.primary,
+    .cta-button.secondary {
+        font-family: 'Montserrat', sans-serif !important;
+        border-radius: 8px !important;
+        border: none !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Specific button types */
+    .btn-login {
+        border-radius: 4px !important;
+    }
+    
+    /* Contact Page Styles */
+    .contact-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+    
+    .contact-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .contact-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2c5530;
+        margin-bottom: 1rem;
+    }
+    
+    .contact-header p {
+        font-size: 1.2rem;
+        color: #666;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        margin-bottom: 3rem;
+    }
+    
+    .contact-info {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .contact-info h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #2c5530;
+        margin-bottom: 1.5rem;
+    }
+    
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+    
+    .contact-item i {
+        font-size: 1.5rem;
+        color: #4caf50;
+        width: 24px;
+        text-align: center;
+    }
+    
+    .contact-item-content h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.25rem;
+    }
+    
+    .contact-item-content p {
+        color: #666;
+        margin: 0;
+    }
+    
+    .contact-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .contact-form h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #2c5530;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #333;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #4caf50;
+        box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    }
+    
+    .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+    
+    .btn-submit {
+        background: #4caf50;
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .btn-submit:hover {
+        background: #45a049;
+    }
+    
+    .map-section {
+        margin-top: 3rem;
+        text-align: center;
+    }
+    
+    .map-section h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c5530;
+        margin-bottom: 2rem;
+    }
+    
+    .map-container {
+        background: #f8f9fa;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .map-placeholder {
+        background: #e0e0e0;
+        height: 400px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        font-size: 1.2rem;
+    }
+    
+    @media (max-width: 768px) {
+        .contact-container {
+            padding: 1rem;
+        }
+        
+        .contact-header h1 {
+            font-size: 2rem;
+        }
+        
+        .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .contact-info,
+        .contact-form {
+            padding: 1.5rem;
+        }
+    }
+    
+    /* Mobile Tab Bar - Hide on Desktop */
+    @media (min-width: 768px) {
+        .mobile-tab-bar { 
+            display: none !important; 
+        }
+    }
+
+}
+</style>
+
+<script>
+// Enhanced loading management
+(function() {
+var loading = document.getElementById('loading');
+var error = document.getElementById('error');
+
+// Hide loading after page load
+function hideLoading() {
+if (loading) {
+loading.classList.add('hidden');
+setTimeout(function() {
+loading.style.display = 'none';
+}, 300);
+}
+}
+
+// Show error message
+function showError(message) {
+if (error) {
+error.textContent = message;
+error.classList.add('show');
+setTimeout(function() {
+error.classList.remove('show');
+}, 5000);
+}
+}
+
+// Hide loading when DOM is ready
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', hideLoading);
+} else {
+hideLoading();
+}
+
+// Hide loading when window loads
+window.addEventListener('load', hideLoading);
+
+// Fallback: hide loading after 3 seconds
+setTimeout(hideLoading, 3000);
+
+// Handle errors
+window.addEventListener('error', function(e) {
+
+showError('An error occurred while loading the page. Please refresh.');
+});
+})();
+</script>
+
+<!-- Mobile Tab Bar (visible only on mobile) -->
+<nav class="mobile-tab-bar" aria-label="Mobile Tab Bar Navigation">
+  <a href="index.html" aria-label="Home"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="about.html" aria-label="About"><i class="fas fa-leaf"></i><span>About</span></a>
+  <a href="services.html" aria-label="Tools"><i class="fas fa-tools"></i><span>Services</span></a>
+  <a href="pay-your-bill.html" aria-label="Pay Your Bill"><i class="fas fa-credit-card"></i><span>Pay Bill</span></a>
+  <a href="faq.html" aria-label="FAQ"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
+  <a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
+  <a href="login.html" aria-label="Login"><i class="fas fa-user"></i><span>Login</span></a>
+</nav>
+
+<style>
+
+    /* Perfect Page Structure - No Issues */
+    .main-header {
+        background: #fff !important;
+        min-height: 70px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0 2rem !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .logo {
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .logo img {
+        height: 50px !important;
+        width: auto !important;
+        display: block !important;
+    }
+    
+    #nav-menu {
+        display: flex !important;
+        align-items: center !important;
+        flex-grow: 1 !important;
+        justify-content: flex-end !important;
+    }
+    
+    .nav-links { 
+        display: flex !important;
+        align-items: center !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 2rem !important;
+        flex-wrap: nowrap !important;
+    }
+    
+    .nav-links a { 
+        padding: 0.5rem 0.75rem !important; 
+        color: #333 !important; 
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease !important;
+        white-space: nowrap !important;
+        font-size: 0.95rem !important;
+        display: block !important;
+    }
+    
+    .nav-links a:hover {
+        color: #2e7d32 !important;
+    }
+    
+    .nav-links li { 
+        display: flex !important; 
+        align-items: center !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    
+    
+    .btn-login {
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        font-size: 0.9rem !important;
+        min-width: 120px !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+        white-space: nowrap !important;
+    }
+    
+    .btn-customer {
+        background: #2e7d32 !important;
+        color: white !important;
+    }
+    
+    .btn-admin {
+        background: #1565c0 !important;
+        color: white !important;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+    /* Hero Section - Perfect Spacing */
+    .hero {
+        position: relative !important;
+        width: 100vw !important;
+        min-height: 60vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #222 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        margin-top: 70px !important;
+        padding: 0 !important;
+    }
+    
+    .hero img {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        z-index: 1 !important;
+        filter: brightness(0.6) !important;
+    }
+    
+    .hero-content {
+        position: relative !important;
+        z-index: 2 !important;
+        text-align: center !important;
+        color: #fff !important;
+        padding: 2rem !important;
+        max-width: 800px !important;
+    }
+    
+    .hero-content h1 {
+        font-size: 3rem !important;
+        margin-bottom: 1rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 1px !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .hero-content p {
+        font-size: 1.25rem !important;
+        font-weight: 400 !important;
+        margin-bottom: 2rem !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Body and Main Content */
+    body {
+        padding-top: 70px !important;
+        margin: 0 !important;
+    }
+    
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    @media (max-width: 768px) {
+        body {
+            padding-top: 70px !important;
+        }
+        
+        .main-header {
+            padding: 0 1rem !important;
+        }
+        
+        #nav-menu {
+            justify-content: flex-end !important;
+        }
+        
+        .nav-links { 
+            display: none !important; 
+            position: absolute !important; 
+            top: 100% !important; 
+            left: 0 !important; 
+            right: 0 !important; 
+            background: var(--color-primary, #4caf50) !important; 
+            padding: 1rem !important; 
+            flex-direction: column !important; 
+            align-items: center !important; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+            z-index: 1000 !important;
+        }
+        
+        .nav-links.active { 
+            display: flex !important; 
+        }
+        
+        
+        
+        .login-buttons {
+            flex-direction: column !important;
+            gap: 0.5rem !important;
+            margin-left: 0 !important;
+        }
+        
+        .btn-login {
+            min-width: 140px !important;
+            font-size: 0.85rem !important;
+        }
+        
+        .hero-content h1 {
+            font-size: 2rem !important;
+        }
+        
+        .hero-content p {
+            font-size: 1rem !important;
+        }
+    }
+    
+    @media (max-width: 900px) {
+        .main-header .nav-links {
+            margin-top: 0 !important;
+            padding-top: 0.5em !important;
+        }
+    }
+
+</style>
+
+<style>
+/* Ensure hero H1 elements are always visible */
+.hero h1 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+/* Ensure hero content is visible */
+.hero-content {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Ensure hero section itself is visible */
+.hero {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+</style>
+
+<style>
+/* Ensure hero H1 elements are always visible */
+.hero h1 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+</style>
+
+<style>
+/* Mobile Tab Bar - Hide on Desktop */
+@media (min-width: 769px) {
+  .mobile-tab-bar { display: none !important; }
+}
+@media (max-width: 768px) {
+  .mobile-tab-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 64px;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+    z-index: 2000;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+</style>
+
+<style>
+/* Hero section visibility - Professional Design Standard */
+.hero h1 { display: block !important; visibility: visible !important; opacity: 1 !important; }
+</style>
+
+<style>
+/* Ensure header displays correctly */
+.main-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1000 !important;
+  padding: 0 1.5rem !important;
+  min-height: 80px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure mobile tab bar displays correctly */
+.mobile-tab-bar {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .mobile-tab-bar {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: white !important;
+    border-top: 1px solid #e0e0e0 !important;
+    z-index: 1000 !important;
+    padding: 0.5rem 0 !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+  }
+  
+  .mobile-tab-bar a {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-decoration: none !important;
+    color: #666 !important;
+    font-size: 0.8rem !important;
+    padding: 0.5rem !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .mobile-tab-bar a.active {
+    color: #4caf50 !important;
+    background: rgba(76, 175, 80, 0.1) !important;
+  }
+  
+  .mobile-tab-bar i {
+    font-size: 1.2rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+}
+
+/* Ensure footer displays correctly */
+.footer {
+  background: #2c5530 !important;
+  color: white !important;
+  padding: 2rem 0 1rem 0 !important;
+  margin-top: 3rem !important;
+}
+
+.footer-content {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 2rem !important;
+}
+
+.footer-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+  gap: 2rem !important;
+  margin-bottom: 2rem !important;
+}
+
+.footer-section h3 {
+  color: #4caf50 !important;
+  margin-bottom: 1rem !important;
+  font-size: 1.2rem !important;
+}
+
+.footer-section ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem !important;
+}
+
+.footer-section ul li a {
+  color: #ccc !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease !important;
+}
+
+.footer-section ul li a:hover {
+  color: #4caf50 !important;
+}
+
+.footer-bottom {
+  border-top: 1px solid #3a6b3e !important;
+  padding-top: 1rem !important;
+  text-align: center !important;
+}
+
+.copyright p {
+  color: #ccc !important;
+  margin: 0 !important;
+}
+</style>
+
+<style>
+/* Ensure hero image displays correctly */
+.hero {
+  position: relative !important;
+  width: 100vw !important;
+  min-height: 60vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: 
+    linear-gradient(135deg, rgba(56, 142, 60, 0.32) 0%, rgba(37, 96, 41, 0.32) 100%),
+    url('assets/images/hero-garden-landscaping.optimized-1280-320.jpg') center/cover no-repeat !important;
+  background-color: #2e7d32 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+
+.hero-content {
+  position: relative !important;
+  z-index: 2 !important;
+  text-align: center !important;
+  color: #fff !important;
+  padding: 2rem !important;
+  background: rgba(56, 142, 60, 0.18) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(4px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem !important;
+  margin-bottom: 1rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3) !important;
+  line-height: 1.2 !important;
+}
+
+.hero-content p {
+  font-size: 1.25rem !important;
+  font-weight: 400 !important;
+  margin-bottom: 2rem !important;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1) !important;
+  line-height: 1.6 !important;
+  opacity: 0.97 !important;
+}
+</style>
+</head>
+<body>
+        <!-- Header -->
+  <header class="main-header">
+    <div class="logo">
+      <a href="index.html">
+        <picture>
+          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+        </picture>
+      </a>
+    </div>
+    <nav id="nav-menu">
+      
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+      </ul>
+      <div class="login-buttons">
+        <a href="login.html" class="btn-login btn-customer">
+          <i class="fas fa-user"></i>
+          Customer Login
+        </a>
+        <a href="admin-login.html" class="btn-login btn-admin">
+          <i class="fas fa-lock"></i>
+          Admin Login
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Tab Bar -->
+  <div class="mobile-tab-bar">
+    <a href="index.html">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    <a href="services.html">
+      <i class="fas fa-tools"></i>
+      <span>Services</span>
+    </a>
+    <a href="pay-your-bill.html">
+      <i class="fas fa-credit-card"></i>
+      <span>Pay Bill</span>
+    </a>
+    <a href="contact.html" class="active">
+      <i class="fas fa-phone"></i>
+      <span>Contact</span>
+    </a>
+    <a href="login.html">
+      <i class="fas fa-user"></i>
+      <span>Login</span>
+    </a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Contact Us</h1>
+      <p>Get in touch with us for all your lawn care and landscaping needs. We're here to help transform your outdoor space.</p>
+    </div>
+  </section>
+
+    <!-- Main Content -->
+    <main>
+        <div class="contact-container">
+            <div class="contact-header">
+                <h2>Contact Us</h2>
+                <p>Get in touch with us for all your lawn care and landscaping needs. We're here to help transform your outdoor space.</p>
+            </div>
+
+            <div class="contact-grid">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <h2>Get In Touch</h2>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-item-content">
+                            <h3>Phone</h3>
+                            <p>Karl Holliday (504) 717-1887</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-item-content">
+                            <h3>Email</h3>
+                            <p>7holliday@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="contact-item-content">
+                            <h3>Business Hours</h3>
+                            <p>Monday - Friday: 8:00 AM - 6:00 PM<br>
+                            Saturday: 8:00 AM - 4:00 PM<br>
+                            Sunday: Closed</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="contact-item-content">
+                            <h3>Service Area</h3>
+                            <p>Serving Louisiana and surrounding areas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <h2>Send Us a Message</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Service Interest</label>
+                            <select id="service" name="service">
+                                <option value="">Select a service</option>
+                                <option value="lawn-maintenance">Lawn Maintenance</option>
+                                <option value="landscaping">Landscaping</option>
+                                <option value="tree-services">Tree Services</option>
+                                <option value="irrigation">Irrigation</option>
+                                <option value="fertilization">Fertilization</option>
+                                <option value="pest-control">Pest Control</option>
+                                <option value="pressure-washing">Pressure Washing</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Tell us about your project or ask any questions..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="footer-contact">
+                        <span class="footer-owner">Karl Holliday</span>
+                        <a href="tel:+15047171887"><i class="fas fa-phone"></i> (504) 717‑1887</a>
+                        <a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope"></i> 7holliday@gmail.com</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Portal</h3>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                        <li><a href="customer-dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> Holliday's Lawn & Garden. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/firebase-config.js" type="module"></script>
+    <script src="assets/js/main.js" type="module"></script>
+    <script>
+        // Handle contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const contactData = Object.fromEntries(formData);
+            
+            // Show success message
+            alert('Thank you for your message! We will get back to you soon.');
+            
+            // Reset form
+            this.reset();
+        });
+        
+        // Update copyright year
+        const yearElement = document.getElementById('current-year');
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
+    </script>
+</body></html>

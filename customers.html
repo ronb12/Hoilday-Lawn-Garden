@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Customers - Admin Dashboard</title>
+    <meta content="Manage customers for Holliday Lawn &amp; Garden" name="description"/>
+    <link href="assets/css/main.min.css" rel="stylesheet"/>
+    <link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta content="#2e7d32" name="theme-color"/>
+    
+    <style>
+        /* Mobile navigation improvements */
+        @media (max-width: 768px) {
+            .admin-nav {
+                max-height: 200px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Add scroll indicators */
+            .admin-nav::before,
+            .admin-nav::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 20px;
+                pointer-events: none;
+                z-index: 2;
+            }
+            
+            .admin-nav::before {
+                left: 0;
+                background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
+            }
+            
+            .admin-nav::after {
+                right: 0;
+                background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
+            }
+        }
+        
+        /* Touch-friendly improvements */
+        @media (max-width: 768px) {
+            .btn {
+                min-height: 44px;
+                touch-action: manipulation;
+            }
+            
+            .filter-group select,
+            .filter-group input {
+                min-height: 44px;
+                touch-action: manipulation;
+            }
+            
+            .customers-table th,
+            .customers-table td {
+                min-height: 44px;
+            }
+            
+            /* Improve table scrolling on mobile */
+            .table-container {
+                scrollbar-width: thin;
+                scrollbar-color: #4caf50 #f0f0f0;
+            }
+            
+            .table-container::-webkit-scrollbar {
+                height: 6px;
+            }
+            
+            .table-container::-webkit-scrollbar-track {
+                background: #f0f0f0;
+                border-radius: 3px;
+            }
+            
+            .table-container::-webkit-scrollbar-thumb {
+                background: #4caf50;
+                border-radius: 3px;
+            }
+            
+            .table-container::-webkit-scrollbar-thumb:hover {
+                background: #388e3c;
+            }
+        }
+        
+        /* Landscape orientation improvements */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .admin-header {
+                flex-direction: row;
+                padding: 0.5rem 1rem;
+            }
+            
+            .admin-header .logo img {
+                height: 28px;
+            }
+            
+            .admin-nav {
+                gap: 0.25rem;
+            }
+            
+            .admin-nav a,
+            .admin-nav button {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.5rem;
+            }
+            
+            body {
+                padding-top: 60px;
+            }
+            
+            .dashboard-main {
+                margin-top: 0.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.5rem;
+            }
+            
+            .stat-card {
+                padding: 0.5rem;
+            }
+            
+            .stat-number {
+                font-size: 1.2rem;
+            }
+            
+            .stat-label {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="error-container" style="display: none; position: fixed; top: 20px; right: 20px; background: #ffebee; color: #c62828; padding: 1rem; border-radius: 6px; z-index: 10000; max-width: 400px;">
+        <div id="errorMessage"></div>
+    </div>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container header-content">
+            <div class="logo">
+                <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden" />
+                <span style="font-weight: 700; color: #2c5530;">Admin Dashboard</span>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="admin-nav" id="adminNav">
+                <a href="admin-dashboard.html">Dashboard</a>
+                <a href="appointments.html">Appointments</a>
+                <a href="customers.html" class="active">Customers</a>
+                <a href="payments.html">Payments</a>
+                <a href="inventory.html">Inventory</a>
+                <a href="staff.html">Staff</a>
+                <a href="analytics.html">Analytics</a>
+                <a href="messages.html">Messages</a>
+                <button class="btn btn-danger" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Customer Management</h1>
+                <p class="page-subtitle">Manage your customer database and relationships</p>
+            </div>
+            <a href="add-customer.html" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Add Customer
+            </a>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="total-customers">0</div>
+                <div class="stat-label">Total Customers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="active-customers">0</div>
+                <div class="stat-label">Active Customers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="new-customers">0</div>
+                <div class="stat-label">New This Month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avg-rating">0.0</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label for="search-customer">Search Customers</label>
+                    <input type="text" id="search-customer" placeholder="Search by name, email, or phone..." />
+                </div>
+                <div class="filter-group">
+                    <label for="status-filter">Status</label>
+                    <select id="status-filter">
+                        <option value="">All Statuses</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="service-filter">Service Type</label>
+                    <select id="service-filter">
+                        <option value="">All Services</option>
+                        <option value="lawn-mowing">Lawn Mowing</option>
+                        <option value="landscaping">Landscaping</option>
+                        <option value="irrigation">Irrigation</option>
+                        <option value="maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="sort-by">Sort By</label>
+                    <select id="sort-by">
+                        <option value="name">Name</option>
+                        <option value="date-added">Date Added</option>
+                        <option value="last-service">Last Service</option>
+                        <option value="total-spent">Total Spent</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customers Table -->
+        <div class="customers-table">
+            <div class="table-header">
+                <h3 class="table-title">Customer List</h3>
+                <div class="table-actions">
+                    <button class="btn btn-secondary btn-small" onclick="exportCustomers()">
+                        <i class="fas fa-download"></i>
+                        Export
+                    </button>
+                    <button class="btn btn-primary btn-small" onclick="refreshCustomers()">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+            <div class="table-container">
+                <div id="loading" class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Loading customers...
+                </div>
+                <div id="error" class="error" style="display: none;"></div>
+                <table id="customers-table" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Contact Info</th>
+                            <th>Address</th>
+                            <th>Services</th>
+                            <th>Status</th>
+                            <th>Last Service</th>
+                            <th>Total Spent</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customers-tbody">
+                        <!-- Customer rows will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase Scripts -->
+    
+    <script type="module" src="assets/js/customers.js"></script>
+    <script src="assets/js/hide-loading.js"></script>
+    
+    <!-- Mobile Menu Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const adminNav = document.getElementById('adminNav');
+            
+            if (mobileMenuToggle && adminNav) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    adminNav.classList.toggle('active');
+                    
+                    // Change icon based on menu state
+                    const icon = this.querySelector('i');
+                    if (adminNav.classList.contains('active')) {
+                        icon.className = 'fas fa-times';
+                    } else {
+                        icon.className = 'fas fa-bars';
+                    }
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenuToggle.contains(event.target) && !adminNav.contains(event.target)) {
+                        adminNav.classList.remove('active');
+                        const icon = mobileMenuToggle.querySelector('i');
+                        icon.className = 'fas fa-bars';
+                    }
+                });
+                
+                // Close menu when clicking on a link
+                const navLinks = adminNav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        adminNav.classList.remove('active');
+                        const icon = mobileMenuToggle.querySelector('i');
+                        icon.className = 'fas fa-bars';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

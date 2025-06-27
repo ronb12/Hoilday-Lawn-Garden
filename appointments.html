@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Appointments - Admin Dashboard</title>
+    <meta content="Manage appointments for Holliday Lawn &amp; Garden" name="description"/>
+    <link href="assets/css/main.min.css" rel="stylesheet"/>
+    <link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta content="#2e7d32" name="theme-color"/>
+</head>
+<body>
+    <div id="error-container" style="display: none; position: fixed; top: 20px; right: 20px; background: #ffebee; color: #c62828; padding: 1rem; border-radius: 6px; z-index: 10000; max-width: 400px;">
+        <div id="errorMessage"></div>
+    </div>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container header-content">
+            <div class="logo">
+                <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden" />
+                <span style="font-weight: 700; color: #2c5530;">Admin Dashboard</span>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="admin-nav" id="adminNav">
+                <a href="admin-dashboard.html">Dashboard</a>
+                <a href="appointments.html" class="active">Appointments</a>
+                <a href="customers.html">Customers</a>
+                <a href="payments.html">Payments</a>
+                <a href="inventory.html">Inventory</a>
+                <a href="staff.html">Staff</a>
+                <a href="analytics.html">Analytics</a>
+                <a href="messages.html">Messages</a>
+                <button class="btn btn-danger" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Appointment Management</h1>
+                <p class="page-subtitle">Schedule and manage your lawn care appointments</p>
+            </div>
+            <a href="add-appointment.html" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Add Appointment
+            </a>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="total-appointments">0</div>
+                <div class="stat-label">Total Appointments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pending-appointments">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="completed-appointments">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="cancelled-appointments">0</div>
+                <div class="stat-label">Cancelled</div>
+            </div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label for="search-appointment">Search Appointments</label>
+                    <input type="text" id="search-appointment" placeholder="Search by customer, service, or date..." />
+                </div>
+                <div class="filter-group">
+                    <label for="status-filter">Status</label>
+                    <select id="status-filter">
+                        <option value="">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="service-filter">Service Type</label>
+                    <select id="service-filter">
+                        <option value="">All Services</option>
+                        <option value="lawn-mowing">Lawn Mowing</option>
+                        <option value="landscaping">Landscaping</option>
+                        <option value="fertilization">Fertilization</option>
+                        <option value="pest-control">Pest Control</option>
+                        <option value="irrigation">Irrigation</option>
+                        <option value="tree-trimming">Tree Trimming</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="sort-by">Sort By</label>
+                    <select id="sort-by">
+                        <option value="date">Date</option>
+                        <option value="customer">Customer</option>
+                        <option value="service">Service</option>
+                        <option value="status">Status</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments Table -->
+        <div class="appointments-table">
+            <div class="table-header">
+                <h3 class="table-title">Appointments List</h3>
+                <div class="table-actions">
+                    <button class="btn btn-secondary btn-small" onclick="exportAppointments()">
+                        <i class="fas fa-download"></i>
+                        Export
+                    </button>
+                    <button class="btn btn-primary btn-small" onclick="refreshAppointments()">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+            <div class="table-container">
+                <div id="loading" class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Loading appointments...
+                </div>
+                <div id="error" class="error" style="display: none;"></div>
+                <table id="appointments-table" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Service</th>
+                            <th>Date & Time</th>
+                            <th>Duration</th>
+                            <th>Status</th>
+                            <th>Staff Assigned</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointments-tbody">
+                        <!-- Appointment rows will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    
+    <script type="module" src="assets/js/appointments.js"></script>
+<script src="assets/js/hide-loading.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Add Customer - Admin Dashboard</title>
+    <meta content="Add new customer for Holliday Lawn &amp; Garden" name="description"/>
+    <link href="assets/css/main.min.css" rel="stylesheet"/>
+    <link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta content="#2e7d32" name="theme-color"/>
+    <style>
+        body { padding-top: 100px; margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .dashboard-main { max-width: 800px; margin: 2rem auto; padding: 0 2rem; }
+        .page-header { background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 2rem; }
+        .page-title { font-size: 2rem; font-weight: 700; color: #2c5530; margin: 0 0 0.5rem 0; }
+        .page-subtitle { color: #666; margin: 0; }
+        .form-container { background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+        .form-section { margin-bottom: 2rem; }
+        .form-section h3 { color: #2c5530; margin-bottom: 1rem; font-size: 1.2rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #4caf50; box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2); }
+        .form-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem; }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .btn-primary { background: #4caf50; color: white; }
+        .btn-primary:hover { background: #388e3c; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #5a6268; }
+        .loading { text-align: center; padding: 2rem; color: #666; }
+        .error { background: #ffebee; color: #c62828; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; }
+        .success { background: #e8f5e8; color: #2e7d32; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; }
+        @media (max-width: 768px) { .dashboard-main { padding: 0 1rem; } .form-row { grid-template-columns: 1fr; } .form-actions { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <div id="error-container" style="display: none; position: fixed; top: 20px; right: 20px; background: #ffebee; color: #c62828; padding: 1rem; border-radius: 6px; z-index: 10000; max-width: 400px;">
+        <div id="errorMessage"></div>
+    </div>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden" />
+            <span style="font-weight: 700; color: #2c5530;">Admin Dashboard</span>
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="customers.html">Customers</a>
+            <a href="payments.html">Payments</a>
+            <a href="inventory.html">Inventory</a>
+            <a href="staff.html">Staff</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="messages.html">Messages</a>
+            <button class="btn btn-danger" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </nav>
+    </header>
+    <main class="dashboard-main">
+        <div class="page-header">
+            <h1 class="page-title">Add New Customer</h1>
+            <p class="page-subtitle">Enter customer information to add them to the system</p>
+        </div>
+        <div class="form-container">
+            <form id="customer-form">
+                <div class="form-section">
+                    <h3>Personal Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h3>Address Information</h3>
+                    <div class="form-group">
+                        <label for="street">Street Address *</label>
+                        <input type="text" id="street" name="street" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State *</label>
+                            <input type="text" id="state" name="state" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="zipCode">ZIP Code *</label>
+                            <input type="text" id="zipCode" name="zipCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" id="country" name="country" value="USA">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h3>Service Information</h3>
+                    <div class="form-group">
+                        <label for="services">Services Needed</label>
+                        <select id="services" name="services" multiple>
+                            <option value="lawn-mowing">Lawn Mowing</option>
+                            <option value="landscaping">Landscaping</option>
+                            <option value="irrigation">Irrigation</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="fertilization">Fertilization</option>
+                            <option value="pest-control">Pest Control</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" name="notes" rows="4" placeholder="Any special requirements or notes about this customer..."></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a href="customers.html" class="btn btn-secondary">
+                        <i class="fas fa-times"></i>
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Add Customer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <script type="module" src="assets/js/add-customer.js"></script>
+<script src="assets/js/hide-loading.js"></script>
+</body>
+</html>

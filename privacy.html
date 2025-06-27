@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Privacy Policy - Holliday's Lawn &amp; Garden</title>
+    <meta content="Privacy Policy for Holliday's Lawn &amp; Garden - Learn how we collect, use, and protect your information" name="description"/>
+    <meta content="privacy policy, data protection, lawn care privacy, garden services privacy" name="keywords"/>
+    <meta content="Holliday's Lawn &amp; Garden" name="author"/>
+    <meta content="Privacy Policy - Holliday's Lawn &amp; Garden" property="og:title"/>
+    <meta content="Learn how we collect, use, and protect your information" property="og:description"/>
+    <meta content="website" property="og:type"/>
+    <meta content="https://ronb12.github.io/Holliday-Lawn-Garden/privacy.html" property="og:url"/>
+    <meta content="summary_large_image" name="twitter:card"/>
+    <meta content="Privacy Policy - Holliday's Lawn &amp; Garden" name="twitter:title"/>
+    <meta content="Learn how we collect, use, and protect your information" name="twitter:description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link href="assets/css/main.min.css" rel="stylesheet"/>
+    <link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.json" />
+    <style>
+        /* Fix for fixed header spacing */
+        body { 
+            padding-top: 100px; 
+            margin: 0; 
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding-top: 60px;
+            }
+        }
+        
+        /* Professional Header Styles */
+        .main-header {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            background: white !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 1000 !important;
+            padding: 0 1rem !important;
+            min-height: 80px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            min-width: 0 !important;
+        }
+
+        .logo {
+            display: flex !important;
+            align-items: center !important;
+            height: 100% !important;
+            flex-shrink: 0 !important;
+            margin-right: 2rem !important;
+        }
+
+        .logo img {
+            height: 60px !important;
+            width: auto !important;
+            display: block !important;
+            margin: 0 !important;
+        }
+
+        #nav-menu {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+            flex: 1 1 auto !important;
+            gap: 0.5rem !important;
+            flex-wrap: nowrap !important;
+            min-width: 0 !important;
+            white-space: nowrap !important;
+        }
+     
+        .nav-links {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 0.5rem !important;
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            flex: 1 1 auto !important;
+            flex-wrap: nowrap !important;
+            min-width: 0 !important;
+            white-space: nowrap !important;
+        }
+        
+        .nav-links a {
+            padding: 0.3rem 0.7rem !important;
+            color: #333 !important;
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            transition: all 0.3s ease !important;
+            white-space: nowrap !important;
+            font-size: 0.92rem !important;
+            display: block !important;
+            border-radius: 6px !important;
+        }
+        
+        .nav-links a:hover {
+            color: #2e7d32 !important;
+            background-color: rgba(0, 0, 0, 0.05) !important;
+            transform: translateY(-1px) !important;
+        }
+        
+        .nav-links li { 
+            display: flex !important;
+            align-items: center !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            list-style: none !important;
+        }
+        
+        .login-buttons {
+            display: flex !important;
+            gap: 0.5rem !important;
+            align-items: center !important;
+            margin-left: 0.5rem !important;
+            flex-wrap: nowrap !important;
+            min-width: 0 !important;
+            white-space: nowrap !important;
+        }
+        
+        .btn-login {
+            padding: 0.3rem 0.8rem !important;
+            border-radius: 4px !important;
+            text-decoration: none !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+            font-size: 0.92rem !important;
+            min-width: 90px !important;
+            text-align: center !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.4rem !important;
+            white-space: nowrap !important;
+        }
+        
+        .btn-customer {
+            background: #2e7d32 !important;
+            color: white !important;
+        }
+        
+        .btn-admin {
+            background: #1565c0 !important;
+            color: white !important;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+        }
+        
+        .hamburger {
+            display: none !important;
+            cursor: pointer !important;
+            padding: 15px !important;
+            z-index: 1000 !important;
+            position: relative !important;
+            background: none !important;
+            border: none !important;
+            -webkit-tap-highlight-color: transparent !important;
+            margin-left: 1rem !important;
+        }
+
+        .hamburger span {
+            display: block !important;
+            width: 25px !important;
+            height: 3px !important;
+            background-color: #2e7d32 !important;
+            margin: 5px 0 !important;
+            transition: 0.3s !important;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px) !important;
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0 !important;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px) !important;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 1200px) {
+            .nav-links {
+                gap: 0.3rem !important;
+            }
+            .btn-login {
+                font-size: 0.88rem !important;
+                min-width: 80px !important;
+                padding: 0.25rem 0.6rem !important;
+            }
+        }
+        @media (max-width: 1024px) {
+            .main-header {
+                padding: 0 0.5rem !important;
+            }
+            .nav-links {
+                gap: 0.2rem !important;
+            }
+            .btn-login {
+                font-size: 0.85rem !important;
+                min-width: 70px !important;
+                padding: 0.2rem 0.5rem !important;
+            }
+        }
+        @media (max-width: 900px) {
+            .main-header {
+                min-height: 60px !important;
+            }
+            .logo img {
+                height: 40px !important;
+            }
+            .nav-links a {
+                font-size: 0.7rem !important;
+                padding: 0.1rem 0.2rem !important;
+            }
+            .btn-login {
+                font-size: 0.7rem !important;
+                min-width: 40px !important;
+                padding: 0.1rem 0.2rem !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .main-header {
+                flex-wrap: wrap !important;
+                min-height: 50px !important;
+            }
+            #nav-menu, .nav-links, .login-buttons {
+                flex-wrap: wrap !important;
+            }
+        }
+        
+        .privacy-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        
+        .privacy-content h1 {
+            color: #2e7d32;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        
+        .privacy-content h2 {
+            color: #2e7d32;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .privacy-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .privacy-content ul {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+        
+        .privacy-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .last-updated {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        
+        /* Hero Section Styles */
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #222;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .hero img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+            padding: 2rem;
+            max-width: 800px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-content p {
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Footer Styles */
+        .main-footer {
+            background: #2e7d32;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .footer-section p {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section ul li a:hover {
+            color: #8bc34a;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 2rem;
+            padding-top: 1rem;
+            text-align: center;
+        }
+        
+        .footer-bottom p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .footer-section ul li i {
+            margin-right: 0.5rem;
+            width: 16px;
+        }
+        
+        .copyright {
+            text-align: center;
+        }
+        
+        /* Mobile Responsive for Hero and Footer */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            
+            .main-footer {
+                padding: 2rem 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden" />
+            </a>
+        </div>
+        <nav id="nav-menu">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+            </ul>
+            <div class="login-buttons">
+                <a href="login.html" class="btn-login btn-customer">
+                    <i class="fas fa-user"></i>
+                    Customer Login
+                </a>
+                <a href="admin-login.html" class="btn-login btn-admin">
+                    <i class="fas fa-lock"></i>
+                    Admin Login
+                </a>
+            </div>
+            <button class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <img src="assets/images/hero-garden-landscaping-1280.jpg" alt="Lawn Care Services" />
+            <div class="hero-content">
+                <h1>Privacy Policy</h1>
+                <p>Your privacy is important to us. Learn how we protect your information.</p>
+            </div>
+        </section>
+
+        <div class="privacy-content">
+            <div class="last-updated">
+                <strong>Last Updated:</strong> January 2025
+            </div>
+
+            <h1>Privacy Policy</h1>
+            
+            <p>At Holliday's Lawn & Garden, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.</p>
+
+            <h2>Information We Collect</h2>
+            
+            <h3>Personal Information</h3>
+            <p>We may collect personal information that you voluntarily provide to us, including:</p>
+            <ul>
+                <li>Name and contact information (email address, phone number, address)</li>
+                <li>Account credentials and login information</li>
+                <li>Service preferences and requirements</li>
+                <li>Payment information (processed securely through third-party providers)</li>
+                <li>Communication preferences</li>
+            </ul>
+
+            <h3>Automatically Collected Information</h3>
+            <p>When you visit our website, we may automatically collect certain information, including:</p>
+            <ul>
+                <li>IP address and device information</li>
+                <li>Browser type and version</li>
+                <li>Pages visited and time spent on our website</li>
+                <li>Referring website information</li>
+                <li>Cookies and similar tracking technologies</li>
+            </ul>
+
+            <h2>How We Use Your Information</h2>
+            <p>We use the information we collect for various purposes, including:</p>
+            <ul>
+                <li>Providing and maintaining our services</li>
+                <li>Processing appointments and service requests</li>
+                <li>Communicating with you about your account and services</li>
+                <li>Sending important updates and notifications</li>
+                <li>Improving our website and services</li>
+                <li>Analyzing usage patterns and trends</li>
+                <li>Complying with legal obligations</li>
+            </ul>
+
+            <h2>Information Sharing and Disclosure</h2>
+            <p>We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except in the following circumstances:</p>
+            <ul>
+                <li><strong>Service Providers:</strong> We may share information with trusted third-party service providers who assist us in operating our website and providing services.</li>
+                <li><strong>Legal Requirements:</strong> We may disclose information if required by law or to protect our rights and safety.</li>
+                <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred as part of the transaction.</li>
+            </ul>
+
+            <h2>Data Security</h2>
+            <p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. These measures include:</p>
+            <ul>
+                <li>Encryption of sensitive data</li>
+                <li>Regular security assessments</li>
+                <li>Access controls and authentication</li>
+                <li>Secure data storage practices</li>
+            </ul>
+
+            <h2>Cookies and Tracking Technologies</h2>
+            <p>We use cookies and similar tracking technologies to enhance your browsing experience and analyze website usage. You can control cookie settings through your browser preferences.</p>
+
+            <h2>Your Rights and Choices</h2>
+            <p>You have certain rights regarding your personal information, including:</p>
+            <ul>
+                <li>Accessing and updating your personal information</li>
+                <li>Requesting deletion of your information</li>
+                <li>Opting out of marketing communications</li>
+                <li>Controlling cookie preferences</li>
+            </ul>
+
+            <h2>Changes to This Privacy Policy</h2>
+            <p>We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
+
+            <p>Thank you for trusting Holliday's Lawn & Garden with your information. We are committed to protecting your privacy and providing you with excellent service.</p>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> Karl Holliday (504) 717-1887</li>
+                    <li><i class="fas fa-envelope"></i> 7holliday@gmail.com</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Portal</h3>
+                <ul>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+                    <li><a href="customer-dashboard.html">Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>© 2024 Holliday's Lawn & Garden. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

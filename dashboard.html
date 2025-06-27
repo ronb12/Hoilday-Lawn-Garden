@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+<style>
+
+    /* Perfect Page Structure - No Issues */
+    .main-header {
+        background: #fff !important;
+        min-height: 70px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0 2rem !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .logo {
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .logo img {
+        height: 50px !important;
+        width: auto !important;
+        display: block !important;
+    }
+    
+    #nav-menu {
+        display: flex !important;
+        align-items: center !important;
+        flex-grow: 1 !important;
+        justify-content: flex-end !important;
+    }
+    
+    .nav-links { 
+        display: flex !important;
+        align-items: center !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 2rem !important;
+        flex-wrap: nowrap !important;
+    }
+    
+    .nav-links a { 
+        padding: 0.5rem 0.75rem !important; 
+        color: #333 !important; 
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease !important;
+        white-space: nowrap !important;
+        font-size: 0.95rem !important;
+        display: block !important;
+    }
+    
+    .nav-links a:hover {
+        color: #2e7d32 !important;
+    }
+    
+    .nav-links li { 
+        display: flex !important; 
+        align-items: center !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .login-buttons {
+        display: flex !important;
+        gap: 1rem !important;
+        align-items: center !important;
+        margin-left: 1rem !important;
+    }
+    
+    .btn-login {
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        font-size: 0.9rem !important;
+        min-width: 120px !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+        white-space: nowrap !important;
+    }
+    
+    .btn-customer {
+        background: #2e7d32 !important;
+        color: white !important;
+    }
+    
+    .btn-admin {
+        background: #1565c0 !important;
+        color: white !important;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    
+    .hamburger {
+        display: none !important;
+        cursor: pointer;
+        padding: 15px;
+        z-index: 1000;
+        position: relative;
+        background: none;
+        border: none;
+        -webkit-tap-highlight-color: transparent;
+        margin-left: 1rem;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: #2e7d32;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+    
+    /* Hero Section - Perfect Spacing */
+    .hero {
+        position: relative !important;
+        width: 100vw !important;
+        min-height: 60vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #222 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        margin-top: 70px !important;
+        padding: 0 !important;
+    }
+    
+    .hero img {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        z-index: 1 !important;
+        filter: brightness(0.6) !important;
+    }
+    
+    .hero-content {
+        position: relative !important;
+        z-index: 2 !important;
+        text-align: center !important;
+        color: #fff !important;
+        padding: 2rem !important;
+        max-width: 800px !important;
+    }
+    
+    .hero-content h1 {
+        font-size: 3rem !important;
+        margin-bottom: 1rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 1px !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .hero-content p {
+        font-size: 1.25rem !important;
+        font-weight: 400 !important;
+        margin-bottom: 2rem !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Body and Main Content */
+    body {
+        padding-top: 70px !important;
+        margin: 0 !important;
+    }
+    
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    @media (max-width: 768px) {
+        body {
+            padding-top: 70px !important;
+        }
+        
+        .main-header {
+            padding: 0 1rem !important;
+        }
+        
+        #nav-menu {
+            justify-content: flex-end !important;
+        }
+        
+        .nav-links { 
+            display: none !important; 
+            position: absolute !important; 
+            top: 100% !important; 
+            left: 0 !important; 
+            right: 0 !important; 
+            background: var(--color-primary, #4caf50) !important; 
+            padding: 1rem !important; 
+            flex-direction: column !important; 
+            align-items: center !important; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+            z-index: 1000 !important;
+        }
+        
+        .nav-links.active { 
+            display: flex !important; 
+        }
+        
+        .hamburger { 
+            display: block !important; 
+        }
+        
+        .login-buttons {
+            display: none !important;
+        }
+        
+        .btn-login {
+            min-width: 140px !important;
+            font-size: 0.85rem !important;
+        }
+        
+        .hero-content h1 {
+            font-size: 2rem !important;
+        }
+        
+        .hero-content p {
+            font-size: 1rem !important;
+        }
+    }
+    
+    @media (max-width: 900px) {
+        .main-header .nav-links {
+            margin-top: 0 !important;
+            padding-top: 0.5em !important;
+        }
+    }
+
+</style>
+</head>
+<body><head>
+<title>Holliday Lawn &amp; Garden</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com" rel="dns-prefetch"/>
+<link href="https://fonts.gstatic.com" rel="dns-prefetch"/>
+<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net" rel="dns-prefetch"/>
+<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+<link rel="manifest" href="manifest.json" />
+<link color="#5bbad5" href="/assets/images/favicon/safari-pinned-tab.svg" rel="mask-icon"/>
+<meta content="#da532c" name="msapplication-TileColor"/>
+<meta content="#ffffff" name="theme-color"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Professional landscaping and garden services in your area." name="description"/>
+<meta content="lawn care, garden services, landscaping, dashboard" name="keywords"/>
+<meta content="Holliday Lawn &amp; Garden" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="Dashboard - Holliday Lawn &amp; Garden" property="og:title"/>
+<meta content="Manage your lawn care services and account settings." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://hollidaylawngarden.com/dashboard" property="og:url"/>
+<meta content="https://hollidaylawngarden.com/assets/images/og-image.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Dashboard - Holliday Lawn &amp; Garden" name="twitter:title"/>
+<meta content="Manage your lawn care services and account settings." name="twitter:description"/>
+<meta content="https://hollidaylawngarden.com/assets/images/og-image.jpg" name="twitter:image"/>
+<link href="https://hollidaylawngarden.com/dashboard" rel="canonical"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com" rel="dns-prefetch"/>
+<link href="https://fonts.gstatic.com" rel="dns-prefetch"/>
+<!-- Common head elements -->
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="#4CAF50" name="theme-color"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<link rel="manifest" href="manifest.json" />
+<!-- Firebase SDK -->
+<script defer="" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.min.js" type="module">
+ import { AccessibilityEnhancer } from '/assets/js/modules/accessibility.js';
+ import { } from '/assets/js/modules/config.js';
+ import { } from '/assets/js/modules/config.min.js';
+ import { initializeDashboard, loadUserData, setupRealtimeListeners, updateDashboardUI, updateServiceRequestUI, removeServiceRequestUI, initializeEventListeners, handleLogout, editProfile } from '/assets/js/modules/customer_dashboard.js';
+ import { initializeDashboard, loadUserData, setupRealtimeListeners, updateDashboardUI, updateServiceRequestUI, removeServiceRequestUI, initializeEventListeners, handleLogout, editProfile } from '/assets/js/modules/customer_dashboard.min.js';
+ import { initializeDashboard, checkAuth, loadUserData, loadServiceRequests, for, loadUpcomingServices, loadRecentPayments, updateDashboardStats, showNewRequestForm, closeModal, submitServiceRequest, showPaymentForm, syncWithGoogleCalendar, logout, showLoading, hideLoading, showError, showSuccess, initializeChat, sendMessage, handleTyping, editMessage, deleteMessage, markMessagesAsRead, handleChatError, initializeNotifications, getNotificationIcon, formatTimestamp, markNotificationAsRead, markAllAsRead, toggleNotifications, handleFileSelect, removeFile } from '/assets/js/modules/dashboard.js';
+ import { initializeDashboard, checkAuth, loadUserData, loadServiceRequests, loadUpcomingServices, loadRecentPayments, updateDashboardStats, showNewRequestForm, closeModal, submitServiceRequest, showPaymentForm, syncWithGoogleCalendar, logout, showLoading, hideLoading, showError, showSuccess, initializeChat, sendMessage, handleTyping, editMessage, deleteMessage, markMessagesAsRead, handleChatError, initializeNotifications, getNotificationIcon, formatTimestamp, markNotificationAsRead, markAllAsRead, toggleNotifications, handleFileSelect, removeFile } from '/assets/js/modules/dashboard.min.js';
+ import { handleFileSelect, displayFile, removeFile, uploadFiles, formatFileSize, showNotification } from '/assets/js/modules/document_upload.js';
+ import { handleFileSelect, displayFile, removeFile, uploadFiles, formatFileSize, showNotification } from '/assets/js/modules/document_upload.min.js';
+ import { showError, handleError, handleFirebaseError, ErrorHandler } from '/assets/js/modules/error_handler.js';
+ import { showError, handleError, handleFirebaseError, ErrorHandler } from '/assets/js/modules/error_handler.min.js';
+ import { ErrorHandler } from '/assets/js/modules/error_handling.js';
+ import { ErrorHandler } from '/assets/js/modules/error_handling.min.js';
+ import { app, auth, db, storage, analytics } from '/assets/js/modules/firebase.js';
+ import { app, auth, db, analytics, googleProvider } from '/assets/js/modules/firebase.js';
+ import { FormValidator } from '/assets/js/modules/form_validation.js';
+ import { FormValidator } from '/assets/js/modules/form_validation.min.js';
+ import { HeadingEnhancer } from '/assets/js/modules/heading_enhancer.js';
+ import { ImageLoader } from '/assets/js/modules/image_loader.js';
+ import { ImageOptimizer } from '/assets/js/modules/image_optimization.js';
+ import { ImageOptimizer } from '/assets/js/modules/image_optimization.min.js';
+ import { ImageOptimizer } from '/assets/js/modules/image_optimizer.js';
+ import { ImageOptimizer } from '/assets/js/modules/image_optimizer.min.js';
+ import { } from '/assets/js/modules/login.js';
+ import { } from '/assets/js/modules/login.min.js';
+ import { initializeUI, setupEventListeners, registerServiceWorker, initializeFirebase, handleFormSubmit, handleNavigation } from '/assets/js/modules/main.js';
+ import { initializeUI, setupEventListeners, registerServiceWorker, initializeFirebase, handleFormSubmit, handleNavigation } from '/assets/js/modules/main.min.js';
+ import { MetaEnhancer } from '/assets/js/modules/meta_enhancer.js';
+ import { Minifier } from '/assets/js/modules/minifier.js';
+ import { Minifier } from '/assets/js/modules/minifier.min.js';
+ import { } from '/assets/js/modules/mobile_menu.js';
+ import { } from '/assets/js/modules/mobile_menu.min.js';
+ import { ${this.getExports(content) } from '/assets/js/modules/modularizer.js';
+ import { ResourceOptimizer } from '/assets/js/modules/resource_optimizer.js';
+ import { createTestResultsContainer, addTestResult, testGoogleSignIn, testEmailSignIn, testPasswordReset, testSignOut, runAuthTests, addTestButton } from '/assets/js/modules/test_auth.js';
+ import { createTestResultsContainer, addTestResult, testGoogleSignIn, testEmailSignIn, testPasswordReset, testSignOut, runAuthTests, addTestButton } from '/assets/js/modules/test_auth.min.js';
+ import { runTests } from '/assets/js/modules/tests.js';
+ import { runTests } from '/assets/js/modules/tests.min.js';
+ import { ModuleUpdater } from '/assets/js/modules/update_modules.js';
+ import { ResourceUpdater } from '/assets/js/modules/update_resources.js';
+ import { ResourceUpdater } from '/assets/js/modules/update_resources.min.js';
+ import { UXEnhancer, class
+ if } from '/assets/js/modules/ux_enhancer.js';</script>
+<script defer="" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.min.js" type="module"></script>
+<script defer="" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.min.js" type="module"></script>
+<script defer="" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.min.js" type="module"></script>
+<script defer="" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.min.js" type="module"></script>
+<script defer="" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-check-compat.min.js" type="module"></script>
+<script defer="" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-performance-compat.min.js" type="module"></script>
+<!-- Firebase Configuration -->
+<!-- Service Worker Registration -->
+<script defer="" type="module">
+ document.addEventListener("DOMContentLoaded", () => {
+ if ("serviceWorker" in navigator) {
+ navigator.serviceWorker
+ .register("/assets/js/service-worker.js")
+ .then((registration) => {
+ })
+ .catch((error) => {
+ console.error("Service Worker registration failed:", error);
+ });
+ }
+ });
+ </script>
+<script type="application/ld+json">
+ {
+ "@context": "https://schema.org",
+ "@type": "WebPage",
+ "name": "Customer Dashboard - Holliday Lawn & Garden",
+ "description": "Access your Holliday Lawn & Garden customer dashboard. View your services and account information.",
+ "url": "https://hollidaylawngarden.com/dashboard",
+ "publisher": {
+ "@type": "Organization",
+ "name": "Holliday Lawn & Garden",
+ "logo": {
+ "@type": "ImageObject",
+ "url": "https://hollidaylawngarden.com/assets/images/hollidays-logo.png"
+ }
+ }
+}
+ </script>
+<style>
+ /* Mobile Menu Styles */
+
+</body>
+</html>

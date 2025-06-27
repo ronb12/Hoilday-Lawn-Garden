@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Dashboard - Holliday's Lawn &amp; Garden</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your lawn care services, view service history, and handle payments through your customer dashboard.">
+    <meta name="keywords" content="lawn care, customer dashboard, service history, payments, Holliday's Lawn &amp; Garden">
+    <meta name="author" content="Holliday's Lawn &amp; Garden">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hollidayslawnandgarden.com/customer-dashboard">
+    <meta property="og:title" content="Customer Dashboard - Holliday's Lawn &amp; Garden">
+    <meta property="og:description" content="Manage your lawn care services, view service history, and handle payments through your customer dashboard.">
+    <meta property="og:image" content="assets/images/hollidays-logo.optimized-1280.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://hollidayslawnandgarden.com/customer-dashboard">
+    <meta property="twitter:title" content="Customer Dashboard - Holliday's Lawn &amp; Garden">
+    <meta property="twitter:description" content="Manage your lawn care services, view service history, and handle payments through your customer dashboard.">
+    <meta property="twitter:image" content="assets/images/hollidays-logo.optimized-1280.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png?v=1.0.1" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png?v=1.0.1" sizes="16x16">
+    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico?v=1.0.1">
+    <link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.png?v=1.0.1">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon/icon-192.png?v=1.0.1">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/images/favicon/icon-512.png?v=1.0.1">
+    <link rel="manifest" href="manifest.json?v=1.0.1">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/mobile-enhancements.css">
+    <link rel="stylesheet" href="assets/css/main.css?v=1.0.1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/customer-dashboard.css">
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.gstatic.com https://www.googletagmanager.com https://apis.google.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+    font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+    img-src 'self' data: https:;
+    connect-src 'self' https://www.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://firebase.googleapis.com https://firebaseinstallations.googleapis.com https://analytics.google.com https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://stats.g.doubleclick.net https://accounts.google.com;
+    frame-src 'self' https://accounts.google.com;
+    ">
+
+    <style>
+        /* Mobile Menu Styles */
+    </style>
+</head>
+<body>
+    <!-- Rest of the file remains unchanged -->
+</body>
+</html>

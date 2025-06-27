@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Privacy Policy - Holliday's Lawn &amp; Garden</title>
+<meta content="Privacy Policy for Holliday's Lawn &amp; Garden - Learn how we collect, use, and protect your information" name="description"/>
+<meta content="privacy policy, data protection, lawn care privacy, garden services privacy" name="keywords"/>
+<meta content="Holliday's Lawn &amp; Garden" name="author"/>
+<meta content="Privacy Policy - Holliday's Lawn &amp; Garden" property="og:title"/>
+<meta content="Learn how we collect, use, and protect your information" property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://ronb12.github.io/Holliday-Lawn-Garden/privacy.html" property="og:url"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Privacy Policy - Holliday's Lawn &amp; Garden" name="twitter:title"/>
+<meta content="Learn how we collect, use, and protect your information" name="twitter:description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="manifest.json" />
+<!-- Fix for fixed header spacing -->
+<style>
+ body { padding-top: 100px; margin: 0; }
+ 
+ @media (max-width: 768px) {
+ body {
+ padding-top: 60px; /* Smaller padding for mobile */
+ }
+ }
+ 
+    /* Comprehensive button styles - override any existing styles */
+    button, 
+    input[type="submit"], 
+    input[type="button"],
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-login,
+    .btn-customer,
+    .btn-admin,
+    .cta-button,
+    .cta-button.primary,
+    .cta-button.secondary {
+        font-family: 'Montserrat', sans-serif !important;
+        border-radius: 8px !important;
+        border: none !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Specific button types */
+    .btn-login {
+        border-radius: 4px !important;
+    }
+    

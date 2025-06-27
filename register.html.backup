@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Register - Holliday's Lawn &amp; Garden</title>
+<meta content="Create your Holliday's Lawn &amp; Garden account to access our services." name="description"/>
+<meta content="lawn care, garden services, landscaping, register" name="keywords"/>
+<meta content="Holliday's Lawn &amp; Garden" name="author"/>
+<meta content="Register - Holliday's Lawn &amp; Garden" property="og:title"/>
+<meta content="Create your Holliday's Lawn &amp; Garden account to access our services." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://ronb12.github.io/Holliday-Lawn-Garden/register.html" property="og:url"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Register - Holliday's Lawn &amp; Garden" name="twitter:title"/>
+<meta content="Create your Holliday's Lawn &amp; Garden account to access our services." name="twitter:description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="manifest.json" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+
+    /* Perfect Page Structure - No Issues */
+    .main-header {
+        background: #fff !important;
+        min-height: 70px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0 2rem !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .logo {
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .logo img {
+        height: 50px !important;
+        width: auto !important;
+        display: block !important;
+    }
+    
+    #nav-menu {
+        display: flex !important;
+        align-items: center !important;
+        flex-grow: 1 !important;
+        justify-content: flex-end !important;
+    }
+    
+    .nav-links { 
+        display: flex !important;
+        align-items: center !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 2rem !important;
+        flex-wrap: nowrap !important;
+    }
+    
+    .nav-links a { 
+        padding: 0.5rem 0.75rem !important; 
+        color: #333 !important; 
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease !important;
+        white-space: nowrap !important;
+        font-size: 0.95rem !important;
+        display: block !important;
+    }
+    
+    .nav-links a:hover {
+        color: #2e7d32 !important;
+    }
+    
+    .nav-links li { 
+        display: flex !important; 
+        align-items: center !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .login-buttons {
+        display: flex !important;
+        gap: 1rem !important;
+        align-items: center !important;
+        margin-left: 1rem !important;
+    }
+    
+    .btn-login {
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        font-size: 0.9rem !important;
+        min-width: 120px !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+        white-space: nowrap !important;
+    }
+    
+    .btn-customer {
+        background: #2e7d32 !important;
+        color: white !important;
+    }
+    
+    .btn-admin {
+        background: #1565c0 !important;
+        color: white !important;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    
+</style>
+</head>
+<body>
+  <!-- Loading Spinner -->
+  <div id="loading" class="loading" role="status" aria-label="Loading page content">
+    <div class="spinner" aria-hidden="true"></div>
+  </div>
+  
+  <!-- Error Message -->
+  <div id="error" class="error-message" role="alert" aria-live="polite"></div>
+  
+    <!-- Header -->
+      <!-- Header -->
+  <header class="main-header">
+    <div class="logo">
+      <a href="index.html">
+        <picture>
+          <source srcset="assets/images/hollidays-logo.optimized-1280.webp" type="image/webp">
+          <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn &amp; Garden Logo" loading="lazy">
+        </picture>
+      </a>
+    </div>
+    <nav id="nav-menu">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="pay-your-bill.html">Pay Your Bill</a></li>
+      </ul>
+      <div class="login-buttons">
+        <a href="login.html" class="btn-login btn-customer">
+          <i class="fas fa-user"></i>
+          Customer Login
+        </a>
+        <a href="admin-login.html" class="btn-login btn-admin">
+          <i class="fas fa-lock"></i>
+          Admin Login
+        </a>
+      </div>
+    </nav>
+  </header>
+<!-- Main Content -->
+<main role="main">
+    <!-- Hero Section -->
+
+ <!-- Hero Section -->
+<div class="hero">
+<img alt="Beautiful garden landscaping" loading="lazy" src="assets/images/hero-garden-landscaping-1280-640.jpg"/>
+<div class="hero-content">
+<h1>Join Our Community</h1>
+<p>Create your account to access our lawn care services and manage your account</p>
+</div>
+</div>
+<!-- Registration Section -->
+<section class="register-section">
+<div class="register-container">
+<div class="register-form-container">
+<h2>Register</h2>
+<p>Join Holliday's Lawn &amp; Garden to manage your services and payments.</p>
+<div class="error-container" id="error-container">
+<div class="error-message">
+<i class="fas fa-exclamation-triangle"></i>
+<span id="error-text"></span>
+</div>
+</div>
+<div class="success-message" id="success-message">
+<i class="fas fa-check-circle"></i>
+<span id="success-text"></span>
+</div>
+<form class="register-form" id="register-form">
+<div class="form-group">
+<label for="firstName">First Name</label>
+<input id="firstName" name="firstName" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="lastName">Last Name</label>
+<input id="lastName" name="lastName" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="email">Email Address</label>
+<input id="email" name="email" required="" type="email"/>
+</div>
+<div class="form-group">
+<label for="phone">Phone Number</label>
+<input id="phone" name="phone" required="" type="tel"/>
+</div>
+<div class="form-group">
+<label for="password">Password</label>
+<div class="password-input">
+<input id="password" name="password" required="" type="password"/>
+<button class="toggle-password" onclick="togglePassword('password')" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;" type="button">
+<i class="fas fa-eye"></i>
+</button>
+</div>
+<div class="password-strength" id="password-strength" style="display: none;">
+<div class="strength-bar">
+<div class="strength-level"></div>
+</div>
+<span class="strength-text"></span>
+<p class="strength-feedback"></p>
+</div>
+</div>
+<div class="form-group">
+<label for="confirmPassword">Confirm Password</label>
+<div class="password-input">
+<input id="confirmPassword" name="confirmPassword" required="" type="password"/>
+<button class="toggle-password" onclick="togglePassword('confirmPassword')" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;" type="button">
+<i class="fas fa-eye"></i>
+</button>
+</div>
+</div>
+<div class="form-group">
+<label class="checkbox-container">
+<input id="terms" name="terms" required="" type="checkbox"/>
+<span>I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and <a href="privacy-policy.html" target="_blank">Privacy Policy</a></span>
+</label>
+</div>
+<button class="btn-primary" style="font-family: 'Montserrat', 'Inter', system-ui, sans-serif;" type="submit">
+<i class="fas fa-user-plus"></i>
+ Create Account
+ </button>
+</form>
+<div class="back-to-login">
+<p>Already have an account? <a href="login.html">Log in here</a></p>
+</div>
+</div>
+</div>
+</section>
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loading-overlay">
+<div class="spinner"></div>
+<p id="loading-message">Creating your account...</p>
+</div>
+</main>
+<!-- Footer -->
+<footer class="footer" role="contentinfo">
+<div class="footer-content">
+<div class="footer-grid">
+<div class="footer-section">
+<h3>Contact Us</h3>
+<div class="footer-contact">
+<span class="footer-owner">Karl Holliday</span>
+<a href="tel:+15047171887"><i class="fas fa-phone" aria-hidden="true"></i> (504) 717‑1887</a>
+<a href="mailto:7holliday@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> 7holliday@gmail.com</a>
+</div>
+</div>
+<div class="footer-section">
+<h3>Quick Links</h3>
+<ul><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="education.html">Education</a></li><li><a href="contact.html">Contact</a></li></ul>
+</div>
+<div class="footer-section">
+<h3>Customer Portal</h3>
+<ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li><li><a href="pay-your-bill.html">Pay Your Bill</a></li><li><a href="customer-dashboard.html">Dashboard</a></li></ul>
+</div>
+<div class="footer-section">
+<h3>Legal</h3>
+<ul>
+  <li><a href="privacy.html">Privacy Policy</a></li>
+  <li><a href="terms.html">Terms of Service</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Follow Us</h3>
+<div class="social-links">
+  <a href="#" class="social-link" aria-label="Facebook">
+    <i class="fab fa-facebook"></i>
+  </a>
+  <a href="#" class="social-link" aria-label="Instagram">
+    <i class="fab fa-instagram"></i>
+  </a>
+  <a href="#" class="social-link" aria-label="Twitter">
+    <i class="fab fa-twitter"></i>
+  </a>
+  <a href="#" class="social-link" aria-label="LinkedIn">
+    <i class="fab fa-linkedin"></i>
+  </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© <span id="current-year"></span> Holliday's Lawn &amp; Garden. All rights reserved.</p>
+</div>
+</footer>
+<!-- Scripts -->
+<script src="firebase-config.js"></script>
+<script type="module">
+ // Import Firebase modules
+ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+ import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+ import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+ // Initialize Firebase
+ const app = initializeApp(firebaseConfig);
+ const auth = getAuth(app);
+ const db = getFirestore(app);
+
+ // DOM elements
+ const registerForm = document.getElementById('register-form');
+ const errorContainer = document.getElementById('error-container');
+ const errorText = document.getElementById('error-text');
+ const successMessage = document.getElementById('success-message');
+ const successText = document.getElementById('success-text');
+ const loadingOverlay = document.getElementById('loading-overlay');
+ const loadingMessage = document.getElementById('loading-message');
+ const passwordInput = document.getElementById('password');
+ const passwordStrength = document.getElementById('password-strength');
+
+ // Password strength checker
+ function checkPasswordStrength(password) {
+ let score = 0;
+ let feedback = [];
+
+ if (password.length >= 8) score++;
+ else feedback.push('At least 8 characters');
+
+ if (/[a-z]/.test(password)) score++;
+ else feedback.push('Include lowercase letters');
+
+ if (/[A-Z]/.test(password)) score++;
+ else feedback.push('Include uppercase letters');
+
+ if (/[0-9]/.test(password)) score++;
+ else feedback.push('Include numbers');
+
+ if (/[^A-Za-z0-9]/.test(password)) score++;
+ else feedback.push('Include special characters');
+
+ const strengthLevels = ['very-weak', 'weak', 'medium', 'strong', 'very-strong'];
+ const strengthTexts = ['Very Weak', 'Weak', 'Medium', 'Strong', 'Very Strong'];
+
+ return {
+ level: strengthLevels[score - 1] || 'very-weak',
+ text: strengthTexts[score - 1] || 'Very Weak',
+ feedback: feedback.join(', ')
+ };
+ }
+
+ // Update password strength display
+ function updatePasswordStrength(password) {
+ if (!password) {
+ passwordStrength.style.display = 'none';
+ return;
+ }
+
+ const strength = checkPasswordStrength(password);
+ passwordStrength.className = `password-strength ${strength.level}`;
+ passwordStrength.querySelector('.strength-text').textContent = strength.text;
+ passwordStrength.querySelector('.strength-feedback').textContent = strength.feedback;
+ passwordStrength.style.display = 'block';
+ }
+
+ // Password strength listener
+ passwordInput.addEventListener('input', (e) => {
+ updatePasswordStrength(e.target.value);
+ });
+
+ // Toggle password visibility
+ window.togglePassword = function(fieldId) {
+ const field = document.getElementById(fieldId);
+ const button = field.nextElementSibling;
+ const icon = button.querySelector('i');
+
+ if (field.type === 'password') {
+ field.type = 'text';
+ icon.className = 'fas fa-eye-slash';
+ } else {
+ field.type = 'password';
+ icon.className = 'fas fa-eye';
+ }
+ };
+
+ // Show/hide messages
+ function showError(message) {
+ errorText.textContent = message;
+ errorContainer.style.display = 'block';
+ successMessage.style.display = 'none';
+ }
+
+ function showSuccess(message) {
+ successText.textContent = message;
+ successMessage.style.display = 'flex';
+ errorContainer.style.display = 'none';
+ }
+
+ function hideMessages() {
+ errorContainer.style.display = 'none';
+ successMessage.style.display = 'none';
+ }
+
+ // Show/hide loading
+ function showLoading(message = 'Creating your account...') {
+ loadingMessage.textContent = message;
+ loadingOverlay.style.display = 'flex';
+ }
+
+ function hideLoading() {
+ loadingOverlay.style.display = 'none';
+ }
+
+ // Form submission
+ registerForm.addEventListener('submit', async (e) => {
+ e.preventDefault();
+ hideMessages();
+
+ const formData = new FormData(registerForm);
+ const firstName = formData.get('firstName').trim();
+ const lastName = formData.get('lastName').trim();
+ const email = formData.get('email').trim();
+ const phone = formData.get('phone').trim();
+ const password = formData.get('password');
+ const confirmPassword = formData.get('confirmPassword');
+ const terms = formData.get('terms');
+
+ // Validation
+ if (!firstName || !lastName || !email || !phone || !password || !confirmPassword) {
+ showError('Please fill in all required fields.');
+ return;
+ }
+
+ if (password !== confirmPassword) {
+ showError('Passwords do not match.');
+ return;
+ }
+
+ if (password.length < 8) {
+ showError('Password must be at least 8 characters long.');
+ return;
+ }
+
+ if (!terms) {
+ showError('Please agree to the Terms of Service and Privacy Policy.');
+ return;
+ }
+
+ // Email validation
+ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+ if (!emailRegex.test(email)) {
+ showError('Please enter a valid email address.');
+ return;
+ }
+
+ try {
+ showLoading();
+
+ // Create user account
+ const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+ const user = userCredential.user;
+
+ // Update user profile
+ await updateProfile(user, {
+ displayName: `${firstName} ${lastName}`
+ });
+
+ // Save additional user data to Firestore
+ await setDoc(doc(db, 'users', user.uid), {
+ firstName,
+ lastName,
+ email,
+ phone,
+ createdAt: new Date(),
+ role: 'customer'
+ });
+
+ showSuccess('Account created successfully! Redirecting to login...');
+ 
+ // Redirect to login page after 2 seconds
+ setTimeout(() => {
+ window.location.href = 'login.html';
+ }, 2000);
+
+ } catch (error) {
+ console.error('Registration error:', error);
+ 
+ let errorMessage = 'An error occurred during registration. Please try again.';
+ 
+ if (error.code === 'auth/email-already-in-use') {
+ errorMessage = 'An account with this email already exists.';
+ } else if (error.code === 'auth/weak-password') {
+ errorMessage = 'Password is too weak. Please choose a stronger password.';
+ } else if (error.code === 'auth/invalid-email') {
+ errorMessage = 'Please enter a valid email address.';
+ }
+ 
+ showError(errorMessage);
+ } finally {
+ hideLoading();
+ }
+ });
+
+ // Update copyright year
+ const yearElement = document.getElementById('current-year');
+if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+}
+
+ // Service Worker Registration
+ if ('serviceWorker' in navigator) {
+ window.addEventListener('load', () => {
+ navigator.serviceWorker.register('./service-worker.js')
+ .then(registration => {
+ })
+ .catch(registrationError => {
+ });
+ });
+ }
+ </script>
+<script>
+// Single, robust hamburger menu script
+// Ensures the hamburger menu works and does not clear or overwrite the header
+// Place this after all other scripts
+
+// This script block was incomplete and has been removed to prevent JavaScript errors
+</script>
+
+ <script>
+ // Enhanced loading management
+ (function() {
+ var loading = document.getElementById('loading');
+ var error = document.getElementById('error');
+ 
+ // Hide loading after page load
+ function hideLoading() {
+ if (loading) {
+ loading.classList.add('hidden');
+ setTimeout(function() {
+ loading.style.display = 'none';
+ }, 300);
+ }
+ }
+ 
+ // Show error message
+ function showError(message) {
+ if (error) {
+ error.textContent = message;
+ error.classList.add('show');
+ setTimeout(function() {
+ error.classList.remove('show');
+ }, 5000);
+ }
+ }
+ 
+ // Hide loading when DOM is ready
+ if (document.readyState === 'loading') {
+ document.addEventListener('DOMContentLoaded', hideLoading);
+ } else {
+ hideLoading();
+ }
+ 
+ // Hide loading when window loads
+ window.addEventListener('load', hideLoading);
+ 
+ // Fallback: hide loading after 3 seconds
+ setTimeout(hideLoading, 3000);
+ 
+ // Handle errors
+ window.addEventListener('error', function(e) {
+ console.error('Page error:', e.error);
+ showError('An error occurred while loading the page. Please refresh.');
+ });
+ })();
+ </script>
+</body></html>

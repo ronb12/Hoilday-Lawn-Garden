@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Payment Receipt - Holliday's Lawn & Garden</title>
+    <meta name="description" content="Your detailed payment receipt for Holliday's Lawn & Garden services.">
+    <!-- Icon Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.json" />
+    <!-- jsPDF Library for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    <!-- jsPDF Library for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        body { font-family: 'Montserrat', sans-serif; background: #f8f9fa; color: #333; margin: 0; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .receipt-card { background: #fff; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); margin: 40px 0; overflow: hidden; }
+        .receipt-header { background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); color: #fff; padding: 40px; text-align: center; }
+        .receipt-header h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
+        .receipt-header p { font-size: 1.1rem; opacity: 0.9; }
+        .receipt-content { padding: 40px; }
+        .receipt-info { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+        .info-section h3 { color: #2e7d32; font-size: 1.2rem; margin-bottom: 15px; font-weight: 600; }
+        .info-item { display: flex; justify-content: space-between; margin-bottom: 10px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+        .info-item:last-child { border-bottom: none; }
+        .info-label { font-weight: 500; color: #666; }
+        .info-value { font-weight: 600; color: #333; }
+        .service-details { background: #f8f9fa; border-radius: 12px; padding: 30px; margin-bottom: 30px; }
+        .service-details h3 { color: #2e7d32; font-size: 1.3rem; margin-bottom: 20px; font-weight: 600; }
+        .service-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #e9ecef; }
+        .service-item:last-child { border-bottom: none; }
+        .service-name { font-weight: 500; color: #333; }
+        .service-price { font-weight: 600; color: #2e7d32; font-size: 1.1rem; }
+        .total-section { background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); color: #fff; padding: 30px; border-radius: 12px; text-align: center; }
+        .total-section h3 { font-size: 1.5rem; margin-bottom: 10px; font-weight: 600; }
+        .total-amount { font-size: 2.5rem; font-weight: 700; margin-bottom: 15px; }
+        .payment-status { display: inline-block; background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 25px; font-weight: 500; }
+        .receipt-actions { display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+        .btn { padding: 12px 24px; border: none; border-radius: 8px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; }
+        .btn-primary { background: #2e7d32; color: #fff; }
+        .btn-primary:hover { background: #1b5e20; transform: translateY(-2px); }
+        .btn-secondary { background: #6c757d; color: #fff; }
+        .btn-secondary:hover { background: #5a6268; transform: translateY(-2px); }
+        .btn-outline { background: transparent; color: #2e7d32; border: 2px solid #2e7d32; }
+        .btn-outline:hover { background: #2e7d32; color: #fff; }
+        .footer { text-align: center; padding: 30px; color: #666; background: #f8f9fa; }
+        .footer p { margin-bottom: 10px; }
+        .footer a { color: #2e7d32; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        @media (max-width: 768px) { .container { padding: 10px; } .receipt-header { padding: 30px 20px; } .receipt-header h1 { font-size: 2rem; } .receipt-content { padding: 20px; } .receipt-info { grid-template-columns: 1fr; gap: 20px; } .total-amount { font-size: 2rem; } .receipt-actions { flex-direction: column; align-items: center; } .btn { width: 100%; max-width: 300px; justify-content: center; } }
+        @media print { body { background: #fff; } .receipt-card { box-shadow: none; margin: 0; } .receipt-actions, .footer { display: none; } }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="receipt-card">
+            <div class="receipt-header">
+                <h1><i class="fas fa-check-circle"></i> Payment Successful</h1>
+                <p>Thank you for your payment to Holliday's Lawn & Garden</p>
+            </div>
+            <div class="receipt-content">
+                <div class="receipt-info">
+                    <div class="info-section">
+                        <h3><i class="fas fa-receipt"></i> Receipt Details</h3>
+                        <div class="info-item"><span class="info-label">Receipt #:</span><span class="info-value" id="receipt-number">HLG-2024-001</span></div>
+                        <div class="info-item"><span class="info-label">Date:</span><span class="info-value" id="receipt-date">January 15, 2024</span></div>
+                        <div class="info-item"><span class="info-label">Time:</span><span class="info-value" id="receipt-time">2:30 PM</span></div>
+                        <div class="info-item"><span class="info-label">Payment Method:</span><span class="info-value">Credit Card</span></div>
+                    </div>
+                    <div class="info-section">
+                        <h3><i class="fas fa-user"></i> Customer Information</h3>
+                        <div class="info-item"><span class="info-label">Name:</span><span class="info-value" id="customer-name">John Smith</span></div>
+                        <div class="info-item"><span class="info-label">Email:</span><span class="info-value" id="customer-email">john.smith@email.com</span></div>
+                        <div class="info-item"><span class="info-label">Phone:</span><span class="info-value" id="customer-phone">(555) 123-4567</span></div>
+                        <div class="info-item"><span class="info-label">Address:</span><span class="info-value" id="customer-address">123 Main St, Anytown, ST 12345</span></div>
+                    </div>
+                </div>
+                <div class="service-details">
+                    <h3><i class="fas fa-tools"></i> Service Details</h3>
+                    <div class="service-item"><span class="service-name">Lawn Mowing Service</span><span class="service-price">$45.00</span></div>
+                    <div class="service-item"><span class="service-name">Hedge Trimming</span><span class="service-price">$35.00</span></div>
+                    <div class="service-item"><span class="service-name">Fertilizer Application</span><span class="service-price">$25.00</span></div>
+                    <div class="service-item"><span class="service-name">Weed Control</span><span class="service-price">$30.00</span></div>
+                </div>
+                <div class="total-section">
+                    <h3>Total Amount Paid</h3>
+                    <div class="total-amount">$135.00</div>
+                    <div class="payment-status"><i class="fas fa-check"></i> Payment Completed</div>
+                </div>
+                <div class="receipt-actions">
+                    <button class="btn btn-primary" onclick="printReceipt()"><i class="fas fa-print"></i> Print Receipt</button>
+                    <button class="btn btn-outline" onclick="downloadPDF()"><i class="fas fa-download"></i> Download PDF</button>
+                    <a href="customer-dashboard.html" class="btn btn-secondary"><i class="fas fa-tachometer-alt"></i> Back to Dashboard</a>
+                    <a href="index.html" class="btn btn-secondary"><i class="fas fa-home"></i> Go Home</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <p><strong>Holliday's Lawn & Garden</strong></p>
+            <p>Professional lawn care and garden services</p>
+            <p>Owner: Karl Holliday</p>
+            <p>Phone: (504) 717‑1887 | Email: 7holliday@gmail.com</p>
+            <p><a href="https://ronb12.github.io/Holliday-Lawn-Garden/">https://ronb12.github.io/Holliday-Lawn-Garden/</a></p>
+            <p>Thank you for choosing Holliday's Lawn & Garden!</p>
+        </div>
+    </div>
+    <script>
+        function setCurrentDateTime() {
+            const now = new Date();
+            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+            const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
+            document.getElementById('receipt-date').textContent = now.toLocaleDateString('en-US', dateOptions);
+            document.getElementById('receipt-time').textContent = now.toLocaleTimeString('en-US', timeOptions);
+            const receiptNumber = 'HLG-' + now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0') + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+            document.getElementById('receipt-number').textContent = receiptNumber;
+        }
+        function loadCustomerData() {
+            const userData = localStorage.getItem('user');
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    if (user.firstName && user.lastName) document.getElementById('customer-name').textContent = `${user.firstName} ${user.lastName}`;
+                    if (user.email) document.getElementById('customer-email').textContent = user.email;
+                    if (user.phone) document.getElementById('customer-phone').textContent = user.phone;
+                    if (user.address) document.getElementById('customer-address').textContent = user.address;
+                } catch (error) { console.log('Error parsing user data:', error); }
+            }
+            const urlParams = new URLSearchParams(window.location.search);
+            const amount = urlParams.get('amount');
+            if (amount) document.querySelector('.total-amount').textContent = '$' + parseFloat(amount).toFixed(2);
+        }
+        function printReceipt() { window.print(); }
+        
+        function downloadPDF() {
+            // Check if jsPDF is loaded
+            if (typeof window.jsPDF === 'undefined') {
+                alert('PDF generation library is loading. Please try again in a moment.');
+                return;
+            }
+
+            const { jsPDF } = window.jsPDF;
+            const doc = new jsPDF();
+            
+            // Get receipt data
+            const receiptNumber = document.getElementById('receipt-number').textContent;
+            const receiptDate = document.getElementById('receipt-date').textContent;
+            const receiptTime = document.getElementById('receipt-time').textContent;
+            const customerName = document.getElementById('customer-name').textContent;
+            const customerEmail = document.getElementById('customer-email').textContent;
+            const customerPhone = document.getElementById('customer-phone').textContent;
+            const customerAddress = document.getElementById('customer-address').textContent;
+            const totalAmount = document.querySelector('.total-amount').textContent;
+            
+            // Set up PDF styling
+            doc.setFont('helvetica');
+            doc.setFontSize(20);
+            doc.setTextColor(46, 125, 50); // Green color
+            
+            // Header
+            doc.text('Holliday\'s Lawn & Garden', 105, 20, { align: 'center' });
+            doc.setFontSize(16);
+            doc.text('Payment Receipt', 105, 30, { align: 'center' });
+            
+            // Receipt details
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Receipt Number:', 20, 50);
+            doc.text(receiptNumber, 60, 50);
+            doc.text('Date:', 20, 60);
+            doc.text(receiptDate, 60, 60);
+            doc.text('Time:', 20, 70);
+            doc.text(receiptTime, 60, 70);
+            doc.text('Payment Method:', 20, 80);
+            doc.text('Credit Card', 60, 80);
+            
+            // Customer information
+            doc.setFontSize(14);
+            doc.setTextColor(46, 125, 50);
+            doc.text('Customer Information', 20, 100);
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Name:', 20, 115);
+            doc.text(customerName, 60, 115);
+            doc.text('Email:', 20, 125);
+            doc.text(customerEmail, 60, 125);
+            doc.text('Phone:', 20, 135);
+            doc.text(customerPhone, 60, 135);
+            doc.text('Address:', 20, 145);
+            doc.text(customerAddress, 60, 145);
+            
+            // Service details
+            doc.setFontSize(14);
+            doc.setTextColor(46, 125, 50);
+            doc.text('Service Details', 20, 165);
+            
+            // Service table
+            const services = [
+                ['Service', 'Amount'],
+                ['Lawn Mowing Service', '$45.00'],
+                ['Hedge Trimming', '$35.00'],
+                ['Fertilizer Application', '$25.00'],
+                ['Weed Control', '$30.00']
+            ];
+            
+            doc.autoTable({
+                startY: 175,
+                head: [services[0]],
+                body: services.slice(1),
+                theme: 'grid',
+                headStyles: {
+                    fillColor: [46, 125, 50],
+                    textColor: 255,
+                    fontStyle: 'bold'
+                },
+                styles: {
+                    fontSize: 10
+                },
+                columnStyles: {
+                    0: { cellWidth: 120 },
+                    1: { cellWidth: 40, halign: 'right' }
+                }
+            });
+            
+            // Total amount
+            const finalY = doc.lastAutoTable.finalY + 10;
+            doc.setFontSize(16);
+            doc.setTextColor(46, 125, 50);
+            doc.text('Total Amount Paid:', 20, finalY);
+            doc.setFontSize(20);
+            doc.setFont('helvetica', 'bold');
+            doc.text(totalAmount, 160, finalY);
+            
+            // Payment status
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Payment Status: Completed', 20, finalY + 15);
+            
+            // Footer
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text('Thank you for choosing Holliday\'s Lawn & Garden!', 105, finalY + 35, { align: 'center' });
+            doc.text('Owner: Karl Holliday', 105, finalY + 41, { align: 'center' });
+            doc.text('Phone: (504) 717‑1887 | Email: 7holliday@gmail.com', 105, finalY + 47, { align: 'center' });
+            doc.text('https://ronb12.github.io/Holliday-Lawn-Garden/', 105, finalY + 53, { align: 'center' });
+            
+            // Save the PDF
+            const fileName = `receipt-${receiptNumber}.pdf`;
+            doc.save(fileName);
+            
+            // Show success notification
+            showNotification('PDF downloaded successfully!', 'success');
+        }
+        
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() { 
+            setCurrentDateTime(); 
+            loadCustomerData(); 
+        });
+    </script>
+</body>
+</html> 
