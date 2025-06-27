@@ -235,7 +235,6 @@ function showError(message) {
 
 // Export functions for global access
 window.exportAppointments = function() {
-    // Implementation for exporting appointments
     console.log('Export appointments functionality');
 };
 
@@ -244,16 +243,13 @@ window.refreshAppointments = function() {
 };
 
 window.viewAppointment = function(id) {
-    // Implementation for viewing appointment details
     console.log('View appointment:', id);
 };
 
 window.editAppointment = function(id) {
-    // Implementation for editing appointment
     console.log('Edit appointment:', id);
 };
 
 window.deleteAppointment = function(id) {
-    // Implementation for deleting appointment
     console.log('Delete appointment:', id);
 };
