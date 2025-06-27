@@ -57,10 +57,17 @@ function isOnLoginPage() {
   return window.location.pathname.includes('admin-login.html');
 }
 
+// Check if we came from admin dashboard (referrer check)
+function cameFromAdminDashboard() {
+  return document.referrer.includes('admin-dashboard.html');
+}
+
 // Check authentication state
 onAuthStateChanged(auth, async (user) => {
   console.log("Admin auth check - user:", user ? user.email : "null");
   console.log("Current page:", window.location.pathname);
+  console.log("Referrer:", document.referrer);
+  console.log("Came from admin dashboard:", cameFromAdminDashboard());
   
   if (user) {
     // User is signed in, check if they're an admin
@@ -105,7 +112,26 @@ onAuthStateChanged(auth, async (user) => {
   } else {
     // No user is signed in
     console.log("No user signed in");
-    if (!isOnLoginPage()) {
+    
+    // If we came from admin dashboard, the user was likely logged in there
+    // This might be a temporary auth state issue, so let's wait a bit
+    if (cameFromAdminDashboard()) {
+      console.log("Came from admin dashboard, waiting for auth state to settle...");
+      setTimeout(() => {
+        // Check auth state again after a short delay
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+          console.log("Auth state recovered, user:", currentUser.email);
+          hideLoading();
+        } else {
+          console.log("Still no user, redirecting to login");
+          showError("Please log in to access the admin dashboard.");
+          setTimeout(() => {
+            window.location.href = "admin-login.html";
+          }, 2000);
+        }
+      }, 1000);
+    } else if (!isOnLoginPage()) {
       console.log("Redirecting to login page");
       showError("Please log in to access the admin dashboard.");
       setTimeout(() => {
