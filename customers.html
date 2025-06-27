@@ -99,6 +99,27 @@
             background: #d32f2f;
         }
         
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #2c5530;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .mobile-menu-toggle:hover {
+            background: #f5f5f5;
+        }
+        
+        .mobile-menu-toggle:focus {
+            outline: 2px solid #4caf50;
+            outline-offset: 2px;
+        }
+        
         .dashboard-main {
             max-width: 1400px;
             margin: 2rem auto;
@@ -291,31 +312,422 @@
         }
         
         @media (max-width: 768px) {
+            body {
+                padding-top: 80px;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .admin-header {
+                padding: 1rem;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                background: #fff;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            
+            .admin-header .logo {
+                justify-content: flex-start;
+            }
+            
+            .admin-header .logo img {
+                height: 36px;
+            }
+            
+            .admin-nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                gap: 0;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            
+            .admin-nav.active {
+                max-height: 400px;
+            }
+            
+            .admin-nav a {
+                font-size: 0.9rem;
+                padding: 1rem;
+                border-radius: 0;
+                background: none;
+                border-bottom: 1px solid #f0f0f0;
+                text-align: left;
+                width: 100%;
+            }
+            
+            .admin-nav a.active {
+                background: #4caf50;
+                color: white;
+            }
+            
+            .admin-nav button {
+                font-size: 0.9rem;
+                padding: 1rem;
+                width: 100%;
+                border-radius: 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            
             .dashboard-main {
                 padding: 0 1rem;
+                margin-top: 1rem;
             }
             
             .page-header {
                 flex-direction: column;
                 gap: 1rem;
-                align-items: flex-start;
+                align-items: stretch;
+                padding: 1.5rem;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            
+            .page-subtitle {
+                text-align: center;
+            }
+            
+            .page-header .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .stat-card {
+                padding: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            
+            .stat-label {
+                font-size: 0.8rem;
+            }
+            
+            .filters-section {
+                padding: 1rem;
             }
             
             .filters-row {
                 grid-template-columns: 1fr;
+                gap: 1rem;
             }
             
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .filter-group label {
+                font-size: 0.9rem;
+                margin-bottom: 0.25rem;
+            }
+            
+            .filter-group select,
+            .filter-group input {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            
+            .customers-table {
+                margin-top: 1rem;
+            }
+            
+            .table-header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+            
+            .table-title {
+                text-align: center;
+                margin: 0;
+            }
+            
+            .table-actions {
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            .table-actions .btn {
+                flex: 1;
+                justify-content: center;
+                font-size: 0.8rem;
+                padding: 0.5rem;
             }
             
             .table-container {
-                font-size: 0.9rem;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .customers-table table {
+                min-width: 800px;
+                font-size: 0.8rem;
             }
             
             .customers-table th,
             .customers-table td {
+                padding: 0.5rem;
+                white-space: nowrap;
+            }
+            
+            .customers-table th:first-child,
+            .customers-table td:first-child {
+                position: sticky;
+                left: 0;
+                background: #fff;
+                z-index: 1;
+                box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+            
+            .action-buttons .btn {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.5rem;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .customer-status {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.5rem;
+            }
+            
+            .loading {
+                padding: 2rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .error {
+                margin: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .admin-header {
                 padding: 0.75rem;
+            }
+            
+            .admin-header .logo img {
+                height: 32px;
+            }
+            
+            .admin-nav {
+                gap: 0.25rem;
+            }
+            
+            .admin-nav a {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.5rem;
+            }
+            
+            .admin-nav button {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.5rem;
+            }
+            
+            .dashboard-main {
+                padding: 0 0.5rem;
+            }
+            
+            .page-header {
+                padding: 1rem;
+            }
+            
+            .page-title {
+                font-size: 1.3rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .stat-card {
+                padding: 0.75rem;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            
+            .filters-section {
+                padding: 0.75rem;
+            }
+            
+            .filter-group select,
+            .filter-group input {
+                padding: 0.5rem;
+                font-size: 0.8rem;
+            }
+            
+            .table-header {
+                padding: 0.75rem;
+            }
+            
+            .table-actions .btn {
+                font-size: 0.7rem;
+                padding: 0.4rem;
+            }
+            
+            .customers-table table {
+                min-width: 700px;
+                font-size: 0.7rem;
+            }
+            
+            .customers-table th,
+            .customers-table td {
+                padding: 0.4rem;
+            }
+            
+            .action-buttons .btn {
+                font-size: 0.6rem;
+                padding: 0.25rem 0.4rem;
+            }
+        }
+        
+        /* Mobile navigation improvements */
+        @media (max-width: 768px) {
+            .admin-nav {
+                max-height: 200px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Add scroll indicators */
+            .admin-nav::before,
+            .admin-nav::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 20px;
+                pointer-events: none;
+                z-index: 2;
+            }
+            
+            .admin-nav::before {
+                left: 0;
+                background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
+            }
+            
+            .admin-nav::after {
+                right: 0;
+                background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
+            }
+        }
+        
+        /* Touch-friendly improvements */
+        @media (max-width: 768px) {
+            .btn {
+                min-height: 44px;
+                touch-action: manipulation;
+            }
+            
+            .filter-group select,
+            .filter-group input {
+                min-height: 44px;
+                touch-action: manipulation;
+            }
+            
+            .customers-table th,
+            .customers-table td {
+                min-height: 44px;
+            }
+            
+            /* Improve table scrolling on mobile */
+            .table-container {
+                scrollbar-width: thin;
+                scrollbar-color: #4caf50 #f0f0f0;
+            }
+            
+            .table-container::-webkit-scrollbar {
+                height: 6px;
+            }
+            
+            .table-container::-webkit-scrollbar-track {
+                background: #f0f0f0;
+                border-radius: 3px;
+            }
+            
+            .table-container::-webkit-scrollbar-thumb {
+                background: #4caf50;
+                border-radius: 3px;
+            }
+            
+            .table-container::-webkit-scrollbar-thumb:hover {
+                background: #388e3c;
+            }
+        }
+        
+        /* Landscape orientation improvements */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .admin-header {
+                flex-direction: row;
+                padding: 0.5rem 1rem;
+            }
+            
+            .admin-header .logo img {
+                height: 28px;
+            }
+            
+            .admin-nav {
+                gap: 0.25rem;
+            }
+            
+            .admin-nav a,
+            .admin-nav button {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.5rem;
+            }
+            
+            body {
+                padding-top: 60px;
+            }
+            
+            .dashboard-main {
+                margin-top: 0.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.5rem;
+            }
+            
+            .stat-card {
+                padding: 0.5rem;
+            }
+            
+            .stat-number {
+                font-size: 1.2rem;
+            }
+            
+            .stat-label {
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -330,7 +742,10 @@
             <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden" />
             <span style="font-weight: 700; color: #2c5530;">Admin Dashboard</span>
         </div>
-        <nav class="admin-nav">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="admin-nav" id="adminNav">
             <a href="admin-dashboard.html">Dashboard</a>
             <a href="appointments.html">Appointments</a>
             <a href="customers.html" class="active">Customers</a>
@@ -462,6 +877,47 @@
     <!-- Firebase Scripts -->
     
     <script type="module" src="assets/js/customers.js"></script>
-<script src="assets/js/hide-loading.js"></script>
+    <script src="assets/js/hide-loading.js"></script>
+    
+    <!-- Mobile Menu Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const adminNav = document.getElementById('adminNav');
+            
+            if (mobileMenuToggle && adminNav) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    adminNav.classList.toggle('active');
+                    
+                    // Change icon based on menu state
+                    const icon = this.querySelector('i');
+                    if (adminNav.classList.contains('active')) {
+                        icon.className = 'fas fa-times';
+                    } else {
+                        icon.className = 'fas fa-bars';
+                    }
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenuToggle.contains(event.target) && !adminNav.contains(event.target)) {
+                        adminNav.classList.remove('active');
+                        const icon = mobileMenuToggle.querySelector('i');
+                        icon.className = 'fas fa-bars';
+                    }
+                });
+                
+                // Close menu when clicking on a link
+                const navLinks = adminNav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        adminNav.classList.remove('active');
+                        const icon = mobileMenuToggle.querySelector('i');
+                        icon.className = 'fas fa-bars';
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html> 
