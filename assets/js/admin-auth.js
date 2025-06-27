@@ -28,36 +28,66 @@ const errorMessage = document.getElementById("errorMessage");
 
 // Show loading overlay
 function showLoading(message = "Loading...") {
+  console.log("showLoading called:", message);
   if (loadingMessage) loadingMessage.textContent = message;
   if (loadingOverlay) loadingOverlay.style.display = "flex";
 }
 
 // Hide loading overlay
 function hideLoading() {
-  if (loadingOverlay) loadingOverlay.style.display = "none";
+  console.log("hideLoading called");
+  if (loadingOverlay) {
+    console.log("Setting loadingOverlay display to none");
+    loadingOverlay.style.display = "none";
+  } else {
+    console.log("loadingOverlay element not found");
+  }
 }
 
 // Show error message
 function showError(message) {
+  console.log("showError called:", message);
   if (errorMessage) errorMessage.textContent = message;
   if (errorContainer) errorContainer.style.display = "block";
   hideLoading();
 }
 
+// Check if we're already on the login page to prevent redirect loops
+function isOnLoginPage() {
+  return window.location.pathname.includes('admin-login.html');
+}
+
 // Check authentication state
 onAuthStateChanged(auth, async (user) => {
   console.log("Admin auth check - user:", user ? user.email : "null");
+  console.log("Current page:", window.location.pathname);
+  
   if (user) {
     // User is signed in, check if they're an admin
     try {
+      console.log("Checking admin status for user:", user.email);
       const userDoc = await getDoc(doc(db, "users", user.uid));
-      if (userDoc.exists() && userDoc.data().role === "admin") {
-        // User is admin, allow access
-        console.log("Admin access granted for:", user.email);
-        hideLoading();
+      console.log("User doc exists:", userDoc.exists());
+      
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        console.log("User role:", userData.role);
+        
+        if (userData.role === "admin") {
+          // User is admin, allow access
+          console.log("Admin access granted for:", user.email);
+          hideLoading();
+          return; // Success - don't redirect
+        } else {
+          console.log("User is not admin, role is:", userData.role);
+        }
       } else {
-        // User is not admin, redirect to login
-        console.log("Access denied - not admin");
+        console.log("User document does not exist");
+      }
+      
+      // User is not admin or document doesn't exist
+      if (!isOnLoginPage()) {
+        console.log("Access denied - redirecting to login");
         showError("Access denied. Admin privileges required.");
         setTimeout(() => {
           window.location.href = "admin-login.html";
@@ -65,18 +95,23 @@ onAuthStateChanged(auth, async (user) => {
       }
     } catch (error) {
       console.error("Error checking admin status:", error);
-      showError("Error verifying admin status. Please try again or contact support.");
+      if (!isOnLoginPage()) {
+        showError("Error verifying admin status. Please try again or contact support.");
+        setTimeout(() => {
+          window.location.href = "admin-login.html";
+        }, 2000);
+      }
+    }
+  } else {
+    // No user is signed in
+    console.log("No user signed in");
+    if (!isOnLoginPage()) {
+      console.log("Redirecting to login page");
+      showError("Please log in to access the admin dashboard.");
       setTimeout(() => {
         window.location.href = "admin-login.html";
       }, 2000);
     }
-  } else {
-    // No user is signed in, redirect to login
-    console.log("No user signed in, redirecting to login");
-    showError("Please log in to access the admin dashboard.");
-    setTimeout(() => {
-      window.location.href = "admin-login.html";
-    }, 2000);
   }
 });
 
