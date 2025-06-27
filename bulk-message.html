@@ -1,267 +1,514 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Bulk Messaging - Holliday's Lawn & Garden</title>
+    <link href="assets/css/main.css" rel="stylesheet"/>
+    <link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
+    <link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <style>
+        .message-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .message-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c5530;
+        }
+        .message-form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .message-history-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+        .customer-selection {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .customer-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .customer-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            background: white;
+        }
+        .customer-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        .customer-item:last-child {
+            border-bottom: none;
+        }
+        .customer-item input[type="checkbox"] {
+            margin-right: 0.75rem;
+        }
+        .customer-info {
+            flex: 1;
+        }
+        .customer-name {
+            font-weight: 600;
+            color: #333;
+        }
+        .customer-email {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .select-all-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+        .message-templates {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .template-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .template-btn {
+            background: #4caf50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: 2px solid #4caf50;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .template-btn:hover {
+            background: #45a049;
+            border-color: #45a049;
+            transform: translateY(-1px);
+        }
+        .template-btn.active {
+            background: white;
+            color: #4caf50;
+            border-color: #4caf50;
+        }
+        .message-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+        .btn-send {
+            background: #4caf50;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .btn-send:hover {
+            background: #45a049;
+        }
+        .btn-send:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .btn-preview {
+            background: #2196F3;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .btn-preview:hover {
+            background: #1976D2;
+        }
+        .message-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .message-table th,
+        .message-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .message-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+        .preview-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .preview-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #000;
+        }
+        .recipient-count {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+        }
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: #666;
+        }
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .status-sent {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        .btn-small {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        /* Mobile menu styles */
+        @media (max-width: 768px) {
+            .message-container {
+                padding: 1rem;
+                margin: 1rem;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .customer-filters {
+                grid-template-columns: 1fr;
+            }
+            .message-actions {
+                flex-direction: column;
+            }
+            .template-buttons {
+                flex-direction: column;
+            }
+            .header-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div id="loading-message">Loading...</div>
+        </div>
+    </div>
 
-<html lang="en"><head><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Bulk Messaging - Holliday's Lawn &amp; Garden</title>
-<link href="assets/css/main.css" rel="stylesheet"/>
-<link href="assets/css/admin-dashboard.css" rel="stylesheet"/>
-<link href="assets/css/mobile-enhancements.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-<style>
- .message-container {
- max-width: 1400px;
- margin: 2rem auto;
- padding: 2rem;
- }
- .message-header {
- display: flex;
- justify-content: space-between;
- align-items: center;
- margin-bottom: 2rem;
- }
- .message-title {
- font-size: 2rem;
- font-weight: 700;
- color: #2c5530;
- }
- .message-form-section {
- background: white;
- padding: 2rem;
- border-radius: 8px;
- box-shadow: 0 2px 10px rgba(0,0,0,0.1);
- margin-bottom: 2rem;
- }
- .message-history-section {
- background: white;
- padding: 2rem;
- border-radius: 8px;
- box-shadow: 0 2px 10px rgba(0,0,0,0.1);
- }
- .form-row {
- display: grid;
- grid-template-columns: 1fr 1fr;
- gap: 1rem;
- margin-bottom: 1rem;
- }
- .form-group {
- margin-bottom: 1rem;
- }
- .form-group label {
- display: block;
- margin-bottom: 0.5rem;
- font-weight: 600;
- color: #333;
- }
- .form-group input,
- .form-group select,
- .form-group textarea {
- width: 100%;
- padding: 0.75rem;
- border: 1px solid #ddd;
- border-radius: 4px;
- font-size: 1rem;
- }
- .form-group input:focus,
- .form-group select:focus,
- .form-group textarea:focus {
- outline: none;
- border-color: #4caf50;
- box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
- }
- .customer-selection {
- background: #f8f9fa;
- padding: 1.5rem;
- border-radius: 8px;
- margin-bottom: 1.5rem;
- }
- .customer-filters {
- display: grid;
- grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
- gap: 1rem;
- margin-bottom: 1rem;
- }
- .customer-list {
- max-height: 300px;
- overflow-y: auto;
- border: 1px solid #ddd;
- border-radius: 4px;
- padding: 1rem;
- background: white;
- }
- .customer-item {
- display: flex;
- align-items: center;
- padding: 0.5rem;
- border-bottom: 1px solid #eee;
- }
- .customer-item:last-child {
- border-bottom: none;
- }
- .customer-item input[type="checkbox"] {
- margin-right: 0.75rem;
- }
- .customer-info {
- flex: 1;
- }
- .customer-name {
- font-weight: 600;
- color: #333;
- }
- .customer-email {
- color: #666;
- font-size: 0.9rem;
- }
- .select-all-section {
- display: flex;
- justify-content: space-between;
- align-items: center;
- margin-bottom: 1rem;
- padding: 0.5rem;
- background: #e9ecef;
- border-radius: 4px;
- }
- .message-templates {
- background: #f8f9fa;
- padding: 1.5rem;
- border-radius: 8px;
- margin-bottom: 1.5rem;
- }
- .template-buttons {
- display: flex;
- gap: 0.5rem;
- flex-wrap: wrap;
- margin-bottom: 1rem;
- }
- .template-btn {
- background: #4caf50;
- color: white;
- padding: 0.5rem 1rem;
- border: 2px solid #4caf50;
- border-radius: 4px;
- cursor: pointer;
- font-size: 0.9rem;
- font-weight: 500;
- transition: all 0.2s ease;
- }
- .template-btn:hover {
- background: #45a049;
- border-color: #45a049;
- transform: translateY(-1px);
- }
- .template-btn.active {
- background: white;
- color: #4caf50;
- border-color: #4caf50;
- }
- .message-actions {
- display: flex;
- gap: 1rem;
- justify-content: flex-end;
- margin-top: 2rem;
- }
- .btn-send {
- background: #4caf50;
- color: white;
- padding: 1rem 2rem;
- border: none;
- border-radius: 5px;
- cursor: pointer;
- font-size: 1rem;
- font-weight: 600;
- }
- .btn-send:hover {
- background: #45a049;
- }
- .btn-send:disabled {
- background: #ccc;
- cursor: not-allowed;
- }
- .btn-preview {
- background: #2196F3;
- color: white;
- padding: 1rem 2rem;
- border: none;
- border-radius: 5px;
- cursor: pointer;
- font-size: 1rem;
- font-weight: 600;
- }
- .btn-preview:hover {
- background: #1976D2;
- }
- .message-table {
- width: 100%;
- border-collapse: collapse;
- margin-top: 1rem;
- }
- .message-table th,
- .message-table td {
- padding: 1rem;
- text-align: left;
- border-bottom: 1px solid #ddd;
- }
- .message-table th {
- background-color: #f5f5f5;
- font-weight: 600;
- }
- .status-sent {
- color: #4caf50;
- font-weight: 600;
- }
- .status-failed {
- color: #f44336;
- font-weight: 600;
- }
- .status-pending {
- color: #ff9800;
- font-weight: 600;
- }
- .preview-modal {
- display: none;
- position: fixed;
- z-index: 1000;
- left: 0;
- top: 0;
- width: 100%;
- height: 100%;
- background-color: rgba(0,0,0,0.5);
- }
- .preview-content {
- background-color: white;
- margin: 5% auto;
- padding: 2rem;
- border-radius: 8px;
- width: 80%;
- max-width: 600px;
- max-height: 80vh;
- overflow-y: auto;
- }
- .preview-header {
- display: flex;
- justify-content: space-between;
- align-items: center;
- margin-bottom: 1rem;
- }
- .close {
- color: #aaa;
- font-size: 28px;
- font-weight: bold;
- cursor: pointer;
- }
- .close:hover {
- color: #000;
- }
- .recipient-count {
- background: #e3f2fd;
- padding: 1rem;
- border-radius: 4px;
- margin-bottom: 1rem;
- text-align: center;
- }
- 
- /* Mobile menu styles */
-</script>
+    <!-- Error and Success Messages -->
+    <div id="error-container" class="error-message">
+        <div id="errorMessage"></div>
+    </div>
 
-<script src="assets/js/hide-loading.js"></script>
-</body></html>
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/hollidays-logo.optimized-1280.png" alt="Holliday's Lawn & Garden" />
+            <span style="font-weight: 700; color: #2c5530;">Admin Dashboard</span>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="window.location.href='admin-dashboard.html'">
+                <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+            </button>
+            <button class="btn btn-danger" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+    </header>
+
+    <main class="message-container">
+        <div class="message-header">
+            <h1 class="message-title">
+                <i class="fas fa-envelope"></i>
+                Bulk Messaging
+            </h1>
+            <div class="header-stats">
+                <span class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <span id="total-customers">0</span> Total Customers
+                </span>
+                <span class="stat-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="selected-customers">0</span> Selected
+                </span>
+            </div>
+        </div>
+
+        <div class="message-form-section">
+            <h2><i class="fas fa-edit"></i> Compose Message</h2>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="message-subject">Subject</label>
+                    <input type="text" id="message-subject" placeholder="Enter message subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message-type">Message Type</label>
+                    <select id="message-type">
+                        <option value="general">General</option>
+                        <option value="promotional">Promotional</option>
+                        <option value="service">Service Update</option>
+                        <option value="reminder">Reminder</option>
+                        <option value="emergency">Emergency</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="message-content">Message Content</label>
+                <textarea id="message-content" rows="8" placeholder="Enter your message here..." required></textarea>
+            </div>
+
+            <div class="message-templates">
+                <h3><i class="fas fa-copy"></i> Message Templates</h3>
+                <div class="template-buttons">
+                    <button class="template-btn" onclick="loadTemplate('welcome')">Welcome Message</button>
+                    <button class="template-btn" onclick="loadTemplate('service-reminder')">Service Reminder</button>
+                    <button class="template-btn" onclick="loadTemplate('promotional')">Promotional Offer</button>
+                    <button class="template-btn" onclick="loadTemplate('maintenance')">Maintenance Notice</button>
+                    <button class="template-btn" onclick="loadTemplate('holiday')">Holiday Schedule</button>
+                </div>
+            </div>
+
+            <div class="customer-selection">
+                <h3><i class="fas fa-users"></i> Select Recipients</h3>
+                
+                <div class="customer-filters">
+                    <div class="form-group">
+                        <label for="status-filter">Status</label>
+                        <select id="status-filter">
+                            <option value="">All Statuses</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="service-filter">Service Type</label>
+                        <select id="service-filter">
+                            <option value="">All Services</option>
+                            <option value="lawn-maintenance">Lawn Maintenance</option>
+                            <option value="landscaping">Landscaping</option>
+                            <option value="garden-care">Garden Care</option>
+                            <option value="commercial">Commercial Services</option>
+                            <option value="pressure-washing">Pressure Washing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="search-customers">Search Customers</label>
+                        <input type="text" id="search-customers" placeholder="Search by name or email">
+                    </div>
+                </div>
+
+                <div class="select-all-section">
+                    <label>
+                        <input type="checkbox" id="select-all-customers">
+                        Select All Customers
+                    </label>
+                    <span id="selected-count">0 customers selected</span>
+                </div>
+
+                <div class="customer-list" id="customer-list">
+                    <!-- Customer list will be populated here -->
+                    <div class="loading-placeholder">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        Loading customers...
+                    </div>
+                </div>
+            </div>
+
+            <div class="message-actions">
+                <button class="btn-preview" onclick="previewMessage()">
+                    <i class="fas fa-eye"></i>
+                    Preview Message
+                </button>
+                <button class="btn-send" onclick="sendBulkMessage()" id="send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Send Message
+                </button>
+            </div>
+        </div>
+
+        <div class="message-history-section">
+            <h2><i class="fas fa-history"></i> Message History</h2>
+            <table class="message-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Subject</th>
+                        <th>Type</th>
+                        <th>Recipients</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="message-history">
+                    <!-- Message history will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Preview Modal -->
+    <div id="preview-modal" class="preview-modal">
+        <div class="preview-content">
+            <div class="preview-header">
+                <h3>Message Preview</h3>
+                <span class="close" onclick="closePreview()">&times;</span>
+            </div>
+            <div class="recipient-count" id="preview-recipient-count">
+                Message will be sent to 0 recipients
+            </div>
+            <div id="preview-content">
+                <!-- Preview content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script type="module" src="assets/js/bulk-message.js"></script>
+    <script src="assets/js/hide-loading.js"></script>
+</body>
+</html>
